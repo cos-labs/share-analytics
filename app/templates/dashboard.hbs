@@ -1,5 +1,9 @@
 <h2>Dashboard</h2>
 
+<p>Search for institution: {{input value=query enter='changeQ'}}</p>
+
+<h3>Showing stats for {{this.q}}</h3>
+
 {{donut-chart aggregations=model.aggregations}}
 
 {{outlet}}

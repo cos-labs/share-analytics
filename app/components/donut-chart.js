@@ -9,23 +9,24 @@ export default Ember.Component.extend({
     }),
 
     dataChanged: Ember.observer('aggregations', function() {
-        let data = this.get('aggregations.sources.buckets');
+        let data = this.get('sourcesList');
+        console.log(data);
         this.updateDonut(data);
     }),
 
     updateDonut(data) {
         let columns = data; // jscs:ignore
-        let title = 'Sources';
+        console.log(columns);
+        let title = 'Published in...';
         
         let donut = this.get('donut');
         if (!donut) {
             this.initDonut(title, columns);
-        } else { // shouldn't be excuting right now
+        } else {
             donut.load({
                 columns,
                 unload: true
-            });
-            this.$('.c3-chart-arcs-title').text(title);
+            });   
         }
     },
 
@@ -50,7 +51,7 @@ export default Ember.Component.extend({
                     show: false
                 }
             },
-            size: { height: 200 }
+            size: { height: 400 }
         });
         this.set('donut', donut);
     },

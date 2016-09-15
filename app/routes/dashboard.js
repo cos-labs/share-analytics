@@ -3,15 +3,25 @@ import ENV from '../config/environment';
 
 export default Ember.Route.extend({
     
+    setupController: function(controller, model) {
+        this._super(controller, model);
+        this.addObserver('controller.q', function() {
+            this.refresh();
+        });
+    },
+    
+    // Note that the above query is NOT perfect. But we'll go with it for now.
     model: function() {
+        let query = this.controllerFor('dashboard').get('q');
         return Ember.$.ajax({
-            url: ENV.apiUrl + '/search/abstractcreativework/_search',
+            url: ENV.apiUrl +  '/search/abstractcreativework/_search',
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({query: { query_string: { query: "cancer" } }, from: 0, aggregations: { sources: { terms: { field: "sources.raw", size: 200 } } } })
+            data: JSON.stringify({query: { query_string: { query: query } }, from: 0, aggregations: { sources: { terms: { field: 'sources.raw', size: 200 } } } })
         }).then((json) => {
             let aggregations = json.aggregations;
+            console.log(json);
             let docs = json.hits.hits.map((hit) => {
                 let source = Ember.Object.create(hit._source);
                 let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');

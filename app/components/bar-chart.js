@@ -3,38 +3,38 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     
-    sourcesList: Ember.computed('aggregations', function() {
-        let data = this.get('aggregations.sources.buckets');
+    contributorsList: Ember.computed('aggregations', function() {
+        let data = this.get('aggregations.contributors.buckets');
         return data ? data.map(({ key, doc_count }) => [key, doc_count]) : [];
     }),
 
     dataChanged: Ember.observer('aggregations', function() {
-        let data = this.get('sourcesList');
-        this.updateDonut(data);
+        let data = this.get('contributorsList');
+        this.updateBar(data);
     }),
 
-    updateDonut(data) {
-        let columns = data; // jscs:ignore
-        let title = 'Published in...';
+    updateBar(data) {
+        let columns = data.slice(0,10); // jscs:ignore
+        let title = 'Top 10 Contributors: ';
         
-        let donut = this.get('donut');
-        if (!donut) {
-            this.initDonut(title, columns);
+        let bar = this.get('bar');
+        if (!bar) {
+            this.initBar(title, columns);
         } else {
-            donut.load({
+            bar.load({
                 columns,
                 unload: true
             });   
         }
     },
 
-    initDonut(title, columns) {
-        let element = this.$(`.donut`).get(0); // This line is breaking: for some reason, Ember isn't getting the element
-        let donut = c3.generate({
+    initBar(title, columns) {
+        let element = this.$(`.bar`).get(0);
+        let bar = c3.generate({
             bindto: element,
             data: {
                 columns,
-                type: 'donut',
+                type: 'bar',
                 onclick: (d) => {
                     let selected = this.get('selected');
                     if (!selected.contains(d.name)) {
@@ -43,15 +43,15 @@ export default Ember.Component.extend({
                 }
             },
             legend: { show: false },
-            donut: {
+            bar: {
                 title,
                 label: {
                     show: false
                 }
             },
-            size: { height: 400 }
+            size: { width: 600 }
         });
-        this.set('donut', donut);
+        this.set('bar', bar);
     },
     
     init() { // Init should be used ONLY for setting component proprties. When we want to work on the component DOM element, we use didInsertElement hool
@@ -59,8 +59,8 @@ export default Ember.Component.extend({
     },
     
     didInsertElement() {
-        let data = this.get('sourcesList');
-        this.updateDonut(data);
+        let data = this.get('contributorsList');
+        this.updateBar(data);
     } 
 
     

@@ -18,10 +18,31 @@ export default Ember.Route.extend({
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({query: { query_string: { query: query } }, from: 0, aggregations: { sources: { terms: { field: 'sources.raw', size: 200 } } } })
+            data: JSON.stringify({
+                query: { 
+                    query_string: { 
+                        query: query 
+                    } 
+                }, 
+                from: 0, 
+                    aggregations: { 
+                        sources: { 
+                            terms: { 
+                                field: 'sources.raw', 
+                                size: 200 
+                            } 
+                        },
+                        contributors : {
+                            terms : {
+                                field: 'contributors.raw',
+                                size: 200
+                            }
+                        }
+                    } 
+                })
         }).then((json) => {
             let aggregations = json.aggregations;
-            console.log(json);
+            console.log(aggregations);
             let docs = json.hits.hits.map((hit) => {
                 let source = Ember.Object.create(hit._source);
                 let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');

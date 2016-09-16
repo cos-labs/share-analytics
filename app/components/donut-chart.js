@@ -15,7 +15,7 @@ export default Ember.Component.extend({
 
     updateDonut(data) {
         let columns = data; // jscs:ignore
-        let title = 'Published in...';
+        let title = '';
         
         let donut = this.get('donut');
         if (!donut) {
@@ -29,7 +29,7 @@ export default Ember.Component.extend({
     },
 
     initDonut(title, columns) {
-        let element = this.$(`.donut`).get(0); // This line is breaking: for some reason, Ember isn't getting the element
+        let element = this.$(`.donut`).get(0);
         let donut = c3.generate({
             bindto: element,
             data: {

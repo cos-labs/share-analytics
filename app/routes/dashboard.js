@@ -37,12 +37,18 @@ export default Ember.Route.extend({
                                 field: 'contributors.raw',
                                 size: 200
                             }
+                        },
+                        articles_over_time: {
+                            date_histogram: {
+                                field: 'date',
+                                interval: 'year',
+                                format:'yyyy-MM-dd'
+                            }
                         }
                     } 
                 })
         }).then((json) => {
             let aggregations = json.aggregations;
-            console.log(aggregations);
             let docs = json.hits.hits.map((hit) => {
                 let source = Ember.Object.create(hit._source);
                 let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');

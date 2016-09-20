@@ -19,10 +19,25 @@ export default Ember.Route.extend({
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                query: { 
-                    query_string: { 
-                        query: query 
-                    } 
+                query: {
+                    bool: {
+                        must: [
+                            {
+                                query_string: {
+                                    query: query
+                                }
+                            },
+                            {
+                                range: {
+                                    date: {
+                                        gte: "1996-01-01",
+                                        lte: "2017",
+                                        format: "yyyy-MM-dd||yyyy"
+                                    }
+                                }
+                            }
+                        ]
+                    }
                 }, 
                 from: 0, 
                     aggregations: { 
@@ -42,10 +57,11 @@ export default Ember.Route.extend({
                             date_histogram: {
                                 field: 'date',
                                 interval: 'year',
-                                format:'yyyy-MM-dd'
+                                format:'yyyy-MM-dd',
+                                "min_doc_count" : 1
                             }
                         }
-                    } 
+                    },
                 })
         }).then((json) => {
             let aggregations = json.aggregations;
@@ -60,6 +76,7 @@ export default Ember.Route.extend({
                 r.organizations = source.lists.organizations;
                 return r;
             });
+            console.log(docs);
             return {aggregations: aggregations, docs: docs}; //allows us to access returned docs as model.docs, aggregations as model.aggregations
             
         });                                                                                            

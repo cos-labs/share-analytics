@@ -34,13 +34,7 @@ export default Ember.Component.extend({
             bindto: element,
             data: {
                 columns,
-                type: 'donut',
-                onclick: (d) => {
-                    let selected = this.get('selected');
-                    if (!selected.contains(d.name)) {
-                        this.send('changeFilter', [d.name, ...selected]);
-                    }
-                }
+                type: 'donut'
             },
             legend: { show: false },
             donut: {

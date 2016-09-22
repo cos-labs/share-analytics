@@ -5,6 +5,7 @@ export default Ember.Controller.extend({
     q: 'UC Santa Barbara',
     gte: "1996-01-01",
     lte: "2017",
+    p: '*',
     
     actions: {
         

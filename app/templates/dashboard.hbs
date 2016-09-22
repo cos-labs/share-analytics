@@ -6,13 +6,17 @@
 
 <div style="float:left;">{{timeseries-chart aggregations=model.aggregations}}</div>
 <div style="float:right;">
-    <p>Update start date for institutional data: {{input value=g enter='changeGte'}}</p>
-    <p>Update end date for institutional data: {{input value=l enter='changeLte'}}</p>
+    <p>Update start date for institutional data: {{input value=g enter='changeGte' size=12}}</p>
+    <p>Update end date for institutional data: {{input value=l enter='changeLte' size=12}}</p>
 </div>
 
 <div style="margin-top: 75px;">
-    <div style="float:left; padding-left:15%;">{{donut-chart aggregations=model.aggregations}}</div>
-    <div style="float:right; padding-right: 15%;">{{bar-chart aggregations=model.aggregations}}</div>
+    <div style="float:left; padding-left:15%;">
+        {{donut-chart aggregations=model.aggregations}}
+    </div>
+    <div style="float:right; padding-right: 15%;">
+        {{bar-chart aggregations=model.aggregations querystring=q g=gte l=lte}}
+    </div>
 </div>
 
 {{outlet}}

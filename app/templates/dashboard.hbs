@@ -4,7 +4,11 @@
 
 <h3>Showing stats for {{this.q}}</h3>
 
-{{timeseries-chart aggregations=model.aggregations}}
+<div style="float:left;">{{timeseries-chart aggregations=model.aggregations}}</div>
+<div style="float:right;">
+    <p>Update start date for institutional data: {{input value=g enter='changeGte'}}</p>
+    <p>Update end date for institutional data: {{input value=l enter='changeLte'}}</p>
+</div>
 
 <div style="margin-top: 75px;">
     <div style="float:left; padding-left:15%;">{{donut-chart aggregations=model.aggregations}}</div>

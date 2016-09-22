@@ -8,11 +8,19 @@ export default Ember.Route.extend({
         this.addObserver('controller.q', function() {
             this.refresh();
         });
+        this.addObserver('controller.gte', function() {
+            this.refresh();
+        });
+        this.addObserver('controller.lte', function() {
+            this.refresh();
+        });
     },
     
     // Note that the above query is NOT perfect. But we'll go with it for now.
     model: function() {
         let query = this.controllerFor('dashboard').get('q');
+        let gte = this.controllerFor('dashboard').get('gte');
+        let lte = this.controllerFor('dashboard').get('lte');
         return Ember.$.ajax({
             url: ENV.apiUrl +  '/search/abstractcreativework/_search',
             crossDomain: true,
@@ -30,8 +38,8 @@ export default Ember.Route.extend({
                             {
                                 range: {
                                     date: {
-                                        gte: "1996-01-01",
-                                        lte: "2017",
+                                        gte: gte,
+                                        lte: lte,
                                         format: "yyyy-MM-dd||yyyy"
                                     }
                                 }

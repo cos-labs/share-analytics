@@ -56,9 +56,8 @@ export default Ember.Route.extend({
                         articles_over_time: {
                             date_histogram: {
                                 field: 'date',
-                                interval: 'year',
-                                format:'yyyy-MM-dd',
-                                "min_doc_count" : 1
+                                interval: 'month',
+                                format:'yyyy-MM-dd'
                             }
                         }
                     },
@@ -76,7 +75,6 @@ export default Ember.Route.extend({
                 r.organizations = source.lists.organizations;
                 return r;
             });
-            console.log(docs);
             return {aggregations: aggregations, docs: docs}; //allows us to access returned docs as model.docs, aggregations as model.aggregations
             
         });                                                                                            

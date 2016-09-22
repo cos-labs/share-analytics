@@ -36,6 +36,21 @@ export default Ember.Component.extend({
                 columns,
                 type: 'bar'
             },
+            axis: {
+              x: {
+                  tick: {
+                      format: function() {
+                          return 'Top 10 Contributors';
+                      }
+                  }
+              },
+              y: {
+                   label: 'Number of Publications'
+              },
+            },
+            tooltip: {
+                grouped: false, // Default true
+            },
             legend: { show: false },
             bar: {
                 title,
@@ -43,7 +58,7 @@ export default Ember.Component.extend({
                     show: false
                 }
             },
-            size: { width: 600 }
+            size: { width: 400 }
         });
         this.set('bar', bar);
     },

@@ -6,7 +6,7 @@ export default Ember.Component.extend({
     timeseriesList: Ember.computed('aggregations', function() { 
         let d = this.get('aggregations.articles_over_time.buckets');
         let firstRow = ['x'];
-        let secondRow = ['Publicaions'];
+        let secondRow = ['Publications (month)'];
         d.forEach(function(entry) {
             firstRow.push(entry.key_as_string);
             secondRow.push(entry.doc_count);
@@ -46,7 +46,18 @@ export default Ember.Component.extend({
                 x: {
                     type: 'timeseries',
                     tick: {
-                        format: '%Y-%m-%d'
+                        format: function(x) {
+                            return x.getFullYear();
+                        }
+                    }
+                }
+            },
+             tooltip: {
+                format: { // We want to return a nice-looking tooltip that is mor descriptive than our x-axis labels (since we plot monthly data)
+                    title: function (d) { 
+                        let m = d.toString().substring(4,8);
+                        let y = d.toString().substring(11,15);
+                        return '' + m + ' ' + y;
                     }
                 }
             },

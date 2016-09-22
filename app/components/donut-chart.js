@@ -15,7 +15,7 @@ export default Ember.Component.extend({
 
     updateDonut(data) {
         let columns = data; // jscs:ignore
-        let title = '';
+        let title = 'Published in...';
         
         let donut = this.get('donut');
         if (!donut) {
@@ -43,7 +43,7 @@ export default Ember.Component.extend({
                     show: false
                 }
             },
-            size: { height: 400 }
+            size: { width: 400 }
         });
         this.set('donut', donut);
     },

@@ -3,10 +3,15 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     
+    tPub: false,
+    tPre: false,
+    tCre: false,
+    tPro: false,
+    
     timeseriesList: Ember.computed('aggregations', function() { 
         let d = this.get('aggregations.articles_over_time.buckets');
         let firstRow = ['x'];
-        let secondRow = ['Publications (month)'];
+        let secondRow = ['Articles'];
         d.forEach(function(entry) {
             firstRow.push(entry.key_as_string);
             secondRow.push(entry.doc_count);
@@ -32,6 +37,19 @@ export default Ember.Component.extend({
                 unload: true
             });   
         }
+    },
+    
+    pushTS(xCol) {
+        let c = xCol;
+        let ts = this.get('ts');
+        ts.load({
+            columns: [xCol]
+        });
+    },
+    
+    popTS(xCol) {
+        let ts = this.get('ts');
+        ts.unload([xCol]);
     },
 
     initTS(title, columns) {
@@ -73,7 +91,100 @@ export default Ember.Component.extend({
     didInsertElement() {
         let data = this.get('timeseriesList');
         this.updateTS(data);
-    } 
-
+    },
+    
+    // If the user wants to isolate preprints:
+    tPreChanged: Ember.observer('tPre', function() {
+        let otherSubsets = (this.get('tPub') || this.get('tCre') || this.get('tPro')); // check if we already are displaying article subsets on the chart
+        if(this.get('tPre')) { // if the user checked the box
+            this.filterTS('preprint',otherSubsets); 
+        }
+        else { // if the user unchecked the box
+            if(!otherSubsets) { // if this is the only data on the chart right now and we're removing it
+                let data = this.get('timeseriesList'); // reload the original chart
+                this.updateTS(data);   
+            }
+            else {
+                this.popTS('preprint');
+            }
+        }
+    }),
+    
+    // If the user wants to isolate publications:
+    tPubChanged: Ember.observer('tPub', function() {
+        let otherSubsets = (this.get('tPre') || this.get('tCre') || this.get('tPro'));
+        if(this.get('tPub')) { // if the user checked the box
+            this.filterTS('publication',otherSubsets); 
+        }
+        else { // if the user unchecked the box
+            if(!otherSubsets) {
+                let data = this.get('timeseriesList');
+                this.updateTS(data);   
+            }
+            else {
+                this.popTS('publication');
+            }
+        }
+    }),
+    
+    // If the user wants to isolate creativeworks:
+    tCreChanged: Ember.observer('tCre', function() {
+        let otherSubsets = (this.get('tPre') || this.get('tPub') || this.get('tPro'));
+        if(this.get('tCre')) { // if the user checked the box
+            this.filterTS('creativework',otherSubsets); 
+        }
+        else { // if the user unchecked the box
+            if(!otherSubsets) {
+                let data = this.get('timeseriesList');
+                this.updateTS(data);   
+            }
+            else {
+                this.popTS('creativework');
+            }
+        }
+    }),
+    
+    // If the user wants to isolate projects:
+    tProChanged: Ember.observer('tPro', function() {
+        let otherSubsets = (this.get('tPre') || this.get('tPub') || this.get('tCre'));
+        if(this.get('tPro')) { // if the user checked the box
+            this.filterTS('project',otherSubsets); 
+        }
+        else { // if the user unchecked the box
+            if(!otherSubsets) {
+                let data = this.get('timeseriesList');
+                this.updateTS(data);   
+            }
+            else {
+                this.popTS('project');
+            }
+        }
+    }),
+    
+    filterTS(typeString,o) {
+        let d = this.get('aggregations.articles_over_time.buckets');
+        let firstRow = ['x'];
+        let secondRow = [typeString];
+        d.forEach(function(entry) {
+            firstRow.push(entry.key_as_string);
+            let hasPubBucket = false;
+            entry.arttype.buckets.forEach(function(b) {
+               if(b.key === typeString) {
+                   hasPubBucket = true;
+                   secondRow.push(b.doc_count);
+               }
+            });
+            if(!hasPubBucket) {
+               secondRow.push(0);
+            }
+        });
+        if(o) {
+            this.pushTS(secondRow);
+        }
+        else {
+            let data = [firstRow, secondRow];
+            this.updateTS(data);
+        }
+    }
     
 });

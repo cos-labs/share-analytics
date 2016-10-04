@@ -39,8 +39,8 @@ export default Ember.Component.extend({
             data: {
                 columns,
                 type: 'bar',
-                onclick: (d) => { // params are going in correctly
-                    console.log(this.getContrib(d,q,gte,lte));
+                onclick: (d) => { 
+                    this.getContrib(d,q,gte,lte);
                 }
             },
             axis: {
@@ -80,54 +80,55 @@ export default Ember.Component.extend({
     },
     
     getContrib(d,q,gte,lte) {
-        return Ember.$.ajax({ // This request is NOT getting what it should be getting. Next time, check that the query is correctly formed!
-            url: ENV.apiUrl +  '/search/abstractcreativework/_search',
-            crossDomain: true,
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                query: {
-                    bool: {
-                        must: [
-                            {
-                                query_string: {
-                                    query: q
-                                }
-                            },
-                            {
-                                range: {
-                                    date: {
-                                        gte: gte,
-                                        lte: lte,
-                                            format: "yyyy-MM-dd||yyyy"
-                                    }
-                                }
-                            }
-                        ],
-                        filter: [
-                            {
-                                term: {
-                                    contributors: d.name // This is NOT an issue with the specific name not being found. 'John' doesn't work either. Must be query strictur.
-                                }
-                            }
-                        ]
-                    }
-                }
-            })
-        }).then((json) => {
-            let docs = json.hits.hits.map((hit) => {
-                let source = Ember.Object.create(hit._source);
-                let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
-                r.id = hit._id;
-                r.contributors = source.lists.contributors;
-                r.funders = source.lists.funders;
-                r.publishers = source.lists.publishers;
-                r.institutions = source.lists.institutions;
-                r.organizations = source.lists.organizations;
-                return r;
-            });
-            console.log(docs);
-        });
+//        let c = d.name;
+//        return Ember.$.ajax({ // This request is NOT getting what it should be getting. Next time, check that the query is correctly formed!
+//            url: ENV.apiUrl +  '/search/abstractcreativework/_search',
+//            crossDomain: true,
+//            type: 'POST',
+//            contentType: 'application/json',
+//            data: JSON.stringify({
+//                query: { 
+//                    bool: { 
+//                       must: [
+//                            {
+//                                query_string: {
+//                                    query: q
+//                                }
+//                            },
+//                            {
+//                                range: { 
+//                                    date: {
+//                                        gte: gte,
+//                                        lte: lte,
+//                                        format: "yyyy-MM-dd||yyyy"
+//                                    }
+//                                }   
+//                            }
+//                      ],
+//                      filter: [
+//                            {
+//                                term: {
+//                                    contributors: c
+//                                }
+//                            }
+//                      ]
+//                    }
+//                }
+//            })
+//        }).then((json) => {
+//            let docs = json.hits.hits.map((hit) => {
+//                let source = Ember.Object.create(hit._source);
+//                let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
+//                r.id = hit._id;
+//                r.contributors = source.lists.contributors;
+//                r.funders = source.lists.funders;
+//                r.publishers = source.lists.publishers;
+//                r.institutions = source.lists.institutions;
+//                r.organizations = source.lists.organizations;
+//                return r;
+//            });
+//            console.log(docs);
+//        });
     }
 
     

@@ -21,7 +21,6 @@ export default Ember.Route.extend({
         let query = this.controllerFor('dashboard').get('q');
         let gte = this.controllerFor('dashboard').get('gte');
         let lte = this.controllerFor('dashboard').get('lte');
-        let p = this.controllerFor('dashboard').get('p');
         return Ember.$.ajax({
             url: ENV.apiUrl +  '/search/abstractcreativework/_search',
             crossDomain: true,

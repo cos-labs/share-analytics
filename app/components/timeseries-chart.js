@@ -27,7 +27,6 @@ export default Ember.Component.extend({
     updateTS(data) {
         let columns = data; 
         let title = '';
-        
         let ts = this.get('ts');
         if (!ts) {
             this.initTS(title, columns);
@@ -40,7 +39,6 @@ export default Ember.Component.extend({
     },
     
     pushTS(xCol) {
-        let c = xCol;
         let ts = this.get('ts');
         ts.load({
             columns: [xCol]

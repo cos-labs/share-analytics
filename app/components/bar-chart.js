@@ -1,6 +1,5 @@
 /* global c3 */
 import Ember from 'ember';
-import ENV from '../config/environment';
 
 export default Ember.Component.extend({
     
@@ -31,9 +30,6 @@ export default Ember.Component.extend({
 
     initBar(title, columns) {
         let element = this.$(`.bar`).get(0);
-        let q = this.get('querystring');
-        let gte = this.get('g');
-        let lte = this.get('l');
         let bar = c3.generate({
             bindto: element,
             data: {

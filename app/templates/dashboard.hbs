@@ -19,4 +19,15 @@
     </div>
 </div>
 
+<div style = 'margin-top: 1200px;'>
+    <h3>Top works associated with {{this.q}}: {{this.gte}} - {{this.lte}}</h3>
+    <ul>
+    {{#each model.docs as |doc|}}
+        <li>
+            <h4><a target='_blank' href='https://share.osf.io/curate/creativework/{{doc.id}}'>{{doc.title}}</a></h4>
+        </li>
+    {{/each}}
+    </ul>
+</div>
+
 {{outlet}}

@@ -79,7 +79,6 @@ export default Ember.Route.extend({
                 })
         }).then((json) => {
             let aggregations = json.aggregations;
-            console.log(aggregations);
             let docs = json.hits.hits.map((hit) => {
                 let source = Ember.Object.create(hit._source);
                 let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
@@ -91,6 +90,7 @@ export default Ember.Route.extend({
                 r.organizations = source.lists.organizations;
                 return r;
             });
+            console.log(docs);
             return {aggregations: aggregations, docs: docs}; //allows us to access returned docs as model.docs, aggregations as model.aggregations
             
         });                                                                                            

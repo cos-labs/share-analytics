@@ -61,6 +61,12 @@ export default Ember.Route.extend({
                                 size: 200
                             }
                         },
+                        tags : {
+                            terms : {
+                                field: 'tags.raw',
+                                size: 200
+                            }
+                        },
                         articles_over_time: {
                             date_histogram: {
                                 field: 'date',
@@ -90,7 +96,7 @@ export default Ember.Route.extend({
                 r.organizations = source.lists.organizations;
                 return r;
             });
-            console.log(docs);
+             console.log(docs);
             return {aggregations: aggregations, docs: docs}; //allows us to access returned docs as model.docs, aggregations as model.aggregations
             
         });                                                                                            

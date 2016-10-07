@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({    
 
     q: 'UC Santa Barbara',
-    gte: "1996-01-01",
+    gte: "1996",
     lte: "2017",
     
     actions: {

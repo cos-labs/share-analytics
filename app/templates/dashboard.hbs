@@ -25,6 +25,13 @@
     {{#each model.docs as |doc|}}
         <li>
             <h4><a target='_blank' href='https://share.osf.io/curate/creativework/{{doc.id}}'>{{doc.title}}</a></h4>
+            {{#if doc.tags}}
+                <ul><strong>Tags:</strong>
+                    {{#each doc.tags as |tag|}}
+                    <li><a target='_blank' href='https://share.osf.io/discover?tags={{tag}}'>{{tag}}</a></li>
+                    {{/each}}
+                </ul>
+            {{/if}}
         </li>
     {{/each}}
     </ul>

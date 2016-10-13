@@ -1,40 +1,64 @@
-<h2>Dashboard</h2>
-
-<p>Search for institution: {{input value=query enter='changeQ'}}</p>
-
-<h3>Showing stats for {{this.q}}</h3>
-
-<div style="float:left;">{{timeseries-chart aggregations=model.aggregations}}</div>
-<div style="float:right;">
-    <p>Update start date for institutional data: {{input value=g enter='changeGte' size=12}}</p>
-    <p>Update end date for institutional data: {{input value=l enter='changeLte' size=12}}</p>
-</div>
-
-<div style="margin-top: 75px;">
-    <div style="float:left; padding-left:15%;">
-        {{donut-chart aggregations=model.aggregations}}
-    </div>
-    <div style="float:right; padding-right: 15%;">
-        {{bar-chart aggregations=model.aggregations querystring=q g=gte l=lte}}
+<div class='container-fluid'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-12'>
+                <h2>Dashboard</h2>
+            </div>
+        </div>
     </div>
 </div>
 
-<div style = 'margin-top: 1200px;'>
-    <h3>Top works associated with {{this.q}}: {{this.gte}} - {{this.lte}}</h3>
-    <ul>
-    {{#each model.docs as |doc|}}
-        <li>
-            <h4><a target='_blank' href='https://share.osf.io/curate/creativework/{{doc.id}}'>{{doc.title}}</a></h4>
-            {{#if doc.tags}}
-                <ul><strong>Tags:</strong>
-                    {{#each doc.tags as |tag|}}
-                    <li><a target='_blank' href='https://share.osf.io/discover?tags={{tag}}'>{{tag}}</a></li>
-                    {{/each}}
-                </ul>
-            {{/if}}
-        </li>
-    {{/each}}
-    </ul>
+<div class='container-fluid'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-12'>
+                <h3>Control Panel:</h3>
+                {{#bs-accordion selected=selected}}
+                     {{#bs-accordion-item value="1" title="Institution"}}
+                        <p>Search for new institution: {{input value=query enter='changeQ'}}</p>
+                     {{/bs-accordion-item}}
+                     {{#bs-accordion-item value="2" title="Dates"}}
+                        <p>Update start date for institutional data: {{input value=g enter='changeGte' size=12}}</p>
+                        <p>Update end date for institutional data: {{input value=l enter='changeLte' size=12}}</p>
+                     {{/bs-accordion-item}}
+                {{/bs-accordion}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='container-fluid'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-12' style='border: solid 1px #efefef;'>
+                {{timeseries-chart aggregations=model.aggregations}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='container-fluid'>
+    <div class='container'>
+        <div class='row'>
+            {{#sortable-objects sortableObjectList=sortableObjectList sortEndAction='sortEndAction'}}
+                {{#each sortableObjectList as |item|}}
+                    {{#draggable-object content=item  overrideClass='sortObject' isSortable=true}}
+                        <div class='col-lg-4 col-md-4 col-sm-12 col-xs-12' style='border: solid 1px #efefef;'>
+                            {{#if item.isOne}}
+                                {{donut-chart aggregations=model.aggregations}}
+                            {{/if}}
+                            {{#if item.isTwo}}
+                                {{bar-chart aggregations=model.aggregations querystring=q g=gte l=lte}}
+                            {{/if}}
+                            {{#if item.isThree}}
+                                <p style='height: 290px;'>Wildcard chart!</p>
+                            {{/if}}
+                        </div>
+                    {{/draggable-object}}
+                {{/each}}
+            {{/sortable-objects}}
+        </div>
+    </div>
 </div>
 
 {{outlet}}

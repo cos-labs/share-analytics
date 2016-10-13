@@ -6,6 +6,12 @@ export default Ember.Controller.extend({
     gte: "1996",
     lte: "2017",
     
+    sortableObjectList: Ember.A(
+        [{isOne: true, isTwo: false, isThree: false},
+        {isOne: false, isTwo: true, isThree: false},
+        {isOne: false, isTwo: false, isThree: true}]
+    ),
+    
     actions: {
         
         changeQ: function(query) {
@@ -19,6 +25,10 @@ export default Ember.Controller.extend({
         changeLte: function(l) {
             this.set('lte',l);
         },
+        
+        sortEndAction: function() {
+            console.log('hi');
+        }
         
     }
     

@@ -43,7 +43,7 @@ export default Ember.Component.extend({
                     show: false
                 }
             },
-            size: { width: 400 }
+            size: { height: 300 }
         });
         this.set('donut', donut);
     },

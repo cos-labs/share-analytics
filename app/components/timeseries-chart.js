@@ -77,7 +77,7 @@ export default Ember.Component.extend({
                     }
                 }
             },
-            size: { width: 1000, height: 600 }
+            size: { height: 600 }
         });
         this.set('ts', ts);
     },

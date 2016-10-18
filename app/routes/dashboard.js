@@ -96,7 +96,6 @@ export default Ember.Route.extend({
                 r.organizations = source.lists.organizations;
                 return r;
             });
-             console.log(docs);
             return {aggregations: aggregations, docs: docs}; //allows us to access returned docs as model.docs, aggregations as model.aggregations
             
         });                                                                                            

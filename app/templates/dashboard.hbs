@@ -21,6 +21,12 @@
                         <p>Update start date for institutional data: {{input value=g enter='changeGte' size=12}}</p>
                         <p>Update end date for institutional data: {{input value=l enter='changeLte' size=12}}</p>
                      {{/bs-accordion-item}}
+                     {{#bs-accordion-item value="3" title="Chart Types"}}
+                        <p>Donut chart: {{input type='checkbox' checked=donut}}</p>
+                        <p>Bar chart: {{input type='checkbox' checked=bar}}</p>
+                        <p>Wildcard chart: {{input type='checkbox' checked=wildcard}}</p>
+                        <p>Extra chart: {{input type='checkbox' checked=extra1}}</p>
+                     {{/bs-accordion-item}}
                 {{/bs-accordion}}
             </div>
         </div>
@@ -44,13 +50,13 @@
                 {{#each sortableObjectList as |item|}}
                     {{#draggable-object content=item  overrideClass='sortObject' isSortable=true}}
                         <div class='col-lg-4 col-md-4 col-sm-12 col-xs-12' style='border: solid 1px #efefef;'>
-                            {{#if item.isOne}}
+                            {{#if item.isDonut}}
                                 {{donut-chart aggregations=model.aggregations}}
                             {{/if}}
-                            {{#if item.isTwo}}
+                            {{#if item.isBar}}
                                 {{bar-chart aggregations=model.aggregations querystring=q g=gte l=lte}}
                             {{/if}}
-                            {{#if item.isThree}}
+                            {{#if item.isWildcard}}
                                 <p style='height: 290px;'>Wildcard chart!</p>
                             {{/if}}
                         </div>

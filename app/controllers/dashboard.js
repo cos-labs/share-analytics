@@ -31,7 +31,7 @@ export default Ember.Controller.extend({
         },
         
         sortEndAction: function() {
-            console.log('');
+            
         }
         
     },
@@ -80,6 +80,22 @@ export default Ember.Controller.extend({
         else { 
             this.set('sortableObjectList', this.get('sortableObjectList').filter(function(item, index, enumerable) { 
                 return !(item.isWildcard) // Filter for all array elements that aren't the donut chart
+            }));
+        }
+    }),
+    
+    extra1Changed: Ember.observer('extra1', function() {
+        if(this.get('extra1')) { 
+            if (this.get('sortableObjectList').length > 2) { 
+                console.log('No can do'); 
+            }
+            else { 
+                this.get('sortableObjectList').addObject({isExtra1: true});
+            }
+        }
+        else { 
+            this.set('sortableObjectList', this.get('sortableObjectList').filter(function(item, index, enumerable) { 
+                return !(item.isExtra1) // Filter for all array elements that aren't the donut chart
             }));
         }
     }),

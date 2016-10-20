@@ -21,12 +21,6 @@
                         <p>Update start date for institutional data: {{input value=g enter='changeGte' size=12}}</p>
                         <p>Update end date for institutional data: {{input value=l enter='changeLte' size=12}}</p>
                      {{/bs-accordion-item}}
-                     {{#bs-accordion-item value="3" title="Chart Types"}}
-                        <p>Donut chart: {{input type='checkbox' checked=donut}}</p>
-                        <p>Bar chart: {{input type='checkbox' checked=bar}}</p>
-                        <p>Wildcard chart: {{input type='checkbox' checked=wildcard}}</p>
-                        <p>Extra chart: {{input type='checkbox' checked=extra1}}</p>
-                     {{/bs-accordion-item}}
                 {{/bs-accordion}}
             </div>
         </div>
@@ -51,16 +45,16 @@
                     {{#draggable-object content=item  overrideClass='sortObject' isSortable=true}}
                         <div class='col-lg-4 col-md-4 col-sm-12 col-xs-12' style='border: solid 1px #efefef;'>
                             {{#if item.isDonut}}
-                                {{donut-chart aggregations=model.aggregations}}
+                                {{donut-chart aggregations=model.aggregations removeChart=(action "removeChart")}}
                             {{/if}}
                             {{#if item.isBar}}
-                                {{bar-chart aggregations=model.aggregations querystring=q g=gte l=lte}}
+                                {{bar-chart aggregations=model.aggregations querystring=q g=gte l=lte removeChart=(action "removeChart")}}
                             {{/if}}
                             {{#if item.isWildcard}}
-                                <p style='height: 290px;'>Wildcard chart!</p>
+                                <p style='height: 290px;'>{{wild-card removeChart=(action "removeChart")}}</p>
                             {{/if}}
-                            {{#if item.isExtra1}}
-                                <p style='height: 290px;'>First extra chart!</p>
+                            {{#if item.isPlaceholder}}
+                                <p style='height: 290px;'>{{place-holder options=addableList addChart=(action "addChart")}}</p>
                             {{/if}}
                         </div>
                     {{/draggable-object}}

@@ -55,7 +55,13 @@ export default Ember.Component.extend({
     didInsertElement() {
         let data = this.get('sourcesList');
         this.updateDonut(data);
-    } 
+    },
+    
+    actions: {
+        removeChart: function() {
+            this.sendAction('removeChart','donut');
+        }
+    },
 
     
 });

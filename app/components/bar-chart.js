@@ -76,4 +76,10 @@ export default Ember.Component.extend({
         this.updateBar(data);
     },
     
+    actions: {
+        removeChart: function() {
+            this.sendAction('removeChart','bar');
+        }
+    },
+    
 });

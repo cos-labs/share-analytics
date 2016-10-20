@@ -1,0 +1,17 @@
+<p>This is a placeholder</p>
+{{#each options as |option|}}
+    {{#if option.isDonut}}
+        <p><button {{action 'addChart' option}}>Add donut chart</button></p>
+    {{/if}}
+    {{#if option.isBar}}
+        <p><button {{action 'addChart' option}}>Add bar chart</button></p>
+    {{/if}}
+    {{#if option.isWildcard}}
+        <p><button {{action 'addChart' option}}>Add wildcard chart</button></p>
+    {{/if}}
+    {{#if option.isExtra1}}
+        <p><button {{action 'addChart' option}}>Add extra chart</button></p>
+    {{/if}}
+{{/each}}
+
+{{yield}}

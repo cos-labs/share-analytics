@@ -14,12 +14,12 @@
             <div class='col-md-12'>
                 <h3>Control Panel:</h3>
                 {{#bs-accordion selected=selected}}
-                     {{#bs-accordion-item value="1" title="Institution"}}
+                     {{#bs-accordion-item value="1" title="Institution (PoC only)"}}
                         <p>Search for new institution: {{input value=query enter='changeQ'}}</p>
                      {{/bs-accordion-item}}
                      {{#bs-accordion-item value="2" title="Dates"}}
-                        <p>Update start date for institutional data: {{input value=g enter='changeGte' size=12}}</p>
-                        <p>Update end date for institutional data: {{input value=l enter='changeLte' size=12}}</p>
+                        <p>Start date for institutional data: {{bootstrap-datepicker value=g autoclose=true changeDate='changeGte'}}</p>
+                        <p>Update end date for institutional data: {{bootstrap-datepicker value=l autoclose=true changeDate='changeLte'}}</p>
                      {{/bs-accordion-item}}
                 {{/bs-accordion}}
             </div>
@@ -31,7 +31,7 @@
     <div class='container'>
         <div class='row'>
             <div class='col-md-12' style='border: solid 1px #efefef;'>
-                {{timeseries-chart aggregations=model.aggregations}}
+                {{timeseries-chart aggregations=model.aggregations interval=tsInterval}}
             </div>
         </div>
     </div>

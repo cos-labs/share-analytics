@@ -24,12 +24,12 @@ export default Ember.Component.extend({
         this.updateTS(data);
     }),
 
-    updateTS(data) {
+    updateTS(data, interval) {
         let columns = data; 
         let title = '';
         let ts = this.get('ts');
         if (!ts) {
-            this.initTS(title, columns);
+            this.initTS(title, columns, interval);
         } else {
             ts.load({
                 columns,
@@ -50,7 +50,7 @@ export default Ember.Component.extend({
         ts.unload([xCol]);
     },
 
-    initTS(title, columns) {
+    initTS(title, columns, interval) {
         let element = this.$(`.ts`).get(0);
         let ts = c3.generate({
             bindto: element,
@@ -62,18 +62,14 @@ export default Ember.Component.extend({
                 x: {
                     type: 'timeseries',
                     tick: {
-                        format: function(x) {
-                            return x.getFullYear();
-                        }
+                        format: '%d-%m-%Y'
                     }
                 }
             },
              tooltip: {
-                format: { // We want to return a nice-looking tooltip that is mor descriptive than our x-axis labels (since we plot monthly data)
-                    title: function (d) { 
-                        let m = d.toString().substring(4,8);
-                        let y = d.toString().substring(11,15);
-                        return '' + m + ' ' + y;
+                format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
+                    title: function (d) {
+                        return d.toString().substring(4,15); // This isn't perfect, but it's at least more verbose than before
                     }
                 }
             },
@@ -88,7 +84,8 @@ export default Ember.Component.extend({
     
     didInsertElement() {
         let data = this.get('timeseriesList');
-        this.updateTS(data);
+        let interval = this.get('interval');
+        this.updateTS(data, interval);
     },
     
     // If the user wants to isolate preprints:

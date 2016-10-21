@@ -3,8 +3,22 @@ import Ember from 'ember';
 export default Ember.Controller.extend({    
 
     q: 'UC Santa Barbara',
-    gte: "1996",
-    lte: "2017",
+    gte: "1996-01-01",
+    lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
+    
+    tsInterval: Ember.computed('gte','lte', function() {
+        let d1 = new Date(this.get('gte'));
+        let d2 = new Date(this.get('lte'));
+        if((d2 - d1) >= 31622400000) { // If our dates are more than a year apart
+           return 'month'; // We want to increment our TS data by months
+        }
+        if((7948800000 <= (d2 - d1)) && ((d2 - d1) < 31622400000)) { // If our dates are less than a year apart but more than three months apart
+            return 'week'; // We want to increment our TS data by weeks
+        }
+        if((d2 - d1) < 7948800000) { // If our data are less than three months apart
+            return 'day'; // We want to increment our TS data by days
+        }
+    }),
     
     // Initialize the three interchangeable charts to be rendered as sortableObjects
     sortableObjectList: [{isDonut: true}, {isBar: true}, {isWildcard: true}],
@@ -18,11 +32,11 @@ export default Ember.Controller.extend({
         },
         
         changeGte: function(g) {
-            this.set('gte',g);
+            this.set('gte', g.toISOString().split('T')[0]); // ES won't accept the full ISOString; had to abbreviate it (no T)
         },
         
         changeLte: function(l) {
-            this.set('lte',l);
+            this.set('lte',l.toISOString().split('T')[0]);
         },
         
         sortEndAction: function() {

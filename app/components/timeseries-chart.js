@@ -3,12 +3,13 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     
-    tPub: false,
-    tPre: false,
-    tCre: false,
-    tPro: false,
+    // Define boolean variables that specify which subsets (if any) of abstractcreativeworks we're specifically looking at
+    tPub: false, // Publication
+    tPre: false, // Preprint
+    tCre: false, // Creativework
+    tPro: false, // Project
     
-    timeseriesList: Ember.computed('aggregations', function() { 
+    timeseriesList: Ember.computed('aggregations', function() { // Format our timeseries data
         let d = this.get('aggregations.articles_over_time.buckets');
         let firstRow = ['x'];
         let secondRow = ['Articles'];
@@ -19,12 +20,12 @@ export default Ember.Component.extend({
         return [firstRow, secondRow];
     }),
 
-    dataChanged: Ember.observer('aggregations', function() {
+    dataChanged: Ember.observer('aggregations', function() { // Initiate a chart update if the TS data changes
         let data = this.get('timeseriesList');
         this.updateTS(data);
     }),
 
-    updateTS(data, interval) {
+    updateTS(data, interval) { // Update our TS chart when data/subsets change
         let columns = data; 
         let title = '';
         let ts = this.get('ts');
@@ -38,19 +39,19 @@ export default Ember.Component.extend({
         }
     },
     
-    pushTS(xCol) {
+    pushTS(xCol) { // Add a specific subset of abstractcreativeworks to the TS chart
         let ts = this.get('ts');
         ts.load({
             columns: [xCol]
         });
     },
     
-    popTS(xCol) {
+    popTS(xCol) { // Remove a specific subset of abstractcreativeworks from the TS chart
         let ts = this.get('ts');
         ts.unload([xCol]);
     },
 
-    initTS(title, columns, interval) {
+    initTS(title, columns, interval) { // Draw the TS chart the first time its rendered
         let element = this.$(`.ts`).get(0);
         let ts = c3.generate({
             bindto: element,
@@ -62,11 +63,11 @@ export default Ember.Component.extend({
                 x: {
                     type: 'timeseries',
                     tick: {
-                        format: '%d-%m-%Y'
+                        format: '%d-%m-%Y' // Format the tick labels on our chart
                     }
                 }
             },
-             tooltip: {
+             tooltip: { // Format the tooltips on our chart
                 format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
                     title: function (d) {
                         return d.toString().substring(4,15); // This isn't perfect, but it's at least more verbose than before
@@ -78,14 +79,14 @@ export default Ember.Component.extend({
         this.set('ts', ts);
     },
     
-    init() { // Init should be used ONLY for setting component proprties. When we want to work on the component DOM element, we use didInsertElement hool
+    init() { // Init should be used ONLY for setting component proprties. When we want to work on the component DOM element, we use didInsertElement hook
         this._super(...arguments);
     },
     
-    didInsertElement() {
+    didInsertElement() { // When this component has been inserted into the DOM
         let data = this.get('timeseriesList');
         let interval = this.get('interval');
-        this.updateTS(data, interval);
+        this.updateTS(data, interval); 
     },
     
     // If the user wants to isolate preprints:
@@ -156,6 +157,7 @@ export default Ember.Component.extend({
         }
     }),
     
+    // Isolate specific subsets of abstractcreativeworks
     filterTS(typeString,o) {
         let d = this.get('aggregations.articles_over_time.buckets');
         let firstRow = ['x'];

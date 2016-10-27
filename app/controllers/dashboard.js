@@ -2,11 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({    
 
+    // Initialize our query parameters
     q: 'UC Santa Barbara',
     gte: "1996-01-01",
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
     
-    tsInterval: Ember.computed('gte','lte', function() {
+    tsInterval: Ember.computed('gte','lte', function() { // Initialize the "bucket size" for our timeseries aggregations
         let d1 = new Date(this.get('gte'));
         let d2 = new Date(this.get('lte'));
         if((d2 - d1) >= 31622400000) { // If our dates are more than a year apart
@@ -23,9 +24,26 @@ export default Ember.Controller.extend({
     // Initialize the three interchangeable charts to be rendered as sortableObjects
     sortableObjectList: [{isDonut: true}, {isBar: true}, {isWildcard: true}],
     
+    // Initialize the list of additional charts that the user can add
     addableList: [],
     
+    storedDashboards: [],
+    
     actions: {
+        
+        persistDash: function(n) {
+            var record = this.store.createRecord('dash', {
+                name: n,
+                q: this.get('q'),
+                gte: this.get('gte'),
+                lte: this.get('lte'),
+                tsInterval: this.get('tsInterval'),
+                sortableObjectList: this.get('sortableObjectList'),
+                addableList: this.get('addableList')
+            });
+            // In the future, to persist to server:
+            // record.save()
+        },
         
         changeQ: function(query) {
             this.set('q',query);

@@ -1,6 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('dash', 'Unit | Model | dash', {
+moduleForModel('institution', 'Unit | Model | institution', {
   // Specify the other units that are required for this test.
   needs: []
 });

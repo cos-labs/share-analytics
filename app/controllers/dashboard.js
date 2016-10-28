@@ -31,8 +31,17 @@ export default Ember.Controller.extend({
     
     actions: {
         
-        persistDash: function(n) {
-            var record = this.store.createRecord('dash', {
+        restoreDash: function(sd) {
+            this.set('q',sd.get('q'));
+            this.send('changeGte', sd.get('gte'));
+            this.send('changeLte',sd.get('lte'));
+//            this.set('tsInterval',sd.get('tsInterval'));
+            this.set('sortableObjectList',sd.get('sortableObjectList'));
+            this.set('addableList',sd.get('addableList'));
+        },
+        
+        persistDashboard: function(n) {
+            var record = this.store.createRecord('dashboard', {
                 name: n,
                 q: this.get('q'),
                 gte: this.get('gte'),
@@ -41,8 +50,10 @@ export default Ember.Controller.extend({
                 sortableObjectList: this.get('sortableObjectList'),
                 addableList: this.get('addableList')
             });
-            // In the future, to persist to server:
+            this.set('storedDashboards', this.store.peekAll('dashboard'));
+            // In the future, we'll want to do:
             // record.save()
+            // this.set('storedDashboards', this.store.findAll('dashboard'));
         },
         
         changeQ: function(query) {
@@ -50,10 +61,12 @@ export default Ember.Controller.extend({
         },
         
         changeGte: function(g) {
-            this.set('gte', g.toISOString().split('T')[0]); // ES won't accept the full ISOString; had to abbreviate it (no T)
+            g = new Date(g);
+            this.set('gte', g.toISOString().split('T')[0]); // ES won't accept the full ISOString; had to abbreviate it (no T portion)
         },
         
         changeLte: function(l) {
+            l = new Date(l)
             this.set('lte',l.toISOString().split('T')[0]);
         },
         

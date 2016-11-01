@@ -8,6 +8,7 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('dashboard');
+  this.route('gridtest');
 });
 
 export default Router;

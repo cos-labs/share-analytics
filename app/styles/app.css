@@ -1,0 +1,40 @@
+/*Packery grid styling*/
+
+/* Single-width element */
+.grid-item {
+    float: left;
+    width: 30%; /* This will need to adjust most likely in order to work with BS? Or maybe we won't need BS? */
+    height: 60px;
+    background: #e6e5e4;
+    border: 2px solid #b6b5b4;
+}
+
+/* Double-wide element */ 
+.grid-item--width2 { 
+    width: 60%; 
+}
+
+/* "Large" element */
+/* "Large" can be defined however you want */
+.grid-item--large {
+    width: 66%;
+    height: 120px;
+}
+
+/* Dragging styling */
+.grid-item.is-dragging,
+/* Packery adds class while transitioning to drop position */
+.grid-item.is-positioning-post-drag {
+  background: #C90;
+  z-index: 2; /* keep dragged item on top */
+}
+
+/* Placeholder styling */
+.packery-drop-placeholder {
+  outline: 3px dashed #444;
+  outline-offset: -6px;
+  /* transition position changing */
+  -webkit-transition: -webkit-transform 0.2s;
+          transition: transform 0.2s;
+}
+

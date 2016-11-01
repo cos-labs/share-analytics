@@ -22,6 +22,8 @@ module.exports = function(defaults) {
     
   app.import('bower_components/d3/d3.js');
   app.import('bower_components/c3/c3.js');
+  app.import('bower_components/packery/dist/packery.pkgd.min.js');
+  app.import('bower_components/draggabilly/dist/draggabilly.pkgd.min.js')
 
   return app.toTree();
 };

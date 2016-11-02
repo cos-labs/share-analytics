@@ -9,6 +9,7 @@
     "select2": "3.5.2",
     "bootstrap": "~3.3.5",
     "bootstrap-datepicker": "^1.6.4",
+    "draggabilly": "^2.1.1",
     "packery": "^2.1.1"
   }
 }

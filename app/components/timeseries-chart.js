@@ -2,7 +2,9 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-    
+   
+    classNames: ['chart'],
+
     // Define boolean variables that specify which subsets (if any) of abstractcreativeworks we're specifically looking at
     tPub: false, // Publication
     tPre: false, // Preprint

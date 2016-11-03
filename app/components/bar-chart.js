@@ -3,6 +3,8 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     
+    classNames: ['chart'],
+
     contributorsList: Ember.computed('aggregations', function() {
         let data = this.get('aggregations.contributors.buckets');
         return data ? data.map(({ key, doc_count }) => [key, doc_count]) : [];

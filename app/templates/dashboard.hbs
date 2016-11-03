@@ -36,7 +36,7 @@
         </div>
     </div>
 </div>
-
+<!--
 <div class='container-fluid'>
     <div class='container'>
         <div class='row'>
@@ -46,7 +46,7 @@
         </div>
     </div>
 </div>
-
+-->
 <div class='container-fluid'>
     <div class='container'>
         <div class='row'>
@@ -55,7 +55,7 @@
                     {{#draggable-object content=item  overrideClass='sortObject' isSortable=true}}
                         <div class='col-lg-4 col-md-4 col-sm-12 col-xs-12' style='border: solid 1px #efefef;'>
                             {{#if item.isDonut}}
-                                {{donut-chart aggregations=model.aggregations removeChart=(action "removeChart")}}
+                                {{donut-chart aggregations=model.aggregations}}
                             {{/if}}
                             {{#if item.isBar}}
                                 {{bar-chart aggregations=model.aggregations querystring=q g=gte l=lte removeChart=(action "removeChart")}}
@@ -64,7 +64,7 @@
                                 <p style='height: 290px;'>{{wild-card removeChart=(action "removeChart")}}</p>
                             {{/if}}
                             {{#if item.isPlaceholder}}
-                                <p style='height: 290px;'>{{place-holder options=addableList addChart=(action "addChart")}}</p>
+                                <p style='height: 290px;'>{{place-holder aggregations=model.aggregations options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item}}</p>
                             {{/if}}
                         </div>
                     {{/draggable-object}}
@@ -73,5 +73,7 @@
         </div>
     </div>
 </div>
+
+<button onclick={{action 'addChart'}}>Add a Widget</button>
 
 {{outlet}}

@@ -2,19 +2,21 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-    
-    sourcesList: Ember.computed('aggregations', function() {
-        let data = this.get('aggregations.sources.buckets');
-        return data ? data.map(({ key, doc_count }) => [key, doc_count]) : [];
+    classNames: ['chart'],
+
+    sourcesList: Ember.computed('data', function() {
+        return this.get('data').map(({ key, doc_count }) => [key, doc_count]);
     }),
 
     dataChanged: Ember.observer('aggregations', function() {
-        let data = this.get('sourcesList');
-        this.updateDonut(data);
+        this.updateDonut();
     }),
 
-    updateDonut(data) {
-        let columns = data; // jscs:ignore
+    data: [],
+
+    updateDonut() {
+        this.set('data', this.get('aggregations.sources.buckets'))
+        let columns = this.get('sourcesList')
         let title = 'Published in...';
         
         let donut = this.get('donut');
@@ -48,19 +50,18 @@ export default Ember.Component.extend({
         this.set('donut', donut);
     },
     
-    init() { // Init should be used ONLY for setting component proprties. When we want to work on the component DOM element, we use didInsertElement hool
-        this._super(...arguments);
-    },
+    //init() {
+    //    this._super(...arguments);
+    //},
     
-    didInsertElement() {
-        let data = this.get('sourcesList');
-        this.updateDonut(data);
+    didRender() {
+        this.updateDonut(); 
     },
-    
+ 
     actions: {
-        removeChart: function() {
-            this.sendAction('removeChart','donut');
-        }
+        //removeChart: function() {
+        //    this.sendAction('removeChart','donut');
+        //}
     },
 
     

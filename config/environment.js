@@ -2,9 +2,10 @@
 
 module.exports = function(environment) {
     var ENV = {
+        authorizationType: 'token',
         modulePrefix: 'tc3',
         environment: environment,
-        baseURL: '/',
+        rootURL: '/',
         locationType: 'auto',
         EmberENV: {
             EXTEND_PROTOTYPES: {

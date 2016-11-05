@@ -7,6 +7,15 @@ export default Ember.Component.extend({
     aggregations: false,
     docs: false,
 
+    attributeBindings: ['style'],
+
+    style: Ember.computed('width', 'height', function() {
+        return 'width:'+this.get('width')+'px;height:'+this.get('height')+'px;';
+    }),
+
+    width: 150,
+    height: 150,
+
     // Initialize our query parameters
     q: 'UC Santa Barbara',
     gte: "1996-01-01",
@@ -25,12 +34,19 @@ export default Ember.Component.extend({
             return 'day'; // We want to increment our TS data by days
         }
     }),
+
+    classNames: ['widget'],
     classNameBindings: ['configuring'],
 
     configuring: false,
 
-    didInsertElement() {
+    init() {
+        this._super(...arguments);
         this.fetchWidgetData();
+    },
+
+    didRender() {
+        this.sendAction('refreshWall');
     },
 
     fetchWidgetData: function() {

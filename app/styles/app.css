@@ -60,3 +60,7 @@
     z-index: 1000;
 }
 
+.widget {
+    background-color: #ff0000;
+    overflow: hidden;
+}

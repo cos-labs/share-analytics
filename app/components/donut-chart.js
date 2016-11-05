@@ -14,6 +14,10 @@ export default Ember.Component.extend({
 
     data: [],
 
+    sizeChanged: Ember.observer('height', 'width', function() {
+        this.updateDonut();
+    }),
+
     updateDonut() {
         this.set('data', this.get('aggregations.sources.buckets'))
         let columns = this.get('sourcesList')
@@ -28,6 +32,8 @@ export default Ember.Component.extend({
                 unload: true
             });   
         }
+        this.$()[0].style.width = this.get('width')+'px'
+        this.$()[0].style.height = this.get('height')+'px'
     },
 
     initDonut(title, columns) {
@@ -45,7 +51,7 @@ export default Ember.Component.extend({
                     show: false
                 }
             },
-            size: { height: 300 }
+            size: { height: this.get('height') }
         });
         this.set('donut', donut);
     },

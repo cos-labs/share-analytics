@@ -1,10 +1,37 @@
 import Ember from 'ember';
+/* global Freewall */
+//import 'bower_components/freewall/freewall';
 import ENV from '../config/environment';
-
+//
 export default Ember.Route.extend({
-    
+
     setupController: function(controller, model) {
         this._super(controller, model);
+        let self = this;
+        Ember.run.schedule('afterRender', this, function() {
+            var wall =  new Freewall('#freewall');
+            wall.reset({
+                draggable: true,
+                selector: '.widget',
+                animate: true,
+                cellW: 150,
+                cellH: 150,
+                onResize: function() {
+                    wall.refresh();
+                },
+                onBlockMove: function() {
+                    console.log(this);
+                }
+            });
+            wall.fitWidth();
+            Ember.$(window).trigger('resize');
+            controller.set('wall', wall);
+            //this.addArrayObserver('controller.sortableObjectList', {
+            //    didChange: function() {
+            //        alert('changed');
+            //    }
+            //});
+        });
         this.addObserver('controller.q', function() {
             this.refresh();
         });
@@ -98,9 +125,7 @@ export default Ember.Route.extend({
                 return r;
             });
             return {aggregations: aggregations, docs: docs}; //allows us to access returned docs as model.docs, aggregations as model.aggregations
-            
-        });                                                                                            
-                                                                                                      
-    }
-    
+
+        });
+    },
 });

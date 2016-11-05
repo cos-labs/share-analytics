@@ -1,12 +1,11 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({    
+export default Ember.Controller.extend({
 
     // Initialize our query parameters
     q: 'UC Santa Barbara',
     gte: "1996-01-01",
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
-    
     tsInterval: Ember.computed('gte','lte', function() { // Initialize the "bucket size" for our timeseries aggregations
         let d1 = new Date(this.get('gte'));
         let d2 = new Date(this.get('lte'));
@@ -20,17 +19,19 @@ export default Ember.Controller.extend({
             return 'day'; // We want to increment our TS data by days
         }
     }),
-    
+
     // Initialize the three interchangeable charts to be rendered as sortableObjects
     sortableObjectList: [{isPlaceholder: true}],
-    
+
     // Initialize the list of additional charts that the user can add
     addableList: [],
-    
+
+    wall: false,
+
     storedDashboards: [],
-    
+
     actions: {
-        
+
         restoreDash: function(sd) {
             this.set('q',sd.get('q'));
             this.send('changeGte', sd.get('gte'));
@@ -39,7 +40,7 @@ export default Ember.Controller.extend({
             this.set('sortableObjectList',sd.get('sortableObjectList'));
             this.set('addableList',sd.get('addableList'));
         },
-        
+
         persistDashboard: function(n) {
             var record = this.store.createRecord('dashboard', {
                 name: n,
@@ -55,39 +56,46 @@ export default Ember.Controller.extend({
             // record.save()
             // this.set('storedDashboards', this.store.findAll('dashboard'));
         },
-        
+
         changeQ: function(query) {
             this.set('q',query);
         },
-        
+
         changeGte: function(g) {
             g = new Date(g);
             this.set('gte', g.toISOString().split('T')[0]); // ES won't accept the full ISOString; had to abbreviate it (no T portion)
         },
-        
+
         changeLte: function(l) {
             l = new Date(l)
             this.set('lte',l.toISOString().split('T')[0]);
         },
-        
+
         sortEndAction: function() {
-            
+
         },
-        
+
         removeChart: function(chart) {
             this.set('sortableObjectList', this.get('sortableObjectList').filter(function(item) {
                 return item !== chart;
-            }))
+            }).slice());
         },
-        
+
         addChart: function(option) {
-            this.get('sortableObjectList').addObject({isPlaceholder: true});
+            this.set('sortableObjectList', this.get('sortableObjectList').addObject({isPlaceholder: true}).slice());
+
         },
-        
+        refreshWall: function() {
+            let wall = this.get('wall')
+            wall && wall.refresh();
+        }
+
     },
     
-    sortableObjectListChanged: Ember.observer('sortableObjectList', function() {
-        
+    sortableObjectListChanged: Ember.observer('sortableObjectList.@each', function() {
+        Ember.run.schedule('afterRender', this, function() {
+            this.get('wall').refresh();
+        });
     }),
     
     

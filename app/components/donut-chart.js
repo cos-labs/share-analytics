@@ -22,7 +22,6 @@ export default Ember.Component.extend({
         this.set('data', this.get('aggregations.sources.buckets'))
         let columns = this.get('sourcesList')
         let title = 'Published in...';
-        
         let donut = this.get('donut');
         if (!donut) {
             this.initDonut(title, columns);
@@ -30,10 +29,10 @@ export default Ember.Component.extend({
             donut.load({
                 columns,
                 unload: true
-            });   
+            });
         }
-        this.$()[0].style.width = this.get('width')+'px'
-        this.$()[0].style.height = this.get('height')+'px'
+        this.$()[0].style.width = this.get('width')+'px';
+        this.$()[0].style.height = this.get('height')+'px';
     },
 
     initDonut(title, columns) {
@@ -55,20 +54,9 @@ export default Ember.Component.extend({
         });
         this.set('donut', donut);
     },
-    
-    //init() {
-    //    this._super(...arguments);
-    //},
-    
+
     didRender() {
-        this.updateDonut(); 
-    },
- 
-    actions: {
-        //removeChart: function() {
-        //    this.sendAction('removeChart','donut');
-        //}
+        this.updateDonut();
     },
 
-    
 });

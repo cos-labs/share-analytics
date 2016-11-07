@@ -63,7 +63,7 @@
 		</style>
         <div id='freewall' class='free-wall'>
                 {{#each sortableObjectList as |item|}}
-                    {{place-holder aggregations=model.aggregations options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item wall=wall}}
+                    {{place-holder aggregations=model.aggregations options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item wall=wall refreshWall=(action 'refreshWall')}}
                 {{/each}}
         </div>
 

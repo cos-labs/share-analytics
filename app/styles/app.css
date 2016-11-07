@@ -53,14 +53,78 @@
 
 .configureButton {
     float: right;
+    position: relative;
+    z-index: 10000;
 }
 
 .widgetButtons {
     overflow: hidden;
+    float: right;
     z-index: 1000;
 }
 
 .widget {
-    background-color: #ff0000;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+-webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+-moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
     overflow: hidden;
+}
+
+.width-1 {
+    width: 150px
+}
+
+.width-2 {
+    width: 300px;
+}
+
+.width-3 {
+    width: 450px;
+}
+
+.width-4 {
+    width: 600px;
+}
+
+.width-5 {
+    width: 750px;
+}
+
+.width-6 {
+    width: 900px;
+}
+
+.width-7 {
+    width: 1050px;
+}
+
+.height-1 {
+    height: 150px;
+}
+
+.height-2 {
+    height: 300px;
+}
+
+.height-3 {
+    height: 450px;
+}
+
+.height-4 {
+    height: 600px;
+}
+
+.height-5 {
+    height: 750px;
+}
+
+.height-6 {
+    height: 900px;
+}
+
+.height-7 {
+    height: 1050px;
 }

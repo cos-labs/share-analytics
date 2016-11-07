@@ -16,6 +16,8 @@ export default Ember.Route.extend({
                 animate: true,
                 cellW: 150,
                 cellH: 150,
+                fixSize: 0,
+                cacheSize: false,
                 onResize: function() {
                     wall.refresh();
                 },
@@ -26,11 +28,6 @@ export default Ember.Route.extend({
             wall.fitWidth();
             Ember.$(window).trigger('resize');
             controller.set('wall', wall);
-            //this.addArrayObserver('controller.sortableObjectList', {
-            //    didChange: function() {
-            //        alert('changed');
-            //    }
-            //});
         });
         this.addObserver('controller.q', function() {
             this.refresh();
@@ -42,7 +39,7 @@ export default Ember.Route.extend({
             this.refresh();
         });
     },
-    
+
     // Note that the above query is NOT perfect. But we'll go with it for now.
     model: function() {
         let query = this.controllerFor('dashboard').get('q');
@@ -74,14 +71,14 @@ export default Ember.Route.extend({
                             }
                         ]
                     }
-                }, 
-                from: 0, 
-                    aggregations: { 
-                        sources: { 
-                            terms: { 
-                                field: 'sources.raw', 
-                                size: 200 
-                            } 
+                },
+                from: 0,
+                    aggregations: {
+                        sources: {
+                            terms: {
+                                field: 'sources.raw',
+                                size: 200
+                            }
                         },
                         contributors : {
                             terms : {

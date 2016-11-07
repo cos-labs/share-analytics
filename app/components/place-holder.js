@@ -2,25 +2,25 @@ import Ember from 'ember';
 import ENV from '../config/environment';
 
 export default Ember.Component.extend({
-  
+
     widgetType: 'wild-card',
     aggregations: false,
     docs: false,
 
-    attributeBindings: ['style'],
+    classNames: ['widget'],
+    classNameBindings: ['configuring', 'width', 'height'],
 
-    style: Ember.computed('width', 'height', function() {
-        return 'width:'+this.get('width')+'px;height:'+this.get('height')+'px;';
-    }),
-
-    width: 150,
-    height: 150,
+    widthSetting: 1,
+    heightSetting: 1,
+    
+    width: 'width-1',
+    height: 'height-1',
 
     // Initialize our query parameters
     q: 'UC Santa Barbara',
     gte: "1996-01-01",
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
-    
+
     tsInterval: Ember.computed('gte','lte', function() { // Initialize the "bucket size" for our timeseries aggregations
         let d1 = new Date(this.get('gte'));
         let d2 = new Date(this.get('lte'));
@@ -35,9 +35,6 @@ export default Ember.Component.extend({
         }
     }),
 
-    classNames: ['widget'],
-    classNameBindings: ['configuring'],
-
     configuring: false,
 
     init() {
@@ -46,7 +43,7 @@ export default Ember.Component.extend({
     },
 
     didRender() {
-        this.sendAction('refreshWall');
+               this.sendAction('refreshWall');
     },
 
     fetchWidgetData: function() {
@@ -68,14 +65,14 @@ export default Ember.Component.extend({
                         lte: lte,
                         format: "yyyy-MM-dd||yyyy"
                     }}
-                }]}}, 
-                from: 0, 
-                aggregations: { 
-                    sources: { 
-                        terms: { 
-                             field: 'sources.raw', 
-                             size: 200 
-                        } 
+                }]}},
+                from: 0,
+                aggregations: {
+                    sources: {
+                        terms: {
+                             field: 'sources.raw',
+                             size: 200
+                        }
                     },
                     contributors : {
                         terms : {
@@ -126,27 +123,36 @@ export default Ember.Component.extend({
         addChart: function(option) {
             this.sendAction('addChart', option);
         },
-
         showConfig: function() {
             this.set('configuring', !this.get('configuring'));
-
         },
-
         makeDonut: function() {
             this.set('widgetType', 'donut-chart');
         },
-
         makeTimeSeries: function() {
             this.set('widgetType', 'timeseries-chart');
         },
-
         makeBar: function() {
             this.set('widgetType', 'bar-chart');
         },
-
         removeWidget: function() {
             this.sendAction('removeChart', this.get('item'))
-        }
+        },
+        setHeight: function(height) {
+        },
+        setWidth: function(width) {
+        },
+        configChanged: function() {
+            console.log('changing config');
+            let width = this.get('widthSetting');
+            let height = this.get('heightSetting');
+            this.set('width', 'width-'+width);
+            this.set('height','height-'+height);
+            //window.setTimeout(() => {
+               this.sendAction('refreshWall');
+            //}, 1000);
+        },
+
     },
-   
+
 });

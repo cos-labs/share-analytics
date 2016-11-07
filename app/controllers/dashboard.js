@@ -86,6 +86,7 @@ export default Ember.Controller.extend({
 
         },
         refreshWall: function() {
+            console.log('refreshing wall');
             let wall = this.get('wall')
             wall && wall.refresh();
         }
@@ -93,9 +94,9 @@ export default Ember.Controller.extend({
     },
     
     sortableObjectListChanged: Ember.observer('sortableObjectList.@each', function() {
-        Ember.run.schedule('afterRender', this, function() {
-            this.get('wall').refresh();
-        });
+        //Ember.run.schedule('afterRender', this, function() {
+        //    this.get('wall').refresh();
+        //});
     }),
     
     

@@ -17,7 +17,7 @@ export default Ember.Route.extend({
                 cellW: 150,
                 cellH: 150,
                 fixSize: 0,
-                cacheSize: false,
+                cacheSize: true,
                 onResize: function() {
                     wall.refresh();
                 },

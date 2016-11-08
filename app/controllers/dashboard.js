@@ -23,6 +23,7 @@ export default Ember.Controller.extend({
     // Initialize the three interchangeable charts to be rendered as sortableObjects
     sortableObjectList: [{isPlaceholder: true}],
 
+    
     // Initialize the list of additional charts that the user can add
     addableList: [],
 

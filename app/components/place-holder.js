@@ -16,6 +16,11 @@ export default Ember.Component.extend({
     width: 'width-1',
     height: 'height-1',
 
+    computedHeight: 150, 
+    computedWidth: 150,
+
+    resizedSignal: false,
+
     // Initialize our query parameters
     q: 'UC Santa Barbara',
     gte: "1996-01-01",
@@ -43,7 +48,9 @@ export default Ember.Component.extend({
     },
 
     didRender() {
-               this.sendAction('refreshWall');
+        this.sendAction('refreshWall');
+        this.set('computedHeight',  this.$().height());
+        this.set('computedWidth', this.$().width());
     },
 
     fetchWidgetData: async function() {
@@ -134,19 +141,20 @@ export default Ember.Component.extend({
         removeWidget: function() {
             this.sendAction('removeChart', this.get('item'))
         },
-        setHeight: function(height) {
-        },
-        setWidth: function(width) {
-        },
         configChanged: function() {
             console.log('changing config');
             let width = this.get('widthSetting');
             let height = this.get('heightSetting');
-            this.set('width', 'width-'+width);
-            this.set('height','height-'+height);
-            //window.setTimeout(() => {
-               this.sendAction('refreshWall');
-            //}, 1000);
+            let wall = this.get('wall')
+            wall.fixSize({
+                block: this.$(),
+                width: width*150,
+                height: height*150,
+            });
+            //wall.fitWidth();
+            this.sendAction('refreshWall');
+            this.set('resizedSignal', true);
+            this.set('configuring', !this.get('configuring'));
         },
 
     },

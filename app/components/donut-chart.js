@@ -14,7 +14,7 @@ export default Ember.Component.extend({
 
     data: [],
 
-    sizeChanged: Ember.observer('height', 'width', function() {
+    sizeChanged: Ember.observer('resizedSignal', function() {
         this.updateDonut();
     }),
 
@@ -23,16 +23,18 @@ export default Ember.Component.extend({
         let columns = this.get('sourcesList')
         let title = 'Published in...';
         let donut = this.get('donut');
-        if (!donut) {
-            this.initDonut(title, columns);
-        } else {
+        if (donut) {
             donut.load({
                 columns,
                 unload: true
             });
+            donut.resize({
+                height: this.get('height')*150-20,
+                width: this.get('width')*150
+            });
+        } else {
+            this.initDonut(title, columns);
         }
-        this.$()[0].style.width = this.get('width')+'px';
-        this.$()[0].style.height = this.get('height')+'px';
     },
 
     initDonut(title, columns) {
@@ -50,7 +52,7 @@ export default Ember.Component.extend({
                     show: false
                 }
             },
-            size: { height: this.get('height') }
+            size: { height: this.get('height')*150 }
         });
         this.set('donut', donut);
     },

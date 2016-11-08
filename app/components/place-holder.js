@@ -46,12 +46,12 @@ export default Ember.Component.extend({
                this.sendAction('refreshWall');
     },
 
-    fetchWidgetData: function() {
+    fetchWidgetData: async function() {
         let query = this.get('q');
         let gte = this.get('gte');
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
-        let data = Ember.$.ajax({
+        let data = await Ember.$.ajax({
             url: ENV.apiUrl +  '/search/abstractcreativework/_search',
             crossDomain: true,
             type: 'POST',
@@ -98,23 +98,19 @@ export default Ember.Component.extend({
                     }
                 },
             })
-        })
-        data.then((json) => {
-            this.set('aggregations', json.aggregations);
         });
-        data.then((json) => {
-            this.set('docs', json.hits.hits.map((hit) => {
-                let source = Ember.Object.create(hit._source);
-                let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
-                r.id = hit._id;
-                r.contributors = source.lists.contributors;
-                r.funders = source.lists.funders;
-                r.publishers = source.lists.publishers;
-                r.institutions = source.lists.institutions;
-                r.organizations = source.lists.organizations;
-                return r;
-            }));
-        });
+        this.set('aggregations', data.aggregations);
+        this.set('docs', data.hits.hits.map((hit) => {
+            let source = Ember.Object.create(hit._source);
+            let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
+            r.id = hit._id;
+            r.contributors = source.lists.contributors;
+            r.funders = source.lists.funders;
+            r.publishers = source.lists.publishers;
+            r.institutions = source.lists.institutions;
+            r.organizations = source.lists.organizations;
+            return r;
+        }));
         this.set('widgetType', 'donut-chart');
     },
 

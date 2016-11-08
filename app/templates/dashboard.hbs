@@ -36,36 +36,11 @@
         </div>
     </div>
 </div>
-<!--
-<div class='container-fluid'>
-    <div class='container'>
-        <div class='row'>
-            <div class='col-md-12' style='border: solid 1px #efefef;'>
-                {{timeseries-chart aggregations=model.aggregations interval=tsInterval}}
-            </div>
-        </div>
-    </div>
+<div id='freewall' class='free-wall'>
+        {{#each sortableObjectList as |item|}}
+            {{place-holder options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item wall=wall refreshWall=(action 'refreshWall')}}
+        {{/each}}
 </div>
--->		<style type="text/css">
-			.free-wall {
-				margin: 15px;
-			}
-			.cell {
-				cursor: move;
-			}
-			.cell .cover {
-				padding: 15px;
-			}
-			.handle {
-				border: 1px dotted orange;
-				padding: 4px
-			}
-		</style>
-        <div id='freewall' class='free-wall'>
-                {{#each sortableObjectList as |item|}}
-                    {{place-holder aggregations=model.aggregations options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item wall=wall refreshWall=(action 'refreshWall')}}
-                {{/each}}
-        </div>
 
 <button onclick={{action 'addChart'}} style='clear:both;'>Add a Widget</button>
 

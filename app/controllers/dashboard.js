@@ -92,12 +92,5 @@ export default Ember.Controller.extend({
         }
 
     },
-    
-    sortableObjectListChanged: Ember.observer('sortableObjectList.@each', function() {
-        //Ember.run.schedule('afterRender', this, function() {
-        //    this.get('wall').refresh();
-        //});
-    }),
-    
-    
+
 });

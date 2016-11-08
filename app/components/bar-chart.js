@@ -10,15 +10,14 @@ export default Ember.Component.extend({
     }),
 
     dataChanged: Ember.observer('aggregations', function() {
-        let data = this.get('contributorsList');
-        this.updateBar(data);
+        this.updateBar();
     }),
 
     sizeChanged: Ember.observer('resizedSignal', function() {
         this.updateBar();
     }),
 
-    updateBar(data) {
+    updateBar() {
         this.set('data', this.get('aggregations.contributors.buckets'));
         let columns = this.get('sourcesList'); // jscs:ignore
         let title = 'Top 10 Contributors: ';

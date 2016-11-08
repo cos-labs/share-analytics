@@ -12,32 +12,40 @@ export default Ember.Component.extend({
     tPro: false, // Project
     
     timeseriesList: Ember.computed('aggregations', function() { // Format our timeseries data
-        let d = this.get('aggregations.articles_over_time.buckets');
-        let firstRow = ['x'];
-        let secondRow = ['Articles'];
-        d.forEach(function(entry) {
-            firstRow.push(entry.key_as_string);
-            secondRow.push(entry.doc_count);
-        });
-        return [firstRow, secondRow];
+        let data = this.get('data');
+        return [
+            ['x'].concat(data.map((datum) => {return datum.key_as_string})),
+            ['Articles'].concat(data.map((datum) => {return datum.doc_count}))
+        ]
     }),
 
-    dataChanged: Ember.observer('aggregations', function() { // Initiate a chart update if the TS data changes
-        let data = this.get('timeseriesList');
-        this.updateTS(data);
+    data: [],
+
+    dataChanged: Ember.observer('data', function() { // Initiate a chart update if the TS data changes
+        this.updateTS();
     }),
 
-    updateTS(data, interval) { // Update our TS chart when data/subsets change
-        let columns = data; 
+    sizeChanged: Ember.observer('resizedSignal', function() {
+        this.updateTS();
+    }),
+
+    updateTS() { // Update our TS chart when data/subsets change
+        this.set('data', this.get('aggregations.articles_over_time.buckets'));
+        let columns = this.get('timeseriesList');
         let title = '';
+        let interval = this.get('interval');
         let ts = this.get('ts');
-        if (!ts) {
-            this.initTS(title, columns, interval);
-        } else {
+        if (ts) {
             ts.load({
                 columns,
                 unload: true
-            });   
+            });
+            ts.resize({
+                height: this.get('height')*150-20,
+                width: this.get('width')*150
+            });
+        } else {
+            this.initTS(title, columns, interval);
         }
     },
     
@@ -76,7 +84,7 @@ export default Ember.Component.extend({
                     }
                 }
             },
-            size: { height: 600 }
+            size: { height: this.get('height')*150-20 }
         });
         this.set('ts', ts);
     },
@@ -85,10 +93,8 @@ export default Ember.Component.extend({
         this._super(...arguments);
     },
     
-    didInsertElement() { // When this component has been inserted into the DOM
-        let data = this.get('timeseriesList');
-        let interval = this.get('interval');
-        this.updateTS(data, interval); 
+    didRender() { // When this component has been inserted into the DOM
+        this.updateTS(); 
     },
     
     // If the user wants to isolate preprints:

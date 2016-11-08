@@ -16,17 +16,22 @@ The SHARE Analytics Dashboard is a flexible extensible framework tightly integra
 ### Removing a Widget
 ### Configuring a Widget
 
-## Development
-
-### Developing a Widget
+## Developing a Widget
 
 Widgets can be developed as an Ember component or as a Polymer component.
 A Widget manage provides an interface for the widget to communicate with the SHARE API and the SHARE Dashboard.
 The manager provides a container for the widget supplying the DOM element that the widget is held in, handles the accessing of the API, the customisation of queries.
 
-A widget provides a validator which asserts that given query parameters will provide data that can be validly displayed by the widget, logic to rerender the widget when the size of the container changes, and logic to render the result of the query as a chart. Optionally, logic`` to render the chart as an image may also be provided.
+A widget provides a validator which asserts that given query parameters will provide data that can be validly displayed by the widget, logic to rerender the widget when the size of the container changes, and logic to render the result of the query as a chart. Optionally, logic to render the chart as an image may also be provided.
 
-### Developing the Dashboard
+### Actions
+
+Using `this.sendAction()` a widget may communicate
+
+`refreshWall`
+
+
+## Developing the Dashboard
 
 ### Prerequisites
 

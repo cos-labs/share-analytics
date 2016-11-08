@@ -2,12 +2,11 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-    
+
     classNames: ['chart'],
 
-    contributorsList: Ember.computed('aggregations', function() {
-        let data = this.get('aggregations.contributors.buckets');
-        return data ? data.map(({ key, doc_count }) => [key, doc_count]) : [];
+    sourcesList: Ember.computed('data', function() {
+        return this.get('data').map(({ key, doc_count }) => [key, doc_count]).slice(0, 10);
     }),
 
     dataChanged: Ember.observer('aggregations', function() {
@@ -15,18 +14,26 @@ export default Ember.Component.extend({
         this.updateBar(data);
     }),
 
+    sizeChanged: Ember.observer('resizedSignal', function() {
+        this.updateBar();
+    }),
+
     updateBar(data) {
-        let columns = data.slice(0,10); // jscs:ignore
+        this.set('data', this.get('aggregations.contributors.buckets'));
+        let columns = this.get('sourcesList'); // jscs:ignore
         let title = 'Top 10 Contributors: ';
-        
         let bar = this.get('bar');
-        if (!bar) {
-            this.initBar(title, columns);
-        } else {
+        if (bar) {
             bar.load({
                 columns,
                 unload: true
-            });   
+            });
+            bar.resize({
+                height: this.get('height')*150-20,
+                width: this.get('width')*150
+            });
+        } else {
+            this.initBar(title, columns);
         }
     },
 
@@ -64,24 +71,13 @@ export default Ember.Component.extend({
                     show: false
                 }
             },
-            size: { height: 300 }
+            size: { height: this.get('height')*150-20 }
         });
         this.set('bar', bar);
     },
-    
-    init() { // Init should be used ONLY for setting component proprties. When we want to work on the component DOM element, we use didInsertElement hool
-        this._super(...arguments);
+
+    didRender() {
+        this.updateBar();
     },
-    
-    didInsertElement() {
-        let data = this.get('contributorsList');
-        this.updateBar(data);
-    },
-    
-    actions: {
-        removeChart: function() {
-            this.sendAction('removeChart','bar');
-        }
-    },
-    
+
 });

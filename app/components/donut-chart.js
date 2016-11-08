@@ -19,7 +19,7 @@ export default Ember.Component.extend({
     }),
 
     updateDonut() {
-        this.set('data', this.get('aggregations.sources.buckets'))
+        this.set('data', this.get('aggregations.sources.buckets'));
         let columns = this.get('sourcesList')
         let title = 'Published in...';
         let donut = this.get('donut');
@@ -52,7 +52,7 @@ export default Ember.Component.extend({
                     show: false
                 }
             },
-            size: { height: this.get('height')*150 }
+            size: { height: this.get('height')*150-20 }
         });
         this.set('donut', donut);
     },

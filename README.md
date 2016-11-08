@@ -2,9 +2,9 @@
 
 As a primary driver of research, proper understanding of projects and investigations is crucial to focus resources, determine new opportunities, and align new projects with the needs of the scientific community.
 
-From visualising trends in topics and authorship to seeing where on the Earth contributions come from, the SHARE Analytics Dashboard provides powerful tools for providing insight to instituitions about the publications, projects, data and preprints that their research team produces.
+By visualising everything from trends in topics and authorship to seeing where on the Earth contributions come from, the SHARE Analytics Dashboard provides powerful insight to instituitions about the publications, projects, data and preprints that their research team produces.
 
-The SHARE Analytics Dashboard is a flexible extensible framework tightly integrated with the SHARE platform that provides open and collaborative tools to lead science into the future.
+The SHARE Analytics Dashboard is a flexible extensible framework tightly integrated with the SHARE platform that provides open and collaborative tools to guide science into the future.
 
 ## Operation
 

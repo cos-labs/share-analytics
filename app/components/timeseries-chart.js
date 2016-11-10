@@ -11,7 +11,7 @@ export default Ember.Component.extend({
     tCre: false, // Creativework
     tPro: false, // Project
     
-    timeseriesList: Ember.computed('aggregations', function() { // Format our timeseries data
+    timeseriesList: Ember.computed('data', function() { // Format our timeseries data
         let data = this.get('data');
         return [
             ['x'].concat(data.map((datum) => {return datum.key_as_string})),
@@ -67,22 +67,36 @@ export default Ember.Component.extend({
             bindto: element,
             data: {
                 x: 'x',
-                columns: columns
+                columns: columns,
+                types: {
+                    x: 'area-spline',
+                    Articles: 'area'
+                }
             },
             axis: {
                 x: {
                     type: 'timeseries',
                     tick: {
+                        culling: {
+                            max: 10
+                        },
+                        rotate: 90,
                         format: '%d-%m-%Y' // Format the tick labels on our chart
                     }
                 }
             },
-             tooltip: { // Format the tooltips on our chart
+            zoom: {
+                enabled: true
+            }
+            tooltip: { // Format the tooltips on our chart
                 format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
                     title: function (d) {
                         return d.toString().substring(4,15); // This isn't perfect, but it's at least more verbose than before
                     }
                 }
+            },
+            point: {
+                show: false,
             },
             size: { height: this.get('height')*150-20 }
         });

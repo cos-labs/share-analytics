@@ -42,6 +42,8 @@
         {{/each}}
 </div>
 
-<button onclick={{action 'addChart'}} style='clear:both;'>Add a Widget</button>
+<div class='centered'>
+    <button class='add-widget-button' onclick={{action 'addChart'}} style='clear:both;'>{{fa-icon 'plus'}}</button>
+</div>
 
 {{outlet}}

@@ -10,14 +10,14 @@ export default Ember.Component.extend({
     classNames: ['widget'],
     classNameBindings: ['configuring', 'width', 'height'],
 
-    widthSetting: 1,
-    heightSetting: 1,
+    widthSetting: 2,
+    heightSetting: 2,
     
-    width: 'width-1',
-    height: 'height-1',
+    width: 'width-2',
+    height: 'height-2',
 
-    computedHeight: 150, 
-    computedWidth: 150,
+    computedHeight: 200, 
+    computedWidth: 200,
 
     resizedSignal: false,
 
@@ -103,7 +103,7 @@ export default Ember.Component.extend({
                             arttype: {terms: {field: 'type'}}
                         }
                     }
-                },
+                }
             })
         });
         this.set('aggregations', data.aggregations);

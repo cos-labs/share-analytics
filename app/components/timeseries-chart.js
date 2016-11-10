@@ -87,7 +87,7 @@ export default Ember.Component.extend({
             },
             zoom: {
                 enabled: true
-            }
+            },
             tooltip: { // Format the tooltips on our chart
                 format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
                     title: function (d) {

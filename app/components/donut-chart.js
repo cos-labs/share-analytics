@@ -20,7 +20,7 @@ export default Ember.Component.extend({
 
     updateDonut() {
         this.set('data', this.get('aggregations.sources.buckets'));
-        let columns = this.get('sourcesList')
+        let columns = this.get('sourcesList');
         let title = 'Published in...';
         let donut = this.get('donut');
         if (donut) {

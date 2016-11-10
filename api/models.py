@@ -1,8 +1,13 @@
-from django.db import models
+from django.db.models import Model
+from django.db.models import ForeignKey
+from django.contrib.postgres.fields import JSONField
+from django.contrib.auth.models import User
 
-class Dashboard(models.Model):
-    owner = models.ForeignKey(
-        'user',
-        on_delete=models.CASCADE
+class Dashboard(Model):
+    owner = ForeignKey(
+        'User',
+        on_delete=CASCADE
     )
-    config = models.
+    config = JSONField()
+
+

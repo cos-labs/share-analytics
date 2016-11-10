@@ -1,0 +1,4 @@
+Django==1.10.3
+django-guardian==1.4.6
+djangorestframework==3.5.3
+six==1.10.0

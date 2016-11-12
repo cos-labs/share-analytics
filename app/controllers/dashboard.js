@@ -84,7 +84,6 @@ export default Ember.Controller.extend({
 
         addChart: function(option) {
             this.set('sortableObjectList', this.get('sortableObjectList').addObject({isPlaceholder: true}).slice());
-
         },
         refreshWall: function() {
             console.log('refreshing wall');

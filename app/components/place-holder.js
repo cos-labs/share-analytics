@@ -12,11 +12,11 @@ export default Ember.Component.extend({
 
     widthSetting: 2,
     heightSetting: 2,
-    
+
     width: 'width-2',
     height: 'height-2',
 
-    computedHeight: 200, 
+    computedHeight: 200,
     computedWidth: 200,
 
     resizedSignal: false,
@@ -130,14 +130,28 @@ export default Ember.Component.extend({
             this.set('configuring', !this.get('configuring'));
         },
         makeDonut: function() {
-            this.set('widgetType', 'donut-chart');
+            // this.set('widgetType', 'donut-chart');
+            console.log('asdf');
         },
         makeTimeSeries: function() {
-            this.set('widgetType', 'timeseries-chart');
+            // this.set('widgetType', 'timeseries-chart');
+            console.log('asdf');
         },
         makeBar: function() {
-            this.set('widgetType', 'bar-chart');
+            // this.set('widgetType', 'bar-chart');
+            console.log('asdf');
         },
+
+        changeEngine: function(jsEngine){
+            console.log(jsEngine);
+        },
+
+        changeChart: function(chart){
+            console.log(this.widgetType);
+            this.set('widgetType', chart);
+            console.log(this.widgetType);
+        },
+
         removeWidget: function() {
             this.sendAction('removeChart', this.get('item'))
         },

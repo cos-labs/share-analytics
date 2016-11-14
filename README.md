@@ -47,6 +47,8 @@ Using `this.sendAction()` a widget may communicate
 
 ## Developing the Dashboard
 
+The SHARE Analytics Dashboard consists of three primary components. The app, which is an ember app that serves the front end for your bowser, the widget repo, which stores and shares widgets' types, configurations, and settings, and the dashboard repo, which stores, manages and shares dashboards' types configurations and settings.
+
 ### Prerequisites
 
 You will need the following things properly installed on your computer.

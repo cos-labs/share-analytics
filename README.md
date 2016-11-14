@@ -13,12 +13,26 @@ The SHARE Analytics Dashboard is a flexible extensible framework tightly integra
 > To sign up for updates about when new versions are released follow this repository and new fixes, features and releases will be emailed right to your inbox.
 
 ### Adding a Widget
+Pressing the Plus button at the bottom of the dashboard will append a new widget onto the dashboard.
+
 ### Removing a Widget
+pressing the X button in the top right hand corner of a particular widget will remove that widget from the dashboard.
+
 ### Configuring a Widget
+pressing the cogs button immediately to the left of the X button in the top right hand corner of a particular widget will hide the chart momentarily, and instead display a list of options that are configurable for the chart.
+
+#### Chart Engine
+Change which charting library to use to render the chart. Choose from:
+  - C3
+  - dimple
+  - NVD3
+  - chart.js
+
+Alternatively, the SHARE Analytics Dashboard also provides for a way to easily develop a custom widget.
 
 ## Developing a Widget
 
-Widgets can be developed as an Ember component or as a Polymer component.
+Widgets can be developed as an Ember component.
 A Widget manage provides an interface for the widget to communicate with the SHARE API and the SHARE Dashboard.
 The manager provides a container for the widget supplying the DOM element that the widget is held in, handles the accessing of the API, the customisation of queries.
 

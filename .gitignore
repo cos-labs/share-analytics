@@ -14,4 +14,35 @@
 /coverage/*
 /libpeerconnection.log
 npm-debug.log
+
+
 testem.log
+
+
+
+
+!.gitkeep
+# DB / Migrations
+# Python
+**/bower_components
+*.diff
+*.idea/
+*.py[cod]
+*.pyc
+*.so
+*/__pycache__/*
+.DS_Store
+.csv
+.env
+.idea
+.idea/
+.local_settings.pyc
+db.sqlite3
+env/
+static
+latest.dump
+local_settings.py
+log
+media
+backend/settings/local.py
+~Envs/

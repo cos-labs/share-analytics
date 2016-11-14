@@ -129,27 +129,13 @@ export default Ember.Component.extend({
         showConfig: function() {
             this.set('configuring', !this.get('configuring'));
         },
-        makeDonut: function() {
-            // this.set('widgetType', 'donut-chart');
-            console.log('asdf');
-        },
-        makeTimeSeries: function() {
-            // this.set('widgetType', 'timeseries-chart');
-            console.log('asdf');
-        },
-        makeBar: function() {
-            // this.set('widgetType', 'bar-chart');
-            console.log('asdf');
-        },
 
         changeEngine: function(jsEngine){
             console.log(jsEngine);
         },
 
         changeChart: function(chart){
-            console.log(this.widgetType);
             this.set('widgetType', chart);
-            console.log(this.widgetType);
         },
 
         removeWidget: function() {

@@ -157,14 +157,14 @@ export default Ember.Component.extend({
                 this.set('data', this.get('aggregations.sources.buckets'));
                 let columns = this.get('sourcesList');
                 let title = 'Published in...';
-                this.$(`#timeseriesCheckBox`).hide();
+                this.$(`#timeseriesCheckbox`).hide();
                 this.drawDonut(title, columns);
                 break;}
             case 'bar-chart':{
                 this.set('data', this.get('aggregations.contributors.buckets'));
                 let columns = this.get('sourcesList'); // jscs:ignore
                 let title = 'Top 10 Contributors: ';
-                this.$(`#timeseriesCheckBox`).hide();
+                this.$(`#timeseriesCheckbox`).hide();
                 this.drawBar(title, columns);
                 break;}
             case 'timeseries-chart':{
@@ -172,7 +172,7 @@ export default Ember.Component.extend({
                 let columns = this.get('timeseriesList');
                 let title = '';
                 let interval = this.get('interval');
-                this.$(`#timeseriesCheckBox`).show();
+                this.$(`#timeseriesCheckbox`).show();
                 this.drawTS(title, columns, interval);
                 break;}
         }

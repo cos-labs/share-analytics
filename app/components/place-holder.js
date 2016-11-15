@@ -137,8 +137,8 @@ export default Ember.Component.extend({
         },
 
         changeChart: function(chart){
-            // this.set('chartType', chart);
-            this.set('widgetType', chart);
+            this.set('chartType', chart);
+            // this.set('widgetType', chart);
         },
 
         removeWidget: function() {

@@ -19,6 +19,7 @@ export default Ember.Route.extend({
                 fixSize: 0,
                 cacheSize: true,
                 onResize: function() {
+                    controller.toggleProperty('resizing'); // Toggle this property to wake up the observer in place-holder.js
                     wall.refresh();
                 },
                 onBlockMove: function() {

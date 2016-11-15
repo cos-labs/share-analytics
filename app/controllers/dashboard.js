@@ -23,13 +23,15 @@ export default Ember.Controller.extend({
     // Initialize the three interchangeable charts to be rendered as sortableObjects
     sortableObjectList: [{isPlaceholder: true}],
 
-    
     // Initialize the list of additional charts that the user can add
     addableList: [],
 
     wall: false,
 
     storedDashboards: [],
+    
+    // An attribute used to track when the browser is resized and pass this event down to each placeholder component
+    resizing: false,
 
     actions: {
 

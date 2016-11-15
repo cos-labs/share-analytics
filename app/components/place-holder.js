@@ -20,6 +20,10 @@ export default Ember.Component.extend({
     computedWidth: 200,
 
     resizedSignal: false,
+    
+    resizingChanged: Ember.observer('resizing', function() {
+        this.set('computedHeight', this.$().width());
+    }),
 
     // Initialize our query parameters
     q: 'UC Santa Barbara',
@@ -155,8 +159,8 @@ export default Ember.Component.extend({
             this.sendAction('refreshWall');
             this.set('resizedSignal', true);
             this.set('configuring', !this.get('configuring'));
-        },
-
+        }
+        
     },
 
 });

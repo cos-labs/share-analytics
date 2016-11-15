@@ -16,6 +16,15 @@ export default Ember.Component.extend({
     sizeChanged: Ember.observer('resizedSignal', function() {
         this.updateBar();
     }),
+    
+    // Observe the width of the outer div (placeholder) surrounding the chart when browser size changes
+    parentWidthChanged: Ember.observer('parentWidth',function() {
+        if(this.get('parentWidth') < this.get('width')*150) { // If the outer div is narrower than the chart width
+            let w = this.get('parentWidth')/150; // Scale the outer div's size in units of 150 (to be consistent with our previous chart sizing)
+            this.set('width',w); // Set the "width" of the chart to this scaled unit
+            this.updateTS(); // Re-draw the chart at a smaller width
+        }
+    }),
 
     updateBar() {
         this.set('data', this.get('aggregations.contributors.buckets'));

@@ -4,6 +4,7 @@ import ENV from '../config/environment';
 export default Ember.Component.extend({
 
     widgetType: 'wild-card',
+    chartType: 'generic-chart',
     aggregations: false,
     docs: false,
 
@@ -118,7 +119,8 @@ export default Ember.Component.extend({
             r.organizations = source.lists.organizations;
             return r;
         }));
-        this.set('widgetType', 'donut-chart');
+        this.set('widgetType', 'generic-chart');
+        this.set('chartType', 'donut-chart');
     },
 
     actions: {
@@ -135,6 +137,7 @@ export default Ember.Component.extend({
         },
 
         changeChart: function(chart){
+            // this.set('chartType', chart);
             this.set('widgetType', chart);
         },
 

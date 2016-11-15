@@ -65,10 +65,18 @@ You will need the following things properly installed on your computer.
 * change into the new directory
 * `npm install`
 * `bower install`
+* set up your config/local.yml (If this file does not exist, you may need to `ember g`)
+
+* createa new virtualenv
+* `pip install -r requirements.txt`
+* Set up postgres
+* create a backend/settings/local.py and configure django to connect to your database in it.
+* ./manage.py migrate
 
 ### Running / Development
 
 * `ember serve`
+* `./manage.py runserver`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
 #### Code Generators
@@ -87,7 +95,7 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 #### Deploying
 
-Specify what it takes to deploy your app.
+Dockerfiles are in the repo that should provide a simple and easy way to deploy these ember and django apps.
 
 ## Further Reading / Useful Links
 

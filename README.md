@@ -13,12 +13,26 @@ The SHARE Analytics Dashboard is a flexible extensible framework tightly integra
 > To sign up for updates about when new versions are released follow this repository and new fixes, features and releases will be emailed right to your inbox.
 
 ### Adding a Widget
+Pressing the Plus button at the bottom of the dashboard will append a new widget onto the dashboard.
+
 ### Removing a Widget
+pressing the X button in the top right hand corner of a particular widget will remove that widget from the dashboard.
+
 ### Configuring a Widget
+pressing the cogs button immediately to the left of the X button in the top right hand corner of a particular widget will hide the chart momentarily, and instead display a list of options that are configurable for the chart.
+
+#### Chart Engine
+Change which charting library to use to render the chart. Choose from:
+  - C3
+  - dimple
+  - NVD3
+  - chart.js
+
+Alternatively, the SHARE Analytics Dashboard also provides for a way to easily develop a custom widget.
 
 ## Developing a Widget
 
-Widgets can be developed as an Ember component or as a Polymer component.
+Widgets can be developed as an Ember component.
 A Widget manage provides an interface for the widget to communicate with the SHARE API and the SHARE Dashboard.
 The manager provides a container for the widget supplying the DOM element that the widget is held in, handles the accessing of the API, the customisation of queries.
 
@@ -32,6 +46,8 @@ Using `this.sendAction()` a widget may communicate
 
 
 ## Developing the Dashboard
+
+The SHARE Analytics Dashboard consists of three primary components. The app, which is an ember app that serves the front end for your bowser, the widget repo, which stores and shares widgets' types, configurations, and settings, and the dashboard repo, which stores, manages and shares dashboards' types configurations and settings.
 
 ### Prerequisites
 
@@ -49,10 +65,18 @@ You will need the following things properly installed on your computer.
 * change into the new directory
 * `npm install`
 * `bower install`
+* set up your config/local.yml (If this file does not exist, you may need to `ember g`)
+
+* createa new virtualenv
+* `pip install -r requirements.txt`
+* Set up postgres
+* create a backend/settings/local.py and configure django to connect to your database in it.
+* ./manage.py migrate
 
 ### Running / Development
 
 * `ember serve`
+* `./manage.py runserver`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
 #### Code Generators
@@ -71,7 +95,7 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 #### Deploying
 
-Specify what it takes to deploy your app.
+Dockerfiles are in the repo that should provide a simple and easy way to deploy these ember and django apps.
 
 ## Further Reading / Useful Links
 

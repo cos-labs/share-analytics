@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/broccoli_merge_trees-input_base_path-280sFt3b.tmp/0/test-helper.jshint.js

@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-AuBrFURp.tmp/0/instance-initializers/ember-osf.js

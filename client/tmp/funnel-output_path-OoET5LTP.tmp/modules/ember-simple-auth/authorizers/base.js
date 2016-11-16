@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-VxqDv0Mr.tmp/0/authorizers/base.js

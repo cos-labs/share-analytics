@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-QwUQCTdn.tmp/0/build/build/faker.js

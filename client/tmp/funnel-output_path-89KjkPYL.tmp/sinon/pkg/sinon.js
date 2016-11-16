@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-4KQ3PZ3h.tmp/0/pkg/sinon.js

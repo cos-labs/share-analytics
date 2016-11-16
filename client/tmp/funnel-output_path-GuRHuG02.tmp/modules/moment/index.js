@@ -1,0 +1,1 @@
+/Users/admin/projects/sharedash/client/tmp/funnel-input_base_path-2k6lOPhW.tmp/0/index.js

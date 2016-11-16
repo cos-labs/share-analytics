@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/broccoli_merge_trees-input_base_path-HYdyKzwd.tmp/0/tc3/tests/integration/components/bar-chart-test.js

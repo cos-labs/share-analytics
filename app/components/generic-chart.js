@@ -11,8 +11,6 @@ export default Ember.Component.extend({
 
     data: [],
 
-    checkboxOperation: ['1'],
-
     sizeChanged: Ember.observer('resizedSignal', function() {
         this.updateChart();
     }),

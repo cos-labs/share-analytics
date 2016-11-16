@@ -23,8 +23,6 @@ export default Ember.Component.extend({
 
     resizedSignal: false,
 
-    checkboxOperation: {'tPub': false, 'tPre': false, 'tCre': false, 'tPro': false},
-
     // Initialize our query parameters
     q: 'UC Santa Barbara',
     gte: "1996-01-01",
@@ -145,11 +143,9 @@ export default Ember.Component.extend({
         changeChart: function(chart){
 
             if(chart == 'timeseries-chart'){
-                this.$(`#timeseriesCheckbox`).show();
                 this.set('aggregation_details', 'aggregations.articles_over_time.buckets');
             }
             else{
-                this.$(`#timeseriesCheckbox`).hide();
                 if(chart=='donut-chart'){
                     this.set('aggregation_details','aggregations.sources.buckets');
                 }
@@ -159,11 +155,6 @@ export default Ember.Component.extend({
             }
 
             this.set('chartType', chart);
-        },
-
-        changeCheckBoxConf: function(){
-            let checkboxOperation = {'tPub': this.get('tPub'), 'tPre': this.get('tPre'), 'tCre': this.get('tCre'), 'tPro': this.get('tPro')};
-            this.set('checkboxOperation', checkboxOperation);
         },
 
         removeWidget: function() {

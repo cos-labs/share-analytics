@@ -20,21 +20,6 @@
             <option value="bar-chart">Bar</option>
           </select>
         </div>
-        <div class='col-md-12' id = 'timeseriesCheckbox' style='display:None' {{action 'changeCheckBoxConf' on='change'}}>
-          <div>Filter articles by type:</div>
-          <div class="col-md-6">
-             Publication: {{input type='checkbox' checked=tPub}}
-          </div>
-          <div class="col-md-6">
-            Preprint: {{input type='checkbox' checked=tPre}}
-          </div>
-          <div class="col-md-6">
-            Creativework: {{input type='checkbox' checked=tCre}}
-          </div>
-          <div class="col-md-6">
-            Project: {{input type='checkbox' checked=tPro}}
-          </div>
-        </div>
         <hr>
         <div class="col-xs-4">Width:</div>
         <div class="col-xs-8">
@@ -48,7 +33,7 @@
         <hr>
         <div class="col-xs-4">Query:</div>
         <div class="col-xs-12">
-          {{textarea value=query cols="36" rows="2"}}
+          {{textarea value=query cols="36" rows="5"}}
         </div>
         <hr>
         <div class="col-xs-12">

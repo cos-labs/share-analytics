@@ -3,9 +3,10 @@ import ENV from '../config/environment';
 
 export default Ember.Component.extend({
 
-    widgetType: 'wild-card',
-    chartType: 'generic-chart',
+    // widgetType: 'wild-card',
+    // chartType: 'donut-chart',
     aggregations: false,
+    aggregation_details: '',
     docs: false,
 
     classNames: ['widget'],
@@ -21,6 +22,8 @@ export default Ember.Component.extend({
     computedWidth: 200,
 
     resizedSignal: false,
+
+    checkboxOperation: {'tPub': false, 'tPre': false, 'tCre': false, 'tPro': false},
 
     // Initialize our query parameters
     q: 'UC Santa Barbara',
@@ -119,8 +122,11 @@ export default Ember.Component.extend({
             r.organizations = source.lists.organizations;
             return r;
         }));
+
         this.set('widgetType', 'generic-chart');
         this.set('chartType', 'donut-chart');
+        this.set('aggregation_details','aggregations.sources.buckets');
+
     },
 
     actions: {
@@ -137,8 +143,27 @@ export default Ember.Component.extend({
         },
 
         changeChart: function(chart){
+
+            if(chart == 'timeseries-chart'){
+                this.$(`#timeseriesCheckbox`).show();
+                this.set('aggregation_details', 'aggregations.articles_over_time.buckets');
+            }
+            else{
+                this.$(`#timeseriesCheckbox`).hide();
+                if(chart=='donut-chart'){
+                    this.set('aggregation_details','aggregations.sources.buckets');
+                }
+                else if(chart == 'bar-chart'){
+                    this.set('aggregation_details','aggregations.contributors.buckets');
+                }
+            }
+
             this.set('chartType', chart);
-            // this.set('widgetType', chart);
+        },
+
+        changeCheckBoxConf: function(){
+            let checkboxOperation = {'tPub': this.get('tPub'), 'tPre': this.get('tPre'), 'tCre': this.get('tCre'), 'tPro': this.get('tPro')};
+            this.set('checkboxOperation', checkboxOperation);
         },
 
         removeWidget: function() {
@@ -148,7 +173,7 @@ export default Ember.Component.extend({
             console.log('changing config');
             let width = this.get('widthSetting');
             let height = this.get('heightSetting');
-            let wall = this.get('wall')
+            let wall = this.get('wall');
             wall.fixSize({
                 block: this.$(),
                 width: width*150,

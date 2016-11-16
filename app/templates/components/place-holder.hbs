@@ -4,7 +4,6 @@
 </div>
 <div class='configmenu'>
     <form {{action 'configChanged' on='submit'}}>
-        <hr>
         <div class="col-xs-4">JS Engine:</div>
         <div class="col-xs-8">
           <select onchange={{action 'changeEngine' value="target.value"}}>
@@ -20,6 +19,21 @@
             <option value="timeseries-chart">Time-Series</option>
             <option value="bar-chart">Bar</option>
           </select>
+        </div>
+        <div class='col-md-12' id = 'timeseriesCheckbox' style='display:None' {{action 'changeCheckBoxConf' on='change'}}>
+          <div>Filter articles by type:</div>
+          <div class="col-md-6">
+             Publication: {{input type='checkbox' checked=tPub}}
+          </div>
+          <div class="col-md-6">
+            Preprint: {{input type='checkbox' checked=tPre}}
+          </div>
+          <div class="col-md-6">
+            Creativework: {{input type='checkbox' checked=tCre}}
+          </div>
+          <div class="col-md-6">
+            Project: {{input type='checkbox' checked=tPro}}
+          </div>
         </div>
         <hr>
         <div class="col-xs-4">Width:</div>
@@ -43,6 +57,6 @@
     </form>
 </div>
 
-{{component widgetType aggregations=aggregations chartType=chartType width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal}}
+{{component widgetType chartType=chartType aggregations=aggregations aggregation_details=aggregation_details checkboxOperation=checkboxOperation width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal}}
 
 {{yield}}

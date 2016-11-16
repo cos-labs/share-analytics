@@ -1,0 +1,1 @@
+/Users/admin/projects/sharedash/node_modules/ember-osf/app/instance-initializers/ember-osf.js

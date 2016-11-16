@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-gpM2d1Ow.tmp/0/components/c3-chart.js

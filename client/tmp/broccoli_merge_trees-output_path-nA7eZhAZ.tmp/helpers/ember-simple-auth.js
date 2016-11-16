@@ -1,0 +1,1 @@
+/Users/admin/projects/sharedash/node_modules/ember-simple-auth/test-support/helpers/ember-simple-auth.js

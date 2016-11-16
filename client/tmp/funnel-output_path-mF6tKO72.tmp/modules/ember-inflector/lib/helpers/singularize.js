@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-yhV3DZ0h.tmp/0/lib/helpers/singularize.js

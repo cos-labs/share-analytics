@@ -1,0 +1,1 @@
+/Users/admin/projects/sharedash/client/tmp/broccoli_merge_trees-input_base_path-cUMxffzg.tmp/14/modules/ember-inflector/index.js

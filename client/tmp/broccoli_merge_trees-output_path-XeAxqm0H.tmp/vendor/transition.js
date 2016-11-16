@@ -1,0 +1,1 @@
+/Users/admin/projects/sharedash/node_modules/ember-bootstrap/vendor/transition.js

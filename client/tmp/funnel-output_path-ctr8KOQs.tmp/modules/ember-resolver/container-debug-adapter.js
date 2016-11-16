@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-zqZpVZvw.tmp/0/container-debug-adapter.js

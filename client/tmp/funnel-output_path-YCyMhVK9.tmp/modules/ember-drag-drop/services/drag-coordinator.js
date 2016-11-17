@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-W8Bm1Fc3.tmp/0/services/drag-coordinator.js

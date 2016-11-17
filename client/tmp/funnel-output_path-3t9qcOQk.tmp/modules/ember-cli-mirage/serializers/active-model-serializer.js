@@ -1,1 +1,0 @@
-/Users/taozhou/share-analytics/client/tmp/funnel-input_base_path-G9PzEVuS.tmp/0/serializers/active-model-serializer.js

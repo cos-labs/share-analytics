@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-hYDyi6hd.tmp/0/pretender.js

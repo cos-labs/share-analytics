@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/node_modules/ember-simple-auth/test-support/helpers/ember-simple-auth.js

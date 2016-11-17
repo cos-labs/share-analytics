@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/client/tmp/broccoli_merge_trees-input_base_path-1Y8DdV89.tmp/11/ember-sinon/shim.js

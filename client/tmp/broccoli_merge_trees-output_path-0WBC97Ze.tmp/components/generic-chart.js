@@ -1,1 +1,0 @@
-/Users/taozhou/share-analytics/client/app/components/generic-chart.js

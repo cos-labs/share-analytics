@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/tmp/funnel-input_base_path-u3Drnw0K.tmp/0/fake_xml_http_request.js

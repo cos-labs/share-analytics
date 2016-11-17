@@ -1,1 +1,0 @@
-/Users/taozhou/share-analytics/client/tmp/funnel-input_base_path-a5JQEouB.tmp/0/pkg/sinon.js

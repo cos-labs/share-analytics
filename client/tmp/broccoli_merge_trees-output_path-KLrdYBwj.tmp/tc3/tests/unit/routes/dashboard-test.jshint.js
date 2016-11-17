@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/broccoli_merge_trees-input_base_path-HYdyKzwd.tmp/2/tc3/tests/unit/routes/dashboard-test.jshint.js

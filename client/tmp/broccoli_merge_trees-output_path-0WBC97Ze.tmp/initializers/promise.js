@@ -1,1 +1,0 @@
-/Users/taozhou/share-analytics/client/app/initializers/promise.js

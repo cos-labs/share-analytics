@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/client/tmp/funnel-input_base_path-9Ud3OvYt.tmp/0/src/locale/fo.js

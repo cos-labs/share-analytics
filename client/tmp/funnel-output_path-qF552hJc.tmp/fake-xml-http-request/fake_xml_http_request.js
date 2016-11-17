@@ -1,1 +1,0 @@
-/Users/taozhou/share-analytics/client/tmp/funnel-input_base_path-KzINMXQm.tmp/0/fake_xml_http_request.js

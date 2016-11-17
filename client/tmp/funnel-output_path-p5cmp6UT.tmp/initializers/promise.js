@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-TRaGw88L.tmp/0/initializers/promise.js

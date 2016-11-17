@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/client/tmp/broccoli_merge_trees-input_base_path-ybTxBqen.tmp/1/tc3/templates/components/form-element/inline/checkbox.js

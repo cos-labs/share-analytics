@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-y9OHQGaQ.tmp/0/mixins/rest-adapter.js

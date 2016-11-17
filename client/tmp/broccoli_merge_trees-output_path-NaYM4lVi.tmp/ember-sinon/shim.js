@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/broccoli_merge_trees-input_base_path-pFtJBET3.tmp/11/ember-sinon/shim.js

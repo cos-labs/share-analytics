@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-0A8zHIMB.tmp/0/components/fa-icon.js

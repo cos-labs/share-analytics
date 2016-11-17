@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-Iy3hX8AZ.tmp/0/serializers/comment.js

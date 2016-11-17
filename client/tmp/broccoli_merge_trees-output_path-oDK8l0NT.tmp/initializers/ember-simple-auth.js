@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/node_modules/ember-simple-auth/app/initializers/ember-simple-auth.js

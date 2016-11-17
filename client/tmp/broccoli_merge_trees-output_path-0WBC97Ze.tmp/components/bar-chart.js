@@ -1,0 +1,1 @@
+/Users/taozhou/share-analytics/client/app/components/bar-chart.js

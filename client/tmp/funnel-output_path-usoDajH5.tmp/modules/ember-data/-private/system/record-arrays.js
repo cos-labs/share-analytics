@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-1qIrClBD.tmp/0/-private/system/record-arrays.js

@@ -1,0 +1,133 @@
+# Usage
+
+
+
+#### Primitives
+
+* [Draggable Object](#draggable-object)
+* [Draggable Object Target](#draggable-object-target)
+
+#### Examples
+
+* [Classify Posts](#classify-posts)
+
+
+
+
+
+# Primitives
+
+## Draggable Object
+
+The `draggable-object` component represents an object you want to drag onto a target.
+
+The two things to provide to the component are:
+
+* The model - Represents the object to be dragged. Will be passed to the target after a completed drag.
+* The template code to render for the draggable object
+
+```handlebars
+{{#draggable-object model=this}}
+  {{name}}
+{{/draggable-object}}
+```
+
+--------------
+
+## Draggable Object Target
+
+The `draggable-object-target` represents a place to drag objects. This will trigger an action which accepts the dragged object as an argument.
+
+The two things to provide to the component are:
+
+* The action - Represents the action to be called with the dragged object.
+* The template code to render for the target.
+
+The action is called with two arguments:
+
+* The dragged object.
+* An options hash. Currently the only key is `target`, which is the draggable-object-target component. 
+
+```handlebars
+... your regular template code
+
+{{#draggable-object-target action="increaseRating" amount="5"}}
+  Drag here to increase rating
+{{/draggable-object-target}}
+```
+
+```javascript
+// represents the controller backing the above template
+
+Ember.Controller.extend({
+  // your regular controller code
+
+  actions: {
+    increaseRating: function(obj,ops) {
+      var amount = parseInt(ops.target.amount);
+      obj.incrementProperty("rating",amount);
+      obj.save();
+    }
+  }
+}
+});
+```
+
+# Examples
+
+## Classify Posts
+
+In this example, we have a bunch of unclassified posts that we want to mark either Ready to Publish or Needs Revision.
+
+When you drag a post onto one of the Possible Statuses, it will be:
+
+* Assigned that rating.
+* Removed from the Unclassified Posts list, by virtue of now having a status.
+
+app/models/post.js
+
+```javascript
+export default DS.Model.extend({
+  title: DS.attr('string'),
+  body: DS.attr('string'),
+  status: DS.attr('string')
+});
+```
+
+app/controllers/posts.js
+
+```javascript
+export default Ember.ArrayController.extend({
+  unclassifiedPosts: Ember.computed.filterBy('content', 'status', undefined),
+
+  actions: {
+    setStatus: function(post,ops) {
+      var status = ops.target.status;
+      post.set("status",status);
+      post.save();
+    }
+  }
+}
+});
+```
+
+app/templates/posts.hbs
+
+```handlebars
+<h3>Unclassified Posts</h3>
+{{#each post in unclassifiedPosts}}
+  {{#draggable-object model=post}}
+    {{post.title}}
+  {{/draggable-object}}
+{{/each}}
+
+<h3>Possible Statuses</h3>
+{{#draggable-object-target action="setStatus" status="Ready to Publish"}}
+  Ready to Publish
+{{/draggable-object-target}}
+
+{{#draggable-object-target action="setStatus" status="Needs Revision"}}
+  Needs Revision
+{{/draggable-object-target}}
+```
+

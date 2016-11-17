@@ -1,0 +1,1 @@
+/Users/admin/projects/sharedash/tmp/broccoli_merge_trees-input_base_path-ug1vr7zi.tmp/3/components/bs-collapse.js

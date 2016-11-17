@@ -1,0 +1,1 @@
+/Users/admin/projects/sharedash/app/components/bar-chart.js

@@ -1,0 +1,1 @@
+/Users/admin/projects/sharedash/tmp/broccoli_merge_trees-input_base_path-TrPr2Pbl.tmp/14/helpers/singularize.js

@@ -1,0 +1,1 @@
+/Users/taozhou/share-analytics/client/node_modules/ember-bootstrap/vendor/transition.js

@@ -1,0 +1,1 @@
+/Users/admin/projects/sharedash/client/tmp/funnel-input_base_path-o8uF2WFS.tmp/0/-private/adapters.js

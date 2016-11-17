@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/app/components/packery-grid.js

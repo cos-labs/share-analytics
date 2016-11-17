@@ -1,0 +1,1 @@
+export { default } from 'ember-i18n/services/i18n';

@@ -1,0 +1,1 @@
+/Users/admin/projects/sharedash/tmp/funnel-input_base_path-RMhadvi7.tmp/0/mixins/model.js

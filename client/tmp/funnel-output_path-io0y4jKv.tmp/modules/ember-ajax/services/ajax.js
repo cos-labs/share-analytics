@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-HS3d0m0V.tmp/0/services/ajax.js

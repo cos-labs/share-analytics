@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/broccoli_merge_trees-input_base_path-Ov7rBM84.tmp/0/modules/ember-osf/components/file-browser-item/component.js

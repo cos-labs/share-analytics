@@ -1,0 +1,1 @@
+/Users/admin/projects/c3-ember/tmp/creator-output_path-VNm7SQM7.tmp/version.js

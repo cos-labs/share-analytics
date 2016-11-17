@@ -23,7 +23,7 @@
                      {{/bs-accordion-item}}
                      {{#bs-accordion-item value="3" title="Saved Dashboards"}}
                         <p>Save current dashboard: {{input value=n enter='persistDashboard' placeholder='Dashboard Name'}}</p>
-                        <p>Saved dashboards: 
+                        <p>Saved dashboards:
                             <ul>
                                 {{#each storedDashboards as |sd|}}
                                 <li><a {{action 'restoreDash' sd}}>{{sd.name}}</a></li>

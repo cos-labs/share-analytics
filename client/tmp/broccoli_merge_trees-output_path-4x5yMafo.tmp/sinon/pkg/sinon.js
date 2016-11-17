@@ -1,0 +1,1 @@
+/Users/taozhou/share-analytics/client/node_modules/sinon/pkg/sinon.js

@@ -1,10 +1,10 @@
-import Ember from 'ember'
+import Ember from 'ember';
 
-export function initialize() {  
-  window.Promise = Ember.RSVP.Promise
+export function initialize() {
+  window.Promise = Ember.RSVP.Promise;
 }
 
-export default {  
+export default {
   name: 'promise',
-  initialize
-}
+  initialize,
+};

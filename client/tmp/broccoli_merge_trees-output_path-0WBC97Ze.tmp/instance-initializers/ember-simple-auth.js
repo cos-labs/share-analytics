@@ -1,0 +1,1 @@
+/Users/taozhou/share-analytics/client/node_modules/ember-simple-auth/app/instance-initializers/ember-simple-auth.js

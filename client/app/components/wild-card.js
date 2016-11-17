@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-    
+
     classNames: ['spinner'],
 
     actions: {
@@ -9,5 +9,5 @@ export default Ember.Component.extend({
             this.sendAction('removeChart','wildcard');
         }
     },
-    
+
 });

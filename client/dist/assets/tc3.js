@@ -806,6 +806,8 @@ define('tc3/components/file-widget/component', ['exports', 'ember-osf/components
   });
 });
 define('tc3/components/generic-chart', ['exports', 'ember'], function (exports, _ember) {
+    function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
     exports['default'] = _ember['default'].Component.extend({
 
         classNames: ['chart'],
@@ -824,54 +826,53 @@ define('tc3/components/generic-chart', ['exports', 'ember'], function (exports, 
             this.updateChart();
         }),
 
-        operationDict: { 'donut-chart': { 'title': 'Published in...',
-                'columns': function columns(data) {
-                    return data.map(function (_ref) {
-                        var key = _ref.key;
-                        var doc_count = _ref.doc_count;
-                        return [key, doc_count];
-                    });
+        updateChart: function updateChart() {
+            var _chart_options;
+
+            var chart_type = this.get('chartType');
+
+            var chart_options = (_chart_options = {
+                bindto: this.$('.chart').get(0),
+                data: {
+                    columns: null, //to be filled later
+                    type: chart_type
                 },
-                'c3_plot': function c3_plot(title, columns, element, height, width) {
-                    var donut = c3.generate({
-                        bindto: element,
-                        data: {
-                            columns: columns,
-                            type: 'donut'
-                        },
-                        legend: { show: false },
-                        donut: {
-                            title: title,
-                            label: {
-                                show: false
-                            }
-                        },
-                        size: { height: height * 150 - 20,
-                            width: width * 150
-                        }
-                    });
+                legend: { show: false }
+            }, _defineProperty(_chart_options, chart_type, {
+                title: null, //to be filled later
+                label: {
+                    show: false
                 }
-            },
-            'bar-chart': { 'title': 'Top 10 Contributors',
-                'columns': function columns(data) {
-                    return data.map(function (_ref2) {
-                        var key = _ref2.key;
-                        var doc_count = _ref2.doc_count;
-                        return [key, doc_count];
-                    }).slice(0, 10);
-                },
-                'c3_plot': function c3_plot(title, columns, element, height, width) {
-                    var bar = c3.generate({
-                        bindto: element,
-                        data: {
-                            columns: columns,
-                            type: 'bar',
-                            onclick: function onclick(d) {
-                                var url = 'https://share.osf.io/discover?q=' + d.name;
-                                window.open(url, '_blank');
-                            }
-                        },
-                        axis: {
+            }), _defineProperty(_chart_options, 'size', {
+                height: this.get('height') * 150 - 20,
+                width: this.get('width') * 150 }), _chart_options);
+
+            switch (chart_type) {
+                case 'donut':
+                    {
+
+                        this.set('data', this.get('aggregations.sources.buckets'));
+                        var columns = this.get('data').map(function (_ref) {
+                            var key = _ref.key;
+                            var doc_count = _ref.doc_count;
+                            return [key, doc_count];
+                        });
+                        var title = 'Published in...';
+
+                        break;
+                    }
+                case 'bar':
+                    {
+
+                        this.set('data', this.get('aggregations.contributors.buckets'));
+                        var columns = this.get('data').map(function (_ref2) {
+                            var key = _ref2.key;
+                            var doc_count = _ref2.doc_count;
+                            return [key, doc_count];
+                        }).slice(0, 10);
+                        var title = 'Top 10 Contributors: ';
+
+                        var axis = {
                             x: {
                                 tick: {
                                     format: function format() {
@@ -882,44 +883,27 @@ define('tc3/components/generic-chart', ['exports', 'ember'], function (exports, 
                             y: {
                                 label: 'Number of Publications'
                             }
-                        },
-                        tooltip: {
-                            grouped: false },
+                        };
+                        var tooltip = {
+                            grouped: false };
                         // Default true
-                        legend: { show: false },
-                        bar: {
-                            title: title,
-                            label: {
-                                show: false
-                            }
-                        },
-                        size: { height: height * 150 - 20,
-                            width: width * 150
-                        }
-                    });
-                }
-            },
-            'timeseries-chart': { 'title': '',
-                'columns': function columns(data) {
-                    return [['x'].concat(data.map(function (datum) {
-                        return datum.key_as_string;
-                    })), ['Articles'].concat(data.map(function (datum) {
-                        return datum.doc_count;
-                    }))];
-                },
-                'c3_plot': function c3_plot(title, columns, element, height, width) {
+                        chart_options['axis'] = axis;
+                        chart_options['tooltip'] = tooltip;
 
-                    var ts = c3.generate({
-                        bindto: element,
-                        data: {
-                            x: 'x',
-                            columns: columns,
-                            types: {
-                                x: 'area-spline',
-                                Articles: 'area'
-                            }
-                        },
-                        axis: {
+                        break;
+                    }
+                case 'timeseries':
+                    {
+
+                        this.set('data', this.get('aggregations.articles_over_time.buckets'));
+                        var columns = [['x'].concat(this.get('data').map(function (datum) {
+                            return datum.key_as_string;
+                        })), ['Articles'].concat(this.get('data').map(function (datum) {
+                            return datum.doc_count;
+                        }))];
+                        var title = '';
+                        var data_x = 'x';
+                        var axis = {
                             x: {
                                 type: 'timeseries',
                                 tick: {
@@ -930,37 +914,39 @@ define('tc3/components/generic-chart', ['exports', 'ember'], function (exports, 
                                     format: '%d-%m-%Y' // Format the tick labels on our chart
                                 }
                             }
-                        },
-                        zoom: {
-                            enabled: true
-                        },
-                        tooltip: { // Format the tooltips on our chart
+                        };
+                        var data_types = {
+                            x: 'area-spline',
+                            Articles: 'area'
+                        };
+                        var tooltip = { // Format the tooltips on our chart
                             format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
                                 title: function title(d) {
                                     return d.toString().substring(4, 15); // This isn't perfect, but it's at least more verbose than before
                                 }
                             }
-                        },
-                        point: {
+                        };
+                        var zoom = {
+                            enabled: true
+                        };
+                        var point = {
                             show: false
-                        },
-                        size: { height: height * 150 - 20,
-                            width: width * 150
-                        }
-                    });
-                }
-            }
-        },
+                        };
 
-        updateChart: function updateChart() {
-            this.set('data', this.get(this.get('aggregation_details')));
-            var title = this.operationDict[this.get('chartType')]['title'];
-            var columns = this.operationDict[this.get('chartType')]['columns'](this.get('data'));
-            console.log(this.aggregations);
-            var element = this.$('.chart').get(0);
-            var height = this.get('height');
-            var width = this.get('width');
-            this.operationDict[this.get('chartType')]['c3_plot'](title, columns, element, height, width);
+                        chart_options['axis'] = axis;
+                        chart_options['data']['types'] = data_types;
+                        chart_options['data']['x'] = data_x;
+                        chart_options['tooltip'] = tooltip;
+                        chart_options['zoom'] = zoom;
+                        chart_options['point'] = point;
+
+                        break;
+                    }
+            }
+
+            chart_options['data']['columns'] = columns;
+            chart_options[chart_type]['title'] = title;
+            c3.generate(chart_options);
         },
 
         didRender: function didRender() {
@@ -1421,7 +1407,6 @@ define('tc3/components/place-holder', ['exports', 'ember', 'tc3/config/environme
         // widgetType: 'wild-card',
         // chartType: 'donut-chart',
         aggregations: false,
-        aggregation_details: '',
         docs: false,
 
         classNames: ['widget'],
@@ -1550,10 +1535,9 @@ define('tc3/components/place-holder', ['exports', 'ember', 'tc3/config/environme
                         }));
 
                         this.set('widgetType', 'generic-chart');
-                        this.set('chartType', 'donut-chart');
-                        this.set('aggregation_details', 'aggregations.sources.buckets');
+                        this.set('chartType', 'donut');
 
-                    case 12:
+                    case 11:
                     case 'end':
                         return context$1$0.stop();
                 }
@@ -1574,16 +1558,6 @@ define('tc3/components/place-holder', ['exports', 'ember', 'tc3/config/environme
             },
 
             changeChart: function changeChart(chart) {
-
-                if (chart == 'timeseries-chart') {
-                    this.set('aggregation_details', 'aggregations.articles_over_time.buckets');
-                } else {
-                    if (chart == 'donut-chart') {
-                        this.set('aggregation_details', 'aggregations.sources.buckets');
-                    } else if (chart == 'bar-chart') {
-                        this.set('aggregation_details', 'aggregations.contributors.buckets');
-                    }
-                }
 
                 this.set('chartType', chart);
             },
@@ -7880,21 +7854,21 @@ define("tc3/templates/components/place-holder", ["exports"], function (exports) 
         var el5 = dom.createTextNode("\n            ");
         dom.appendChild(el4, el5);
         var el5 = dom.createElement("option");
-        dom.setAttribute(el5, "value", "donut-chart");
+        dom.setAttribute(el5, "value", "donut");
         var el6 = dom.createTextNode("Donut");
         dom.appendChild(el5, el6);
         dom.appendChild(el4, el5);
         var el5 = dom.createTextNode("\n            ");
         dom.appendChild(el4, el5);
         var el5 = dom.createElement("option");
-        dom.setAttribute(el5, "value", "timeseries-chart");
+        dom.setAttribute(el5, "value", "timeseries");
         var el6 = dom.createTextNode("Time-Series");
         dom.appendChild(el5, el6);
         dom.appendChild(el4, el5);
         var el5 = dom.createTextNode("\n            ");
         dom.appendChild(el4, el5);
         var el5 = dom.createElement("option");
-        dom.setAttribute(el5, "value", "bar-chart");
+        dom.setAttribute(el5, "value", "bar");
         var el6 = dom.createTextNode("Bar");
         dom.appendChild(el5, el6);
         dom.appendChild(el4, el5);
@@ -8030,7 +8004,7 @@ define("tc3/templates/components/place-holder", ["exports"], function (exports) 
         morphs[11] = dom.createMorphAt(fragment, 6, 6, contextualElement);
         return morphs;
       },
-      statements: [["attribute", "onclick", ["subexpr", "action", ["removeWidget"], [], ["loc", [null, [null, null], [2, 69]]], 0, 0], 0, 0, 0, 0], ["inline", "fa-icon", ["close"], [], ["loc", [null, [2, 70], [2, 89]]], 0, 0], ["attribute", "onclick", ["subexpr", "action", ["showConfig"], [], ["loc", [null, [null, null], [3, 67]]], 0, 0], 0, 0, 0, 0], ["inline", "fa-icon", ["cogs"], [], ["loc", [null, [3, 68], [3, 86]]], 0, 0], ["element", "action", ["configChanged"], ["on", "submit"], ["loc", [null, [6, 10], [6, 48]]], 0, 0], ["attribute", "onchange", ["subexpr", "action", ["changeEngine"], ["value", "target.value"], ["loc", [null, [null, null], [9, 73]]], 0, 0], 0, 0, 0, 0], ["attribute", "onchange", ["subexpr", "action", ["changeChart"], ["value", "target.value"], ["loc", [null, [null, null], [17, 72]]], 0, 0], 0, 0, 0, 0], ["inline", "input", [], ["type", "text", "size", "10", "value", ["subexpr", "@mut", [["get", "widthSetting", ["loc", [null, [26, 46], [26, 58]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [26, 10], [26, 60]]], 0, 0], ["inline", "input", [], ["type", "text", "size", "10", "value", ["subexpr", "@mut", [["get", "heightSetting", ["loc", [null, [31, 46], [31, 59]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [31, 10], [31, 61]]], 0, 0], ["inline", "textarea", [], ["value", ["subexpr", "@mut", [["get", "query", ["loc", [null, [36, 27], [36, 32]]], 0, 0, 0, 0]], [], [], 0, 0], "cols", "36", "rows", "5"], ["loc", [null, [36, 10], [36, 53]]], 0, 0], ["inline", "component", [["get", "widgetType", ["loc", [null, [45, 12], [45, 22]]], 0, 0, 0, 0]], ["chartType", ["subexpr", "@mut", [["get", "chartType", ["loc", [null, [45, 33], [45, 42]]], 0, 0, 0, 0]], [], [], 0, 0], "aggregations", ["subexpr", "@mut", [["get", "aggregations", ["loc", [null, [45, 56], [45, 68]]], 0, 0, 0, 0]], [], [], 0, 0], "aggregation_details", ["subexpr", "@mut", [["get", "aggregation_details", ["loc", [null, [45, 89], [45, 108]]], 0, 0, 0, 0]], [], [], 0, 0], "width", ["subexpr", "@mut", [["get", "widthSetting", ["loc", [null, [45, 115], [45, 127]]], 0, 0, 0, 0]], [], [], 0, 0], "height", ["subexpr", "@mut", [["get", "heightSetting", ["loc", [null, [45, 135], [45, 148]]], 0, 0, 0, 0]], [], [], 0, 0], "interval", ["subexpr", "@mut", [["get", "tsInterval", ["loc", [null, [45, 158], [45, 168]]], 0, 0, 0, 0]], [], [], 0, 0], "resizedSignal", ["subexpr", "@mut", [["get", "resizedSignal", ["loc", [null, [45, 183], [45, 196]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [45, 0], [45, 198]]], 0, 0], ["content", "yield", ["loc", [null, [47, 0], [47, 9]]], 0, 0, 0, 0]],
+      statements: [["attribute", "onclick", ["subexpr", "action", ["removeWidget"], [], ["loc", [null, [null, null], [2, 69]]], 0, 0], 0, 0, 0, 0], ["inline", "fa-icon", ["close"], [], ["loc", [null, [2, 70], [2, 89]]], 0, 0], ["attribute", "onclick", ["subexpr", "action", ["showConfig"], [], ["loc", [null, [null, null], [3, 67]]], 0, 0], 0, 0, 0, 0], ["inline", "fa-icon", ["cogs"], [], ["loc", [null, [3, 68], [3, 86]]], 0, 0], ["element", "action", ["configChanged"], ["on", "submit"], ["loc", [null, [6, 10], [6, 48]]], 0, 0], ["attribute", "onchange", ["subexpr", "action", ["changeEngine"], ["value", "target.value"], ["loc", [null, [null, null], [9, 73]]], 0, 0], 0, 0, 0, 0], ["attribute", "onchange", ["subexpr", "action", ["changeChart"], ["value", "target.value"], ["loc", [null, [null, null], [17, 72]]], 0, 0], 0, 0, 0, 0], ["inline", "input", [], ["type", "text", "size", "10", "value", ["subexpr", "@mut", [["get", "widthSetting", ["loc", [null, [26, 46], [26, 58]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [26, 10], [26, 60]]], 0, 0], ["inline", "input", [], ["type", "text", "size", "10", "value", ["subexpr", "@mut", [["get", "heightSetting", ["loc", [null, [31, 46], [31, 59]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [31, 10], [31, 61]]], 0, 0], ["inline", "textarea", [], ["value", ["subexpr", "@mut", [["get", "query", ["loc", [null, [36, 27], [36, 32]]], 0, 0, 0, 0]], [], [], 0, 0], "cols", "36", "rows", "5"], ["loc", [null, [36, 10], [36, 53]]], 0, 0], ["inline", "component", [["get", "widgetType", ["loc", [null, [45, 12], [45, 22]]], 0, 0, 0, 0]], ["chartType", ["subexpr", "@mut", [["get", "chartType", ["loc", [null, [45, 33], [45, 42]]], 0, 0, 0, 0]], [], [], 0, 0], "aggregations", ["subexpr", "@mut", [["get", "aggregations", ["loc", [null, [45, 56], [45, 68]]], 0, 0, 0, 0]], [], [], 0, 0], "width", ["subexpr", "@mut", [["get", "widthSetting", ["loc", [null, [45, 75], [45, 87]]], 0, 0, 0, 0]], [], [], 0, 0], "height", ["subexpr", "@mut", [["get", "heightSetting", ["loc", [null, [45, 95], [45, 108]]], 0, 0, 0, 0]], [], [], 0, 0], "interval", ["subexpr", "@mut", [["get", "tsInterval", ["loc", [null, [45, 118], [45, 128]]], 0, 0, 0, 0]], [], [], 0, 0], "resizedSignal", ["subexpr", "@mut", [["get", "resizedSignal", ["loc", [null, [45, 143], [45, 156]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [45, 0], [45, 158]]], 0, 0], ["content", "yield", ["loc", [null, [47, 0], [47, 9]]], 0, 0, 0, 0]],
       locals: [],
       templates: []
     };
@@ -8886,7 +8860,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("tc3/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"tc3","version":"0.0.0+c0a8ab57"});
+  require("tc3/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"tc3","version":"0.0.0+34cb247a"});
 }
 
 /* jshint ignore:end */

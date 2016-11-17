@@ -15,9 +15,9 @@
         <div class="col-xs-4">Chart</div>
         <div class="col-xs-8">
           <select onchange={{action 'changeChart' value="target.value"}}>
-            <option value="donut-chart">Donut</option>
-            <option value="timeseries-chart">Time-Series</option>
-            <option value="bar-chart">Bar</option>
+            <option value="donut">Donut</option>
+            <option value="timeseries">Time-Series</option>
+            <option value="bar">Bar</option>
           </select>
         </div>
         <hr>
@@ -42,6 +42,6 @@
     </form>
 </div>
 
-{{component widgetType chartType=chartType aggregations=aggregations aggregation_details=aggregation_details width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal}}
+{{component widgetType chartType=chartType aggregations=aggregations width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal}}
 
 {{yield}}

@@ -102,21 +102,21 @@ export default Ember.HTMLBars.template((function() {
       var el5 = dom.createTextNode("\n            ");
       dom.appendChild(el4, el5);
       var el5 = dom.createElement("option");
-      dom.setAttribute(el5,"value","donut-chart");
+      dom.setAttribute(el5,"value","donut");
       var el6 = dom.createTextNode("Donut");
       dom.appendChild(el5, el6);
       dom.appendChild(el4, el5);
       var el5 = dom.createTextNode("\n            ");
       dom.appendChild(el4, el5);
       var el5 = dom.createElement("option");
-      dom.setAttribute(el5,"value","timeseries-chart");
+      dom.setAttribute(el5,"value","timeseries");
       var el6 = dom.createTextNode("Time-Series");
       dom.appendChild(el5, el6);
       dom.appendChild(el4, el5);
       var el5 = dom.createTextNode("\n            ");
       dom.appendChild(el4, el5);
       var el5 = dom.createElement("option");
-      dom.setAttribute(el5,"value","bar-chart");
+      dom.setAttribute(el5,"value","bar");
       var el6 = dom.createTextNode("Bar");
       dom.appendChild(el5, el6);
       dom.appendChild(el4, el5);
@@ -263,7 +263,7 @@ export default Ember.HTMLBars.template((function() {
       ["inline","input",[],["type","text","size","10","value",["subexpr","@mut",[["get","widthSetting",["loc",[null,[26,46],[26,58]]],0,0,0,0]],[],[],0,0]],["loc",[null,[26,10],[26,60]]],0,0],
       ["inline","input",[],["type","text","size","10","value",["subexpr","@mut",[["get","heightSetting",["loc",[null,[31,46],[31,59]]],0,0,0,0]],[],[],0,0]],["loc",[null,[31,10],[31,61]]],0,0],
       ["inline","textarea",[],["value",["subexpr","@mut",[["get","query",["loc",[null,[36,27],[36,32]]],0,0,0,0]],[],[],0,0],"cols","36","rows","5"],["loc",[null,[36,10],[36,53]]],0,0],
-      ["inline","component",[["get","widgetType",["loc",[null,[45,12],[45,22]]],0,0,0,0]],["chartType",["subexpr","@mut",[["get","chartType",["loc",[null,[45,33],[45,42]]],0,0,0,0]],[],[],0,0],"aggregations",["subexpr","@mut",[["get","aggregations",["loc",[null,[45,56],[45,68]]],0,0,0,0]],[],[],0,0],"aggregation_details",["subexpr","@mut",[["get","aggregation_details",["loc",[null,[45,89],[45,108]]],0,0,0,0]],[],[],0,0],"width",["subexpr","@mut",[["get","widthSetting",["loc",[null,[45,115],[45,127]]],0,0,0,0]],[],[],0,0],"height",["subexpr","@mut",[["get","heightSetting",["loc",[null,[45,135],[45,148]]],0,0,0,0]],[],[],0,0],"interval",["subexpr","@mut",[["get","tsInterval",["loc",[null,[45,158],[45,168]]],0,0,0,0]],[],[],0,0],"resizedSignal",["subexpr","@mut",[["get","resizedSignal",["loc",[null,[45,183],[45,196]]],0,0,0,0]],[],[],0,0]],["loc",[null,[45,0],[45,198]]],0,0],
+      ["inline","component",[["get","widgetType",["loc",[null,[45,12],[45,22]]],0,0,0,0]],["chartType",["subexpr","@mut",[["get","chartType",["loc",[null,[45,33],[45,42]]],0,0,0,0]],[],[],0,0],"aggregations",["subexpr","@mut",[["get","aggregations",["loc",[null,[45,56],[45,68]]],0,0,0,0]],[],[],0,0],"width",["subexpr","@mut",[["get","widthSetting",["loc",[null,[45,75],[45,87]]],0,0,0,0]],[],[],0,0],"height",["subexpr","@mut",[["get","heightSetting",["loc",[null,[45,95],[45,108]]],0,0,0,0]],[],[],0,0],"interval",["subexpr","@mut",[["get","tsInterval",["loc",[null,[45,118],[45,128]]],0,0,0,0]],[],[],0,0],"resizedSignal",["subexpr","@mut",[["get","resizedSignal",["loc",[null,[45,143],[45,156]]],0,0,0,0]],[],[],0,0]],["loc",[null,[45,0],[45,158]]],0,0],
       ["content","yield",["loc",[null,[47,0],[47,9]]],0,0,0,0]
     ],
     locals: [],

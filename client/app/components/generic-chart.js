@@ -19,132 +19,114 @@ export default Ember.Component.extend({
         this.updateChart();
     }),
 
-    operationDict: {'donut-chart':{'title':'Published in...',
-                                  'columns':function(data) {
-                                      return data.map(({ key, doc_count }) => [key, doc_count]);},
-                                  'c3_plot':function(title, columns, element, height, width){
-                                      let donut = c3.generate({
-                                          bindto: element,
-                                          data: {
-                                              columns,
-                                              type: 'donut'
-                                          },
-                                          legend: { show: false },
-                                          donut: {
-                                              title,
-                                              label: {
-                                                  show: false
-                                              }
-                                          },
-                                          size: { height: height*150-20,
-                                                  width: width*150
-                                                },
-                                      });
-                                  },
-                                },
-                    'bar-chart':{'title':'Top 10 Contributors',
-                                 'columns':function(data) {
-                                       return data.map(({ key, doc_count }) => [key, doc_count]).slice(0, 10);},
-                                 'c3_plot':function(title, columns, element, height, width){
-                                       let bar = c3.generate({
-                                           bindto: element,
-                                           data: {
-                                               columns,
-                                               type: 'bar',
-                                               onclick: (d) => {
-                                                   let url = 'https://share.osf.io/discover?q=' + d.name;
-                                                   window.open(url, '_blank');
-                                               }
-                                           },
-                                           axis: {
-                                             x: {
-                                                 tick: {
-                                                     format: function() {
-                                                         return 'Top 10 Contributors';
-                                                     }
-                                                 }
-                                             },
-                                             y: {
-                                                  label: 'Number of Publications'
-                                             },
-                                           },
-                                           tooltip: {
-                                               grouped: false, // Default true
-                                           },
-                                           legend: { show: false },
-                                           bar: {
-                                               title,
-                                               label: {
-                                                   show: false
-                                               }
-                                           },
-                                           size: { height: height*150-20,
-                                                   width: width*150
-                                                 },
-                                        });
-                                   },
-                                },
-                    'timeseries-chart':{'title': '',
-                                        'columns':function(data) {
-                                              return [
-                                                ['x'].concat(data.map((datum) => {return datum.key_as_string})),
-                                                ['Articles'].concat(data.map((datum) => {return datum.doc_count})),
-                                              ];
-                                            },
-                                        'c3_plot':function(title, columns, element, height, width){
-
-                                              let ts = c3.generate({
-                                                  bindto: element,
-                                                  data: {
-                                                      x: 'x',
-                                                      columns: columns,
-                                                      types: {
-                                                          x: 'area-spline',
-                                                          Articles: 'area'
-                                                      }
-                                                  },
-                                                  axis: {
-                                                      x: {
-                                                          type: 'timeseries',
-                                                          tick: {
-                                                              culling: {
-                                                                  max: 10
-                                                              },
-                                                              rotate: 90,
-                                                              format: '%d-%m-%Y' // Format the tick labels on our chart
-                                                          }
-                                                      }
-                                                  },
-                                                  zoom: {
-                                                      enabled: true
-                                                  },
-                                                  tooltip: { // Format the tooltips on our chart
-                                                      format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
-                                                          title: function (d) {
-                                                              return d.toString().substring(4,15); // This isn't perfect, but it's at least more verbose than before
-                                                          }
-                                                      }
-                                                  },
-                                                  point: {
-                                                      show: false,
-                                                  },
-                                                  size: { height: height*150-20,
-                                                          width: width*150
-                                                        },
-                                              });
-                                        },
-                                      },
-                    },
-
     updateChart() {
-        this.set('data', this.get(this.get('aggregation_details')));
-        let title = this.operationDict[this.get('chartType')]['title'];
-        let columns = this.operationDict[this.get('chartType')]['columns'](this.get('data'));
-        console.log(this.aggregations);
-        let element = this.$(`.chart`).get(0);
-        let height = this.get('height');
-        let width = this.get('width');
-        this.operationDict[this.get('chartType')]['c3_plot'](title, columns, element, height, width);
+
+        let chart_type = this.get('chartType');
+
+        let chart_options= {
+              bindto: this.$(`.chart`).get(0),
+              data: {
+                  columns: null, //to be filled later
+                  type: chart_type,
+              },
+              legend: { show: false },
+              [chart_type]:{
+                  title: null,  //to be filled later
+                  label: {
+                    show: false
+                  }
+                },
+              size:{
+                  height: this.get('height')*150 - 20,
+                  width: this.get('width')*150},
+        };
+
+        switch(chart_type) {
+             case 'donut':{
+
+                 this.set('data', this.get('aggregations.sources.buckets'));
+                 var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
+                 var title = 'Published in...';
+
+                 break;}
+             case 'bar':{
+
+                 this.set('data', this.get('aggregations.contributors.buckets'));
+                 var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]).slice(0, 10);
+                 var title = 'Top 10 Contributors: ';
+
+                 let axis = {
+                               x: {
+                                   tick: {
+                                       format: function() {
+                                           return 'Top 10 Contributors';
+                                       }
+                                   }
+                               },
+                               y: {
+                                    label: 'Number of Publications'
+                               },
+                            };
+                 let tooltip = {
+                                   grouped: false, // Default true
+                               };
+                 chart_options['axis'] = axis;
+                 chart_options['tooltip'] = tooltip;
+
+                 break;}
+             case 'timeseries':{
+
+                 this.set('data', this.get('aggregations.articles_over_time.buckets'));
+                 var columns = [
+                                 ['x'].concat(this.get('data').map((datum) => {return datum.key_as_string})),
+                                 ['Articles'].concat(this.get('data').map((datum) => {return datum.doc_count})),
+                               ];
+                 var title = '';
+                 let data_x = 'x';
+                 let axis = {
+                                 x: {
+                                     type: 'timeseries',
+                                     tick: {
+                                         culling: {
+                                             max: 10
+                                         },
+                                         rotate: 90,
+                                         format: '%d-%m-%Y' // Format the tick labels on our chart
+                                     }
+                                 }
+                             };
+                 let data_types = {
+                                     x: 'area-spline',
+                                     Articles: 'area'
+                                 };
+                 let tooltip = { // Format the tooltips on our chart
+                                     format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
+                                         title: function (d) {
+                                             return d.toString().substring(4,15); // This isn't perfect, but it's at least more verbose than before
+                                         }
+                                     }
+                                 };
+                 let zoom = {
+                                 enabled: true
+                            };
+                 let point = {
+                                show: false,
+                            };
+
+                 chart_options['axis'] = axis;
+                 chart_options['data']['types'] = data_types;
+                 chart_options['data']['x'] = data_x;
+                 chart_options['tooltip'] = tooltip;
+                 chart_options['zoom'] = zoom;
+                 chart_options['point'] = point;
+
+                 break;}
+         }
+
+        chart_options['data']['columns'] = columns;
+        chart_options[chart_type]['title'] = title;
+        c3.generate(chart_options);
+
     },
 
     didRender() {

@@ -339,7 +339,6 @@ define('tc3/components/place-holder', ['exports', 'ember', 'tc3/config/environme
         // widgetType: 'wild-card',
         // chartType: 'donut-chart',
         aggregations: false,
-        aggregation_details: '',
         docs: false,
 
         classNames: ['widget'],
@@ -468,10 +467,9 @@ define('tc3/components/place-holder', ['exports', 'ember', 'tc3/config/environme
                         }));
 
                         this.set('widgetType', 'generic-chart');
-                        this.set('chartType', 'donut-chart');
-                        this.set('aggregation_details', 'aggregations.sources.buckets');
+                        this.set('chartType', 'donut');
 
-                    case 12:
+                    case 11:
                     case 'end':
                         return context$1$0.stop();
                 }
@@ -492,16 +490,6 @@ define('tc3/components/place-holder', ['exports', 'ember', 'tc3/config/environme
             },
 
             changeChart: function changeChart(chart) {
-
-                if (chart == 'timeseries-chart') {
-                    this.set('aggregation_details', 'aggregations.articles_over_time.buckets');
-                } else {
-                    if (chart == 'donut-chart') {
-                        this.set('aggregation_details', 'aggregations.sources.buckets');
-                    } else if (chart == 'bar-chart') {
-                        this.set('aggregation_details', 'aggregations.contributors.buckets');
-                    }
-                }
 
                 this.set('chartType', chart);
             },

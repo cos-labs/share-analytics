@@ -1,8 +1,10 @@
 /*jshint node:true*/
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var path = require('path');
 
 module.exports = function(defaults) {
+ 
   var app = new EmberApp(defaults, {
     babel: {
       includePolyfill: true
@@ -27,6 +29,17 @@ module.exports = function(defaults) {
   app.import('bower_components/freewall/freewall.js');
   app.import('bower_components/packery/dist/packery.pkgd.min.js');
   app.import('bower_components/draggabilly/dist/draggabilly.pkgd.min.js')
-
+  // Import component styles from addon
+  app.import(path.join(app.bowerDirectory, 'osf-style/vendor/prism/prism.css'));
+  app.import(path.join(app.bowerDirectory, 'osf-style/page.css'));
+  app.import(path.join(app.bowerDirectory, 'osf-style/css/base.css'));
+  
+  app.import(path.join(app.bowerDirectory, 'osf-style/img/cos-white2.png'), {
+  	destDir: 'img'
+  }); 
+  	
+  app.import('vendor/assets/ember-osf.css');
+   
   return app.toTree();
+
 };

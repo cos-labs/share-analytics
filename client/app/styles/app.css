@@ -1,5 +1,29 @@
 /*Packery grid styling*/
 
+.background {
+    background: url("http://localhost:4200/images/geometric.jpg");
+    background-size: cover;
+}
+
+
+.container.copyright {
+    width: 100%;
+    text-align: center;
+    background-color: #444;
+    color: #fff;
+    padding: 15px;
+    font-weight: 500 !important;
+    -webkit-box-shadow: inset 0px 83px 72px -90px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 83px 72px -90px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 83px 72px -90px rgba(0,0,0,0.75);
+}
+
+footer.footer {
+    margin: 0;
+}
+.container.copyright a {
+    color: #80bbee;
+}
 /* Single-width element */
 .grid-item {
     float: left;

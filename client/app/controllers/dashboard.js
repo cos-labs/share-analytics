@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
     // Initialize the three interchangeable charts to be rendered as sortableObjects
     sortableObjectList: [{isPlaceholder: true}],
 
-    
+
     // Initialize the list of additional charts that the user can add
     addableList: [],
 
@@ -68,7 +68,7 @@ export default Ember.Controller.extend({
         },
 
         changeLte: function(l) {
-            l = new Date(l)
+            l = new Date(l);
             this.set('lte',l.toISOString().split('T')[0]);
         },
 
@@ -84,11 +84,10 @@ export default Ember.Controller.extend({
 
         addChart: function(option) {
             this.set('sortableObjectList', this.get('sortableObjectList').addObject({isPlaceholder: true}).slice());
-
         },
         refreshWall: function() {
             console.log('refreshing wall');
-            let wall = this.get('wall')
+            let wall = this.get('wall');
             wall && wall.refresh();
         }
 

@@ -805,6 +805,157 @@ define('tc3/components/file-widget/component', ['exports', 'ember-osf/components
     }
   });
 });
+define('tc3/components/generic-chart', ['exports', 'ember'], function (exports, _ember) {
+    function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+    exports['default'] = _ember['default'].Component.extend({
+
+        classNames: ['chart'],
+
+        dataChanged: _ember['default'].observer('aggregations', function () {
+            this.updateChart();
+        }),
+
+        data: [],
+
+        sizeChanged: _ember['default'].observer('resizedSignal', function () {
+            this.updateChart();
+        }),
+
+        charTypeChange: _ember['default'].observer('chartType', function () {
+            this.updateChart();
+        }),
+
+        updateChart: function updateChart() {
+            var _chart_options;
+
+            var chart_type = this.get('chartType');
+
+            var chart_options = (_chart_options = {
+                bindto: this.$('.chart').get(0),
+                data: {
+                    columns: null, //to be filled later
+                    type: chart_type
+                },
+                legend: { show: false }
+            }, _defineProperty(_chart_options, chart_type, {
+                title: null, //to be filled later
+                label: {
+                    show: false
+                }
+            }), _defineProperty(_chart_options, 'size', {
+                height: this.get('height') * 150 - 20,
+                width: this.get('width') * 150 }), _chart_options);
+
+            switch (chart_type) {
+                case 'donut':
+                    {
+
+                        this.set('data', this.get('aggregations.sources.buckets'));
+                        var columns = this.get('data').map(function (_ref) {
+                            var key = _ref.key;
+                            var doc_count = _ref.doc_count;
+                            return [key, doc_count];
+                        });
+                        var title = 'Published in...';
+
+                        break;
+                    }
+                case 'bar':
+                    {
+
+                        this.set('data', this.get('aggregations.contributors.buckets'));
+                        var columns = this.get('data').map(function (_ref2) {
+                            var key = _ref2.key;
+                            var doc_count = _ref2.doc_count;
+                            return [key, doc_count];
+                        }).slice(0, 10);
+                        var title = 'Top 10 Contributors: ';
+
+                        var axis = {
+                            x: {
+                                tick: {
+                                    format: function format() {
+                                        return 'Top 10 Contributors';
+                                    }
+                                }
+                            },
+                            y: {
+                                label: 'Number of Publications'
+                            }
+                        };
+                        var tooltip = {
+                            grouped: false };
+                        // Default true
+                        chart_options['axis'] = axis;
+                        chart_options['tooltip'] = tooltip;
+
+                        break;
+                    }
+                case 'timeseries':
+                    {
+
+                        this.set('data', this.get('aggregations.articles_over_time.buckets'));
+                        var columns = [['x'].concat(this.get('data').map(function (datum) {
+                            return datum.key_as_string;
+                        })), ['Articles'].concat(this.get('data').map(function (datum) {
+                            return datum.doc_count;
+                        }))];
+                        var title = '';
+                        var data_x = 'x';
+                        var axis = {
+                            x: {
+                                type: 'timeseries',
+                                tick: {
+                                    culling: {
+                                        max: 10
+                                    },
+                                    rotate: 90,
+                                    format: '%d-%m-%Y' // Format the tick labels on our chart
+                                }
+                            }
+                        };
+                        var data_types = {
+                            x: 'area-spline',
+                            Articles: 'area'
+                        };
+                        var tooltip = { // Format the tooltips on our chart
+                            format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
+                                title: function title(d) {
+                                    return d.toString().substring(4, 15); // This isn't perfect, but it's at least more verbose than before
+                                }
+                            }
+                        };
+                        var zoom = {
+                            enabled: true
+                        };
+                        var point = {
+                            show: false
+                        };
+
+                        chart_options['axis'] = axis;
+                        chart_options['data']['types'] = data_types;
+                        chart_options['data']['x'] = data_x;
+                        chart_options['tooltip'] = tooltip;
+                        chart_options['zoom'] = zoom;
+                        chart_options['point'] = point;
+
+                        break;
+                    }
+            }
+
+            chart_options['data']['columns'] = columns;
+            chart_options[chart_type]['title'] = title;
+            c3.generate(chart_options);
+        },
+
+        didRender: function didRender() {
+            this.updateChart();
+        }
+
+    });
+});
+/* global c3 */
 define('tc3/components/oauth-popup/component', ['exports', 'ember-osf/components/oauth-popup/component'], function (exports, _emberOsfComponentsOauthPopupComponent) {
     Object.defineProperty(exports, 'default', {
         enumerable: true,
@@ -1253,7 +1404,8 @@ define('tc3/components/place-holder', ['exports', 'ember', 'tc3/config/environme
 
     exports['default'] = _ember['default'].Component.extend({
 
-        widgetType: 'wild-card',
+        // widgetType: 'wild-card',
+        // chartType: 'donut-chart',
         aggregations: false,
         docs: false,
 
@@ -1381,9 +1533,11 @@ define('tc3/components/place-holder', ['exports', 'ember', 'tc3/config/environme
                             r.organizations = source.lists.organizations;
                             return r;
                         }));
-                        this.set('widgetType', 'donut-chart');
 
-                    case 10:
+                        this.set('widgetType', 'generic-chart');
+                        this.set('chartType', 'donut');
+
+                    case 11:
                     case 'end':
                         return context$1$0.stop();
                 }
@@ -1398,15 +1552,16 @@ define('tc3/components/place-holder', ['exports', 'ember', 'tc3/config/environme
             showConfig: function showConfig() {
                 this.set('configuring', !this.get('configuring'));
             },
-            makeDonut: function makeDonut() {
-                this.set('widgetType', 'donut-chart');
+
+            changeEngine: function changeEngine(jsEngine) {
+                console.log(jsEngine);
             },
-            makeTimeSeries: function makeTimeSeries() {
-                this.set('widgetType', 'timeseries-chart');
+
+            changeChart: function changeChart(chart) {
+
+                this.set('chartType', chart);
             },
-            makeBar: function makeBar() {
-                this.set('widgetType', 'bar-chart');
-            },
+
             removeWidget: function removeWidget() {
                 this.sendAction('removeChart', this.get('item'));
             },
@@ -7314,6 +7469,52 @@ define("tc3/templates/components/form-element/vertical/textarea", ["exports"], f
     };
   })());
 });
+define("tc3/templates/components/generic-chart", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.7.3",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 3,
+            "column": 0
+          }
+        },
+        "moduleName": "tc3/templates/components/generic-chart.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "chart");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment, 2, 2, contextualElement);
+        return morphs;
+      },
+      statements: [["content", "yield", ["loc", [null, [2, 0], [2, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
 define("tc3/templates/components/object-bin", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template((function () {
     var child0 = (function () {
@@ -7561,7 +7762,7 @@ define("tc3/templates/components/place-holder", ["exports"], function (exports) 
             "column": 0
           },
           "end": {
-            "line": 19,
+            "line": 48,
             "column": 0
           }
         },
@@ -7601,49 +7802,167 @@ define("tc3/templates/components/place-holder", ["exports"], function (exports) 
         var el2 = dom.createElement("form");
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
-        var el3 = dom.createElement("button");
-        var el4 = dom.createTextNode("TimeSeries");
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "class", "col-xs-4");
+        var el4 = dom.createTextNode("JS Engine:");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
-        var el3 = dom.createElement("button");
-        var el4 = dom.createTextNode("Donut");
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "class", "col-xs-8");
+        var el4 = dom.createTextNode("\n          ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("select");
+        var el5 = dom.createTextNode("\n            ");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createElement("option");
+        dom.setAttribute(el5, "value", "c3");
+        var el6 = dom.createTextNode("C3");
+        dom.appendChild(el5, el6);
+        dom.appendChild(el4, el5);
+        var el5 = dom.createTextNode("\n            ");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createElement("option");
+        dom.setAttribute(el5, "value", "dimple");
+        var el6 = dom.createTextNode("Dimple");
+        dom.appendChild(el5, el6);
+        dom.appendChild(el4, el5);
+        var el5 = dom.createTextNode("\n          ");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
-        var el3 = dom.createElement("button");
-        var el4 = dom.createTextNode("Bar");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("br");
+        var el3 = dom.createElement("hr");
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
-        var el3 = dom.createElement("label");
-        var el4 = dom.createTextNode("Width");
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "class", "col-xs-4");
+        var el4 = dom.createTextNode("Chart");
         dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createComment("");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("br");
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
-        var el3 = dom.createElement("label");
-        var el4 = dom.createTextNode("Height");
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "class", "col-xs-8");
+        var el4 = dom.createTextNode("\n          ");
         dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createComment("");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("br");
+        var el4 = dom.createElement("select");
+        var el5 = dom.createTextNode("\n            ");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createElement("option");
+        dom.setAttribute(el5, "value", "donut");
+        var el6 = dom.createTextNode("Donut");
+        dom.appendChild(el5, el6);
+        dom.appendChild(el4, el5);
+        var el5 = dom.createTextNode("\n            ");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createElement("option");
+        dom.setAttribute(el5, "value", "timeseries");
+        var el6 = dom.createTextNode("Time-Series");
+        dom.appendChild(el5, el6);
+        dom.appendChild(el4, el5);
+        var el5 = dom.createTextNode("\n            ");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createElement("option");
+        dom.setAttribute(el5, "value", "bar");
+        var el6 = dom.createTextNode("Bar");
+        dom.appendChild(el5, el6);
+        dom.appendChild(el4, el5);
+        var el5 = dom.createTextNode("\n          ");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
-        var el3 = dom.createElement("button");
-        dom.setAttribute(el3, "type", "submit");
-        var el4 = dom.createTextNode("OK");
+        var el3 = dom.createElement("hr");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "class", "col-xs-4");
+        var el4 = dom.createTextNode("Width:");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "class", "col-xs-8");
+        var el4 = dom.createTextNode("\n          ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createComment("");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("hr");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "class", "col-xs-4");
+        var el4 = dom.createTextNode("Height:");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "class", "col-xs-8");
+        var el4 = dom.createTextNode("\n          ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createComment("");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("hr");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "class", "col-xs-4");
+        var el4 = dom.createTextNode("Query:");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "class", "col-xs-12");
+        var el4 = dom.createTextNode("\n          ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createComment("");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("hr");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "class", "col-xs-12");
+        var el4 = dom.createTextNode("\n          ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("button");
+        dom.setAttribute(el4, "class", "btn btn-primary");
+        dom.setAttribute(el4, "style", "margin-right:10px");
+        dom.setAttribute(el4, "type", "submit");
+        var el5 = dom.createTextNode("OK");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
@@ -7669,25 +7988,24 @@ define("tc3/templates/components/place-holder", ["exports"], function (exports) 
         var element1 = dom.childAt(element0, [1]);
         var element2 = dom.childAt(element0, [3]);
         var element3 = dom.childAt(fragment, [2, 1]);
-        var element4 = dom.childAt(element3, [1]);
-        var element5 = dom.childAt(element3, [3]);
-        var element6 = dom.childAt(element3, [5]);
+        var element4 = dom.childAt(element3, [3, 1]);
+        var element5 = dom.childAt(element3, [9, 1]);
         var morphs = new Array(12);
         morphs[0] = dom.createAttrMorph(element1, 'onclick');
         morphs[1] = dom.createMorphAt(element1, 0, 0);
         morphs[2] = dom.createAttrMorph(element2, 'onclick');
         morphs[3] = dom.createMorphAt(element2, 0, 0);
         morphs[4] = dom.createElementMorph(element3);
-        morphs[5] = dom.createAttrMorph(element4, 'onclick');
-        morphs[6] = dom.createAttrMorph(element5, 'onclick');
-        morphs[7] = dom.createAttrMorph(element6, 'onclick');
-        morphs[8] = dom.createMorphAt(element3, 9, 9);
-        morphs[9] = dom.createMorphAt(element3, 13, 13);
+        morphs[5] = dom.createAttrMorph(element4, 'onchange');
+        morphs[6] = dom.createAttrMorph(element5, 'onchange');
+        morphs[7] = dom.createMorphAt(dom.childAt(element3, [15]), 1, 1);
+        morphs[8] = dom.createMorphAt(dom.childAt(element3, [21]), 1, 1);
+        morphs[9] = dom.createMorphAt(dom.childAt(element3, [27]), 1, 1);
         morphs[10] = dom.createMorphAt(fragment, 4, 4, contextualElement);
         morphs[11] = dom.createMorphAt(fragment, 6, 6, contextualElement);
         return morphs;
       },
-      statements: [["attribute", "onclick", ["subexpr", "action", ["removeWidget"], [], ["loc", [null, [null, null], [2, 69]]], 0, 0], 0, 0, 0, 0], ["inline", "fa-icon", ["close"], [], ["loc", [null, [2, 70], [2, 89]]], 0, 0], ["attribute", "onclick", ["subexpr", "action", ["showConfig"], [], ["loc", [null, [null, null], [3, 67]]], 0, 0], 0, 0, 0, 0], ["inline", "fa-icon", ["cogs"], [], ["loc", [null, [3, 68], [3, 86]]], 0, 0], ["element", "action", ["configChanged"], ["on", "submit"], ["loc", [null, [6, 10], [6, 48]]], 0, 0], ["attribute", "onclick", ["subexpr", "action", ["makeTimeSeries"], [], ["loc", [null, [null, null], [7, 51]]], 0, 0], 0, 0, 0, 0], ["attribute", "onclick", ["subexpr", "action", ["makeDonut"], [], ["loc", [null, [null, null], [8, 46]]], 0, 0], 0, 0, 0, 0], ["attribute", "onclick", ["subexpr", "action", ["makeBar"], [], ["loc", [null, [null, null], [9, 44]]], 0, 0], 0, 0, 0, 0], ["inline", "input", [], ["type", "text", "value", ["subexpr", "@mut", [["get", "widthSetting", ["loc", [null, [10, 54], [10, 66]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [10, 28], [10, 68]]], 0, 0], ["inline", "input", [], ["type", "text", "value", ["subexpr", "@mut", [["get", "heightSetting", ["loc", [null, [11, 55], [11, 68]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [11, 29], [11, 70]]], 0, 0], ["inline", "component", [["get", "widgetType", ["loc", [null, [16, 12], [16, 22]]], 0, 0, 0, 0]], ["aggregations", ["subexpr", "@mut", [["get", "aggregations", ["loc", [null, [16, 36], [16, 48]]], 0, 0, 0, 0]], [], [], 0, 0], "width", ["subexpr", "@mut", [["get", "widthSetting", ["loc", [null, [16, 55], [16, 67]]], 0, 0, 0, 0]], [], [], 0, 0], "height", ["subexpr", "@mut", [["get", "heightSetting", ["loc", [null, [16, 75], [16, 88]]], 0, 0, 0, 0]], [], [], 0, 0], "interval", ["subexpr", "@mut", [["get", "tsInterval", ["loc", [null, [16, 98], [16, 108]]], 0, 0, 0, 0]], [], [], 0, 0], "resizedSignal", ["subexpr", "@mut", [["get", "resizedSignal", ["loc", [null, [16, 123], [16, 136]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [16, 0], [16, 138]]], 0, 0], ["content", "yield", ["loc", [null, [18, 0], [18, 9]]], 0, 0, 0, 0]],
+      statements: [["attribute", "onclick", ["subexpr", "action", ["removeWidget"], [], ["loc", [null, [null, null], [2, 69]]], 0, 0], 0, 0, 0, 0], ["inline", "fa-icon", ["close"], [], ["loc", [null, [2, 70], [2, 89]]], 0, 0], ["attribute", "onclick", ["subexpr", "action", ["showConfig"], [], ["loc", [null, [null, null], [3, 67]]], 0, 0], 0, 0, 0, 0], ["inline", "fa-icon", ["cogs"], [], ["loc", [null, [3, 68], [3, 86]]], 0, 0], ["element", "action", ["configChanged"], ["on", "submit"], ["loc", [null, [6, 10], [6, 48]]], 0, 0], ["attribute", "onchange", ["subexpr", "action", ["changeEngine"], ["value", "target.value"], ["loc", [null, [null, null], [9, 73]]], 0, 0], 0, 0, 0, 0], ["attribute", "onchange", ["subexpr", "action", ["changeChart"], ["value", "target.value"], ["loc", [null, [null, null], [17, 72]]], 0, 0], 0, 0, 0, 0], ["inline", "input", [], ["type", "text", "size", "10", "value", ["subexpr", "@mut", [["get", "widthSetting", ["loc", [null, [26, 46], [26, 58]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [26, 10], [26, 60]]], 0, 0], ["inline", "input", [], ["type", "text", "size", "10", "value", ["subexpr", "@mut", [["get", "heightSetting", ["loc", [null, [31, 46], [31, 59]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [31, 10], [31, 61]]], 0, 0], ["inline", "textarea", [], ["value", ["subexpr", "@mut", [["get", "query", ["loc", [null, [36, 27], [36, 32]]], 0, 0, 0, 0]], [], [], 0, 0], "cols", "36", "rows", "5"], ["loc", [null, [36, 10], [36, 53]]], 0, 0], ["inline", "component", [["get", "widgetType", ["loc", [null, [45, 12], [45, 22]]], 0, 0, 0, 0]], ["chartType", ["subexpr", "@mut", [["get", "chartType", ["loc", [null, [45, 33], [45, 42]]], 0, 0, 0, 0]], [], [], 0, 0], "aggregations", ["subexpr", "@mut", [["get", "aggregations", ["loc", [null, [45, 56], [45, 68]]], 0, 0, 0, 0]], [], [], 0, 0], "width", ["subexpr", "@mut", [["get", "widthSetting", ["loc", [null, [45, 75], [45, 87]]], 0, 0, 0, 0]], [], [], 0, 0], "height", ["subexpr", "@mut", [["get", "heightSetting", ["loc", [null, [45, 95], [45, 108]]], 0, 0, 0, 0]], [], [], 0, 0], "interval", ["subexpr", "@mut", [["get", "tsInterval", ["loc", [null, [45, 118], [45, 128]]], 0, 0, 0, 0]], [], [], 0, 0], "resizedSignal", ["subexpr", "@mut", [["get", "resizedSignal", ["loc", [null, [45, 143], [45, 156]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [45, 0], [45, 158]]], 0, 0], ["content", "yield", ["loc", [null, [47, 0], [47, 9]]], 0, 0, 0, 0]],
       locals: [],
       templates: []
     };
@@ -8062,7 +8380,7 @@ define("tc3/templates/dashboard", ["exports"], function (exports) {
             var el1 = dom.createTextNode("\n                        ");
             dom.appendChild(el0, el1);
             var el1 = dom.createElement("p");
-            var el2 = dom.createTextNode("Saved dashboards: \n                            ");
+            var el2 = dom.createTextNode("Saved dashboards:\n                            ");
             dom.appendChild(el1, el2);
             var el2 = dom.createElement("ul");
             var el3 = dom.createTextNode("\n");
@@ -8543,7 +8861,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("tc3/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"tc3","version":"0.0.0+df896fbd"});
+  require("tc3/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"tc3","version":"0.0.0+502ac74a"});
 }
 
 /* jshint ignore:end */

@@ -2,7 +2,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-   
+
     classNames: ['chart'],
 
     // Define boolean variables that specify which subsets (if any) of abstractcreativeworks we're specifically looking at
@@ -10,13 +10,13 @@ export default Ember.Component.extend({
     tPre: false, // Preprint
     tCre: false, // Creativework
     tPro: false, // Project
-    
+
     timeseriesList: Ember.computed('data', function() { // Format our timeseries data
         let data = this.get('data');
         return [
             ['x'].concat(data.map((datum) => {return datum.key_as_string})),
-            ['Articles'].concat(data.map((datum) => {return datum.doc_count}))
-        ]
+            ['Articles'].concat(data.map((datum) => {return datum.doc_count})),
+        ];
     }),
 
     data: [],
@@ -48,14 +48,14 @@ export default Ember.Component.extend({
             this.initTS(title, columns, interval);
         }
     },
-    
+
     pushTS(xCol) { // Add a specific subset of abstractcreativeworks to the TS chart
         let ts = this.get('ts');
         ts.load({
             columns: [xCol]
         });
     },
-    
+
     popTS(xCol) { // Remove a specific subset of abstractcreativeworks from the TS chart
         let ts = this.get('ts');
         ts.unload([xCol]);
@@ -102,83 +102,83 @@ export default Ember.Component.extend({
         });
         this.set('ts', ts);
     },
-    
+
     init() { // Init should be used ONLY for setting component proprties. When we want to work on the component DOM element, we use didInsertElement hook
         this._super(...arguments);
     },
-    
+
     didRender() { // When this component has been inserted into the DOM
-        this.updateTS(); 
+        this.updateTS();
     },
-    
+
     // If the user wants to isolate preprints:
     tPreChanged: Ember.observer('tPre', function() {
         let otherSubsets = (this.get('tPub') || this.get('tCre') || this.get('tPro')); // check if we already are displaying article subsets on the chart
         if(this.get('tPre')) { // if the user checked the box
-            this.filterTS('preprint',otherSubsets); 
+            this.filterTS('preprint',otherSubsets);
         }
         else { // if the user unchecked the box
             if(!otherSubsets) { // if this is the only data on the chart right now and we're removing it
                 let data = this.get('timeseriesList'); // reload the original chart
-                this.updateTS(data);   
+                this.updateTS(data);
             }
             else {
                 this.popTS('preprint');
             }
         }
     }),
-    
+
     // If the user wants to isolate publications:
     tPubChanged: Ember.observer('tPub', function() {
         let otherSubsets = (this.get('tPre') || this.get('tCre') || this.get('tPro'));
         if(this.get('tPub')) { // if the user checked the box
-            this.filterTS('publication',otherSubsets); 
+            this.filterTS('publication',otherSubsets);
         }
         else { // if the user unchecked the box
             if(!otherSubsets) {
                 let data = this.get('timeseriesList');
-                this.updateTS(data);   
+                this.updateTS(data);
             }
             else {
                 this.popTS('publication');
             }
         }
     }),
-    
+
     // If the user wants to isolate creativeworks:
     tCreChanged: Ember.observer('tCre', function() {
         let otherSubsets = (this.get('tPre') || this.get('tPub') || this.get('tPro'));
         if(this.get('tCre')) { // if the user checked the box
-            this.filterTS('creativework',otherSubsets); 
+            this.filterTS('creativework',otherSubsets);
         }
         else { // if the user unchecked the box
             if(!otherSubsets) {
                 let data = this.get('timeseriesList');
-                this.updateTS(data);   
+                this.updateTS(data);
             }
             else {
                 this.popTS('creativework');
             }
         }
     }),
-    
+
     // If the user wants to isolate projects:
     tProChanged: Ember.observer('tPro', function() {
         let otherSubsets = (this.get('tPre') || this.get('tPub') || this.get('tCre'));
         if(this.get('tPro')) { // if the user checked the box
-            this.filterTS('project',otherSubsets); 
+            this.filterTS('project',otherSubsets);
         }
         else { // if the user unchecked the box
             if(!otherSubsets) {
                 let data = this.get('timeseriesList');
-                this.updateTS(data);   
+                this.updateTS(data);
             }
             else {
                 this.popTS('project');
             }
         }
     }),
-    
+
     // Isolate specific subsets of abstractcreativeworks
     filterTS(typeString,o) {
         let d = this.get('aggregations.articles_over_time.buckets');
@@ -205,5 +205,5 @@ export default Ember.Component.extend({
             this.updateTS(data);
         }
     }
-    
+
 });

@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-8jeCBIe0.tmp/0/fake_xml_http_request.js

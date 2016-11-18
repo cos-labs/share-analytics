@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/node_modules/ember-wormhole/app/components/ember-wormhole.js

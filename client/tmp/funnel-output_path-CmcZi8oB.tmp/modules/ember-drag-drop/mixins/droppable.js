@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-k5hlnv4v.tmp/0/mixins/droppable.js

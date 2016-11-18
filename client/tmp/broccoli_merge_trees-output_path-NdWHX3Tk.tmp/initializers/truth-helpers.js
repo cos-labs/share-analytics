@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/node_modules/ember-truth-helpers/app/initializers/truth-helpers.js

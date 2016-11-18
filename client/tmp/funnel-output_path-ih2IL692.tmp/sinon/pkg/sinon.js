@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/tmp/funnel-input_base_path-zARDZJ6C.tmp/0/pkg/sinon.js

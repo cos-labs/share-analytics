@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/node_modules/ember-i18n/app/instance-initializers/ember-i18n.js

@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-8Fd5630p.tmp/0/index.js

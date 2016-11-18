@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/client/app/instance-initializers/global.js.js

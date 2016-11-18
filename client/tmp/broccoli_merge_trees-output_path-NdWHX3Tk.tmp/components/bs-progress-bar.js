@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/node_modules/ember-bootstrap/app/components/bs-progress-bar.js

@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-L6NEnQyK.tmp/0/route-handlers/shorthands/post.js

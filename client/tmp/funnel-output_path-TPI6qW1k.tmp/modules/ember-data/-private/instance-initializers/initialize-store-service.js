@@ -1,0 +1,1 @@
+/Users/admin/projects/sharedash/client/tmp/funnel-input_base_path-yf2ttoeP.tmp/0/-private/instance-initializers/initialize-store-service.js

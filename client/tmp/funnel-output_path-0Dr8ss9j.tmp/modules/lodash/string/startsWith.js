@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-ThBtVLD1.tmp/0/string/startsWith.js

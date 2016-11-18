@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-jsspOw2n.tmp/0//app-prefix.js

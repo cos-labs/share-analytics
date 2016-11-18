@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/client/tmp/funnel-input_base_path-jnDXKBfW.tmp/0/instance-initializers/global.js.js

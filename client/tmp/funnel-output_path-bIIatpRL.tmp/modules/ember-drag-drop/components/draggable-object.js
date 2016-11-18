@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/client/tmp/funnel-input_base_path-alcOh7Jd.tmp/0/components/draggable-object.js

@@ -9,7 +9,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('widgetrepo', '0001_initial'),
+        ('widget', '0001_initial'),
     ]
 
     operations = [

@@ -1,7 +1,7 @@
 from rest_framework_json_api.serializers import ModelSerializer
 from rest_framework_json_api.relations import ResourceRelatedField
-from widgetrepo.models import Widget
-from dashrepo.models import Dashboard
+from widget.models import Widget
+from dashboard.models import Dashboard
 from django.contrib.auth.models import User, Group
 
 

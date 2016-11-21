@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class DashrepoConfig(AppConfig):
-    name = 'dashrepo'
+    name = 'dashboard'

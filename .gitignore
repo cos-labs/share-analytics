@@ -42,6 +42,7 @@ env/
 static
 latest.dump
 local_settings.py
+local.py
 log
 media
 backend/settings/local.py

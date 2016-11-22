@@ -44,5 +44,5 @@ latest.dump
 local_settings.py
 log
 media
-backend/settings/local.py
+**/local.py
 ~Envs/

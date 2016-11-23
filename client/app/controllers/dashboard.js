@@ -89,6 +89,13 @@ export default Ember.Controller.extend({
             console.log('refreshing wall');
             let wall = this.get('wall');
             wall && wall.refresh();
+        },
+
+        addWidget: function(information) {
+            console.log("come");
+            let widget = this.store.createRecord('widget',information);
+            widget.save();
+            console.log(information);
         }
 
     },

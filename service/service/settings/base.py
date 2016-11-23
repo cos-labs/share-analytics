@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,7 +99,7 @@ REST_FRAMEWORK = {
 
 JSON_API_PLURALIZE_TYPES = True
 JSON_API_FORMAT_TYPES = 'camelize'
-
+ALLOWED_HOSTS = ['*']
 
 # Database and Cache
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases

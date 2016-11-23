@@ -506,6 +506,30 @@ export default Ember.Component.extend({
           this.set('configuring', !this.get('configuring'));
       },
 
+      saveWidget: function(){
+          console.log('saveWidget');
+          let name = "galou";
+          let author = "taozhou";
+          let width = this.get('widthSetting');
+          let height = this.get('heightSetting');
+          let query = this.get('q');
+          let settings = {gte: this.get('gte'),
+                          lte: this.get('lte'),
+                          interval: this.get('tsInterval'),
+                        };
+
+          let information = {
+              name: name,
+              author: author,
+              width: width,
+              height: height,
+              query: query,
+              settings: settings,
+          };
+
+          this.sendAction('addWidget', information);
+      }
+
   },
 
 

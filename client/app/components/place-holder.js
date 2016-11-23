@@ -508,19 +508,34 @@ export default Ember.Component.extend({
 
       saveWidget: function(){
           console.log('saveWidget');
-          let name = "galou";
+          let name = this.get('chartType');
           let author = "taozhou";
           let width = this.get('widthSetting');
           let height = this.get('heightSetting');
-          let query = this.get('q');
+          let q = this.get('q');
+          let gte = this.get('gte');
+          let lte = this.get('lte');
+          let query = { bool: {
+                                must: [
+                                        {query_string: {query: q}},
+                                        {range:
+                                              { date: {
+                                                          gte: gte,
+                                                          lte: lte,
+                                                          format: "yyyy-MM-dd||yyyy"
+                                                      }
+                                              }
+                                        }
+                                        ]
+                               }
+                        };
           let settings = {gte: this.get('gte'),
                           lte: this.get('lte'),
                           interval: this.get('tsInterval'),
                         };
-
           let information = {
               name: name,
-              author: author,
+              // author: author,
               width: width,
               height: height,
               query: query,

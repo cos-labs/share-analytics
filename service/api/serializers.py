@@ -7,22 +7,21 @@ from django.contrib.auth.models import User, Group
 
 class WidgetSerializer(ModelSerializer):
 
-    author = ResourceRelatedField(
-        queryset=User.objects,
-        related_link_url_kwarg='user_pk'
-    )
+    # author = ResourceRelatedField(
+    #     queryset=User.objects,
+    #     related_link_url_kwarg='user_pk'
+    # )
 
     class Meta:
         model = Widget
         fields = (
             'id',
             'name',
-            'author',
+            # 'author',
             'width',
             'height',
             'query',
             'settings',
-
         )
 
     class JSONAPIMeta:
@@ -61,5 +60,3 @@ class UserSerializer(ModelSerializer):
 
     class JSONAPIMeta:
         resource_name = 'users'
-
-

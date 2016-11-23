@@ -15,13 +15,13 @@ class Widget(Model):
         max_length = 32,
         default='Unnamed Widget'
     )
-    author = ForeignKey(
-        User,
-        on_delete=PROTECT
-    )
+    # author = ForeignKey(
+    #     User,
+    #     on_delete=PROTECT
+    # )
     width = IntegerField(default=2)
     height = IntegerField(default=2)
-    query = JSONField()
+    query = JSONField(null = True, blank=True)
     settings = JSONField(
         null=True,
         blank=True
@@ -29,5 +29,3 @@ class Widget(Model):
 
     def save(self, *args, **kwargs):
         super(Widget, self).save(*args, **kwargs)
-
-

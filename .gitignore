@@ -43,6 +43,7 @@ static
 latest.dump
 local_settings.py
 local.py
+local.yml
 log
 media
 backend/settings/local.py

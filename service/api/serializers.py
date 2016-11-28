@@ -17,7 +17,7 @@ class WidgetSerializer(ModelSerializer):
         fields = (
             'id',
             'name',
-            # 'author',
+            'author',
             'width',
             'height',
             'query',

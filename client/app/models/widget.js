@@ -4,7 +4,7 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default DS.Model.extend({
     name: attr('string', {defaultValue:'Unnamed Widget'}),
-    // author: attr('string'),
+    author: attr('string'),
     width: attr('number'),
     height: attr('number'),
     query: attr({

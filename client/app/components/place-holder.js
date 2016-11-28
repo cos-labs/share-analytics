@@ -535,7 +535,6 @@ export default Ember.Component.extend({
                         };
           let information = {
               name: name,
-              // author: author,
               width: width,
               height: height,
               query: query,

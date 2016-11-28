@@ -93,15 +93,12 @@ export default Ember.Controller.extend({
         },
 
         addWidget: function(information) {
-            console.log("come");
-            let widget = this.store.createRecord('widget',information);
-            widget.save();
-            console.log(this.get('currentUser'));
+
             this.get('currentUser').load().then((c) => {
-                console.log(c.get('fullName'));
-                console.log(c);
+                information.author = c.get('fullName');
+                let widget = this.store.createRecord('widget',information);
+                widget.save();
             });
-            console.log(information);
         }
 
     },

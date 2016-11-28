@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
 
     // Initialize our query parameters
+    currentUser: Ember.inject.service(),
     q: 'UC Santa Barbara',
     gte: "1996-01-01",
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
@@ -95,6 +96,11 @@ export default Ember.Controller.extend({
             console.log("come");
             let widget = this.store.createRecord('widget',information);
             widget.save();
+            console.log(this.get('currentUser'));
+            this.get('currentUser').load().then((c) => {
+                console.log(c.get('fullName'));
+                console.log(c);
+            });
             console.log(information);
         }
 

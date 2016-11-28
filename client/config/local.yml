@@ -1,26 +1,36 @@
+######## export settings ########
+# export BACKEND=stage
+###### end export settings ######
 
-######## ember-osf settings ########
 local:
-    CLIENT_ID: null
+    CLIENT_ID: 83a3354d3b0f41a9a1e3df1e08ac7ed1
     PERSONAL_ACCESS_TOKEN: null
     OAUTH_SCOPES: osf.full_read osf.full_write
-    REDIRECT_URI: http://localhost:4200/login/
-
+    REDIRECT_URI: https://staging-grants.osf.io/
+stage:
+    CLIENT_ID: 3df077f151dd4de48876baf63fa9d7a6
+    PERSONAL_ACCESS_TOKEN: null
+    OAUTH_SCOPES: osf.full_read osf.full_write
+    REDIRECT_URI: http://localhost:4200/
+######## ember-osf settings ########
+# local:
+#    CLIENT_ID: null
+#    PERSONAL_ACCESS_TOKEN: null
+#    OAUTH_SCOPES: osf.full_read osf.full_write
+#    REDIRECT_URI: http://localhost:4200/login/
 # stage:
 #    CLIENT_ID: null
 #    PERSONAL_ACCESS_TOKEN: null
 #    OAUTH_SCOPES: osf.full_read osf.full_write
 #    REDIRECT_URI: http://localhost:4200/login/
-
 # stage2:
 #    CLIENT_ID: null
 #    PERSONAL_ACCESS_TOKEN: null
 #    OAUTH_SCOPES: osf.full_read osf.full_write
 #    REDIRECT_URI: http://localhost:4200/login/
-
-test:
-    CLIENT_ID: null
-    PERSONAL_ACCESS_TOKEN: null
-    OAUTH_SCOPES: osf.full_read osf.full_write
-    REDIRECT_URI: http://localhost:4200/login/
+# test:
+#     CLIENT_ID: null
+#     PERSONAL_ACCESS_TOKEN: null
+#     OAUTH_SCOPES: osf.full_read osf.full_write
+#     REDIRECT_URI: http://localhost:4200/
 ######### end ember-osf ##########

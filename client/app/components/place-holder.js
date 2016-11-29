@@ -575,7 +575,7 @@ export default Ember.Component.extend({
               settings: settings,
           };
 
-          this.sendAction('addWidget', information);
+          this.sendAction('dashboardSaveWidget', information);
           alert("Chart has been successfully saved!");
       }
 

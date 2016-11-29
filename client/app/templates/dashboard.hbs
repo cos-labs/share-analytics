@@ -38,12 +38,12 @@
 </div>
 <div id='freewall' class='free-wall'>
         {{#each sortableObjectList as |item|}}
-            {{place-holder options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item wall=wall refreshWall=(action 'refreshWall') addWidget=(action 'addWidget')}}
+            {{place-holder options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item wall=wall refreshWall=(action 'refreshWall') dashboardSaveWidget=(action 'dashboardSaveWidget')}}
         {{/each}}
 </div>
 
 <div class='centered'>
-    <button class='add-widget-button' onclick={{action 'addChart'}} style='clear:both;'>{{fa-icon 'plus'}}</button>
+    <button class='add-widget-button' onclick={{action 'addChart' none}} style='clear:both;'>{{fa-icon 'plus'}}</button>
 </div>
 
 {{outlet}}

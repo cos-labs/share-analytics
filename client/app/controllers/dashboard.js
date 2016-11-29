@@ -85,6 +85,8 @@ export default Ember.Controller.extend({
 
         addChart: function(option) {
             this.set('sortableObjectList', this.get('sortableObjectList').addObject({isPlaceholder: true}).slice());
+            let widgets = this.store.findRecord('widget', 1);
+            console.log(widgets.name);
         },
         refreshWall: function() {
             console.log('refreshing wall');
@@ -92,7 +94,7 @@ export default Ember.Controller.extend({
             wall && wall.refresh();
         },
 
-        addWidget: function(information) {
+        dashboardSaveWidget: function(information) {
             this.get('currentUser').load().then((c) => {
                 information.author = c.get('fullName');
                 let widget = this.store.createRecord('widget',information);

@@ -5,7 +5,7 @@
 </div>
 <div class='configmenu'>
     <form {{action 'configChanged' on='submit'}}>
-        <div class="col-xs-4">JS Engine:</div>
+        <div class="col-xs-4">JSengine:</div>
         <div class="col-xs-8">
           <select onchange={{action 'changeEngine' value="target.value"}}>
             <option value="c3">C3</option>
@@ -34,7 +34,7 @@
         <hr>
         <div class="col-xs-4">Query:</div>
         <div class="col-xs-12">
-          {{textarea value=query cols="36" rows="5"}}
+          {{textarea value=query cols="34" rows="4"}}
         </div>
         <hr>
         <div class="col-xs-12">

@@ -93,7 +93,6 @@ export default Ember.Controller.extend({
         },
 
         addWidget: function(information) {
-
             this.get('currentUser').load().then((c) => {
                 information.author = c.get('fullName');
                 let widget = this.store.createRecord('widget',information);

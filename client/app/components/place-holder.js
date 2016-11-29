@@ -509,12 +509,15 @@ export default Ember.Component.extend({
       saveWidget: function(){
           console.log('saveWidget');
           let name = this.get('chartType');
+          let jsEngine = this.get('jsEngine');
           let author = "taozhou";
           let width = this.get('widthSetting');
           let height = this.get('heightSetting');
+
           let q = this.get('q');
           let gte = this.get('gte');
           let lte = this.get('lte');
+          let interval = this.get('tsInterval');
           let query = { bool: {
                                 must: [
                                         {query_string: {query: q}},
@@ -527,12 +530,40 @@ export default Ember.Component.extend({
                                               }
                                         }
                                         ]
-                               }
+                               },
+                         from: 0,
+                         aggregations: {
+                             sources: {
+                                 terms: {
+                                      field: 'sources.raw',
+                                      size: 200
+                                 }
+                             },
+                             contributors : {
+                                 terms : {
+                                     field: 'contributors.raw',
+                                     size: 200
+                                 }
+                             },
+                             tags : {
+                                 terms : {
+                                     field: 'tags.raw',
+                                     size: 200
+                                 }
+                             },
+                             articles_over_time: {
+                                 date_histogram: {
+                                     field: 'date',
+                                     interval: interval,
+                                     format:'yyyy-MM-dd'
+                                 },
+                                 aggregations: {
+                                     arttype: {terms: {field: 'type'}}
+                                 }
+                             }
+                          }
                         };
-          let settings = {gte: this.get('gte'),
-                          lte: this.get('lte'),
-                          interval: this.get('tsInterval'),
-                        };
+          let settings = {jsEngine: jsEngine};
           let information = {
               name: name,
               width: width,
@@ -542,6 +573,7 @@ export default Ember.Component.extend({
           };
 
           this.sendAction('addWidget', information);
+          alert("Chart has been successfully saved!");
       }
 
   },

@@ -12,8 +12,7 @@
             <option value="dimple">Dimple</option>
           </select>
         </div>
-        <hr>
-        <div class="col-xs-4">Chart</div>
+        <div class="col-xs-4">Chart:</div>
         <div class="col-xs-8">
           <select onchange={{action 'changeChart' value="target.value"}}>
             <option value="donut">Donut</option>
@@ -21,28 +20,28 @@
             <option value="bar">Bar</option>
           </select>
         </div>
-        <hr>
+        <div class="col-xs-4">Name:</div>
+        <div class="col-xs-12">
+          {{input type='text' size="35" value=name}}
+        </div>
         <div class="col-xs-4">Width:</div>
         <div class="col-xs-8">
           {{input type='text' size="10" value=widthSetting}}
         </div>
-        <hr>
         <div class="col-xs-4">Height:</div>
         <div class="col-xs-8">
           {{input type='text' size="10" value=heightSetting}}
         </div>
-        <hr>
         <div class="col-xs-4">Query:</div>
         <div class="col-xs-12">
-          {{textarea value=query cols="34" rows="4"}}
+          {{textarea value=query cols="35" rows="3"}}
         </div>
-        <hr>
         <div class="col-xs-12">
           <button class="btn btn-primary" style="margin-right:10px" type='submit'>OK</button>
         </div>
     </form>
 </div>
 
-{{component widgetType chartType=chartType aggregations=aggregations width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal}}
+{{component widgetType chartType=chartType aggregations=aggregations name=name width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal}}
 
 {{yield}}

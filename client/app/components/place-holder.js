@@ -355,6 +355,8 @@ export default Ember.Component.extend({
   classNames: ['widget'],
   classNameBindings: ['configuring', 'width', 'height'],
 
+  name: 'tobeDetermined',
+  jsEngine: 'c3',
   widthSetting: 2,
   heightSetting: 2,
 
@@ -466,7 +468,6 @@ export default Ember.Component.extend({
 
       this.set('widgetType', 'generic-chart');
       this.set('chartType', 'donut');
-
   },
 
   actions: {
@@ -483,7 +484,6 @@ export default Ember.Component.extend({
       },
 
       changeChart: function(chart){
-
           this.set('chartType', chart);
       },
 
@@ -494,6 +494,8 @@ export default Ember.Component.extend({
           console.log('changing config');
           let width = this.get('widthSetting');
           let height = this.get('heightSetting');
+          let name = this.get('name');
+          console.log(name);
           let wall = this.get('wall');
           wall.fixSize({
               block: this.$(),
@@ -508,9 +510,10 @@ export default Ember.Component.extend({
 
       saveWidget: function(){
           console.log('saveWidget');
-          let name = this.get('chartType');
+          let widgetType = this.get('chartType');
+          let name = this.get('name');
           let jsEngine = this.get('jsEngine');
-          let author = "taozhou";
+          let author = "tobeDetermined";
           let width = this.get('widthSetting');
           let height = this.get('heightSetting');
 

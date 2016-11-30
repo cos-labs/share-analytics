@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
 
     // Initialize the three interchangeable charts to be rendered as sortableObjects
     sortableObjectList: [{isPlaceholder: true}],
-
+    widgets: [],
 
     // Initialize the list of additional charts that the user can add
     addableList: [],
@@ -32,24 +32,26 @@ export default Ember.Controller.extend({
 
     storedDashboards: [],
 
+    init(){
+        let items = this.store.peekAll('widget');
+        let widgets = [];
+        items.forEach(function(item, index, enumerable){
+            widgets.push({
+                name: item.get('name'),
+                author: item.get('author'),
+                width: item.get('width'),
+                height: item.get('height'),
+                query: item.get('query'),
+                settings: item.get('settings')});
+        });
+        this.set('widgets', widgets);
+    },
+
     actions: {
 
         restoreWidgets: function(){
-            let items = this.store.peekAll('widget');
-
-            let widgets = [];
-            items.forEach(function(item, index, enumerable){
-                widgets.push({
-                    name: item.get('name'),
-                    author: item.get('author'),
-                    width: item.get('width'),
-                    height: item.get('height'),
-                    query: item.get('query'),
-                    settings: item.get('settings')});
-            });
-
-            if(widgets.length > 0){
-              this.set('sortableObjectList', widgets);
+            if(this.get('widgets').length > 0){
+              this.set('sortableObjectList', this.get('widgets'));
             }
         },
 

@@ -507,6 +507,10 @@ export default Ember.Component.extend({
           this.set('chartType', chart);
       },
 
+      restoreChart: function(name){
+          console.log(name);
+      },
+
       removeWidget: function() {
           this.sendAction('removeChart', this.get('item'))
       },

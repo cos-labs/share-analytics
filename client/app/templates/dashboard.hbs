@@ -38,7 +38,7 @@
 </div>
 <div id='freewall' class='free-wall'>
         {{#each sortableObjectList as |item|}}
-            {{place-holder options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item wall=wall refreshWall=(action 'refreshWall') dashboardSaveWidget=(action 'dashboardSaveWidget')}}
+            {{place-holder options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item widgets=widgets wall=wall refreshWall=(action 'refreshWall') dashboardSaveWidget=(action 'dashboardSaveWidget')}}
         {{/each}}
 </div>
 

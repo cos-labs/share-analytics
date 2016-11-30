@@ -20,6 +20,13 @@
             <option value="bar">Bar</option>
           </select>
         </div>
+        <div class="col-xs-8">
+          <select onchange={{action 'restoreChart' value="target.value"}}>
+            {{#each widgets as |item|}}
+                <option value={{item.name}}>{{item.name}}</option>
+            {{/each}}
+          </select>
+        </div>
         <div class="col-xs-4">Name:</div>
         <div class="col-xs-12">
           {{input type='text' size="35" value=name}}

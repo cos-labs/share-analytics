@@ -353,7 +353,7 @@ export default Ember.Component.extend({
   docs: false,
 
   classNames: ['widget'],
-  classNameBindings: ['configuring', 'width', 'height'],
+  classNameBindings: ['configuring', 'picking', 'width', 'height'],
 
   widgetType: 'wild-card',
   name: 'tobeDetermined',
@@ -389,6 +389,7 @@ export default Ember.Component.extend({
   }),
 
   configuring: false,
+  picking: false,
 
   init() {
       this._super(...arguments);
@@ -473,6 +474,8 @@ export default Ember.Component.extend({
               data: JSON.stringify(this.get('item').query)
             });
           this.set('chartType', this.get('item').settings.chart_type);
+          this.set('widthSetting', this.get('item').width);
+          this.set('heightSetting', this.get('item').height);
       }
       this.set('aggregations', data.aggregations);
       this.set('docs', data.hits.hits.map((hit) => {
@@ -488,6 +491,7 @@ export default Ember.Component.extend({
         }));
 
       this.set('widgetType', 'generic-chart');
+
   },
 
   actions: {
@@ -495,8 +499,15 @@ export default Ember.Component.extend({
       addChart: function(option) {
           this.sendAction('addChart', option);
       },
+
       showConfig: function() {
           this.set('configuring', !this.get('configuring'));
+          this.set('picking', false);
+      },
+
+      showPicker: function() {
+          this.set('picking', !this.get('picking'));
+          this.set('configuring', false);
       },
 
       changeEngine: function(jsEngine){
@@ -507,8 +518,15 @@ export default Ember.Component.extend({
           this.set('chartType', chart);
       },
 
-      restoreChart: function(name){
-          console.log(name);
+      widgetPicked: function(){
+          let index = document.getElementById("widgetSelect").selectedIndex;
+          if(index == 0){
+              return;
+          }
+          let selectedWidget = this.get('widgets')[index];
+          this.set('item', selectedWidget);
+          this.fetchWidgetData();
+
       },
 
       removeWidget: function() {
@@ -518,8 +536,6 @@ export default Ember.Component.extend({
           console.log('changing config');
           let width = this.get('widthSetting');
           let height = this.get('heightSetting');
-          let name = this.get('name');
-          console.log(name);
           let wall = this.get('wall');
           wall.fixSize({
               block: this.$(),
@@ -529,7 +545,7 @@ export default Ember.Component.extend({
           //wall.fitWidth();
           this.sendAction('refreshWall');
           this.set('resizedSignal', true);
-          this.set('configuring', !this.get('configuring'));
+          this.set('configuring', false);
       },
 
       saveWidget: function(){

@@ -2,6 +2,7 @@
     <button class='configureButton' onclick={{action 'removeWidget'}}>{{fa-icon "close"}}</button>
     <button class='configureButton' onclick={{action 'showConfig'}}>{{fa-icon "cogs"}}</button>
     <button class='configureButton' onclick={{action 'saveWidget'}}>{{fa-icon "save"}}</button>
+    <button class='configureButton' onclick={{action 'showPicker'}}>{{fa-icon "folder-open"}}</button>
 </div>
 <div class='configmenu'>
     <form {{action 'configChanged' on='submit'}}>
@@ -18,13 +19,6 @@
             <option value="donut">Donut</option>
             <option value="timeseries">Time-Series</option>
             <option value="bar">Bar</option>
-          </select>
-        </div>
-        <div class="col-xs-8">
-          <select onchange={{action 'restoreChart' value="target.value"}}>
-            {{#each widgets as |item|}}
-                <option value={{item.name}}>{{item.name}}</option>
-            {{/each}}
           </select>
         </div>
         <div class="col-xs-4">Name:</div>
@@ -46,6 +40,20 @@
         <div class="col-xs-12">
           <button class="btn btn-primary" style="margin-right:10px" type='submit'>OK</button>
         </div>
+    </form>
+</div>
+
+<div class='widgetpicker'>
+    <form>
+      <hr>
+      <div class="col-xs-4">Widgets:</div>
+      <div class="col-xs-8">
+        <select id="widgetSelect" onchange={{action 'widgetPicked' value="target.value"}}>
+          {{#each widgets as |item|}}
+              <option value={{item.name}}>{{item.name}}</option>
+          {{/each}}
+        </select>
+      </div>
     </form>
 </div>
 

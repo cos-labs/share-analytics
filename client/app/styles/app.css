@@ -67,11 +67,31 @@ footer.footer {
     display: none;
 }
 
+.widgetpicker {
+    display: none;
+}
+
+.picking > .widgetpicker {
+    display: block;
+}
+
+.picking > .configmenu {
+    display: none;
+}
+
+.picking > .chart {
+    display: none;
+}
+
 .configuring > .configmenu {
     display: block;
 }
 
 .configuring > .chart {
+    display: none;
+}
+
+.configuring > .widgetpicker {
     display: none;
 }
 
@@ -153,7 +173,7 @@ footer.footer {
     padding-left: 20px;
     padding-right: 20px;
     font-size: 24px;
-    border-radius: 70px;
+    border-radius: 80px;
     border: solid rgba(0,0,0,0.3) 1px;
     background-color: #e5e5e5;
     color: rgba(0,0,0,0.3);

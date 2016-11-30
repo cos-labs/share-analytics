@@ -93,6 +93,7 @@ export default Ember.Controller.extend({
             this.get('currentUser').load().then((c) => {
 
                     information.author = c.get('fullName');
+                    this.set('widgets', this.get('widgets').addObject(information).slice());
                     let widget = this.store.createRecord('widget',information);
                     widget.save();
                     alert("Chart has been successfully saved!");

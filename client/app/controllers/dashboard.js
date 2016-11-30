@@ -32,15 +32,6 @@ export default Ember.Controller.extend({
 
     storedDashboards: [],
 
-    init(){
-        this._super(...arguments);
-        this.restoreWidgetsI();
-    },
-
-    restoreWidgetsI: function(){
-
-    },
-
     actions: {
 
         restoreWidgets: function(){
@@ -60,33 +51,6 @@ export default Ember.Controller.extend({
             if(widgets.length > 0){
               this.set('sortableObjectList', widgets);
             }
-
-
-        },
-
-        restoreDash: function(sd) {
-            this.set('q',sd.get('q'));
-            this.send('changeGte', sd.get('gte'));
-            this.send('changeLte',sd.get('lte'));
-//            this.set('tsInterval',sd.get('tsInterval'));
-            this.set('sortableObjectList',sd.get('sortableObjectList'));
-            this.set('addableList',sd.get('addableList'));
-        },
-
-        persistDashboard: function(n) {
-            var record = this.store.createRecord('dashboard', {
-                name: n,
-                q: this.get('q'),
-                gte: this.get('gte'),
-                lte: this.get('lte'),
-                tsInterval: this.get('tsInterval'),
-                sortableObjectList: this.get('sortableObjectList'),
-                addableList: this.get('addableList')
-            });
-            this.set('storedDashboards', this.store.peekAll('dashboard'));
-            // In the future, we'll want to do:
-            // record.save()
-            // this.set('storedDashboards', this.store.findAll('dashboard'));
         },
 
         changeQ: function(query) {
@@ -125,9 +89,13 @@ export default Ember.Controller.extend({
 
         dashboardSaveWidget: function(information) {
             this.get('currentUser').load().then((c) => {
-                information.author = c.get('fullName');
-                let widget = this.store.createRecord('widget',information);
-                widget.save();
+
+                    information.author = c.get('fullName');
+                    let widget = this.store.createRecord('widget',information);
+                    widget.save();
+                    alert("Chart has been successfully saved!");
+            }, function(r){
+                alert("Log in at first to save widget!");
             });
         }
 

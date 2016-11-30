@@ -33,9 +33,9 @@ footer.footer {
     overflow: hidden;
 }
 
-/* Double-wide element */ 
-.grid-item--width2 { 
-    width: 60%; 
+/* Double-wide element */
+.grid-item--width2 {
+    width: 60%;
 }
 
 /* "Large" element */
@@ -145,6 +145,31 @@ footer.footer {
     box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
 }
 
+.restore-widget-button {
+    margin: 40px auto;
+    position: relative;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 24px;
+    border-radius: 70px;
+    border: solid rgba(0,0,0,0.3) 1px;
+    background-color: #e5e5e5;
+    color: rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    outline: none;
+}
+
+.restore-widget-button:hover {
+    top: -1px;
+    -webkit-box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+    box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+}
+
 .centered {
     text-align: center;
 }
@@ -208,16 +233,16 @@ footer.footer {
 @keyframes spinner {
     to {transform: rotate(360deg);}
 }
- 
+
 @-webkit-keyframes spinner {
     to {-webkit-transform: rotate(360deg);}
 }
- 
+
 .spinner {
     min-width: 50px;
     min-height: 50px;
 }
- 
+
 .spinner:before {
     content: 'Loading…';
     position: absolute;
@@ -228,7 +253,7 @@ footer.footer {
     margin-top: -10px;
     margin-left: -16px;
 }
- 
+
 .spinner:not(:required):before {
     content: '';
     border-radius: 50%;

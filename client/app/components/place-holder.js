@@ -597,7 +597,6 @@ export default Ember.Component.extend({
           };
 
           this.sendAction('dashboardSaveWidget', information);
-          alert("Chart has been successfully saved!");
       }
 
   },

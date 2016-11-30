@@ -43,7 +43,9 @@
 </div>
 
 <div class='centered'>
-    <button class='add-widget-button' onclick={{action 'addChart' none}} style='clear:both;'>{{fa-icon 'plus'}}</button>
+    <button class='restore-widget-button' onclick = {{action 'restoreWidgets'}} style = 'clear:both;'>{{fa-icon 'folder-open'}}</button>
+    <button class='add-widget-button' onclick={{action 'addChart'}} style='clear:both;'>{{fa-icon 'plus'}}</button>
+
 </div>
 
 {{outlet}}

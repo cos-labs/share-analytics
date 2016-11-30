@@ -4,7 +4,7 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default DS.Model.extend({
     name: attr('string', {defaultValue:'Unnamed Widget'}),
-    // author: attr('string'),
+    author: attr('string'),
     width: attr('number'),
     height: attr('number'),
     query: attr({
@@ -40,21 +40,23 @@ export default DS.Model.extend({
                     field: attr('string'),
                     size: attr('number')
                 })
-            })
-        }),
-        bool: attr({
-            must: attr([{
-                query_string: attr('string'),
-            },{
-                range: attr({
-                    date: attr({
-                        gte: attr('date'),
-                        lte: attr('date'),
-                        interval: attr('string')
-                    })
-                })
-            }])
-        }),
+            })}),
+        query: attr({
+                  bool: attr({
+                      must: attr([{
+                            query_string: attr({query: attr('string')})
+                          },
+                          { range: attr({
+                                  date: attr({
+                                      gte: attr('date'),
+                                      lte: attr('date'),
+                                      interval: attr('string')
+                                      })
+                                  })
+                          }]
+                      )
+                  })
+                }),
         from: attr('number')
     }),
 

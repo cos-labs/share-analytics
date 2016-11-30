@@ -13,7 +13,6 @@ export default Ember.Route.extend(OsfAgnosticAuthRouteMixin, {
         if (this.get('session.isAuthenticated')) {
             return this.get('store').findRecord('user', 'me');
         }
-        return null;
 
     }
 });

@@ -32,7 +32,37 @@ export default Ember.Controller.extend({
 
     storedDashboards: [],
 
+    init(){
+        this._super(...arguments);
+        this.restoreWidgetsI();
+    },
+
+    restoreWidgetsI: function(){
+
+    },
+
     actions: {
+
+        restoreWidgets: function(){
+            let items = this.store.peekAll('widget');
+
+            let widgets = [];
+            items.forEach(function(item, index, enumerable){
+                widgets.push({
+                    name: item.get('name'),
+                    author: item.get('author'),
+                    width: item.get('width'),
+                    height: item.get('height'),
+                    query: item.get('query'),
+                    settings: item.get('settings')});
+            });
+
+            if(widgets.length > 0){
+              this.set('sortableObjectList', widgets);
+            }
+
+
+        },
 
         restoreDash: function(sd) {
             this.set('q',sd.get('q'));
@@ -85,9 +115,8 @@ export default Ember.Controller.extend({
 
         addChart: function(option) {
             this.set('sortableObjectList', this.get('sortableObjectList').addObject({isPlaceholder: true}).slice());
-            let widgets = this.store.findRecord('widget', 1);
-            console.log(widgets.name);
         },
+
         refreshWall: function() {
             console.log('refreshing wall');
             let wall = this.get('wall');

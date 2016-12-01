@@ -15,6 +15,19 @@ export default Ember.Component.extend({
         this.updateChart();
     }),
 
+    download: Ember.observer( 'downloadHook', function() {
+      let element = this.$(`.chart`).get(0);
+      var a = document.createElement('a'), xml, ev;
+      a.download = 'chart.svg'; // file name
+      xml = (new XMLSerializer()).serializeToString(element);
+      a.href = 'data:application/octet-stream;base64,' + btoa(xml);
+      ev = document.createEvent("MouseEvents");
+      ev.initMouseEvent("click", true, false, self, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      a.dispatchEvent(ev);
+      console.log('josh') ;
+      this.get('downloadHook') ;
+    }),
+
     charTypeChange: Ember.observer('chartType', function(){
         this.updateChart();
     }),

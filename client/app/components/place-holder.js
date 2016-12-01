@@ -364,6 +364,7 @@ export default Ember.Component.extend({
   computedHeight: 200,
   computedWidth: 200,
 
+  downloadHook: false,
   resizedSignal: false,
 
   // Initialize our query parameters
@@ -490,6 +491,12 @@ export default Ember.Component.extend({
       removeWidget: function() {
           this.sendAction('removeChart', this.get('item'))
       },
+
+      download : function() {
+          this.set( 'downloadHook', true );
+          console.log() ;
+      },
+
       configChanged: function() {
           console.log('changing config');
           let width = this.get('widthSetting');

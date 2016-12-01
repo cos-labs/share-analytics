@@ -1,6 +1,7 @@
 <div class='widgetButtons'>
     <button class='configureButton' onclick={{action 'removeWidget'}}>{{fa-icon "close"}}</button>
     <button class='configureButton' onclick={{action 'showConfig'}}>{{fa-icon "cogs"}}</button>
+    <button class='configureButton' onclick={{action 'download'}}>{{fa-icon 'download'}}</button>
 </div>
 <div class='configmenu'>
     <form {{action 'configChanged' on='submit'}}>
@@ -42,6 +43,6 @@
     </form>
 </div>
 
-{{component widgetType chartType=chartType aggregations=aggregations width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal}}
+{{component widgetType chartType=chartType aggregations=aggregations width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal downloadHook=downloadHook}}
 
 {{yield}}

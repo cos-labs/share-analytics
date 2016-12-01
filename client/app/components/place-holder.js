@@ -394,7 +394,6 @@ export default Ember.Component.extend({
       this._super(...arguments);
 
       this.fetchWidgetData().then(function(val){
-          console.log('%c ggg! ', 'background: #222; color: #bada55');
           return val.applyGraphSetting();
       });
 
@@ -490,8 +489,6 @@ export default Ember.Component.extend({
             r.organizations = source.lists.organizations;
             return r;
         }));
-
-        console.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
         deferred.resolve(this);
         return deferred.promise;
   },
@@ -514,7 +511,6 @@ export default Ember.Component.extend({
             height: height*150,
         });
         this.set('chartType', this.get('item').settings.chart_type);
-        console.log(this.get('name'));
       }
       this.set('widgetType', 'generic-chart');
       this.sendAction('refreshWall');
@@ -545,10 +541,8 @@ export default Ember.Component.extend({
           this.set('chartType', chart);
       },
 
-      widgetPicked: function(){
-          let index = document.getElementById("widgetSelect").selectedIndex;
+      widgetPicked: function(index){
           let selectedWidget = this.get('widgets')[index];
-
           this.set('item', selectedWidget);
           console.log(this.get('item').name);
           this.fetchWidgetData().then(function(val){

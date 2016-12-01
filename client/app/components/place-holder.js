@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ENV from '../config/environment';
 
-
+import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
 
     //
@@ -344,7 +344,6 @@ const agg_types = [ // agg_types is this array literal, reduced by the following
 
 }, {});
 
-
 export default Ember.Component.extend({
 
   // widgetType: 'wild-card',
@@ -393,7 +392,12 @@ export default Ember.Component.extend({
 
   init() {
       this._super(...arguments);
-      this.fetchWidgetData();
+
+      this.fetchWidgetData().then(function(val){
+          console.log('%c ggg! ', 'background: #222; color: #bada55');
+          return val.applyGraphSetting();
+      });
+
   },
 
   didRender() {
@@ -403,6 +407,7 @@ export default Ember.Component.extend({
   },
 
   fetchWidgetData: async function() {
+      var deferred = Q.defer();
       let data = null;
       if(this.get('item').isPlaceholder){
           let query = this.get('q');
@@ -463,7 +468,6 @@ export default Ember.Component.extend({
                   }
               })
           });
-          this.set('chartType', 'donut');
       }
       else{
           data = await Ember.$.ajax({
@@ -473,17 +477,6 @@ export default Ember.Component.extend({
               contentType: 'application/json',
               data: JSON.stringify(this.get('item').query)
             });
-          this.set('chartType', this.get('item').settings.chart_type);
-          this.set('widthSetting', this.get('item').width);
-          this.set('heightSetting', this.get('item').height);
-          let width = this.get('widthSetting');
-          let height = this.get('heightSetting');
-          let wall = this.get('wall');
-          wall.fixSize({
-              block: this.$(),
-              width: width*150,
-              height: height*150,
-          });
       }
       this.set('aggregations', data.aggregations);
       this.set('docs', data.hits.hits.map((hit) => {
@@ -498,7 +491,33 @@ export default Ember.Component.extend({
             return r;
         }));
 
+        console.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
+        deferred.resolve(this);
+        return deferred.promise;
+  },
+
+  applyGraphSetting: function(){
+
+      if(this.get('item').isPlaceholder){
+        this.set('chartType', 'donut');
+      }
+      else{
+        this.set('widthSetting', this.get('item').width);
+        this.set('heightSetting', this.get('item').height);
+        this.set('name', this.get('item').name);
+        let width = this.get('widthSetting');
+        let height = this.get('heightSetting');
+        let wall = this.get('wall');
+        wall.fixSize({
+            block: this.$(),
+            width: width*150,
+            height: height*150,
+        });
+        this.set('chartType', this.get('item').settings.chart_type);
+        console.log(this.get('name'));
+      }
       this.set('widgetType', 'generic-chart');
+      this.sendAction('refreshWall');
 
   },
 
@@ -528,12 +547,13 @@ export default Ember.Component.extend({
 
       widgetPicked: function(){
           let index = document.getElementById("widgetSelect").selectedIndex;
-          if(index == 0){
-              return;
-          }
           let selectedWidget = this.get('widgets')[index];
+
           this.set('item', selectedWidget);
-          this.fetchWidgetData();
+          console.log(this.get('item').name);
+          this.fetchWidgetData().then(function(val){
+              return val.applyGraphSetting();
+          });
       },
 
       removeWidget: function() {
@@ -543,6 +563,7 @@ export default Ember.Component.extend({
           console.log('changing config');
           let width = this.get('widthSetting');
           let height = this.get('heightSetting');
+          let name = this.get('name');
           let wall = this.get('wall');
           wall.fixSize({
               block: this.$(),

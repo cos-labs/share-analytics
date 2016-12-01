@@ -50,22 +50,22 @@ export default Ember.Controller.extend({
     actions: {
 
         restoreWidgets: function(){
-          let items = this.store.peekAll('widget');
-          let widgets = [];
-          items.forEach(function(item, index, enumerable){
-              widgets.push({
-                  name: item.get('name'),
-                  author: item.get('author'),
-                  width: item.get('width'),
-                  height: item.get('height'),
-                  query: item.get('query'),
-                  settings: item.get('settings')});
-          });
+            let items = this.store.peekAll('widget');
+            let widgets = [];
+            items.forEach(function(item, index, enumerable){
+                widgets.push({
+                    name: item.get('name'),
+                    author: item.get('author'),
+                    width: item.get('width'),
+                    height: item.get('height'),
+                    query: item.get('query'),
+                    settings: item.get('settings')});
+            });
 
-          this.set('widgets', widgets);
-            if(this.get('widgets').length > 0){
-              this.set('sortableObjectList', this.get('widgets').slice());
-            }
+            this.set('widgets', widgets);
+              if(this.get('widgets').length > 0){
+                this.set('sortableObjectList', this.get('widgets').slice());
+              }
         },
 
         changeQ: function(query) {

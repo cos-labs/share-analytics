@@ -476,6 +476,14 @@ export default Ember.Component.extend({
           this.set('chartType', this.get('item').settings.chart_type);
           this.set('widthSetting', this.get('item').width);
           this.set('heightSetting', this.get('item').height);
+          let width = this.get('widthSetting');
+          let height = this.get('heightSetting');
+          let wall = this.get('wall');
+          wall.fixSize({
+              block: this.$(),
+              width: width*150,
+              height: height*150,
+          });
       }
       this.set('aggregations', data.aggregations);
       this.set('docs', data.hits.hits.map((hit) => {
@@ -526,7 +534,6 @@ export default Ember.Component.extend({
           let selectedWidget = this.get('widgets')[index];
           this.set('item', selectedWidget);
           this.fetchWidgetData();
-
       },
 
       removeWidget: function() {

@@ -847,101 +847,88 @@ define('tc3/components/generic-chart', ['exports', 'ember'], function (exports, 
                 height: this.get('height') * 150 - 20,
                 width: this.get('width') * 150 }), _chart_options);
 
-            switch (chart_type) {
-                case 'donut':
-                    {
+            if (chart_type == 'donut') {
 
-                        this.set('data', this.get('aggregations.sources.buckets'));
-                        var columns = this.get('data').map(function (_ref) {
-                            var key = _ref.key;
-                            var doc_count = _ref.doc_count;
-                            return [key, doc_count];
-                        });
-                        var title = 'Published in...';
+                this.set('data', this.get('aggregations.sources.buckets'));
+                var columns = this.get('data').map(function (_ref) {
+                    var key = _ref.key;
+                    var doc_count = _ref.doc_count;
+                    return [key, doc_count];
+                });
+                var title = 'Published in...';
+            } else if (chart_type == 'bar') {
 
-                        break;
+                this.set('data', this.get('aggregations.contributors.buckets'));
+                var columns = this.get('data').map(function (_ref2) {
+                    var key = _ref2.key;
+                    var doc_count = _ref2.doc_count;
+                    return [key, doc_count];
+                }).slice(0, 10);
+                var title = 'Top 10 Contributors: ';
+
+                var axis = {
+                    x: {
+                        tick: {
+                            format: function format() {
+                                return 'Top 10 Contributors';
+                            }
+                        }
+                    },
+                    y: {
+                        label: 'Number of Publications'
                     }
-                case 'bar':
-                    {
+                };
+                var tooltip = {
+                    grouped: false };
+                // Default true
+                chart_options['axis'] = axis;
+                chart_options['tooltip'] = tooltip;
+            } else if (chart_type == 'timeseries') {
 
-                        this.set('data', this.get('aggregations.contributors.buckets'));
-                        var columns = this.get('data').map(function (_ref2) {
-                            var key = _ref2.key;
-                            var doc_count = _ref2.doc_count;
-                            return [key, doc_count];
-                        }).slice(0, 10);
-                        var title = 'Top 10 Contributors: ';
-
-                        var axis = {
-                            x: {
-                                tick: {
-                                    format: function format() {
-                                        return 'Top 10 Contributors';
-                                    }
-                                }
+                this.set('data', this.get('aggregations.articles_over_time.buckets'));
+                var columns = [['x'].concat(this.get('data').map(function (datum) {
+                    return datum.key_as_string;
+                })), ['Articles'].concat(this.get('data').map(function (datum) {
+                    return datum.doc_count;
+                }))];
+                var title = '';
+                var data_x = 'x';
+                var axis = {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            culling: {
+                                max: 10
                             },
-                            y: {
-                                label: 'Number of Publications'
-                            }
-                        };
-                        var tooltip = {
-                            grouped: false };
-                        // Default true
-                        chart_options['axis'] = axis;
-                        chart_options['tooltip'] = tooltip;
-
-                        break;
+                            rotate: 90,
+                            format: '%d-%m-%Y' // Format the tick labels on our chart
+                        }
                     }
-                case 'timeseries':
-                    {
-
-                        this.set('data', this.get('aggregations.articles_over_time.buckets'));
-                        var columns = [['x'].concat(this.get('data').map(function (datum) {
-                            return datum.key_as_string;
-                        })), ['Articles'].concat(this.get('data').map(function (datum) {
-                            return datum.doc_count;
-                        }))];
-                        var title = '';
-                        var data_x = 'x';
-                        var axis = {
-                            x: {
-                                type: 'timeseries',
-                                tick: {
-                                    culling: {
-                                        max: 10
-                                    },
-                                    rotate: 90,
-                                    format: '%d-%m-%Y' // Format the tick labels on our chart
-                                }
-                            }
-                        };
-                        var data_types = {
-                            x: 'area-spline',
-                            Articles: 'area'
-                        };
-                        var tooltip = { // Format the tooltips on our chart
-                            format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
-                                title: function title(d) {
-                                    return d.toString().substring(4, 15); // This isn't perfect, but it's at least more verbose than before
-                                }
-                            }
-                        };
-                        var zoom = {
-                            enabled: true
-                        };
-                        var point = {
-                            show: false
-                        };
-
-                        chart_options['axis'] = axis;
-                        chart_options['data']['types'] = data_types;
-                        chart_options['data']['x'] = data_x;
-                        chart_options['tooltip'] = tooltip;
-                        chart_options['zoom'] = zoom;
-                        chart_options['point'] = point;
-
-                        break;
+                };
+                var data_types = {
+                    x: 'area-spline',
+                    Articles: 'area'
+                };
+                var tooltip = { // Format the tooltips on our chart
+                    format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
+                        title: function title(d) {
+                            return d.toString().substring(4, 15); // This isn't perfect, but it's at least more verbose than before
+                        }
                     }
+                };
+                var zoom = {
+                    enabled: true
+                };
+                var point = {
+                    show: false
+                };
+
+                chart_options['axis'] = axis;
+                chart_options['data']['types'] = data_types;
+                chart_options['data']['x'] = data_x;
+                chart_options['tooltip'] = tooltip;
+                chart_options['zoom'] = zoom;
+                chart_options['point'] = point;
             }
 
             chart_options['data']['columns'] = columns;
@@ -8200,270 +8187,17 @@ define("tc3/templates/components/wild-card", ["exports"], function (exports) {
 define("tc3/templates/dashboard", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template((function () {
     var child0 = (function () {
-      var child0 = (function () {
-        return {
-          meta: {
-            "revision": "Ember@2.7.3",
-            "loc": {
-              "source": null,
-              "start": {
-                "line": 17,
-                "column": 21
-              },
-              "end": {
-                "line": 19,
-                "column": 21
-              }
-            },
-            "moduleName": "tc3/templates/dashboard.hbs"
-          },
-          isEmpty: false,
-          arity: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          buildFragment: function buildFragment(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode("                        ");
-            dom.appendChild(el0, el1);
-            var el1 = dom.createElement("p");
-            var el2 = dom.createTextNode("Search for new institution: ");
-            dom.appendChild(el1, el2);
-            var el2 = dom.createComment("");
-            dom.appendChild(el1, el2);
-            dom.appendChild(el0, el1);
-            var el1 = dom.createTextNode("\n");
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-            var morphs = new Array(1);
-            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 1, 1);
-            return morphs;
-          },
-          statements: [["inline", "input", [], ["value", ["subexpr", "@mut", [["get", "query", ["loc", [null, [18, 69], [18, 74]]], 0, 0, 0, 0]], [], [], 0, 0], "enter", "changeQ"], ["loc", [null, [18, 55], [18, 92]]], 0, 0]],
-          locals: [],
-          templates: []
-        };
-      })();
-      var child1 = (function () {
-        return {
-          meta: {
-            "revision": "Ember@2.7.3",
-            "loc": {
-              "source": null,
-              "start": {
-                "line": 20,
-                "column": 21
-              },
-              "end": {
-                "line": 23,
-                "column": 21
-              }
-            },
-            "moduleName": "tc3/templates/dashboard.hbs"
-          },
-          isEmpty: false,
-          arity: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          buildFragment: function buildFragment(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode("                        ");
-            dom.appendChild(el0, el1);
-            var el1 = dom.createElement("p");
-            var el2 = dom.createTextNode("Start date for institutional data: ");
-            dom.appendChild(el1, el2);
-            var el2 = dom.createComment("");
-            dom.appendChild(el1, el2);
-            dom.appendChild(el0, el1);
-            var el1 = dom.createTextNode("\n                        ");
-            dom.appendChild(el0, el1);
-            var el1 = dom.createElement("p");
-            var el2 = dom.createTextNode("Update end date for institutional data: ");
-            dom.appendChild(el1, el2);
-            var el2 = dom.createComment("");
-            dom.appendChild(el1, el2);
-            dom.appendChild(el0, el1);
-            var el1 = dom.createTextNode("\n");
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-            var morphs = new Array(2);
-            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 1, 1);
-            morphs[1] = dom.createMorphAt(dom.childAt(fragment, [3]), 1, 1);
-            return morphs;
-          },
-          statements: [["inline", "bootstrap-datepicker", [], ["value", ["subexpr", "@mut", [["get", "g", ["loc", [null, [21, 91], [21, 92]]], 0, 0, 0, 0]], [], [], 0, 0], "autoclose", true, "changeDate", "changeGte"], ["loc", [null, [21, 62], [21, 132]]], 0, 0], ["inline", "bootstrap-datepicker", [], ["value", ["subexpr", "@mut", [["get", "l", ["loc", [null, [22, 96], [22, 97]]], 0, 0, 0, 0]], [], [], 0, 0], "autoclose", true, "changeDate", "changeLte"], ["loc", [null, [22, 67], [22, 137]]], 0, 0]],
-          locals: [],
-          templates: []
-        };
-      })();
-      var child2 = (function () {
-        var child0 = (function () {
-          return {
-            meta: {
-              "revision": "Ember@2.7.3",
-              "loc": {
-                "source": null,
-                "start": {
-                  "line": 28,
-                  "column": 32
-                },
-                "end": {
-                  "line": 30,
-                  "column": 32
-                }
-              },
-              "moduleName": "tc3/templates/dashboard.hbs"
-            },
-            isEmpty: false,
-            arity: 1,
-            cachedFragment: null,
-            hasRendered: false,
-            buildFragment: function buildFragment(dom) {
-              var el0 = dom.createDocumentFragment();
-              var el1 = dom.createTextNode("                                ");
-              dom.appendChild(el0, el1);
-              var el1 = dom.createElement("li");
-              var el2 = dom.createElement("a");
-              var el3 = dom.createComment("");
-              dom.appendChild(el2, el3);
-              dom.appendChild(el1, el2);
-              dom.appendChild(el0, el1);
-              var el1 = dom.createTextNode("\n");
-              dom.appendChild(el0, el1);
-              return el0;
-            },
-            buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-              var element0 = dom.childAt(fragment, [1, 0]);
-              var morphs = new Array(2);
-              morphs[0] = dom.createElementMorph(element0);
-              morphs[1] = dom.createMorphAt(element0, 0, 0);
-              return morphs;
-            },
-            statements: [["element", "action", ["restoreDash", ["get", "sd", ["loc", [null, [29, 62], [29, 64]]], 0, 0, 0, 0]], [], ["loc", [null, [29, 39], [29, 66]]], 0, 0], ["content", "sd.name", ["loc", [null, [29, 67], [29, 78]]], 0, 0, 0, 0]],
-            locals: ["sd"],
-            templates: []
-          };
-        })();
-        return {
-          meta: {
-            "revision": "Ember@2.7.3",
-            "loc": {
-              "source": null,
-              "start": {
-                "line": 24,
-                "column": 21
-              },
-              "end": {
-                "line": 33,
-                "column": 21
-              }
-            },
-            "moduleName": "tc3/templates/dashboard.hbs"
-          },
-          isEmpty: false,
-          arity: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          buildFragment: function buildFragment(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode("                        ");
-            dom.appendChild(el0, el1);
-            var el1 = dom.createElement("p");
-            var el2 = dom.createTextNode("Save current dashboard: ");
-            dom.appendChild(el1, el2);
-            var el2 = dom.createComment("");
-            dom.appendChild(el1, el2);
-            dom.appendChild(el0, el1);
-            var el1 = dom.createTextNode("\n                        ");
-            dom.appendChild(el0, el1);
-            var el1 = dom.createElement("p");
-            var el2 = dom.createTextNode("Saved dashboards:\n                            ");
-            dom.appendChild(el1, el2);
-            var el2 = dom.createElement("ul");
-            var el3 = dom.createTextNode("\n");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createComment("");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createTextNode("                            ");
-            dom.appendChild(el2, el3);
-            dom.appendChild(el1, el2);
-            var el2 = dom.createTextNode("\n                        ");
-            dom.appendChild(el1, el2);
-            dom.appendChild(el0, el1);
-            var el1 = dom.createTextNode("\n");
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-            var morphs = new Array(2);
-            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 1, 1);
-            morphs[1] = dom.createMorphAt(dom.childAt(fragment, [3, 1]), 1, 1);
-            return morphs;
-          },
-          statements: [["inline", "input", [], ["value", ["subexpr", "@mut", [["get", "n", ["loc", [null, [25, 65], [25, 66]]], 0, 0, 0, 0]], [], [], 0, 0], "enter", "persistDashboard", "placeholder", "Dashboard Name"], ["loc", [null, [25, 51], [25, 122]]], 0, 0], ["block", "each", [["get", "storedDashboards", ["loc", [null, [28, 40], [28, 56]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [28, 32], [30, 41]]]]],
-          locals: [],
-          templates: [child0]
-        };
-      })();
       return {
         meta: {
           "revision": "Ember@2.7.3",
           "loc": {
             "source": null,
             "start": {
-              "line": 16,
-              "column": 16
-            },
-            "end": {
-              "line": 34,
-              "column": 16
-            }
-          },
-          "moduleName": "tc3/templates/dashboard.hbs"
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createComment("");
-          dom.appendChild(el0, el1);
-          var el1 = dom.createComment("");
-          dom.appendChild(el0, el1);
-          var el1 = dom.createComment("");
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(3);
-          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
-          morphs[1] = dom.createMorphAt(fragment, 1, 1, contextualElement);
-          morphs[2] = dom.createMorphAt(fragment, 2, 2, contextualElement);
-          dom.insertBoundary(fragment, 0);
-          dom.insertBoundary(fragment, null);
-          return morphs;
-        },
-        statements: [["block", "bs-accordion-item", [], ["value", "1", "title", "Institution (PoC only)"], 0, null, ["loc", [null, [17, 21], [19, 43]]]], ["block", "bs-accordion-item", [], ["value", "2", "title", "Dates"], 1, null, ["loc", [null, [20, 21], [23, 43]]]], ["block", "bs-accordion-item", [], ["value", "3", "title", "Saved Dashboards"], 2, null, ["loc", [null, [24, 21], [33, 43]]]]],
-        locals: [],
-        templates: [child0, child1, child2]
-      };
-    })();
-    var child1 = (function () {
-      return {
-        meta: {
-          "revision": "Ember@2.7.3",
-          "loc": {
-            "source": null,
-            "start": {
-              "line": 40,
+              "line": 41,
               "column": 8
             },
             "end": {
-              "line": 42,
+              "line": 43,
               "column": 8
             }
           },
@@ -8488,7 +8222,7 @@ define("tc3/templates/dashboard", ["exports"], function (exports) {
           morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
           return morphs;
         },
-        statements: [["inline", "place-holder", [], ["options", ["subexpr", "@mut", [["get", "addableList", ["loc", [null, [41, 35], [41, 46]]], 0, 0, 0, 0]], [], [], 0, 0], "addChart", ["subexpr", "action", ["addChart"], [], ["loc", [null, [41, 56], [41, 75]]], 0, 0], "removeChart", ["subexpr", "action", ["removeChart"], [], ["loc", [null, [41, 88], [41, 110]]], 0, 0], "item", ["subexpr", "@mut", [["get", "item", ["loc", [null, [41, 116], [41, 120]]], 0, 0, 0, 0]], [], [], 0, 0], "wall", ["subexpr", "@mut", [["get", "wall", ["loc", [null, [41, 126], [41, 130]]], 0, 0, 0, 0]], [], [], 0, 0], "refreshWall", ["subexpr", "action", ["refreshWall"], [], ["loc", [null, [41, 143], [41, 165]]], 0, 0]], ["loc", [null, [41, 12], [41, 167]]], 0, 0]],
+        statements: [["inline", "place-holder", [], ["options", ["subexpr", "@mut", [["get", "addableList", ["loc", [null, [42, 35], [42, 46]]], 0, 0, 0, 0]], [], [], 0, 0], "addChart", ["subexpr", "action", ["addChart"], [], ["loc", [null, [42, 56], [42, 75]]], 0, 0], "removeChart", ["subexpr", "action", ["removeChart"], [], ["loc", [null, [42, 88], [42, 110]]], 0, 0], "item", ["subexpr", "@mut", [["get", "item", ["loc", [null, [42, 116], [42, 120]]], 0, 0, 0, 0]], [], [], 0, 0], "wall", ["subexpr", "@mut", [["get", "wall", ["loc", [null, [42, 126], [42, 130]]], 0, 0, 0, 0]], [], [], 0, 0], "refreshWall", ["subexpr", "action", ["refreshWall"], [], ["loc", [null, [42, 143], [42, 165]]], 0, 0]], ["loc", [null, [42, 12], [42, 167]]], 0, 0]],
         locals: ["item"],
         templates: []
       };
@@ -8503,7 +8237,7 @@ define("tc3/templates/dashboard", ["exports"], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 50,
+            "line": 51,
             "column": 0
           }
         },
@@ -8515,6 +8249,14 @@ define("tc3/templates/dashboard", ["exports"], function (exports) {
       hasRendered: false,
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
         var el1 = dom.createElement("div");
         dom.setAttribute(el1, "class", "container-fluid");
         var el2 = dom.createTextNode("\n    ");
@@ -8549,41 +8291,7 @@ define("tc3/templates/dashboard", ["exports"], function (exports) {
         dom.appendChild(el0, el1);
         var el1 = dom.createTextNode("\n\n");
         dom.appendChild(el0, el1);
-        var el1 = dom.createElement("div");
-        dom.setAttribute(el1, "class", "container-fluid");
-        var el2 = dom.createTextNode("\n    ");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "container");
-        var el3 = dom.createTextNode("\n        ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("div");
-        dom.setAttribute(el3, "class", "row");
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("div");
-        dom.setAttribute(el4, "class", "col-md-12");
-        var el5 = dom.createTextNode("\n                ");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createElement("h3");
-        var el6 = dom.createTextNode("Control Panel:");
-        dom.appendChild(el5, el6);
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode("\n");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createComment("");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode("            ");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n        ");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n");
-        dom.appendChild(el1, el2);
+        var el1 = dom.createComment(" <div class='container-fluid'>\n    <div class='container'>\n        <div class='row'>\n            <div class='col-md-12'>\n                <h3>Control Panel:</h3>\n{{#bs-accordion selected=selected}}\n                     {{#bs-accordion-item value=\"1\" title=\"Institution (PoC only)\"}}\n                        <p>Search for new institution: {{input value=query enter='changeQ'}}</p>\n                     {{/bs-accordion-item}}\n                     {{#bs-accordion-item value=\"2\" title=\"Dates\"}}\n                        <p>Start date for institutional data: {{bootstrap-datepicker value=g autoclose=true changeDate='changeGte'}}</p>\n                        <p>Update end date for institutional data: {{bootstrap-datepicker value=l autoclose=true changeDate='changeLte'}}</p>\n                     {{/bs-accordion-item}}\n                     {{#bs-accordion-item value=\"3\" title=\"Saved Dashboards\"}}\n                        <p>Save current dashboard: {{input value=n enter='persistDashboard' placeholder='Dashboard Name'}}</p>\n                        <p>Saved dashboards:\n                            <ul>\n                                {{#each storedDashboards as |sd|}}\n                                <li><a {{action 'restoreDash' sd}}>{{sd.name}}</a></li>\n                                {{/each}}\n                            </ul>\n                        </p>\n                     {{/bs-accordion-item}}\n                {{/bs-accordion}}            </div>\n        </div>\n    </div>\n</div>");
         dom.appendChild(el0, el1);
         var el1 = dom.createTextNode("\n");
         dom.appendChild(el0, el1);
@@ -8619,18 +8327,17 @@ define("tc3/templates/dashboard", ["exports"], function (exports) {
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var element1 = dom.childAt(fragment, [6, 1]);
-        var morphs = new Array(5);
-        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [2, 1, 1, 1]), 3, 3);
-        morphs[1] = dom.createMorphAt(dom.childAt(fragment, [4]), 1, 1);
-        morphs[2] = dom.createAttrMorph(element1, 'onclick');
-        morphs[3] = dom.createMorphAt(element1, 0, 0);
-        morphs[4] = dom.createMorphAt(fragment, 8, 8, contextualElement);
+        var element0 = dom.childAt(fragment, [10, 1]);
+        var morphs = new Array(4);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [8]), 1, 1);
+        morphs[1] = dom.createAttrMorph(element0, 'onclick');
+        morphs[2] = dom.createMorphAt(element0, 0, 0);
+        morphs[3] = dom.createMorphAt(fragment, 12, 12, contextualElement);
         return morphs;
       },
-      statements: [["block", "bs-accordion", [], ["selected", ["subexpr", "@mut", [["get", "selected", ["loc", [null, [16, 41], [16, 49]]], 0, 0, 0, 0]], [], [], 0, 0]], 0, null, ["loc", [null, [16, 16], [34, 33]]]], ["block", "each", [["get", "sortableObjectList", ["loc", [null, [40, 16], [40, 34]]], 0, 0, 0, 0]], [], 1, null, ["loc", [null, [40, 8], [42, 17]]]], ["attribute", "onclick", ["subexpr", "action", ["addChart"], [], ["loc", [null, [null, null], [46, 67]]], 0, 0], 0, 0, 0, 0], ["inline", "fa-icon", ["plus"], [], ["loc", [null, [46, 88], [46, 106]]], 0, 0], ["content", "outlet", ["loc", [null, [49, 0], [49, 10]]], 0, 0, 0, 0]],
+      statements: [["block", "each", [["get", "sortableObjectList", ["loc", [null, [41, 16], [41, 34]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [41, 8], [43, 17]]]], ["attribute", "onclick", ["subexpr", "action", ["addChart"], [], ["loc", [null, [null, null], [47, 67]]], 0, 0], 0, 0, 0, 0], ["inline", "fa-icon", ["plus"], [], ["loc", [null, [47, 88], [47, 106]]], 0, 0], ["content", "outlet", ["loc", [null, [50, 0], [50, 10]]], 0, 0, 0, 0]],
       locals: [],
-      templates: [child0, child1]
+      templates: [child0]
     };
   })());
 });
@@ -8861,7 +8568,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("tc3/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"tc3","version":"0.0.0+502ac74a"});
+  require("tc3/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"tc3","version":"0.0.0+42c62d35"});
 }
 
 /* jshint ignore:end */

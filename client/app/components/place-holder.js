@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import ENV from '../config/environment';
 
-import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
 
     //
@@ -393,10 +392,10 @@ export default Ember.Component.extend({
   init() {
       this._super(...arguments);
 
-      this.fetchWidgetData().then(function(val){
-          return val.applyGraphSetting();
-      });
-
+      // this.fetchWidgetData().then(function(val){
+      //     return val.applyGraphSetting();
+      // });
+      Promise.resolve(this.fetchWidgetData()).then(() => {this.applyGraphSetting();});
   },
 
   didRender() {
@@ -406,7 +405,6 @@ export default Ember.Component.extend({
   },
 
   fetchWidgetData: async function() {
-      var deferred = Q.defer();
       let data = null;
       if(this.get('item').isPlaceholder){
           let query = this.get('q');
@@ -489,8 +487,7 @@ export default Ember.Component.extend({
             r.organizations = source.lists.organizations;
             return r;
         }));
-        deferred.resolve(this);
-        return deferred.promise;
+
   },
 
   applyGraphSetting: function(){
@@ -514,7 +511,6 @@ export default Ember.Component.extend({
       }
       this.set('widgetType', 'generic-chart');
       this.sendAction('refreshWall');
-
   },
 
   actions: {
@@ -545,9 +541,7 @@ export default Ember.Component.extend({
           let selectedWidget = this.get('widgets')[index];
           this.set('item', selectedWidget);
           console.log(this.get('item').name);
-          this.fetchWidgetData().then(function(val){
-              return val.applyGraphSetting();
-          });
+          Promise.resolve(this.fetchWidgetData()).then(() => {this.applyGraphSetting();});
       },
 
       removeWidget: function() {

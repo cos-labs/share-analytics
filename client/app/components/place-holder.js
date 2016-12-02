@@ -409,6 +409,24 @@ export default Ember.Component.extend({
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
         let post_body = {
+            totalResults: JSON.stringify({
+              query: {
+                bool: {
+                  must: [{
+                     query_string: {query: query}
+                  }]
+                }
+              }
+            }),
+            totalPublications: JSON.stringify({
+              query: {
+                bool: {
+                  must: {
+                     query_string: {query: query}
+                  }
+                }
+              }
+            }),
             donut: JSON.stringify({
                 query: {
                   bool: { must: [{
@@ -474,6 +492,7 @@ export default Ember.Component.extend({
         //        data: JSON.stringify(this.get('item').query)
         //      });
         this.set('aggregations', data.aggregations);
+        this.set('total', data.hits.total);
         this.set('docs', data.hits.hits.map((hit) => {
               let source = Ember.Object.create(hit._source);
               let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');

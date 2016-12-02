@@ -32,10 +32,20 @@ footer.footer {
     border: 2px solid #b6b5b4;
     overflow: hidden;
 }
+input[type="button" i], input[type="submit" i], input[type="reset" i], input[type="file" i]::-webkit-file-upload-button, button
+button.edit-title {
+    background-color: rgba(0,0,0,0);
+    border: none;
+}
+nav.navbar {
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+}
 
-/* Double-wide element */ 
-.grid-item--width2 { 
-    width: 60%; 
+/* Double-wide element */
+.grid-item--width2 {
+    width: 60%;
 }
 
 /* "Large" element */
@@ -65,6 +75,24 @@ footer.footer {
 
 .configmenu {
     display: none;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.widgetpicker {
+    display: none;
+}
+
+.picking > .widgetpicker {
+    display: block;
+}
+
+.picking > .configmenu {
+    display: none;
+}
+
+.picking > .chart {
+    display: none;
 }
 
 .configuring > .configmenu {
@@ -72,6 +100,10 @@ footer.footer {
 }
 
 .configuring > .chart {
+    display: none;
+}
+
+.configuring > .widgetpicker {
     display: none;
 }
 
@@ -88,23 +120,35 @@ footer.footer {
     z-index: 1000;
     position: relative;
     min-height: 5px;
-    background-color: #7f6c89;
+    background-color: rgba(0,0,0,0);
     border-top:1px solid #eee;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
     overflow: hidden;
+    padding: 5px;
 }
 
 .widget .configureButton {
     display: block;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    padding: 5px;
 }
 
 .widget {
     background-color: #f8f4f9;
     border: 1px solid #e0d5e2;
+    margin-top: 20px;
     border-radius: 3px;
     -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
     -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
     box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+}
+.chart svg {
+    width: 100%;
+    min-height: 100%;
+}
+.chart {
+    width: 100%;
 }
 
 .free-wall {
@@ -145,6 +189,31 @@ footer.footer {
     box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
 }
 
+.restore-widget-button {
+    margin: 40px auto;
+    position: relative;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 24px;
+    border-radius: 80px;
+    border: solid rgba(0,0,0,0.3) 1px;
+    background-color: #e5e5e5;
+    color: rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    outline: none;
+}
+
+.restore-widget-button:hover {
+    top: -1px;
+    -webkit-box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+    box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+}
+
 .centered {
     text-align: center;
 }
@@ -154,7 +223,6 @@ footer.footer {
 }
 
 .width-2 {
-    width: 300px;
 }
 
 .width-3 {
@@ -182,7 +250,6 @@ footer.footer {
 }
 
 .height-2 {
-    height: 300px;
 }
 
 .height-3 {
@@ -208,16 +275,16 @@ footer.footer {
 @keyframes spinner {
     to {transform: rotate(360deg);}
 }
- 
+
 @-webkit-keyframes spinner {
     to {-webkit-transform: rotate(360deg);}
 }
- 
+
 .spinner {
     min-width: 50px;
     min-height: 50px;
 }
- 
+
 .spinner:before {
     content: 'Loading…';
     position: absolute;
@@ -228,7 +295,7 @@ footer.footer {
     margin-top: -10px;
     margin-left: -16px;
 }
- 
+
 .spinner:not(:required):before {
     content: '';
     border-radius: 50%;

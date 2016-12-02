@@ -6,7 +6,7 @@ import {
     getAuthUrl
 } from 'ember-osf/utils/auth';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(OsfAgnosticAuthControllerMixin,{
     toast: Ember.inject.service(),
     authUrl: getAuthUrl(),
     actions: {

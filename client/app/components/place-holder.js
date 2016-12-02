@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ENV from '../config/environment';
 
-import Q from 'npm:q';
+//import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
 
     //
@@ -392,11 +392,9 @@ export default Ember.Component.extend({
 
   init() {
       this._super(...arguments);
-
-      this.fetchWidgetData().then(function(val){
-          return val.applyGraphSetting();
+      Promise.resolve(this.fetchWidgetData()).then(() =>{
+          return this.applyGraphSetting();
       });
-
   },
 
   didRender() {
@@ -406,9 +404,8 @@ export default Ember.Component.extend({
   },
 
   fetchWidgetData: async function() {
-      var deferred = Q.defer();
       let data = null;
-      if(this.get('item').isPlaceholder){
+      if (this.get('item').isPlaceholder) {
           let query = this.get('q');
           let gte = this.get('gte');
           let lte = this.get('lte');
@@ -421,18 +418,18 @@ export default Ember.Component.extend({
               data: JSON.stringify({
                   query: {
                     bool: { must: [{
-                                        query_string: {query: query}
-                                    },
-                                    {
-                                        range: { date: {
-                                                  gte: gte,
-                                                  lte: lte,
-                                                  format: "yyyy-MM-dd||yyyy"
-                                                  }
-                                                }
-                                    }
-                                  ]
-                            }
+                               query_string: {query: query}
+                           },
+                           {
+                               range: { date: {
+                                         gte: gte,
+                                         lte: lte,
+                                         format: "yyyy-MM-dd||yyyy"
+                                         }
+                                       }
+                           }
+                         ]
+                    }
                           },
                   from: 0,
                   aggregations: {
@@ -489,8 +486,9 @@ export default Ember.Component.extend({
             r.organizations = source.lists.organizations;
             return r;
         }));
-        deferred.resolve(this);
-        return deferred.promise;
+        
+        //Promise.resolve(this).then(function() {
+        //});
   },
 
   applyGraphSetting: function(){
@@ -545,8 +543,8 @@ export default Ember.Component.extend({
           let selectedWidget = this.get('widgets')[index];
           this.set('item', selectedWidget);
           console.log(this.get('item').name);
-          this.fetchWidgetData().then(function(val){
-              return val.applyGraphSetting();
+          Promise.resolve(this.fetchWidgetData()).then(() => {
+              return this.applyGraphSetting();
           });
       },
 
@@ -554,18 +552,19 @@ export default Ember.Component.extend({
           this.sendAction('removeChart', this.get('item'))
       },
       configChanged: function() {
-          console.log('changing config');
+          this.set('configuring', !this.get('configuring'));
           let width = this.get('widthSetting');
           let height = this.get('heightSetting');
           let name = this.get('name');
           let wall = this.get('wall');
           wall.fixSize({
-              block: this.$(),
+              block: this.element,
               width: width*150,
               height: height*150,
           });
-          //wall.fitWidth();
+          wall.fitWidth();
           this.sendAction('refreshWall');
+          if (this.get('resizedSignal') == true) return;
           this.set('resizedSignal', true);
           this.set('configuring', false);
       },

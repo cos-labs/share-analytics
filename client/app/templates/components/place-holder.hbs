@@ -5,8 +5,7 @@
     <button class='configureButton' onclick={{action 'showPicker'}}>{{fa-icon "folder-open"}}</button>
 </div>
 <div class='configmenu'>
-    <form {{action 'configChanged' on='submit'}}>
-        <div class="col-xs-4">JSengine:</div>
+        <div class="col-xs-4">JS Engine:</div>
         <div class="col-xs-8">
           <select onchange={{action 'changeEngine' value="target.value"}}>
             <option value="c3">C3</option>
@@ -38,9 +37,8 @@
           {{textarea value=query cols="35" rows="3"}}
         </div>
         <div class="col-xs-12">
-          <button class="btn btn-primary" style="margin-right:10px" type='submit'>OK</button>
+          <button class="btn btn-primary" style="margin-right:10px" type='submit' {{action 'configChanged'}}>OK</button>
         </div>
-    </form>
 </div>
 
 <div class='widgetpicker'>

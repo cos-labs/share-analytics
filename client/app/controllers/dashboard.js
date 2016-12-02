@@ -33,25 +33,9 @@ export default Ember.Controller.extend({
     storedDashboards: [],
 
     init(){
-        let items = this.store.peekAll('widget');
-        let widgets = [];
-        items.forEach(function(item, index, enumerable){
-            widgets.push({
-                name: item.get('name'),
-                author: item.get('author'),
-                width: item.get('width'),
-                height: item.get('height'),
-                query: item.get('query'),
-                settings: item.get('settings')});
-        });
-        this.set('widgets', widgets);
-    },
-
-    actions: {
-
-        restoreWidgets: function(){
-            let items = this.store.peekAll('widget');
+        this.store.findAll('widget').then((items) => {
             let widgets = [];
+            console.log(items);
             items.forEach(function(item, index, enumerable){
                 widgets.push({
                     name: item.get('name'),
@@ -61,11 +45,17 @@ export default Ember.Controller.extend({
                     query: item.get('query'),
                     settings: item.get('settings')});
             });
-
+            console.log(widgets);
             this.set('widgets', widgets);
-              if(this.get('widgets').length > 0){
-                this.set('sortableObjectList', this.get('widgets').slice());
-              }
+        });
+    },
+
+    actions: {
+
+        restoreWidgets: function(){
+            if(this.get('widgets').length > 0){
+              this.set('sortableObjectList', this.get('widgets').slice());
+            }
         },
 
         changeQ: function(query) {
@@ -101,19 +91,6 @@ export default Ember.Controller.extend({
             let wall = this.get('wall');
             wall && wall.refresh();
         },
-
-        dashboardSaveWidget: function(information) {
-            this.get('currentUser').load().then((c) => {
-
-                    information.author = c.get('fullName');
-                    this.set('widgets', this.get('widgets').addObject(information).slice());
-                    let widget = this.store.createRecord('widget',information);
-                    widget.save();
-                    alert("Chart has been successfully saved!");
-            }, function(r){
-                alert("Log in at first to save widget!");
-            });
-        }
 
     },
 

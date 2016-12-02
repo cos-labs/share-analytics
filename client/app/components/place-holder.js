@@ -347,6 +347,9 @@ export default Ember.Component.extend({
 
   // widgetType: 'wild-card',
   // chartType: 'donut-chart',
+  currentUser: Ember.inject.service(),
+  store: Ember.inject.service(),
+
   aggregations: false,
   docs: false,
 
@@ -525,6 +528,10 @@ export default Ember.Component.extend({
       },
 
       showPicker: function() {
+          if(!ENV.APP.TALK_TO_LOCAL_SERVER){
+              alert("Talking to local server has been disabled.");
+              return;
+          }
           this.set('picking', !this.get('picking'));
           this.set('configuring', false);
       },
@@ -565,6 +572,10 @@ export default Ember.Component.extend({
       },
 
       saveWidget: function(){
+          if(!ENV.APP.TALK_TO_LOCAL_SERVER){
+              alert("Talking to local server has been disabled.");
+              return;
+          }
           console.log('saveWidget');
           let widgetType = this.get('chartType');
           let name = this.get('name');
@@ -632,7 +643,16 @@ export default Ember.Component.extend({
               settings: settings,
           };
 
-          this.sendAction('dashboardSaveWidget', information);
+          this.get('currentUser').load().then((c) => {
+                  information.author = c.get('fullName');
+                  this.set('widgets', this.get('widgets').addObject(information).slice());
+                  let widget = this.get('store').createRecord('widget',information);
+                  widget.save();
+                  alert("Widget has been successfully saved!");
+          }, function(r){
+              alert("Log in at first to save widget!");
+          });
+
       }
 
   },

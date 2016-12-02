@@ -8,11 +8,9 @@ export default Ember.Route.extend(OsfAgnosticAuthRouteMixin, {
     session: Ember.inject.service(),
     model() {
 
-        this.get('store').findAll('widget');
-
         if (this.get('session.isAuthenticated')) {
             return this.get('store').findRecord('user', 'me');
         }
-
+        return null;
     }
 });

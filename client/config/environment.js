@@ -51,6 +51,7 @@ module.exports = function(environment) {
         ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
         ENV.APP.LOG_VIEW_LOOKUPS = true;
         ENV.APP.GRANTS_BACKEND = 'http://127.0.0.1:8000/api';
+        ENV.APP.TALK_TO_LOCAL_SERVER = false;
     }
 //
 //    if (environment === 'staging') {

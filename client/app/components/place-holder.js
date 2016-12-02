@@ -505,7 +505,7 @@ export default Ember.Component.extend({
         //    height: height*150,
         //});
         //this.set('chartType', this.get('item').settings.chart_type);
-        this.set('widgetType', 'generic-chart');
+        this.set('widgetType', this.get('item').widgetType);
         //this.sendAction('refreshWall');
 
     },

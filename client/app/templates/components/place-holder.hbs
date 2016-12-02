@@ -1,0 +1,60 @@
+<div class='widgetButtons'>
+    <button class='configureButton' onclick={{action 'removeWidget'}}>{{fa-icon "close"}}</button>
+    <button class='configureButton' onclick={{action 'showConfig'}}>{{fa-icon "cogs"}}</button>
+    <button class='configureButton' onclick={{action 'saveWidget'}}>{{fa-icon "save"}}</button>
+    <button class='configureButton' onclick={{action 'showPicker'}}>{{fa-icon "folder-open"}}</button>
+</div>
+<div class='configmenu'>
+        <div class="col-xs-4">JS Engine:</div>
+        <div class="col-xs-8">
+          <select onchange={{action 'changeEngine' value="target.value"}}>
+            <option value="c3">C3</option>
+            <option value="dimple">Dimple</option>
+          </select>
+        </div>
+        <div class="col-xs-4">Chart:</div>
+        <div class="col-xs-8">
+          <select onchange={{action 'changeChart' value="target.value"}}>
+            <option value="donut">Donut</option>
+            <option value="timeseries">Time-Series</option>
+            <option value="bar">Bar</option>
+          </select>
+        </div>
+        <div class="col-xs-4">Name:</div>
+        <div class="col-xs-12">
+          {{input type='text' size="35" value=name}}
+        </div>
+        <div class="col-xs-4">Width:</div>
+        <div class="col-xs-8">
+          {{input type='text' size="10" value=widthSetting}}
+        </div>
+        <div class="col-xs-4">Height:</div>
+        <div class="col-xs-8">
+          {{input type='text' size="10" value=heightSetting}}
+        </div>
+        <div class="col-xs-4">Query:</div>
+        <div class="col-xs-12">
+          {{textarea value=query cols="35" rows="3"}}
+        </div>
+        <div class="col-xs-12">
+          <button class="btn btn-primary" style="margin-right:10px" type='submit' {{action 'configChanged'}}>OK</button>
+        </div>
+</div>
+
+<div class='widgetpicker'>
+    <form>
+      <hr>
+      <div class="col-xs-4">Widgets:</div>
+      <div class="col-xs-8">
+        <select onchange={{action 'widgetPicked' value="target.value"}}>
+          {{#each widgets as |item index|}}
+              <option value={{index}}>{{item.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </form>
+</div>
+
+{{component widgetType chartType=chartType aggregations=aggregations name=name width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal}}
+
+{{yield}}

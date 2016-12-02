@@ -1,0 +1,306 @@
+/*Packery grid styling*/
+
+.background {
+    background: url("http://localhost:4200/images/geometric.jpg");
+    background-size: cover;
+}
+
+
+.container.copyright {
+    width: 100%;
+    text-align: center;
+    background-color: #444;
+    color: #fff;
+    padding: 15px;
+    font-weight: 500 !important;
+    -webkit-box-shadow: inset 0px 83px 72px -90px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 83px 72px -90px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 83px 72px -90px rgba(0,0,0,0.75);
+}
+
+footer.footer {
+    margin: 0;
+}
+.container.copyright a {
+    color: #80bbee;
+}
+/* Single-width element */
+.grid-item {
+    float: left;
+    width: 30%; /* This will need to adjust most likely in order to work with BS? Or maybe we won't need BS? */
+    background: #e6e5e4;
+    border: 2px solid #b6b5b4;
+    overflow: hidden;
+}
+input[type="button" i], input[type="submit" i], input[type="reset" i], input[type="file" i]::-webkit-file-upload-button, button
+button.edit-title {
+    background-color: rgba(0,0,0,0);
+    border: none;
+}
+nav.navbar {
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+}
+
+/* Double-wide element */
+.grid-item--width2 {
+    width: 60%;
+}
+
+/* "Large" element */
+/* "Large" can be defined however you want */
+.grid-item--large {
+    width: 66%;
+    height: 120px;
+}
+
+/* Dragging styling */
+.grid-item.is-dragging,
+/* Packery adds class while transitioning to drop position */
+.grid-item.is-positioning-post-drag {
+  background: #C90;
+
+  z-index: 2; /* keep dragged item on top */
+}
+
+/* Placeholder styling */
+.packery-drop-placeholder {
+  outline: 3px dashed #444;
+  outline-offset: -6px;
+  /* transition position changing */
+  -webkit-transition: -webkit-transform 0.2s;
+          transition: transform 0.2s;
+}
+
+.configmenu {
+    display: none;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.widgetpicker {
+    display: none;
+}
+
+.picking > .widgetpicker {
+    display: block;
+}
+
+.picking > .configmenu {
+    display: none;
+}
+
+.picking > .chart {
+    display: none;
+}
+
+.configuring > .configmenu {
+    display: block;
+}
+
+.configuring > .chart {
+    display: none;
+}
+
+.configuring > .widgetpicker {
+    display: none;
+}
+
+
+.configureButton {
+    display: none;
+    float: right;
+    line-height: 10px;
+    position: relative;
+    z-index: 1000;
+}
+
+.widgetButtons {
+    z-index: 1000;
+    position: relative;
+    min-height: 5px;
+    background-color: rgba(0,0,0,0);
+    border-top:1px solid #eee;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    overflow: hidden;
+    padding: 5px;
+}
+
+.widget .configureButton {
+    display: block;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    padding: 5px;
+}
+
+.widget {
+    background-color: #f8f4f9;
+    border: 1px solid #e0d5e2;
+    margin-top: 20px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+}
+.chart svg {
+    width: 100%;
+    min-height: 100%;
+}
+.chart {
+    width: 100%;
+}
+
+.free-wall {
+    margin: 15px;
+}
+.cell {
+    cursor: move;
+}
+.cell .cover {
+    padding: 15px;
+}
+.handle {
+    border: 1px dotted orange;
+    padding: 4px
+}
+.add-widget-button {
+    margin: 40px auto;
+    position: relative;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 24px;
+    border-radius: 80px;
+    border: solid rgba(0,0,0,0.3) 1px;
+    background-color: #e5e5e5;
+    color: rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    outline: none;
+}
+
+.add-widget-button:hover {
+    top: -1px;
+    -webkit-box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+    box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+}
+
+.restore-widget-button {
+    margin: 40px auto;
+    position: relative;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 24px;
+    border-radius: 80px;
+    border: solid rgba(0,0,0,0.3) 1px;
+    background-color: #e5e5e5;
+    color: rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    outline: none;
+}
+
+.restore-widget-button:hover {
+    top: -1px;
+    -webkit-box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+    box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+}
+
+.centered {
+    text-align: center;
+}
+
+.width-1 {
+    width: 1px
+}
+
+.width-2 {
+}
+
+.width-3 {
+    width: 450px;
+}
+
+.width-4 {
+    width: 600px;
+}
+
+.width-5 {
+    width: 750px;
+}
+
+.width-6 {
+    width: 900px;
+}
+
+.width-7 {
+    width: 1050px;
+}
+
+.height-1 {
+    height: 150px;
+}
+
+.height-2 {
+}
+
+.height-3 {
+    height: 450px;
+}
+
+.height-4 {
+    height: 600px;
+}
+
+.height-5 {
+    height: 750px;
+}
+
+.height-6 {
+    height: 900px;
+}
+
+.height-7 {
+    height: 1050px;
+}
+
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+}
+
+@-webkit-keyframes spinner {
+    to {-webkit-transform: rotate(360deg);}
+}
+
+.spinner {
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.spinner:before {
+    content: 'Loading…';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin-top: -10px;
+    margin-left: -16px;
+}
+
+.spinner:not(:required):before {
+    content: '';
+    border-radius: 50%;
+    border: 4px solid rgba(0, 0, 0, .3);
+    border-top-color: rgba(0, 0, 0, .6);
+    animation: spinner .6s linear infinite;
+    -webkit-animation: spinner .6s linear infinite;
+}

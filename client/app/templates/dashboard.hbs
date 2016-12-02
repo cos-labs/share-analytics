@@ -1,0 +1,23 @@
+<br><br><br>
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='col-md-12'>
+            <h2>Dashboard<button cliass='edit-title'>{{fa-icon 'pencil'}}</button></h2>
+        </div>
+    </div>
+</div>
+
+<div id='freewall' class='free-wall'>
+        {{#each sortableObjectList as |item|}}
+            {{place-holder options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item widgets=widgets wall=wall refreshWall=(action 'refreshWall') dashboardSaveWidget=(action 'dashboardSaveWidget')}}
+        {{/each}}
+</div>
+
+<!-- 
+<div class='centered'>
+    <button class='restore-widget-button' onclick = {{action 'restoreWidgets'}} style = 'clear:both;'>{{fa-icon 'folder-open'}}</button>
+    <button class='add-widget-button' onclick={{action 'addChart'}} style='clear:both;'>{{fa-icon 'plus'}}</button>
+</div>
+-->
+
+{{outlet}}

@@ -1,12 +1,12 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
-/tmp
+dist/
+tmp/
 
 # dependencies
-/node_modules
-/bower_components
+node_modules/
+bower_components/
 
 # misc
 /.sass-cache
@@ -42,7 +42,9 @@ env/
 static
 latest.dump
 local_settings.py
+local.py
+local.yml
 log
 media
-backend/settings/local.py
+**/local.py
 ~Envs/

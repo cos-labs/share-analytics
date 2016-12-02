@@ -410,22 +410,27 @@ export default Ember.Component.extend({
         let interval = this.get('tsInterval');
         let post_body = {
             totalResults: JSON.stringify({
-              query: {
-                bool: {
-                  must: [{
-                     query_string: {query: query}
-                  }]
+                query: {
+                    bool: {
+                      must: {
+                        query_string: {query: query}
+                      }
+                    }
                 }
-              }
             }),
             totalPublications: JSON.stringify({
-              query: {
-                bool: {
-                  must: {
-                     query_string: {query: query}
-                  }
+                query: {
+                    bool: {
+                        must: {
+                            query_string: {query: query}
+                        },
+                        filter: [{
+                            term: {
+                                "type.raw": "publication"
+                            }
+                        }]
+                    }
                 }
-              }
             }),
             donut: JSON.stringify({
                 query: {

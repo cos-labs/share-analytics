@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import ENV from '../config/environment';
 
-
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
 
     //
@@ -344,7 +343,6 @@ const agg_types = [ // agg_types is this array literal, reduced by the following
 
 }, {});
 
-
 export default Ember.Component.extend({
 
   // widgetType: 'wild-card',
@@ -353,8 +351,11 @@ export default Ember.Component.extend({
   docs: false,
 
   classNames: ['widget'],
-  classNameBindings: ['configuring', 'width', 'height'],
+  classNameBindings: ['configuring', 'picking', 'width', 'height'],
 
+  widgetType: 'wild-card',
+  name: 'tobeDetermined',
+  jsEngine: 'c3',
   widthSetting: 2,
   heightSetting: 2,
 
@@ -386,10 +387,15 @@ export default Ember.Component.extend({
   }),
 
   configuring: false,
+  picking: false,
 
   init() {
       this._super(...arguments);
-      this.fetchWidgetData();
+
+      // this.fetchWidgetData().then(function(val){
+      //     return val.applyGraphSetting();
+      // });
+      Promise.resolve(this.fetchWidgetData()).then(() => {this.applyGraphSetting();});
   },
 
   didRender() {
@@ -399,74 +405,112 @@ export default Ember.Component.extend({
   },
 
   fetchWidgetData: async function() {
-      let query = this.get('q');
-      let gte = this.get('gte');
-      let lte = this.get('lte');
-      let interval = this.get('tsInterval');
-      let data = await Ember.$.ajax({
-          url: ENV.apiUrl +  '/search/abstractcreativework/_search',
-          crossDomain: true,
-          type: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({
-              query: { bool: { must: [{
-                  query_string: {query: query}
-              },{
-                  range: { date: {
-                      gte: gte,
-                      lte: lte,
-                      format: "yyyy-MM-dd||yyyy"
-                  }}
-              }]}},
-              from: 0,
-              aggregations: {
-                  sources: {
-                      terms: {
-                           field: 'sources.raw',
-                           size: 200
-                      }
-                  },
-                  contributors : {
-                      terms : {
-                          field: 'contributors.raw',
-                          size: 200
-                      }
-                  },
-                  tags : {
-                      terms : {
-                          field: 'tags.raw',
-                          size: 200
-                      }
-                  },
-                  articles_over_time: {
-                      date_histogram: {
-                          field: 'date',
-                          interval: interval,
-                          format:'yyyy-MM-dd'
+      let data = null;
+      if(this.get('item').isPlaceholder){
+          let query = this.get('q');
+          let gte = this.get('gte');
+          let lte = this.get('lte');
+          let interval = this.get('tsInterval');
+          data = await Ember.$.ajax({
+              url: ENV.apiUrl +  '/search/abstractcreativework/_search',
+              crossDomain: true,
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({
+                  query: {
+                    bool: { must: [{
+                                        query_string: {query: query}
+                                    },
+                                    {
+                                        range: { date: {
+                                                  gte: gte,
+                                                  lte: lte,
+                                                  format: "yyyy-MM-dd||yyyy"
+                                                  }
+                                                }
+                                    }
+                                  ]
+                            }
+                          },
+                  from: 0,
+                  aggregations: {
+                      sources: {
+                          terms: {
+                               field: 'sources.raw',
+                               size: 200
+                          }
                       },
-                      aggregations: {
-                          arttype: {terms: {field: 'type'}}
+                      contributors : {
+                          terms : {
+                              field: 'contributors.raw',
+                              size: 200
+                          }
+                      },
+                      tags : {
+                          terms : {
+                              field: 'tags.raw',
+                              size: 200
+                          }
+                      },
+                      articles_over_time: {
+                          date_histogram: {
+                              field: 'date',
+                              interval: interval,
+                              format:'yyyy-MM-dd'
+                          },
+                          aggregations: {
+                              arttype: {terms: {field: 'type'}}
+                          }
                       }
                   }
-              }
-          })
-      });
+              })
+          });
+      }
+      else{
+          data = await Ember.$.ajax({
+              url: ENV.apiUrl +  '/search/abstractcreativework/_search',
+              crossDomain: true,
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify(this.get('item').query)
+            });
+      }
       this.set('aggregations', data.aggregations);
       this.set('docs', data.hits.hits.map((hit) => {
-          let source = Ember.Object.create(hit._source);
-          let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
-          r.id = hit._id;
-          r.contributors = source.lists.contributors;
-          r.funders = source.lists.funders;
-          r.publishers = source.lists.publishers;
-          r.institutions = source.lists.institutions;
-          r.organizations = source.lists.organizations;
-          return r;
-      }));
+            let source = Ember.Object.create(hit._source);
+            let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
+            r.id = hit._id;
+            r.contributors = source.lists.contributors;
+            r.funders = source.lists.funders;
+            r.publishers = source.lists.publishers;
+            r.institutions = source.lists.institutions;
+            r.organizations = source.lists.organizations;
+            return r;
+        }));
 
+  },
+
+  applyGraphSetting: function(){
+
+      if(this.get('item').isPlaceholder){
+        this.set('chartType', 'donut');
+      }
+      else{
+        this.set('widthSetting', this.get('item').width);
+        this.set('heightSetting', this.get('item').height);
+        this.set('name', this.get('item').name);
+        let width = this.get('widthSetting');
+        let height = this.get('heightSetting');
+        let wall = this.get('wall');
+        wall.fixSize({
+            block: this.$(),
+            width: width*150,
+            height: height*150,
+        });
+        this.set('chartType', this.get('item').settings.chart_type);
+      }
       this.set('widgetType', 'generic-chart');
-      this.set('chartType', 'donut');
-
+      this.sendAction('refreshWall');
   },
 
   actions: {
@@ -474,8 +518,15 @@ export default Ember.Component.extend({
       addChart: function(option) {
           this.sendAction('addChart', option);
       },
+
       showConfig: function() {
           this.set('configuring', !this.get('configuring'));
+          this.set('picking', false);
+      },
+
+      showPicker: function() {
+          this.set('picking', !this.get('picking'));
+          this.set('configuring', false);
       },
 
       changeEngine: function(jsEngine){
@@ -483,8 +534,14 @@ export default Ember.Component.extend({
       },
 
       changeChart: function(chart){
-
           this.set('chartType', chart);
+      },
+
+      widgetPicked: function(index){
+          let selectedWidget = this.get('widgets')[index];
+          this.set('item', selectedWidget);
+          console.log(this.get('item').name);
+          Promise.resolve(this.fetchWidgetData()).then(() => {this.applyGraphSetting();});
       },
 
       removeWidget: function() {
@@ -494,6 +551,7 @@ export default Ember.Component.extend({
           console.log('changing config');
           let width = this.get('widthSetting');
           let height = this.get('heightSetting');
+          let name = this.get('name');
           let wall = this.get('wall');
           wall.fixSize({
               block: this.$(),
@@ -503,8 +561,79 @@ export default Ember.Component.extend({
           //wall.fitWidth();
           this.sendAction('refreshWall');
           this.set('resizedSignal', true);
-          this.set('configuring', !this.get('configuring'));
+          this.set('configuring', false);
       },
+
+      saveWidget: function(){
+          console.log('saveWidget');
+          let widgetType = this.get('chartType');
+          let name = this.get('name');
+          let jsEngine = this.get('jsEngine');
+          let chartType = this.get('chartType');
+          let author = "tobeDetermined";
+          let width = this.get('widthSetting');
+          let height = this.get('heightSetting');
+
+          let q = this.get('q');
+          let gte = this.get('gte');
+          let lte = this.get('lte');
+          let interval = this.get('tsInterval');
+          let query = { query:{bool: {
+                                must: [
+                                        {query_string: {query: q}},
+                                        {range:
+                                              { date: {
+                                                          gte: gte,
+                                                          lte: lte,
+                                                          format: "yyyy-MM-dd||yyyy"
+                                                      }
+                                              }
+                                        }
+                                        ]
+                               }},
+                         from: 0,
+                         aggregations: {
+                             sources: {
+                                 terms: {
+                                      field: 'sources.raw',
+                                      size: 200
+                                 }
+                             },
+                             contributors : {
+                                 terms : {
+                                     field: 'contributors.raw',
+                                     size: 200
+                                 }
+                             },
+                             tags : {
+                                 terms : {
+                                     field: 'tags.raw',
+                                     size: 200
+                                 }
+                             },
+                             articles_over_time: {
+                                 date_histogram: {
+                                     field: 'date',
+                                     interval: interval,
+                                     format:'yyyy-MM-dd'
+                                 },
+                                 aggregations: {
+                                     arttype: {terms: {field: 'type'}}
+                                 }
+                             }
+                          }
+                        };
+          let settings = {jsEngine: jsEngine, chartType: chartType};
+          let information = {
+              name: name,
+              width: width,
+              height: height,
+              query: query,
+              settings: settings,
+          };
+
+          this.sendAction('dashboardSaveWidget', information);
+      }
 
   },
 

@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
 
     // Initialize our query parameters
+    currentUser: Ember.inject.service(),
     q: 'UC Santa Barbara',
     gte: "1996-01-01",
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
@@ -22,7 +23,7 @@ export default Ember.Controller.extend({
 
     // Initialize the three interchangeable charts to be rendered as sortableObjects
     sortableObjectList: [{isPlaceholder: true}],
-
+    widgets: [],
 
     // Initialize the list of additional charts that the user can add
     addableList: [],
@@ -31,31 +32,40 @@ export default Ember.Controller.extend({
 
     storedDashboards: [],
 
+    init(){
+        let items = this.store.peekAll('widget');
+        let widgets = [];
+        items.forEach(function(item, index, enumerable){
+            widgets.push({
+                name: item.get('name'),
+                author: item.get('author'),
+                width: item.get('width'),
+                height: item.get('height'),
+                query: item.get('query'),
+                settings: item.get('settings')});
+        });
+        this.set('widgets', widgets);
+    },
+
     actions: {
 
-        restoreDash: function(sd) {
-            this.set('q',sd.get('q'));
-            this.send('changeGte', sd.get('gte'));
-            this.send('changeLte',sd.get('lte'));
-//            this.set('tsInterval',sd.get('tsInterval'));
-            this.set('sortableObjectList',sd.get('sortableObjectList'));
-            this.set('addableList',sd.get('addableList'));
-        },
-
-        persistDashboard: function(n) {
-            var record = this.store.createRecord('dashboard', {
-                name: n,
-                q: this.get('q'),
-                gte: this.get('gte'),
-                lte: this.get('lte'),
-                tsInterval: this.get('tsInterval'),
-                sortableObjectList: this.get('sortableObjectList'),
-                addableList: this.get('addableList')
+        restoreWidgets: function(){
+            let items = this.store.peekAll('widget');
+            let widgets = [];
+            items.forEach(function(item, index, enumerable){
+                widgets.push({
+                    name: item.get('name'),
+                    author: item.get('author'),
+                    width: item.get('width'),
+                    height: item.get('height'),
+                    query: item.get('query'),
+                    settings: item.get('settings')});
             });
-            this.set('storedDashboards', this.store.peekAll('dashboard'));
-            // In the future, we'll want to do:
-            // record.save()
-            // this.set('storedDashboards', this.store.findAll('dashboard'));
+
+            this.set('widgets', widgets);
+              if(this.get('widgets').length > 0){
+                this.set('sortableObjectList', this.get('widgets').slice());
+              }
         },
 
         changeQ: function(query) {
@@ -85,10 +95,24 @@ export default Ember.Controller.extend({
         addChart: function(option) {
             this.set('sortableObjectList', this.get('sortableObjectList').addObject({isPlaceholder: true}).slice());
         },
+
         refreshWall: function() {
             console.log('refreshing wall');
             let wall = this.get('wall');
             wall && wall.refresh();
+        },
+
+        dashboardSaveWidget: function(information) {
+            this.get('currentUser').load().then((c) => {
+
+                    information.author = c.get('fullName');
+                    this.set('widgets', this.get('widgets').addObject(information).slice());
+                    let widget = this.store.createRecord('widget',information);
+                    widget.save();
+                    alert("Chart has been successfully saved!");
+            }, function(r){
+                alert("Log in at first to save widget!");
+            });
         }
 
     },

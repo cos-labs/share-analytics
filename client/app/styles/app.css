@@ -65,6 +65,8 @@ footer.footer {
 
 .configmenu {
     display: none;
+    overflow: hidden;
+    padding: 10px;
 }
 
 .widgetpicker {
@@ -108,19 +110,24 @@ footer.footer {
     z-index: 1000;
     position: relative;
     min-height: 5px;
-    background-color: #7f6c89;
+    background-color: rgba(0,0,0,0);
     border-top:1px solid #eee;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
     overflow: hidden;
+    padding: 5px;
 }
 
 .widget .configureButton {
     display: block;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    padding: 5px;
 }
 
 .widget {
     background-color: #f8f4f9;
     border: 1px solid #e0d5e2;
+    margin-top: 20px;
     border-radius: 3px;
     -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
     -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
@@ -132,7 +139,6 @@ footer.footer {
 }
 .chart {
     width: 100%;
-    height: 100%;
 }
 
 .free-wall {
@@ -207,7 +213,6 @@ footer.footer {
 }
 
 .width-2 {
-    width: 300px;
 }
 
 .width-3 {
@@ -235,7 +240,6 @@ footer.footer {
 }
 
 .height-2 {
-    height: 300px;
 }
 
 .height-3 {

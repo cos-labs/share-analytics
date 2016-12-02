@@ -346,62 +346,62 @@ const agg_types = [ // agg_types is this array literal, reduced by the following
 
 export default Ember.Component.extend({
 
-  // widgetType: 'wild-card',
-  // chartType: 'donut-chart',
-  aggregations: false,
-  docs: false,
+    // widgetType: 'wild-card',
+    // chartType: 'donut-chart',
+    aggregations: false,
+    docs: false,
 
-  classNames: ['widget'],
-  classNameBindings: ['configuring', 'picking', 'width', 'height'],
+    classNames: ['widget'],
+    classNameBindings: ['configuring', 'picking', 'width', 'height'],
 
-  widgetType: 'wild-card',
-  name: 'tobeDetermined',
-  jsEngine: 'c3',
-  widthSetting: 2,
-  heightSetting: 2,
+    widgetType: 'wild-card',
+    name: 'tobeDetermined',
+    jsEngine: 'c3',
+    widthSetting: 2,
+    heightSetting: 2,
 
-  width: 'width-2',
-  height: 'height-2',
+    width: 'width-2',
+    height: 'height-2',
 
-  computedHeight: 200,
-  computedWidth: 200,
+    computedHeight: 200,
+    computedWidth: 200,
 
-  resizedSignal: false,
+    resizedSignal: false,
 
-  // Initialize our query parameters
-  q: 'UC Santa Barbara',
-  gte: "1996-01-01",
-  lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
+    // Initialize our query parameters
+    q: 'UC Santa Barbara',
+    gte: "1996-01-01",
+    lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
 
-  tsInterval: Ember.computed('gte','lte', function() { // Initialize the "bucket size" for our timeseries aggregations
-      let d1 = new Date(this.get('gte'));
-      let d2 = new Date(this.get('lte'));
-      if((d2 - d1) >= 31622400000) { // If our dates are more than a year apart
-         return 'month'; // We want to increment our TS data by months
-      }
-      if((7948800000 <= (d2 - d1)) && ((d2 - d1) < 31622400000)) { // If our dates are less than a year apart but more than three months apart
-          return 'week'; // We want to increment our TS data by weeks
-      }
-      if((d2 - d1) < 7948800000) { // If our data are less than three months apart
-          return 'day'; // We want to increment our TS data by days
-      }
-  }),
+    tsInterval: Ember.computed('gte','lte', function() { // Initialize the "bucket size" for our timeseries aggregations
+        let d1 = new Date(this.get('gte'));
+        let d2 = new Date(this.get('lte'));
+        if((d2 - d1) >= 31622400000) { // If our dates are more than a year apart
+           return 'month'; // We want to increment our TS data by months
+        }
+        if((7948800000 <= (d2 - d1)) && ((d2 - d1) < 31622400000)) { // If our dates are less than a year apart but more than three months apart
+            return 'week'; // We want to increment our TS data by weeks
+        }
+        if((d2 - d1) < 7948800000) { // If our data are less than three months apart
+            return 'day'; // We want to increment our TS data by days
+        }
+    }),
 
-  configuring: false,
-  picking: false,
+    configuring: false,
+    picking: false,
 
-  init() {
-      this._super(...arguments);
-      Promise.resolve(this.fetchWidgetData()).then(() =>{
-          return this.applyGraphSetting();
-      });
-  },
+    init() {
+        this._super(...arguments);
+        Promise.resolve(this.fetchWidgetData()).then(() =>{
+            return this.applyGraphSetting();
+        });
+    },
 
-  didRender() {
-      this.sendAction('refreshWall');
-      this.set('computedHeight',  this.$().height());
-      this.set('computedWidth', this.$().width());
-  },
+    didRender() {
+        this.sendAction('refreshWall');
+        this.set('computedHeight',  this.$().height());
+        this.set('computedWidth', this.$().width());
+    },
 
     fetchWidgetData: async function() {
         let query = this.get('q');
@@ -459,11 +459,11 @@ export default Ember.Component.extend({
             })
         };
         let data = await Ember.$.ajax({
-            url: ENV.apiUrl +  '/search/abstractcreativework/_search',
+            url: ENV.apiUrl + '/search/abstractcreativework/_search',
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
-            data: post_body[this.get('item').chartType] 
+            data: post_body[this.get('item').chartType]
         });
         //else {
         //    data = await Ember.$.ajax({
@@ -485,7 +485,7 @@ export default Ember.Component.extend({
               r.organizations = source.lists.organizations;
               return r;
           }));
-          
+
           //Promise.resolve(this).then(function() {
           //});
     },
@@ -634,7 +634,6 @@ export default Ember.Component.extend({
             this.sendAction('dashboardSaveWidget', information);
         }
 
-  },
-
+    },
 
 });

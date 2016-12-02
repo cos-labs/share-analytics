@@ -492,7 +492,6 @@ export default Ember.Component.extend({
 
     applyGraphSetting: function(){
 
-        debugger;
         this.set('chartType', this.get('item').chartType);
         //this.set('widthSetting', this.get('item').width);
         //this.set('heightSetting', this.get('item').height);

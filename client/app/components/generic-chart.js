@@ -16,7 +16,7 @@ export default Ember.Component.extend({
         if (this.get('resizedSignal') == false) return;
         this.updateChart();
         this.set('resizedSignal', false); 
-        debugger;
+        //debugger;
     }),
 
     charTypeChange: Ember.observer('chartType', function(){
@@ -47,6 +47,7 @@ export default Ember.Component.extend({
             //},
         };
 
+        debugger;
         if (chart_type == 'donut') {
 
              this.set('data', this.get('aggregations.sources.buckets'));

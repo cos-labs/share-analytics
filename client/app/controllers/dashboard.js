@@ -22,7 +22,7 @@ export default Ember.Controller.extend({
     }),
 
     // Initialize the three interchangeable charts to be rendered as sortableObjects
-    sortableObjectList: [{chartType: 'donut'}, {chartType: 'donut-chart'}],
+    sortableObjectList: [{chartType: 'donut'}, {chartType: 'donut'}],
     widgets: [],
 
     // Initialize the list of additional charts that the user can add

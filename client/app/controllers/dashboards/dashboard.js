@@ -33,39 +33,32 @@ export default Ember.Controller.extend({
     storedDashboards: [],
 
     init(){
-        let items = this.store.peekAll('widget');
-        let widgets = [];
-        items.forEach(function(item, index, enumerable){
-            widgets.push({
-                name: item.get('name'),
-                author: item.get('author'),
-                width: item.get('width'),
-                height: item.get('height'),
-                query: item.get('query'),
-                settings: item.get('settings')});
-        });
-        this.set('widgets', widgets);
     },
 
     actions: {
-
         restoreWidgets: function(){
-            let items = this.store.peekAll('widget');
-            let widgets = [];
-            items.forEach(function(item, index, enumerable){
-                widgets.push({
-                    name: item.get('name'),
-                    author: item.get('author'),
-                    width: item.get('width'),
-                    height: item.get('height'),
-                    query: item.get('query'),
-                    settings: item.get('settings')});
-            });
+           // let items = this.store.peekAll('widget');
+           // let widgets = [];
+           // items.forEach(function(item, index, enumerable){
+           //     widgets.push({
+           //         name: item.get('name'),
+           //         author: item.get('author'),
+           //         width: item.get('width'),
+           //         height: item.get('height'),
+           //         query: item.get('query'),
+           //         settings: item.get('settings')});
+           // });
 
-            this.set('widgets', widgets);
-              if(this.get('widgets').length > 0){
-                this.set('sortableObjectList', this.get('widgets').slice());
-              }
+           // this.set('widgets', this.get('store').peekAll('widget').map((item) => {
+           //     return {
+           //         name: item.get('name'),
+           //         author: item.get('author'),
+           //         width: item.get('width'),
+           //         height: item.get('height'),
+           //         query: item.get('query'),
+           //         settings: item.get('settings')
+           //     });
+           // });
         },
 
         changeQ: function(query) {
@@ -74,7 +67,7 @@ export default Ember.Controller.extend({
 
         changeGte: function(g) {
             g = new Date(g);
-            this.set('gte', g.toISOString().split('T')[0]); // ES won't accept the full ISOString; had to abbreviate it (no T portion)
+            this.set('gte', g.toISOString().split('T')[0]); // Elasticsearch doesn't accept timezone information.
         },
 
         changeLte: function(l) {
@@ -86,14 +79,14 @@ export default Ember.Controller.extend({
 
         },
 
-        removeChart: function(chart) {
-            this.set('sortableObjectList', this.get('sortableObjectList').filter(function(item) {
+        removeChart: function(chart) { // TODO This function should allow passing multiple charts to remove.
+            this.set('widgets', this.get('widgets').filter(function(item) {
                 return item !== chart;
             }).slice());
         },
 
-        addChart: function(option) {
-            this.set('sortableObjectList', this.get('sortableObjectList').addObject({isPlaceholder: true}).slice());
+        addChart: function(option) { // TODO this function should allow passing multiple charts to add.
+            this.set('widgets', this.get('widgets').concat({isPlaceholder: true}));
         },
 
         refreshWall: function() {
@@ -102,16 +95,17 @@ export default Ember.Controller.extend({
             wall && wall.refresh();
         },
 
-        dashboardSaveWidget: function(information) {
+        dashboardSaveWidget: function(information) { // TODO This function should allow passing multiple charts to save.
             this.get('currentUser').load().then((c) => {
-
-                    information.author = c.get('fullName');
-                    this.set('widgets', this.get('widgets').addObject(information).slice());
-                    let widget = this.store.createRecord('widget',information);
-                    widget.save();
-                    alert("Chart has been successfully saved!");
+                information.author = c.get('fullName');
+                this.set('widgets', this.get('widgets').addObject(information).slice());
+                let widget = this.store.createRecord('widget',information);
+                widget.save();
+                // TODO: This should not be an alert, but a growl-style notification.
+                //alert("Chart has been successfully saved!");
             }, function(r){
-                alert("Log in at first to save widget!");
+                // TODO: This should not be an alert, but a growl-style notification.
+                alert("Widgets cannot be saved anonymously. Log in to save a widget.");
             });
         }
 

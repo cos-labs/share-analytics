@@ -366,10 +366,11 @@ export default Ember.Component.extend({
     computedHeight: 200,
     computedWidth: 200,
 
+    router: Ember.inject.service('router'),
     resizedSignal: false,
 
     // Initialize our query parameters
-    q: 'UC Santa Barbara',
+    q: 'UC',
     gte: "1996-01-01",
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
 
@@ -459,12 +460,13 @@ export default Ember.Component.extend({
             })
         };
         let data = await Ember.$.ajax({
-            url: ENV.apiUrl + '/search/abstractcreativework/_search',
+            url: ENV.apiUrl + '/search/creativeworks/_search',
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
             data: post_body[this.get('item').chartType]
         });
+        debugger;
         //else {
         //    data = await Ember.$.ajax({
         //       url: ENV.apiUrl +  '/search/abstractcreativework/_search',
@@ -562,6 +564,18 @@ export default Ember.Component.extend({
             if (this.get('resizedSignal') == true) return;
             this.set('resizedSignal', true);
             this.set('configuring', false);
+        },
+
+        transitionToFacet: function() {
+            this.get('router').transitionTo('dashboards.dashboard', 'subject').then((route) => {
+                Ember.run.schedule('afterRender', this, () => {
+                    let controller = route.get('controller');
+                    controller.set('subject', d);
+                    controller.set('back', 'backroute');
+                });
+            });
+            let url = 'https://share.osf.io/discover?q=' + d.name;
+            window.open(url, '_blank');
         },
 
         saveWidget: function(){

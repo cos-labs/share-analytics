@@ -2,13 +2,13 @@
 <div class='container-fluid'>
     <div class='row'>
         <div class='col-md-12'>
-            <h2>Dashboard<button cliass='edit-title'>{{fa-icon 'pencil'}}</button></h2>
+            <h2>Dashboard<button class='edit-title'>{{fa-icon 'pencil'}}</button></h2>
         </div>
     </div>
 </div>
 
 <div id='freewall' class='free-wall'>
-        {{#each sortableObjectList as |item|}}
+        {{#each widgets as |item|}}
             {{place-holder options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item widgets=widgets wall=wall refreshWall=(action 'refreshWall') dashboardSaveWidget=(action 'dashboardSaveWidget')}}
         {{/each}}
 </div>

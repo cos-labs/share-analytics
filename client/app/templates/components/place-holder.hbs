@@ -1,7 +1,6 @@
 <div class='widgetButtons'>
-    {{name}}
     <button class='configureButton' onclick={{action 'removeWidget'}}>{{fa-icon "close"}}</button>
-    <button class='configureButton' onclick={{action 'showConfig'}}>{{fa-icon "cogs"}}</button>
+    <button class='configureButton' onclick={{action 'showConfig'}}>{{fa-icon "wrench"}}</button>
     <button class='configureButton' onclick={{action 'saveWidget'}}>{{fa-icon "save"}}</button>
     <button class='configureButton' onclick={{action 'showPicker'}}>{{fa-icon "folder-open"}}</button>
 </div>
@@ -43,19 +42,16 @@
 </div>
 
 <div class='widgetpicker'>
-    <form>
-      <hr>
-      <div class="col-xs-4">Widgets:</div>
-      <div class="col-xs-8">
-        <select onchange={{action 'widgetPicked' value="target.value"}}>
-          {{#each widgets as |item index|}}
-              <option value={{index}}>{{item.name}}</option>
-          {{/each}}
-        </select>
-      </div>
-    </form>
+    <div class="col-xs-4">Widgets:</div>
+    <div class="col-xs-8">
+      <select onchange={{action 'widgetPicked' value="target.value"}}>
+        {{#each widgets as |item index|}}
+            <option value={{index}}>{{item.name}}</option>
+        {{/each}}
+      </select>
+    </div>
 </div>
 
-{{component widgetType chartType=chartType aggregations=aggregations total=total width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal}}
+{{component widgetType chartType=chartType aggregations=aggregations name=item.name width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal transitionToFacet=(action 'transitionToFacet')}}
 
 {{yield}}

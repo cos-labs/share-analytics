@@ -479,10 +479,28 @@ export default Ember.Component.extend({
                         }
                     }
                 }
+            }),
+            topContributors: JSON.stringify({
+                query: {
+                    bool: {
+                        must: {
+                            query_string: {query: query}
+                        }
+                    }
+                },
+                from: 0,
+                aggregations: {
+                    contributors : {
+                        terms : {
+                            field: 'contributors.raw',
+                            size: 10
+                        }
+                    }
+                }
             })
         };
         let data = await Ember.$.ajax({
-            url: ENV.apiUrl + '/search/abstractcreativework/_search',
+            url: ENV.apiUrl + '/search/creativeworks/_search',
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',

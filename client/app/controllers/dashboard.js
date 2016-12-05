@@ -25,7 +25,8 @@ export default Ember.Controller.extend({
     sortableObjectList: [
       {chartType: 'donut', widgetType: 'generic-chart', name: ''},
       {chartType: 'totalResults', widgetType: 'number-widget', name: 'Total Results'},
-      {chartType: 'totalPublications', widgetType: 'number-widget', name: 'Total Publications'}
+      {chartType: 'totalPublications', widgetType: 'number-widget', name: 'Total Publications'},
+      {chartType: 'topContributors', widgetType: 'top-contributors', name: 'Top Contributors'}
     ],
     widgets: [],
 

@@ -6,27 +6,26 @@ export default Ember.Route.extend({
 
     // Note that the above query is NOT perfect. But we'll go with it for now.
     model: function(params) {
-        debugger;
         return {
             overview: {
                 widgets: [
-                    {chartType: 'timeseries'},
-                    {chartType: 'donut'},
-                    {chartType: 'donut'}
+                    {chartType: 'timeseries', widgetType: 'generic-chart', name:'timeser'},
+                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don1'},
+                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don2'}
                 ]
             },
             user: {
                 widgets: [
-                    {chartType: 'timeseries'},
-                    {chartType: 'donut'},
-                    {chartType: 'donut'}
+                    {chartType: 'timeseries', widgetType: 'generic-chart', name:'timeser'},
+                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don1'},
+                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don2'}
                 ]
             },
             topic: {
                 widgets: [
-                    {chartType: 'timeseries'},
-                    {chartType: 'donut'},
-                    {chartType: 'donut'}
+                    {chartType: 'timeseries', widgetType: 'generic-chart', name:'timeser'},
+                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don1'},
+                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don2'}
                 ]
             }
         }[params.dashboard];

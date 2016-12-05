@@ -27,6 +27,7 @@ export default Ember.Component.extend({
 
     updateChart() {
 
+
         let chart_type = this.get('chartType');
 
         let chart_options = {

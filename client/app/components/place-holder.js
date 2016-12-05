@@ -410,8 +410,8 @@ export default Ember.Component.extend({
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
         let post_body = {
-            relevance: {
-                query: JSON.stringify({
+            relevance: JSON.stringify({
+                query: {
                     bool: {
                         must: [{
                             query_string: {
@@ -481,6 +481,9 @@ export default Ember.Component.extend({
                         aggregations: {
                             arttype: { terms: { field: 'type' } }
                         }
+                    }
+                }
+            }),
             totalResults: JSON.stringify({
                 query: {
                     bool: {

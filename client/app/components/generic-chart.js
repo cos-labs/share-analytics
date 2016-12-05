@@ -24,7 +24,9 @@ export default Ember.Component.extend({
     }),
 
 
+
     updateChart() {
+
 
         let chart_type = this.get('chartType');
 
@@ -33,6 +35,9 @@ export default Ember.Component.extend({
             data: {
                 columns: null, //to be filled later
                 type: chart_type,
+                onclick: (d) => {
+                    this.attrs.transitionToFacet();
+                },
             },
             legend: { show: false },
             [chart_type]: {
@@ -47,7 +52,6 @@ export default Ember.Component.extend({
             //},
         };
 
-        debugger;
         if (chart_type == 'donut') {
 
              this.set('data', this.get('aggregations.sources.buckets'));

@@ -411,7 +411,7 @@ export default Ember.Component.extend({
         let interval = this.get('tsInterval');
         let post_body = {
             relevance: {
-                query: {
+                query: JSON.stringify({
                     bool: {
                         must: [{
                             query_string: {
@@ -440,7 +440,7 @@ export default Ember.Component.extend({
                         }
                     }
                 }
-            },
+            }),
             stats: JSON.stringify({
                 query: {
                     bool: { must: [{
@@ -481,6 +481,26 @@ export default Ember.Component.extend({
                         aggregations: {
                             arttype: { terms: { field: 'type' } }
                         }
+            totalResults: JSON.stringify({
+                query: {
+                    bool: {
+                      must: {
+                        query_string: {query: query}
+                      }
+                    }
+                }
+            }),
+            totalPublications: JSON.stringify({
+                query: {
+                    bool: {
+                        must: {
+                            query_string: {query: query}
+                        },
+                        filter: [{
+                            term: {
+                                "type.raw": "publication"
+                            }
+                        }]
                     }
                 }
             }),
@@ -546,6 +566,7 @@ export default Ember.Component.extend({
         //    data: JSON.stringify(this.get('item').query)
         //});
         this.set('aggregations', data.aggregations);
+        this.set('total', data.hits.total);
         this.set('docs', data.hits.hits.map((hit) => {
               let source = Ember.Object.create(hit._source);
               let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
@@ -577,7 +598,7 @@ export default Ember.Component.extend({
         //    height: height*150,
         //});
         //this.set('chartType', this.get('item').settings.chart_type);
-        this.set('widgetType', 'generic-chart');
+        this.set('widgetType', this.get('item').widgetType);
         //this.sendAction('refreshWall');
 
     },

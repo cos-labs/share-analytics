@@ -6,13 +6,30 @@ export default Ember.Route.extend({
 
     // Note that the above query is NOT perfect. But we'll go with it for now.
     model: function(params) {
+        debugger;
         return {
-            widgets: [
-                {chartType: 'donut'},
-                {chartType: 'donut'},
-                {chartType: 'donut'}
-            ]
-        }
+            overview: {
+                widgets: [
+                    {chartType: 'timeseries'},
+                    {chartType: 'donut'},
+                    {chartType: 'donut'}
+                ]
+            },
+            user: {
+                widgets: [
+                    {chartType: 'timeseries'},
+                    {chartType: 'donut'},
+                    {chartType: 'donut'}
+                ]
+            },
+            topic: {
+                widgets: [
+                    {chartType: 'timeseries'},
+                    {chartType: 'donut'},
+                    {chartType: 'donut'}
+                ]
+            }
+        }[params.dashboard];
         //return Ember.RSVP.hash({
         //    widgets: this.get('store').peekAll('widget').map((item) => {
         //        return {

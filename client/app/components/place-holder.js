@@ -410,22 +410,94 @@ export default Ember.Component.extend({
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
         let post_body = {
+            relevance: {
+                query: {
+                    bool: {
+                        must: [{
+                            query_string: {
+                                query: "Biology"
+                            }
+                        },{
+                            range: {
+                                date: {
+                                    gte: "1996-01-01",
+                                    lte: "2007-01-01",
+                                    format: "yyyy-MM-dd||yyyy"
+                                }
+                            }
+                        }]
+                    }
+                },
+                size: 0,
+                aggregations: {
+                    test: {
+                        histogram: {
+                            interval: 10,
+                            script: {
+                                lang: "expression",
+                                inline: "_score * 100"
+                            }
+                        }
+                    }
+                }
+            },
+            stats: JSON.stringify({
+                query: {
+                    bool: { must: [{
+                        query_string: { query: query }
+                    }, {
+                        range: { date: {
+                            gte: gte,
+                            lte: lte,
+                            format: "yyyy-MM-dd||yyyy"
+                        }}
+                    }]}
+                },
+                from: 0,
+                aggregations: {
+                    creativework_stats: { stats: { field: "id" } }
+                }
+            }),
+            timeseries: JSON.stringify({
+                query: {
+                    bool: { must: [{
+                        query_string: { query: query }
+                    }, {
+                        range: { date: {
+                            gte: gte,
+                            lte: lte,
+                            format: "yyyy-MM-dd||yyyy"
+                        }}
+                    }]}
+                },
+                from: 0,
+                aggregations: {
+                    articles_over_time: {
+                        date_histogram: {
+                            field: 'date',
+                            interval: interval,
+                            format:'yyyy-MM-dd'
+                        },
+                        aggregations: {
+                            arttype: { terms: { field: 'type' } }
+                        }
+                    }
+                }
+            }),
             donut: JSON.stringify({
                 query: {
-                  bool: { must: [{
-                             query_string: {query: query}
-                         },
-                         {
-                             range: { date: {
+                    bool: { must: [{
+                            query_string: {query: query}
+                        },{
+                            range: { date: {
                                        gte: gte,
                                        lte: lte,
                                        format: "yyyy-MM-dd||yyyy"
                                        }
-                                     }
-                         }
-                       ]
-                  }
-                        },
+                            }
+                        }
+                    ]}
+                },
                 from: 0,
                 aggregations: {
                     sources: {
@@ -466,15 +538,13 @@ export default Ember.Component.extend({
             contentType: 'application/json',
             data: post_body[this.get('item').chartType]
         });
-        debugger;
-        //else {
-        //    data = await Ember.$.ajax({
-        //       url: ENV.apiUrl +  '/search/abstractcreativework/_search',
-        //        crossDomain: true,
-        //        type: 'POST',
-        //        contentType: 'application/json',
-        //        data: JSON.stringify(this.get('item').query)
-        //      });
+        //let data = await Ember.$.ajax({
+        //    url: ENV.apiUrl +  '/search/abstractcreativework/_search',
+        //    crossDomain: true,
+        //    type: 'POST',
+        //    contentType: 'application/json',
+        //    data: JSON.stringify(this.get('item').query)
+        //});
         this.set('aggregations', data.aggregations);
         this.set('docs', data.hits.hits.map((hit) => {
               let source = Ember.Object.create(hit._source);

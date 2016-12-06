@@ -407,6 +407,7 @@ export default Ember.Component.extend({
 
     init() {
         this._super(...arguments);
+        this.set('widthSetting', this.get('item').width);
         Promise.resolve(this.fetchWidgetData()).then(() =>{
             return this.applyGraphSetting();
         });
@@ -431,7 +432,7 @@ export default Ember.Component.extend({
                             query_string: {
                                 query: "Biology"
                             }
-                        },{
+                        }, {
                             range: {
                                 date: {
                                     gte: "1996-01-01",
@@ -662,6 +663,7 @@ export default Ember.Component.extend({
     applyGraphSetting: function(){
 
         this.set('chartType', this.get('item').chartType);
+
         //this.set('widthSetting', this.get('item').width);
         //this.set('heightSetting', this.get('item').height);
         //this.set('name', this.get('item').name);

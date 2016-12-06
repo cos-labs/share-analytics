@@ -10,34 +10,124 @@ export default Ember.Route.extend({
             overview: {
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
-                    {chartType: 'totalResults', widgetType: 'number-widget', name: 'Total Results'},
-                    {chartType: 'totalPublications', widgetType: 'number-widget', name: 'Total Publications'},
-                    {chartType: 'topContributors', widgetType: 'top-contributors', name: 'Top Contributors'},
-                    {chartType: 'timeseries', widgetType: 'generic-chart', name:'timeser'},
-                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don1'},
-                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don2'}
+                    {
+                        chartType: 'totalResults',
+                        widgetType: 'number-widget',
+                        name: 'Total Results',
+                        width: 2,
+                    },
+                    {
+                        chartType: 'totalPublications',
+                        widgetType: 'number-widget',
+                        name: 'Total Publications',
+                        width: 2,
+                    },
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'top-contributors',
+                        name: 'Top Contributors',
+                        width: 2,
+                    },
+                    {
+                        chartType: 'timeseries',
+                        widgetType: 'generic-chart',
+                        width: 2,
+                        name:'timeser',
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'generic-chart',
+                        name: 'don1',
+                        width: 2,
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'generic-chart',
+                        name: 'don2',
+                        width: 2,
+                    }
                 ]
             },
             user: {
                 dasboardName: 'Institution Contributor Overview Dashboard',
                 widgets: [
-                    {chartType: 'totalResults', widgetType: 'number-widget', name: 'Total Results'},
-                    {chartType: 'totalPublications', widgetType: 'number-widget', name: 'Total Publications'},
-                    {chartType: 'timeseries', widgetType: 'generic-chart', name:'timeser'},
-                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don1'},
-                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don2'},
-                    {chartType: 'relevanceHistogram', widgetType: 'generic-chart', name:'timeser'}
+                    {
+                        chartType: 'totalResults',
+                        widgetType: 'number-widget',
+                        name: 'Total Results',
+                        width: 3,
+                    },
+                    {
+                        chartType: 'totalPublications',
+                        widgetType: 'number-widget',
+                        name: 'Total Publications',
+                        width: 3,
+                    },
+                    {
+                        chartType: 'timeseries',
+                        widgetType: 'generic-chart',
+                        name:'timeser',
+                        width: 6,
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'generic-chart',
+                        name: 'don1',
+                        width: 3,
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'generic-chart',
+                        name: 'don2',
+                        width: 3,
+                    },
+                    {
+                        chartType: 'relevanceHistogram',
+                        widgetType: 'generic-chart',
+                        name:'timeser',
+                        width: 6,
+                    }
                 ]
             },
             topic: {
                 dasboardName: 'Institution Subject Area Dashboard',
                 widgets: [
-                    {chartType: 'relevanceHistogram', widgetType: 'generic-chart', name:'timeser'},
-                    {chartType: 'totalResults', widgetType: 'number-widget', name: 'Total Results'},
-                    {chartType: 'totalPublications', widgetType: 'number-widget', name: 'Total Publications'},
-                    {chartType: 'timeseries', widgetType: 'generic-chart', name:'timeser'},
-                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don1'},
-                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don2'}
+                    {
+                        chartType: 'relevanceHistogram',
+                        widgetType: 'generic-chart',
+                        name:'timeser',
+                        width: 2,
+                    },
+                    {
+                        chartType: 'totalResults',
+                        widgetType: 'number-widget',
+                        name: 'Total Results',
+                        width: 2,
+                    },
+                    {
+                        chartType: 'totalPublications',
+                        widgetType: 'number-widget',
+                        name: 'Total Publications',
+                        width: 2,
+                    },
+                    {
+                        chartType: 'timeseries',
+                        widgetType: 'generic-chart',
+                        name:'timeser',
+                        width: 2,
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'generic-chart',
+                        name: 'don1',
+                        width: 2,
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'generic-chart',
+                        name: 'don2',
+                        width: 2,
+                    }
                 ]
             }
         }[params.dashboard];

@@ -23,10 +23,7 @@ export default Ember.Component.extend({
         this.updateChart();
     }),
 
-
-
     updateChart() {
-
 
         let chart_type = this.get('chartType');
 
@@ -54,9 +51,9 @@ export default Ember.Component.extend({
 
         if (chart_type == 'donut') {
 
-             this.set('data', this.get('aggregations.sources.buckets'));
-             var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
-             var title = 'Published in...';
+            this.set('data', this.get('aggregations.sources.buckets'));
+            var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
+            var title = 'Published in...';
 
         } else if (chart_type == 'bar') {
 
@@ -79,6 +76,67 @@ export default Ember.Component.extend({
                 grouped: false, // Default true
             };
             chart_options['tooltip'] = tooltip;
+
+        } else if (chart_type == 'relevanceHistogram') {
+
+            var columns = [
+                //['x'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
+                //    return datum.key
+                //})),
+                ['overallCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
+                    let val = this.get('aggregations.all_score.buckets')[datum.key];
+                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1;}
+                    return 0;
+                })),
+                ['ucCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
+                    let val = this.get('aggregations.filtered_score.buckets.UC.score.buckets')[datum.key];
+                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1;}
+                    return 0;
+                })),
+                ['doeCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
+                    let val = this.get('aggregations.filtered_score.buckets.DOE.score.buckets')[datum.key];
+                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1;}
+                    return 0;
+                }))
+            ];
+
+            chart_options['axis'] = {
+                x: {
+                    tick: {
+                        format: function(val) {
+                            return val;
+                        }
+                    },
+                    label: 'Relevance Score'
+                },
+                y: {
+                    min: 1,
+                    tick: {
+                        format: function (d) { return Math.pow(10,d - 1).toFixed(0); }
+                    },
+                    label: 'Number of Items (Log Scale)'
+                }
+            };
+
+            let zoom = {enabled: true};
+            chart_options['data']['types'] = {
+                x: 'area-spline',
+                overallCountByRelevance: 'area-spline',
+                doeCountByRelevance: 'area-spline',
+                ucCountByRelevance: 'area-spline'
+            };
+            
+            chart_options['data']['labels'] = {
+                //labels: {
+                //    format: {
+                //        overallCountByRelevance: function(d,id){console.log(id, Math.pow(10,d));return Math.pow(10,d).toFixed(0);},
+                //        institutionCountByRelevance: function(d,id){console.log(id, Math.pow(10,d));return Math.pow(10,d).toFixed(0);}
+                //    }
+                //}
+            };
+
+            chart_options['point'] = {show: false};
+            chart_options['zoom'] = {enabled: true};
 
         } else if (chart_type == 'timeseries') {
 

@@ -501,9 +501,59 @@ export default Ember.Component.extend({
                         },
                         filter: [{
                             term: {
-                                "type.raw": "publication"
+                                'type.raw': "publication"
                             }
                         }]
+                    }
+                }
+            }),
+            relevanceHistogram: JSON.stringify({
+                query: {
+                    bool: {
+                        must: [{
+                            query_string: {
+                                query: "plasma"
+                            }
+                        }]
+                    }
+                },
+                size: 0,
+                aggregations: {
+                    all_score: {
+                        histogram: {
+                                interval: 1,
+                                script: {
+                                lang: "expression",
+                                    inline: "_score * 10"
+                            }
+                        }
+                    },
+                    filtered_score: {
+                        filters: {
+                            filters: {
+                                "UC": {
+                                    term: {
+                                       'sources.raw': "eScholarship @ University of California"
+                                    }
+                                },
+                                "DOE": {
+                                    term: {
+                                        'sources.raw': "DoE's SciTech Connect Database"
+                                    }
+                                }
+                            }
+                        },
+                        aggregations: {
+                            score: {
+                                histogram: {
+                                    interval: 1,
+                                    script: {
+                                        lang: "expression",
+                                        inline: "_score * 10"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }),
@@ -588,18 +638,19 @@ export default Ember.Component.extend({
         //});
         this.set('aggregations', data.aggregations);
         this.set('total', data.hits.total);
-        this.set('docs', data.hits.hits.map((hit) => {
-              let source = Ember.Object.create(hit._source);
-              let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
-              r.id = hit._id;
-              r.contributors = source.lists.contributors;
-              r.funders = source.lists.funders;
-              r.publishers = source.lists.publishers;
-              r.institutions = source.lists.institutions;
-              r.organizations = source.lists.organizations;
-              return r;
-          }));
-
+        if (data.hits.total == 0) {
+            this.set('docs', data.hits.hits.map((hit) => {
+                let source = Ember.Object.create(hit._source);
+                let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
+                r.id = hit._id;
+                r.contributors = source.lists.contributors;
+                r.funders = source.lists.funders;
+                r.publishers = source.lists.publishers;
+                r.institutions = source.lists.institutions;
+                r.organizations = source.lists.organizations;
+                return r;
+            }));
+        }
           //Promise.resolve(this).then(function() {
           //});
     },

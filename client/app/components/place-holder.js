@@ -351,7 +351,6 @@ export default Ember.Component.extend({
     aggregations: false,
     docs: false,
 
-    classNames: ['widget'],
     classNameBindings: ['configuring', 'picking', 'width', 'height'],
 
     widgetType: 'wild-card',
@@ -360,8 +359,23 @@ export default Ember.Component.extend({
     widthSetting: 2,
     heightSetting: 2,
 
-    width: 'width-2',
-    height: 'height-2',
+    width: Ember.computed('widthSetting', function() {
+
+        let new_setting = this.get('widthSetting');
+        let current_setting = this.get('currentWidth');
+
+        if (new_setting == 0) {
+            new_setting = current_setting;
+        }
+        if (new_setting > 12) {
+            new_setting = 12;
+        }
+
+        this.set('currentWidth', new_setting)
+
+        return "col-md-" + new_setting;
+
+    }),
 
     computedHeight: 200,
     computedWidth: 200,

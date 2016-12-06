@@ -111,15 +111,15 @@ nav.navbar {
     display: none;
 }
 
-.configuring > .configmenu {
+.configuring > .widget > .configmenu {
     display: block;
 }
 
-.configuring > .chart {
+.configuring > .widget > .chart {
     display: none;
 }
 
-.configuring > .widgetpicker {
+.configuring > .widget > .widgetpicker {
     display: none;
 }
 
@@ -145,6 +145,7 @@ nav.navbar {
     height: 15px;
     line-height: 15px;
     color: #666;
+    position:absolute;
 }
 
 .widget .configureButton {

@@ -20,17 +20,18 @@ export default Ember.Route.extend({
             user: {
                 dasboardName: 'Institution Contributor Overview Dashboard',
                 widgets: [
+                    {chartType: 'totalResults', widgetType: 'number-widget', name: 'Total Results'},
+                    {chartType: 'totalPublications', widgetType: 'number-widget', name: 'Total Publications'},
+                    {chartType: 'timeseries', widgetType: 'generic-chart', name:'timeser'},
+                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don1'},
+                    {chartType: 'donut', widgetType: 'generic-chart', name: 'don2'},
                     {chartType: 'relevanceHistogram', widgetType: 'generic-chart', name:'timeser'}
-                    //{chartType: 'totalResults', widgetType: 'number-widget', name: 'Total Results'},
-                    //{chartType: 'totalPublications', widgetType: 'number-widget', name: 'Total Publications'},
-                    //{chartType: 'timeseries', widgetType: 'generic-chart', name:'timeser'},
-                    //{chartType: 'donut', widgetType: 'generic-chart', name: 'don1'},
-                    //{chartType: 'donut', widgetType: 'generic-chart', name: 'don2'}
                 ]
             },
             topic: {
                 dasboardName: 'Institution Subject Area Dashboard',
                 widgets: [
+                    {chartType: 'relevanceHistogram', widgetType: 'generic-chart', name:'timeser'},
                     {chartType: 'totalResults', widgetType: 'number-widget', name: 'Total Results'},
                     {chartType: 'totalPublications', widgetType: 'number-widget', name: 'Total Publications'},
                     {chartType: 'timeseries', widgetType: 'generic-chart', name:'timeser'},

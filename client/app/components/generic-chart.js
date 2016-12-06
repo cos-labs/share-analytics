@@ -85,12 +85,17 @@ export default Ember.Component.extend({
                 //})),
                 ['overallCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
                     let val = this.get('aggregations.all_score.buckets')[datum.key];
-                    if (val && val.doc_count > 0) {return Math.log(val.doc_count) / Math.LN10;}
+                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1;}
                     return 0;
                 })),
-                ['institutionCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
-                    let val = this.get('aggregations.filtered_score.score.buckets')[datum.key];
-                    if (val && val.doc_count > 0) {return Math.log(val.doc_count) / Math.LN10;}
+                ['ucCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
+                    let val = this.get('aggregations.filtered_score.buckets.UC.score.buckets')[datum.key];
+                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1;}
+                    return 0;
+                })),
+                ['doeCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
+                    let val = this.get('aggregations.filtered_score.buckets.DOE.score.buckets')[datum.key];
+                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1;}
                     return 0;
                 }))
             ];
@@ -101,12 +106,15 @@ export default Ember.Component.extend({
                         format: function(val) {
                             return val;
                         }
-                    }
+                    },
+                    label: 'Relevance Score'
                 },
                 y: {
+                    min: 1,
                     tick: {
-                        format: function (d) { return Math.pow(10,d).toFixed(0); }
-                    }
+                        format: function (d) { return Math.pow(10,d - 1).toFixed(0); }
+                    },
+                    label: 'Number of Items (Log Scale)'
                 }
             };
 
@@ -114,7 +122,8 @@ export default Ember.Component.extend({
             chart_options['data']['types'] = {
                 x: 'area-spline',
                 overallCountByRelevance: 'area-spline',
-                institutionCountByRelevance: 'area-spline'
+                doeCountByRelevance: 'area-spline',
+                ucCountByRelevance: 'area-spline'
             };
             
             chart_options['data']['labels'] = {

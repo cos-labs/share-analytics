@@ -512,7 +512,7 @@ export default Ember.Component.extend({
                     bool: {
                         must: [{
                             query_string: {
-                                query: "psychology"
+                                query: "plasma"
                             }
                         }]
                     }
@@ -529,9 +529,18 @@ export default Ember.Component.extend({
                         }
                     },
                     filtered_score: {
-                        filter: {
-                            term: {
-                                'sources.raw': "eScholarship @ University of California"
+                        filters: {
+                            filters: {
+                                "UC": {
+                                    term: {
+                                       'sources.raw': "eScholarship @ University of California"
+                                    }
+                                },
+                                "DOE": {
+                                    term: {
+                                        'sources.raw': "DoE's SciTech Connect Database"
+                                    }
+                                }
                             }
                         },
                         aggregations: {

@@ -8,9 +8,9 @@
 </div>
 
 <div id='freewall' class='free-wall'>
-        {{#each widgets as |item|}}
-            {{place-holder options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item widgets=widgets wall=wall refreshWall=(action 'refreshWall') dashboardSaveWidget=(action 'dashboardSaveWidget')}}
-        {{/each}}
+    {{#each widgets as |item|}}
+        {{place-holder options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item widgets=widgets wall=wall refreshWall=(action 'refreshWall') dashboardSaveWidget=(action 'dashboardSaveWidget')}}
+    {{/each}}
 </div>
 
 <!--

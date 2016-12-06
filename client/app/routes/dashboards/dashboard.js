@@ -12,6 +12,7 @@ export default Ember.Route.extend({
                 widgets: [
                     {chartType: 'totalResults', widgetType: 'number-widget', name: 'Total Results'},
                     {chartType: 'totalPublications', widgetType: 'number-widget', name: 'Total Publications'},
+                    {chartType: 'topContributors', widgetType: 'top-contributors', name: 'Top Contributors'},
                     {chartType: 'timeseries', widgetType: 'generic-chart', name:'timeser'},
                     {chartType: 'donut', widgetType: 'generic-chart', name: 'don1'},
                     {chartType: 'donut', widgetType: 'generic-chart', name: 'don2'}

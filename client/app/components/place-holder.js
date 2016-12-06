@@ -735,16 +735,16 @@ export default Ember.Component.extend({
             this.set('configuring', false);
         },
 
-        transitionToFacet: function() {
-            this.get('router').transitionTo('dashboards.dashboard', 'subject').then((route) => {
+        transitionToFacet: function(d) {
+            this.get('router').transitionTo('dashboards.dashboard', 'topic').then((route) => {
                 Ember.run.schedule('afterRender', this, () => {
                     let controller = route.get('controller');
                     controller.set('subject', d);
                     controller.set('back', 'backroute');
                 });
             });
-            let url = 'https://share.osf.io/discover?q=' + d.name;
-            window.open(url, '_blank');
+            //let url = 'https://share.osf.io/discover?q=' + d.name;
+            //window.open(url, '_blank');
         },
 
         saveWidget: function(){

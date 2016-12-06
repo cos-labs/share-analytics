@@ -33,7 +33,7 @@ export default Ember.Component.extend({
                 columns: null, //to be filled later
                 type: chart_type,
                 onclick: (d) => {
-                    this.attrs.transitionToFacet();
+                    this.attrs.transitionToFacet(d);
                 },
             },
             legend: { show: false },

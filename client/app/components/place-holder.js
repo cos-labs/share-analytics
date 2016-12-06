@@ -628,31 +628,21 @@ export default Ember.Component.extend({
             type: 'POST',
             contentType: 'application/json',
             data: post_body[this.get('item').chartType]
-        });
-        //let data = await Ember.$.ajax({
-        //    url: ENV.apiUrl +  '/search/abstractcreativework/_search',
-        //    crossDomain: true,
-        //    type: 'POST',
-        //    contentType: 'application/json',
         //    data: JSON.stringify(this.get('item').query)
-        //});
+        });
         this.set('aggregations', data.aggregations);
         this.set('total', data.hits.total);
-        if (data.hits.total == 0) {
-            this.set('docs', data.hits.hits.map((hit) => {
-                let source = Ember.Object.create(hit._source);
-                let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
-                r.id = hit._id;
-                r.contributors = source.lists.contributors;
-                r.funders = source.lists.funders;
-                r.publishers = source.lists.publishers;
-                r.institutions = source.lists.institutions;
-                r.organizations = source.lists.organizations;
-                return r;
-            }));
-        }
-          //Promise.resolve(this).then(function() {
-          //});
+        this.set('docs', data.hits.hits.map((hit) => {
+            let source = Ember.Object.create(hit._source);
+            let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
+            r.id = hit._id;
+            r.contributors = source.lists.contributors;
+            r.funders = source.lists.funders;
+            r.publishers = source.lists.publishers;
+            r.institutions = source.lists.institutions;
+            r.organizations = source.lists.organizations;
+            return r;
+        }));
     },
 
     applyGraphSetting: function(){

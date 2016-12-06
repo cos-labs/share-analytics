@@ -1,4 +1,5 @@
 <div class='widgetButtons'>
+    <label>{{item.name}}</label>
     <button class='configureButton' onclick={{action 'removeWidget'}}>{{fa-icon "close"}}</button>
     <button class='configureButton' onclick={{action 'showConfig'}}>{{fa-icon "wrench"}}</button>
     <button class='configureButton' onclick={{action 'saveWidget'}}>{{fa-icon "save"}}</button>
@@ -52,6 +53,6 @@
     </div>
 </div>
 
-{{component widgetType chartType=chartType aggregations=aggregations name=item.name width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal transitionToFacet=(action 'transitionToFacet')}}
+{{component widgetType chartType=chartType aggregations=aggregations name=item.name width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal total=total transitionToFacet=(action 'transitionToFacet')}}
 
 {{yield}}

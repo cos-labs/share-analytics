@@ -140,6 +140,12 @@ nav.navbar {
     overflow: hidden;
     padding: 5px;
 }
+.widgetButtons > label {
+    padding: 5px;
+    height: 15px;
+    line-height: 15px;
+    color: #666;
+}
 
 .widget .configureButton {
     display: block;
@@ -171,7 +177,7 @@ nav.navbar {
 }
 
 .free-wall {
-    margin: 15px;
+    margin-bottom: 40px;
 }
 .cell {
     cursor: move;

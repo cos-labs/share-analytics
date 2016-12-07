@@ -424,6 +424,7 @@ export default Ember.Component.extend({
         let gte = this.get('gte');
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
+        let chartType = this.get('item').chartType;
         let post_body = {
             relevance: JSON.stringify({
                 query: {
@@ -637,12 +638,15 @@ export default Ember.Component.extend({
                 }
             })
         };
+        if (!post_body.hasOwnProperty(chartType)){
+            return;
+        }
         let data = await Ember.$.ajax({
             url: ENV.apiUrl + '/search/creativeworks/_search',
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
-            data: post_body[this.get('item').chartType]
+            data: post_body[chartType]
         //    data: JSON.stringify(this.get('item').query)
         });
         this.set('aggregations', data.aggregations);

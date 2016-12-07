@@ -384,7 +384,7 @@ export default Ember.Component.extend({
     resizedSignal: false,
 
     // Initialize our query parameters
-    q: 'UC',
+    query: 'UC',
     gte: "1996-01-01",
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
 
@@ -420,230 +420,18 @@ export default Ember.Component.extend({
     },
 
     fetchWidgetData: async function() {
-        let query = this.get('q');
+        let query = this.get('query');
         let gte = this.get('gte');
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
-        let post_body = {
-            relevance: JSON.stringify({
-                query: {
-                    bool: {
-                        must: [{
-                            query_string: {
-                                query: "Biology"
-                            }
-                        }, {
-                            range: {
-                                date: {
-                                    gte: "1996-01-01",
-                                    lte: "2007-01-01",
-                                    format: "yyyy-MM-dd||yyyy"
-                                }
-                            }
-                        }]
-                    }
-                },
-                size: 0,
-                aggregations: {
-                    test: {
-                        histogram: {
-                            interval: 10,
-                            script: {
-                                lang: "expression",
-                                inline: "_score * 100"
-                            }
-                        }
-                    }
-                }
-            }),
-            stats: JSON.stringify({
-                query: {
-                    bool: { must: [{
-                        query_string: { query: query }
-                    }, {
-                        range: { date: {
-                            gte: gte,
-                            lte: lte,
-                            format: "yyyy-MM-dd||yyyy"
-                        }}
-                    }]}
-                },
-                from: 0,
-                aggregations: {
-                    creativework_stats: { stats: { field: "id" } }
-                }
-            }),
-            timeseries: JSON.stringify({
-                query: {
-                    bool: { must: [{
-                        query_string: { query: query }
-                    }, {
-                        range: { date: {
-                            gte: gte,
-                            lte: lte,
-                            format: "yyyy-MM-dd||yyyy"
-                        }}
-                    }]}
-                },
-                from: 0,
-                aggregations: {
-                    articles_over_time: {
-                        date_histogram: {
-                            field: 'date',
-                            interval: interval,
-                            format:'yyyy-MM-dd'
-                        },
-                        aggregations: {
-                            arttype: { terms: { field: 'type' } }
-                        }
-                    }
-                }
-            }),
-            totalResults: JSON.stringify({
-                query: {
-                    bool: {
-                      must: {
-                        query_string: {query: query}
-                      }
-                    }
-                }
-            }),
-            totalPublications: JSON.stringify({
-                query: {
-                    bool: {
-                        must: {
-                            query_string: {query: query}
-                        },
-                        filter: [{
-                            term: {
-                                'type.raw': "publication"
-                            }
-                        }]
-                    }
-                }
-            }),
-            relevanceHistogram: JSON.stringify({
-                query: {
-                    bool: {
-                        must: [{
-                            query_string: {
-                                query: "plasma"
-                            }
-                        }]
-                    }
-                },
-                size: 0,
-                aggregations: {
-                    all_score: {
-                        histogram: {
-                                interval: 1,
-                                script: {
-                                lang: "expression",
-                                    inline: "_score * 10"
-                            }
-                        }
-                    },
-                    filtered_score: {
-                        filters: {
-                            filters: {
-                                "UC": {
-                                    term: {
-                                       'sources.raw': "eScholarship @ University of California"
-                                    }
-                                },
-                                "DOE": {
-                                    term: {
-                                        'sources.raw': "DoE's SciTech Connect Database"
-                                    }
-                                }
-                            }
-                        },
-                        aggregations: {
-                            score: {
-                                histogram: {
-                                    interval: 1,
-                                    script: {
-                                        lang: "expression",
-                                        inline: "_score * 10"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }),
-            donut: JSON.stringify({
-                query: {
-                    bool: { must: [{
-                            query_string: {query: query}
-                        },{
-                            range: { date: {
-                                       gte: gte,
-                                       lte: lte,
-                                       format: "yyyy-MM-dd||yyyy"
-                                       }
-                            }
-                        }
-                    ]}
-                },
-                from: 0,
-                aggregations: {
-                    sources: {
-                        terms: {
-                             field: 'sources.raw',
-                             size: 200
-                        }
-                    },
-                    contributors : {
-                        terms : {
-                            field: 'contributors.raw',
-                            size: 200
-                        }
-                    },
-                    tags : {
-                        terms : {
-                            field: 'tags.raw',
-                            size: 200
-                        }
-                    },
-                    articles_over_time: {
-                        date_histogram: {
-                            field: 'date',
-                            interval: interval,
-                            format:'yyyy-MM-dd'
-                        },
-                        aggregations: {
-                            arttype: {terms: {field: 'type'}}
-                        }
-                    }
-                }
-            }),
-            topContributors: JSON.stringify({
-                query: {
-                    bool: {
-                        must: {
-                            query_string: {query: query}
-                        }
-                    }
-                },
-                from: 0,
-                aggregations: {
-                    contributors : {
-                        terms : {
-                            field: 'contributors.raw',
-                            size: 10
-                        }
-                    }
-                }
-            })
-        };
+
         let data = await Ember.$.ajax({
             url: ENV.apiUrl + '/search/creativeworks/_search',
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
-            data: post_body[this.get('item').chartType]
-        //    data: JSON.stringify(this.get('item').query)
+        //    data: post_body[this.get('item').chartType]
+            data: JSON.stringify(this.get('item').post_body)
         });
         this.set('aggregations', data.aggregations);
         this.set('total', data.hits.total);
@@ -735,16 +523,16 @@ export default Ember.Component.extend({
             this.set('configuring', false);
         },
 
-        transitionToFacet: function() {
-            this.get('router').transitionTo('dashboards.dashboard', 'subject').then((route) => {
+        transitionToFacet: function(d) {
+            this.get('router').transitionTo('dashboards.dashboard', 'topic').then((route) => {
                 Ember.run.schedule('afterRender', this, () => {
                     let controller = route.get('controller');
-                    controller.set('subject', d);
+                    controller.set('query', {topic: d});
                     controller.set('back', 'backroute');
                 });
             });
-            let url = 'https://share.osf.io/discover?q=' + d.name;
-            window.open(url, '_blank');
+            //let url = 'https://share.osf.io/discover?q=' + d.name;
+            //window.open(url, '_blank');
         },
 
         saveWidget: function(){

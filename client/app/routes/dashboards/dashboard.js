@@ -56,12 +56,20 @@ export default Ember.Route.extend({
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 3,
+                        widgetSettings : {
+                            fontSize: 2,
+                            fontColor: '#2196F3'
+                        }
                     },
                     {
                         chartType: 'totalPublications',
                         widgetType: 'number-widget',
                         name: 'Total Publications',
                         width: 3,
+                        widgetSettings : {
+                            fontSize: 2,
+                            fontColor: '#F44336'
+                        }
                     },
                     {
                         chartType: 'timeseries',
@@ -147,7 +155,7 @@ export default Ember.Route.extend({
     },
 
     setupController: function(controller, model) {
-        controller.set('widgets', model.widgets)
+        controller.set('widgets', model.widgets);
         this._super(controller, model);
         let self = this;
         Ember.run.schedule('afterRender', this, function() {

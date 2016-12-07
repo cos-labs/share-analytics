@@ -1,4 +1,5 @@
 /* global c3 */
+/* global Plotly */
 import Ember from 'ember';
 
 export default Ember.Component.extend({
@@ -15,7 +16,7 @@ export default Ember.Component.extend({
     sizeChanged: Ember.observer('resizedSignal', function() {
         if (this.get('resizedSignal') == false) return;
         this.updateChart();
-        this.set('resizedSignal', false); 
+        this.set('resizedSignal', false);
         //debugger;
     }),
 
@@ -127,7 +128,19 @@ export default Ember.Component.extend({
 
         chart_options['data']['columns'] = columns;
         chart_options[chart_type]['title'] = title;
+
+        var data = [{
+          values: [19, 26, 55],
+          labels: ['Residential', 'Non-Residential', 'Utility'],
+          type: 'pie'
+        }];
+
+        var layout = {
+          height: 400,
+          width: 500
+        };
         this.set('chart', c3.generate(chart_options));
+        // this.set('chart', Plotly.newPlot(this.element, data, layout));
 
     },
 

@@ -55,7 +55,7 @@ export default Ember.Route.extend({
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
-                        width: 3,
+                        width: 4,
                         widgetSettings : {
                             fontSize: 1,
                             fontColor: '#2196F3'
@@ -65,7 +65,17 @@ export default Ember.Route.extend({
                         chartType: 'totalPublications',
                         widgetType: 'number-widget',
                         name: 'Total Publications',
-                        width: 3,
+                        width: 4,
+                        widgetSettings : {
+                            fontSize: 2,
+                            fontColor: '#F44336'
+                        }
+                    },
+                    {
+                        chartType: 'totalPublications',
+                        widgetType: 'number-widget',
+                        name: 'Total Publications',
+                        width: 4,
                         widgetSettings : {
                             fontSize: 2,
                             fontColor: '#F44336'
@@ -75,25 +85,19 @@ export default Ember.Route.extend({
                         chartType: 'timeseries',
                         widgetType: 'generic-chart',
                         name:'timeser',
-                        width: 6,
+                        width: 12,
                     },
                     {
                         chartType: 'donut',
                         widgetType: 'generic-chart',
                         name: 'don1',
-                        width: 3,
-                    },
-                    {
-                        chartType: 'donut',
-                        widgetType: 'generic-chart',
-                        name: 'don2',
-                        width: 3,
+                        width: 4,
                     },
                     {
                         chartType: 'relevanceHistogram',
                         widgetType: 'generic-chart',
                         name:'timeser',
-                        width: 6,
+                        width: 8,
                     }
                 ]
             },

@@ -1,8 +1,13 @@
 /*Packery grid styling*/
 
-.background {
+.wrapper {
     background: url("http://localhost:4200/images/stardust.png");
     padding-bottom: 40px;
+    margin-top: 50px;
+}
+
+.wrapper h2 {
+    color: #f8f4f9;
 }
 
 
@@ -13,9 +18,9 @@
     color: #fff;
     padding: 15px;
     font-weight: 500 !important;
-    -webkit-box-shadow: inset 0px 83px 72px -90px rgba(0,0,0,0.75);
-    -moz-box-shadow: inset 0px 83px 72px -90px rgba(0,0,0,0.75);
-    box-shadow: inset 0px 83px 72px -90px rgba(0,0,0,0.75);
+    -webkit-box-shadow: inset 0px -3px 10px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px -3px 10px rgba(0,0,0,0.75);
+    box-shadow: inset 0px -3px 10px rgba(0,0,0,0.75)
 }
 
 .widgetpicker {
@@ -159,6 +164,7 @@ nav.navbar {
     -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
     box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
     padding: 5px;
+    min-height: 100px;
 }
 .widget-body {
     padding: 0 10px;

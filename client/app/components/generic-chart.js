@@ -140,11 +140,14 @@ export default Ember.Component.extend({
 
         } else if (chart_type == 'timeseries') {
 
-            this.set('data', this.get('aggregations.articles_over_time.buckets'));
-            var columns = [
+            this.set('data', this.get('aggregations'));
+            var datehists_by_type = this.get('data').sorted_by_type.buckets.map((bucket) => {
+                return [bucket.key].concat(bucket.type_over_time.buckets.map((bucket) => { return bucket.doc_count; }));
+            });
+            [
                 ['x'].concat(this.get('data').map((datum) => {return datum.key_as_string})),
-                ['Articles'].concat(this.get('data').map((datum) => {return datum.doc_count})),
-            ];
+                ['All Events'].concat(this.get('data').map((datum) => {return datum.doc_count})),
+            ]
             let data_x = 'x';
             chart_options['axis'] = {
                 x: {
@@ -160,7 +163,7 @@ export default Ember.Component.extend({
             };
             let data_types = {
                 x: 'area-spline',
-                Articles: 'area'
+                Articles: 'area-spline'
             };
             chart_options['tooltip'] = {
                 format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals

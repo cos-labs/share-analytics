@@ -62,13 +62,16 @@ export default Ember.Route.extend({
                         }
                     },
                     {
-                        chartType: 'totalPublications',
+                        chartType: 'numberValue',
                         widgetType: 'number-widget',
-                        name: 'Total Publications',
+                        name: 'Funding from NIH',
                         width: 4,
                         widgetSettings : {
+                            value : '400',
                             fontSize: 2,
-                            fontColor: '#F44336'
+                            fontColor: '#F44336',
+                            pre : '$',
+                            post: 'M'
                         }
                     },
                     {

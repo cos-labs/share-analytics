@@ -57,7 +57,7 @@ export default Ember.Route.extend({
                         name: 'Total Results',
                         width: 3,
                         widgetSettings : {
-                            fontSize: 2,
+                            fontSize: 1,
                             fontColor: '#2196F3'
                         }
                     },

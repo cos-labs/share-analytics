@@ -129,18 +129,7 @@ export default Ember.Component.extend({
         chart_options['data']['columns'] = columns;
         chart_options[chart_type]['title'] = title;
 
-        var data = [{
-          values: [19, 26, 55],
-          labels: ['Residential', 'Non-Residential', 'Utility'],
-          type: 'pie'
-        }];
-
-        var layout = {
-          height: 400,
-          width: 500
-        };
         this.set('chart', c3.generate(chart_options));
-        // this.set('chart', Plotly.newPlot(this.element, data, layout));
 
     },
 

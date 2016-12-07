@@ -1,10 +1,6 @@
 <div class='widget'>
     <div class='widgetButtons'>
-        <label>{{item.name}}</label>
-        <button class='configureButton' onclick={{action 'removeWidget'}}>{{fa-icon "close"}}</button>
-        <button class='configureButton' onclick={{action 'showConfig'}}>{{fa-icon "wrench"}}</button>
-        <button class='configureButton' onclick={{action 'saveWidget'}}>{{fa-icon "save"}}</button>
-        <button class='configureButton' onclick={{action 'showPicker'}}>{{fa-icon "folder-open"}}</button>
+        <h4>{{item.name}}</h4>
     </div>
     <div class='configmenu'>
             <div class="col-xs-4">JS Engine:</div>
@@ -54,7 +50,7 @@
         </div>
     </div>
 
-    {{component widgetType chartType=chartType aggregations=aggregations name=item.name width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal total=total transitionToFacet=(action 'transitionToFacet')}}
+    {{component widgetType widgetSettings=item.widgetSettings chartType=chartType aggregations=aggregations name=item.name width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal total=total transitionToFacet=(action 'transitionToFacet')}}
 
     {{yield}}
 </div>

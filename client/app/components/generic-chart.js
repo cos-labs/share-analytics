@@ -15,7 +15,7 @@ export default Ember.Component.extend({
     sizeChanged: Ember.observer('resizedSignal', function() {
         if (this.get('resizedSignal') == false) return;
         this.updateChart();
-        this.set('resizedSignal', false); 
+        this.set('resizedSignal', false);
         //debugger;
     }),
 
@@ -83,7 +83,7 @@ export default Ember.Component.extend({
                 //['x'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
                 //    return datum.key
                 //})),
-                ['overallCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
+                ['overallCountByRelevance'].concat(this.get('aggregations').all_score.UC.buckets.map((datum) => {
                     let val = this.get('aggregations.all_score.buckets')[datum.key];
                     if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1; }
                     return 0;

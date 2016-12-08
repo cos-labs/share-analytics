@@ -247,16 +247,30 @@ export default Ember.Route.extend({
                             }
                         },
                         widgetSettings : {
-                            fontSize: 1,
-                            fontColor: '#2196F3'
+                            fontSize: 2,
+                            fontColor: '#F44336'
                         }
                     },
                     {
-                        chartType: 'totalPublications',
+                        chartType: 'numberValue',
                         widgetType: 'number-widget',
-                        name: 'Total Publications',
+                        name: 'Funding from NIH',
                         width: 4,
-                        post_body: {
+                        post_body: null,
+                        widgetSettings : {
+                            value : '400',
+                            fontSize: 2,
+                            fontColor: '#F44336',
+                            pre : '$',
+                            post: 'M'
+                        }
+                    },
+                    {
+                        chartType: 'relatedResearchers',
+                        widgetType: 'number-widget',
+                        name: 'Related Researchers',
+                        width: 4,
+                        post_body : {
                             query: {
                                 bool: {
                                     must: {
@@ -264,9 +278,16 @@ export default Ember.Route.extend({
                                     },
                                     filter: [{
                                         term: {
-                                            'type.raw': "publication"
+                                            "sources.raw": "eScholarship @ University of California"
                                         }
                                     }]
+                                }
+                            },
+                            aggregations: {
+                                "relatedContributors" : {
+                                    cardinality : {
+                                        field: "lists.contributors.id"
+                                    }
                                 }
                             }
                         },
@@ -276,32 +297,7 @@ export default Ember.Route.extend({
                         }
                     },
                     {
-                        chartType: 'totalPublications',
-                        widgetType: 'number-widget',
-                        name: 'Active Contributors',
-                        width: 4,
-                        post_body: {
-                            query: {
-                                bool: {
-                                    must: {
-                                        query_string: {query: query}
-                                    },
-                                    filter: [{
-                                        term: {
-                                            'type.raw': "publication"
-                                        }
-                                    }]
-                                }
-                            }
-                        },
-                        width: 4,
-                        widgetSettings : {
-                            fontSize: 2,
-                            fontColor: '#F44336'
-                        }
-                    },
-                    {
-                        chartType: 'timeseries',
+                        chartType: 'relevanceHistogram',
                         widgetType: 'generic-chart',
                         name:'Date Histogram',
                         width: 12,
@@ -336,6 +332,30 @@ export default Ember.Route.extend({
                                         "field": "date_updated",
                                         "interval": "1y",
                                         "format": "yyyy-MM-dd"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Top Contributors',
+                        width: 4,
+                        post_body : {
+                            query: {
+                                bool: {
+                                    must: {
+                                        query_string: {query: query}
+                                    }
+                                }
+                            },
+                            from: 0,
+                            aggregations: {
+                                listWidgetData : {
+                                    terms : {
+                                        field: 'contributors.raw',
+                                        size: 10
                                     }
                                 }
                             }
@@ -394,10 +414,34 @@ export default Ember.Route.extend({
                         }
                     },
                     {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Top Tags',
+                        width: 4,
+                        post_body : {
+                            query: {
+                                bool: {
+                                    must: {
+                                        query_string: {query: query}
+                                    }
+                                }
+                            },
+                            from: 0,
+                            aggregations: {
+                                listWidgetData : {
+                                    terms : {
+                                        field: 'tags',
+                                        size: 10
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
                         chartType: 'relevanceHistogram',
                         widgetType: 'generic-chart',
                         name:'Relevance Histogram',
-                        width: 8,
+                        width: 12,
                         post_body: {
                             query: {
                                 bool: {

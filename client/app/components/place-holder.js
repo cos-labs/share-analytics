@@ -629,9 +629,27 @@ export default Ember.Component.extend({
                 },
                 from: 0,
                 aggregations: {
-                    contributors : {
+                    listWidgetData : {
                         terms : {
                             field: 'contributors.raw',
+                            size: 10
+                        }
+                    }
+                }
+            }),
+            topTags : JSON.stringify({
+                query: {
+                    bool: {
+                        must: {
+                            query_string: {query: query}
+                        }
+                    }
+                },
+                from: 0,
+                aggregations: {
+                    listWidgetData : {
+                        terms : {
+                            field: 'tags',
                             size: 10
                         }
                     }

@@ -103,9 +103,9 @@ export default Ember.Route.extend({
                         width: 4,
                     },
                     {
-                        chartType: 'topContributors',
+                        chartType: 'topTags',
                         widgetType: 'list-widget',
-                        name: 'Top Contributors',
+                        name: 'Top Tags',
                         width: 4,
                     }
                 ]

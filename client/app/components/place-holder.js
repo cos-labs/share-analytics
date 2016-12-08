@@ -636,6 +636,27 @@ export default Ember.Component.extend({
                         }
                     }
                 }
+            }),
+            relatedResearchers: JSON.stringify({
+                query: {
+                    bool: {
+                        must: {
+                            query_string: {query: query}
+                        },
+                        filter: [{
+                            term: {
+                                "sources.raw": "eScholarship @ University of California"
+                            }
+                        }]
+                    }
+                },
+                aggregations: {
+                    "relatedContributors" : {
+                        cardinality : {
+                            field: "lists.contributors.id"
+                        }
+                    }
+                }
             })
         };
         if (!post_body.hasOwnProperty(chartType)){
@@ -651,6 +672,9 @@ export default Ember.Component.extend({
         });
         this.set('aggregations', data.aggregations);
         this.set('total', data.hits.total);
+        if(chartType === 'relatedResearchers') {
+            this.set('total', data.aggregations.relatedContributors.value);
+        }
         this.set('docs', data.hits.hits.map((hit) => {
             let source = Ember.Object.create(hit._source);
             let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');

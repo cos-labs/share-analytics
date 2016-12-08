@@ -75,9 +75,9 @@ export default Ember.Route.extend({
                         }
                     },
                     {
-                        chartType: 'totalPublications',
+                        chartType: 'relatedResearchers',
                         widgetType: 'number-widget',
-                        name: 'Total Publications',
+                        name: 'Related Researchers',
                         width: 4,
                         widgetSettings : {
                             fontSize: 2,

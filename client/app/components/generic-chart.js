@@ -195,6 +195,7 @@ export default Ember.Component.extend({
 
             chart_options['data']['types'] = data_types;
             chart_options['data']['x'] = data_x;
+            chart_options['legend'] = { position: "right" };
             chart_options['zoom'] = zoom;
             chart_options['point'] = point;
 

@@ -15,7 +15,7 @@ export default Ember.Component.extend({
     sizeChanged: Ember.observer('resizedSignal', function() {
         if (this.get('resizedSignal') == false) return;
         this.updateChart();
-        this.set('resizedSignal', false); 
+        this.set('resizedSignal', false);
         //debugger;
     }),
 
@@ -33,7 +33,7 @@ export default Ember.Component.extend({
                 columns: null, //to be filled later
                 type: chart_type,
                 onclick: (d) => {
-                    this.attrs.transitionToFacet();
+                    this.attrs.transitionToFacet(d);
                 },
             },
             legend: { show: false },
@@ -83,19 +83,19 @@ export default Ember.Component.extend({
                 //['x'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
                 //    return datum.key
                 //})),
-                ['overallCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
+                ['overallCountByRelevance'].concat(this.get('aggregations').all_score.UC.buckets.map((datum) => {
                     let val = this.get('aggregations.all_score.buckets')[datum.key];
-                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1;}
+                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1; }
                     return 0;
                 })),
                 ['ucCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
                     let val = this.get('aggregations.filtered_score.buckets.UC.score.buckets')[datum.key];
-                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1;}
+                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1; }
                     return 0;
                 })),
                 ['doeCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
                     let val = this.get('aggregations.filtered_score.buckets.DOE.score.buckets')[datum.key];
-                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1;}
+                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1; }
                     return 0;
                 }))
             ];
@@ -125,7 +125,7 @@ export default Ember.Component.extend({
                 doeCountByRelevance: 'area-spline',
                 ucCountByRelevance: 'area-spline'
             };
-            
+
             chart_options['data']['labels'] = {
                 //labels: {
                 //    format: {
@@ -140,11 +140,21 @@ export default Ember.Component.extend({
 
         } else if (chart_type == 'timeseries') {
 
-            this.set('data', this.get('aggregations.articles_over_time.buckets'));
-            var columns = [
-                ['x'].concat(this.get('data').map((datum) => {return datum.key_as_string})),
-                ['Articles'].concat(this.get('data').map((datum) => {return datum.doc_count})),
-            ];
+            this.set('data', this.get('aggregations'));
+            let x_axis = this.get('data').all_over_time.buckets.map((datum) => { return datum.key_as_string })
+            var columns = this.get('data').sorted_by_type.buckets.map((bucket) => {
+                return [bucket.key].concat(bucket.type_over_time.buckets.reduce((ret, bucket) => {
+                    if (bucket && bucket.doc_count > 0) {
+                        ret[x_axis.indexOf(bucket.key_as_string)] = (Math.log(bucket.doc_count) / Math.LN10) + 1 ;
+                    }
+                    return ret;
+                }, (new Array(x_axis.length)).fill(0)));
+            });
+            columns.unshift(['x'].concat(x_axis))
+            columns.unshift(['All Events'].concat(this.get('data').all_over_time.buckets.map((bucket) => {
+                if (bucket && bucket.doc_count > 0) { return (Math.log(bucket.doc_count) / Math.Ln10) + 1; }
+                return 0;
+            })))
             let data_x = 'x';
             chart_options['axis'] = {
                 x: {
@@ -156,12 +166,19 @@ export default Ember.Component.extend({
                         rotate: 90,
                         format: '%d-%m-%Y' // Format the tick labels on our chart
                     }
+                },
+                y: {
+                    min: 1,
+                    tick: {
+                        format: function (d) { return Math.pow(10,d - 1).toFixed(0); }
+                    },
+                    label: 'Number of Items (Log Scale)'
                 }
             };
-            let data_types = {
-                x: 'area-spline',
-                Articles: 'area'
-            };
+            let data_types = columns.reduce((r, c, i, a) => {
+                r[c[0]] = 'area-spline';
+                return r;
+            }, {});
             chart_options['tooltip'] = {
                 format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
                     title: function (d) {
@@ -178,6 +195,7 @@ export default Ember.Component.extend({
 
             chart_options['data']['types'] = data_types;
             chart_options['data']['x'] = data_x;
+            chart_options['legend'] = { position: "right" };
             chart_options['zoom'] = zoom;
             chart_options['point'] = point;
 

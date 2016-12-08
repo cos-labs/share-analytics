@@ -173,7 +173,7 @@ nav.navbar {
     font-weight: bold;
     color: #F44336;
     float: right;
-    margin-top: -20px;
+    margin-top: -5px;
 }
 .widget-number.size-1 {
     font-size: 32px;
@@ -353,10 +353,16 @@ nav.navbar {
     padding-bottom: 20px;
 }
 .list-widget-item {
-    padding: 3px 10px;
-        border-bottom: 1px solid #ddd;
-        border-radius: 2px;
-        margin-bottom: 3px;
+    padding: 4px 10px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 2px;
+}
+a.list-widget-item{
+    display: block;
+    cursor: pointer;
+}
+a.list-widget-item:hover {
+    background: #e3ecf3;
 }
 .list-widget .item-number {
     font-size: 18px;

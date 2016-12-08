@@ -57,8 +57,8 @@ export default Ember.Route.extend({
                         name: 'Total Results',
                         width: 4,
                         widgetSettings : {
-                            fontSize: 1,
-                            fontColor: '#2196F3'
+                            fontSize: 2,
+                            fontColor: '#F44336'
                         }
                     },
                     {
@@ -85,10 +85,16 @@ export default Ember.Route.extend({
                         }
                     },
                     {
-                        chartType: 'timeseries',
+                        chartType: 'relevanceHistogram',
                         widgetType: 'generic-chart',
-                        name:'timeser',
+                        name:'Relevance Histogram',
                         width: 12,
+                    },
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Top Contributors',
+                        width: 4,
                     },
                     {
                         chartType: 'donut',
@@ -100,12 +106,6 @@ export default Ember.Route.extend({
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Contributors',
-                        width: 4,
-                    },
-                    {
-                        chartType: 'relevanceHistogram',
-                        widgetType: 'generic-chart',
-                        name:'timeser',
                         width: 4,
                     }
                 ]

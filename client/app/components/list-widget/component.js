@@ -5,13 +5,14 @@ export default Ember.Component.extend({
     generateLink () {
         // generate link for single item
     },
-    processData () {
+    processData (data) {
         // loop through data and do things
-
+        for (let item of data){
+            this.get('data').pushObject({number : item.doc_count, name :item.key});
+        }
     },
     init(){
         this._super(...arguments);
-        this.get('data').pushObject({number : 23, name :'Jeanne Khalid'});
-        //this.processData();
+        this.processData(this.get('aggregations.contributors.buckets'));
     }
 });

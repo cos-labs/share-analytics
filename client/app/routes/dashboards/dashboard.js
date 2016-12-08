@@ -97,10 +97,16 @@ export default Ember.Route.extend({
                         width: 4,
                     },
                     {
+                        chartType: 'list',
+                        widgetType: 'list-widget',
+                        name: 'List of Things',
+                        width: 4,
+                    },
+                    {
                         chartType: 'relevanceHistogram',
                         widgetType: 'generic-chart',
                         name:'timeser',
-                        width: 8,
+                        width: 4,
                     }
                 ]
             },

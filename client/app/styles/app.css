@@ -348,3 +348,19 @@ nav.navbar {
     animation: spinner .6s linear infinite;
     -webkit-animation: spinner .6s linear infinite;
 }
+
+.list-widget {
+    padding-bottom: 20px;
+}
+.list-widget-item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+}
+.list-widget .item-number {
+    font-size: 18px;
+    color: #F44336;
+}
+.list-widget .item-name {
+    font-size: 16px;
+}

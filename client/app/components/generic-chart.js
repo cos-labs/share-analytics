@@ -79,25 +79,30 @@ export default Ember.Component.extend({
 
         } else if (chart_type == 'relevanceHistogram') {
 
+            let UC_hits = this.get('aggregations.filtered_score.buckets.UC.doc_count')
+            let total_hits = this.get('total')
+            console.log(UC_hits)
+            console.log(total_hits)
+            debugger;
             var columns = [
                 //['x'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
                 //    return datum.key
                 //})),
-                ['overallCountByRelevance'].concat(this.get('aggregations').all_score.UC.buckets.map((datum) => {
+                ['overallCountByRelevance'].concat(this.get('aggregations').all_score.buckets.map((datum) => {
                     let val = this.get('aggregations.all_score.buckets')[datum.key];
-                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1; }
+                    if (val && val.doc_count > 0) { return val.doc_count * UC_hits / total_hits; }
                     return 0;
                 })),
                 ['ucCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
                     let val = this.get('aggregations.filtered_score.buckets.UC.score.buckets')[datum.key];
-                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1; }
+                    if (val && val.doc_count > 0) { return val.doc_count; }
                     return 0;
                 })),
-                ['doeCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
-                    let val = this.get('aggregations.filtered_score.buckets.DOE.score.buckets')[datum.key];
-                    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1; }
-                    return 0;
-                }))
+                //['doeCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
+                //    let val = this.get('aggregations.filtered_score.buckets.DOE.score.buckets')[datum.key];
+                //    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1; }
+                //    return 0;
+                //}))
             ];
 
             chart_options['axis'] = {
@@ -110,20 +115,19 @@ export default Ember.Component.extend({
                     label: 'Relevance Score'
                 },
                 y: {
-                    min: 1,
                     tick: {
-                        format: function (d) { return Math.pow(10,d - 1).toFixed(0); }
+                        format: function (d) { return d; }
                     },
-                    label: 'Number of Items (Log Scale)'
+                    label: 'Number of Items'
                 }
             };
 
             let zoom = {enabled: true};
             chart_options['data']['types'] = {
-                x: 'area-spline',
-                overallCountByRelevance: 'area-spline',
-                doeCountByRelevance: 'area-spline',
-                ucCountByRelevance: 'area-spline'
+                x: 'bar',
+                overallCountByRelevance: 'bar',
+                doeCountByRelevance: 'bar',
+                ucCountByRelevance: 'bar'
             };
 
             chart_options['data']['labels'] = {
@@ -152,9 +156,12 @@ export default Ember.Component.extend({
             });
             columns.unshift(['x'].concat(x_axis))
             columns.unshift(['All Events'].concat(this.get('data').all_over_time.buckets.map((bucket) => {
-                if (bucket && bucket.doc_count > 0) { return (Math.log(bucket.doc_count) / Math.Ln10) + 1; }
+                if (bucket && bucket.doc_count > 0) {
+                    return (Math.log(bucket.doc_count) / Math.LN10) + 1;
+                }
                 return 0;
             })))
+            console.log(columns);
             let data_x = 'x';
             chart_options['axis'] = {
                 x: {

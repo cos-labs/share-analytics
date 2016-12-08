@@ -20,7 +20,7 @@ export default Ember.Route.extend({
             return 'day'; // We want to increment our TS data by days
         }
     }),
-    // Note that the above query is NOT perfect. But we'll go with it for now.
+
     model: function(params) {
         let query = this.get('query');
         let gte = this.get('gte');
@@ -228,9 +228,9 @@ export default Ember.Route.extend({
                     }
                 ]
             },
-            user: {
+            institution: {
                 dasboardName: 'Institution Contributor Overview Dashboard',
-                query: 'Vladimir',
+                query: 'UC San Diego',
                 widgets: [
                     {
                         chartType: 'totalResults',
@@ -297,18 +297,17 @@ export default Ember.Route.extend({
                         }
                     },
                     {
-                        chartType: 'relevanceHistogram',
+                        chartType: 'timeseries',
                         widgetType: 'generic-chart',
                         name:'Date Histogram',
                         width: 12,
                         post_body: {
                             "query": {
-                                "bool": {
-                                    "must": [{
-                                        "query_string": {
-                                            "query": "plasma"
-                                        }
-                                    }]
+                                "range" : {
+                                    "date" : {
+                                        "gte" : "now-10y/d",
+                                        "lt" :  "now/d"
+                                    }
                                 }
                             },
                             "size": 10,
@@ -321,7 +320,7 @@ export default Ember.Route.extend({
                                         "type_over_time": {
                                             "date_histogram": {
                                                 "field": "date_updated",
-                                                "interval": "1y",
+                                                "interval": "1M",
                                                 "format": "yyyy-MM-dd"
                                             }
                                         }
@@ -330,7 +329,7 @@ export default Ember.Route.extend({
                                 "all_over_time": {
                                     "date_histogram": {
                                         "field": "date_updated",
-                                        "interval": "1y",
+                                        "interval": "1M",
                                         "format": "yyyy-MM-dd"
                                     }
                                 }
@@ -399,16 +398,6 @@ export default Ember.Route.extend({
                                         field: 'tags.raw',
                                         size: 200
                                     }
-                                },
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
-                                    },
-                                    aggregations: {
-                                        arttype: {terms: {field: 'type'}}
-                                    }
                                 }
                             }
                         }
@@ -447,7 +436,7 @@ export default Ember.Route.extend({
                                 bool: {
                                     must: [{
                                         query_string: {
-                                            query: "University of California water"
+                                            query: "hiv"
                                         }
                                     }]
                                 }
@@ -503,7 +492,7 @@ export default Ember.Route.extend({
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
-                        width: 2,
+                        width: 4,
                         post_body: {
                             query: {
                                 bool: {
@@ -518,7 +507,27 @@ export default Ember.Route.extend({
                         chartType: 'totalPublications',
                         widgetType: 'number-widget',
                         name: 'Total Publications',
-                        width: 2,
+                        width: 4,
+                        post_body: {
+                            query: {
+                                bool: {
+                                    must: {
+                                        query_string: {query: query}
+                                    },
+                                    filter: [{
+                                        term: {
+                                            'type.raw': "publication"
+                                        }
+                                    }]
+                                }
+                            }
+                        }
+                    },
+                    {
+                        chartType: 'totalPublications',
+                        widgetType: 'number-widget',
+                        name: 'Total Publications',
+                        width: 4,
                         post_body: {
                             query: {
                                 bool: {
@@ -538,7 +547,7 @@ export default Ember.Route.extend({
                         chartType: 'timeseries',
                         widgetType: 'generic-chart',
                         name:'timeser',
-                        width: 2,
+                        width: 12,
                         post_body: {
                             query: {
                                 bool: { must: [{
@@ -570,7 +579,7 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'generic-chart',
                         name: 'don1',
-                        width: 2,
+                        width: 3,
                         post_body: {
                             query: {
                                 bool: { must: [{
@@ -622,7 +631,7 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'generic-chart',
                         name: 'don2',
-                        width: 2,
+                        width: 3,
                         post_body: {
                             query: {
                                 bool: { must: [{
@@ -674,7 +683,7 @@ export default Ember.Route.extend({
                         chartType: 'relevanceHistogram',
                         widgetType: 'generic-chart',
                         name:'timeser',
-                        width: 2,
+                        width: 6,
                         post_body: {
                             query: {
                                 bool: {

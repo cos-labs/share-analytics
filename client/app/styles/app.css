@@ -353,9 +353,10 @@ nav.navbar {
     padding-bottom: 20px;
 }
 .list-widget-item {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 2px;
+    padding: 3px 10px;
+        border-bottom: 1px solid #ddd;
+        border-radius: 2px;
+        margin-bottom: 3px;
 }
 .list-widget .item-number {
     font-size: 18px;

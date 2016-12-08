@@ -152,9 +152,12 @@ export default Ember.Component.extend({
             });
             columns.unshift(['x'].concat(x_axis))
             columns.unshift(['All Events'].concat(this.get('data').all_over_time.buckets.map((bucket) => {
-                if (bucket && bucket.doc_count > 0) { return (Math.log(bucket.doc_count) / Math.Ln10) + 1; }
+                if (bucket && bucket.doc_count > 0) {
+                    return (Math.log(bucket.doc_count) / Math.LN10) + 1;
+                }
                 return 0;
             })))
+            console.log(columns);
             let data_x = 'x';
             chart_options['axis'] = {
                 x: {

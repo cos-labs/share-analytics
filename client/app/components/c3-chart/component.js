@@ -24,6 +24,20 @@ export default Ember.Component.extend({
 
     updateChart() {
 
+        function log10ToLinear(log_num) {
+            if (log_num > 0) {
+                return 0;
+            }
+            return Math.pow(10, log_num-1).toFixed(0);
+        }
+
+        function linearToLog10(lin_num) {
+            if (lin_num <= 0) {
+                return 0;
+            }
+            return (Math.log(lin_num) / Math.LN10) + 1;
+        }
+
         let chart_type = this.get('chartType');
 
         let chart_options = {
@@ -42,10 +56,6 @@ export default Ember.Component.extend({
                     show: false
                 }
             },
-            //size: {
-            //    height: this.get('height')*150 - 20,
-            //    width: this.get('width')*150
-            //},
         };
 
         if (chart_type == 'donut') {
@@ -83,10 +93,7 @@ export default Ember.Component.extend({
             console.log(UC_hits)
             console.log(total_hits)
             var columns = [
-                //['x'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
-                //    return datum.key
-                //})),
-                ['overallCountByRelevance'].concat(this.get('aggregations').all_score.buckets.map((datum) => {
+                ['overallCountByRelevance'].concat(this.get('data.aggregations.all_score.buckets').map((datum) => {
                     let val = this.get('aggregations.all_score.buckets')[datum.key];
                     if (val && val.doc_count > 0) { return val.doc_count * UC_hits / total_hits; }
                     return 0;
@@ -96,11 +103,6 @@ export default Ember.Component.extend({
                     if (val && val.doc_count > 0) { return val.doc_count; }
                     return 0;
                 })),
-                //['doeCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
-                //    let val = this.get('aggregations.filtered_score.buckets.DOE.score.buckets')[datum.key];
-                //    if (val && val.doc_count > 0) {return (Math.log(val.doc_count) / Math.LN10) + 1; }
-                //    return 0;
-                //}))
             ];
 
             chart_options['axis'] = {
@@ -142,22 +144,17 @@ export default Ember.Component.extend({
 
         } else if (chart_type == 'timeseries') {
 
-            this.set('data', this.get('aggregations'));
-            let x_axis = this.get('data').all_over_time.buckets.map((datum) => { return datum.key_as_string })
-            var columns = this.get('data').sorted_by_type.buckets.map((bucket) => {
-                return [bucket.key].concat(bucket.type_over_time.buckets.reduce((ret, bucket) => {
-                    if (bucket && bucket.doc_count > 0) {
-                        ret[x_axis.indexOf(bucket.key_as_string)] = (Math.log(bucket.doc_count) / Math.LN10) + 1 ;
-                    }
+            
+            let x_axis = this.get('data.aggregations.all_over_time.buckets').map((datum) => { return datum.key_as_string })
+            var columns = this.get('data.aggregations.sorted_by_type.buckets').map((bucket) => {
+                return [bucket.key].concat(bucket['type_over_time'].buckets.reduce((ret, bucket) => {
+                    ret[x_axis.indexOf(bucket.key_as_string)] = linearToLog10(bucket.doc_count);
                     return ret;
                 }, (new Array(x_axis.length)).fill(0)));
             });
             columns.unshift(['x'].concat(x_axis))
-            columns.unshift(['All Events'].concat(this.get('data').all_over_time.buckets.map((bucket) => {
-                if (bucket && bucket.doc_count > 0) {
-                    return (Math.log(bucket.doc_count) / Math.LN10) + 1;
-                }
-                return 0;
+            columns.unshift(['All Events'].concat(this.get('data.aggregations.all_over_time.buckets').map((bucket) => {
+                return linearToLog10(bucket.doc_count);
             })))
             console.log(columns);
             let data_x = 'x';
@@ -175,7 +172,7 @@ export default Ember.Component.extend({
                 y: {
                     min: 1,
                     tick: {
-                        format: function (d) { return Math.pow(10,d - 1).toFixed(0); }
+                        format: log10ToLinear
                     },
                     label: 'Number of Items (Log Scale)'
                 }

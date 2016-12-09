@@ -27,8 +27,8 @@ export default Ember.Route.extend({
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
         return {
-            overview: {
-                dasboardName: 'Institution Overview Dashboard',
+            user: {
+                dasboardName: 'Scholar Dashboard',
                 query: "eScholarship @ University of California",
                 widgets: [
                     {
@@ -177,7 +177,7 @@ export default Ember.Route.extend({
                 ]
             },
             institution: {
-                dasboardName: 'Institution Contributor Overview Dashboard',
+                dasboardName: 'Institution Overview Dashboard',
                 query: 'UC San Diego',
                 widgets: [
                     {
@@ -373,6 +373,178 @@ export default Ember.Route.extend({
                                 }
                             }
                         }
+                    }
+                ]
+            },
+            topic: {
+                dasboardName: 'Institution Subject Area Dashboard',
+                query: 'plasma',
+                widgets: [
+                    {
+                        chartType: 'totalResults',
+                        widgetType: 'number-widget',
+                        name: 'Total Results',
+                        width: 4,
+                        post_body: {
+                            query: {
+                                bool: {
+                                  must: {
+                                    query_string: {query: query}
+                                  }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        chartType: 'totalPublications',
+                        widgetType: 'number-widget',
+                        name: 'Total Publications',
+                        width: 4,
+                        post_body: {
+                            query: {
+                                bool: {
+                                    must: {
+                                        query_string: {query: query}
+                                    },
+                                    filter: [{
+                                        term: {
+                                            'type.raw': "publication"
+                                        }
+                                    }]
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "chartType": 'timeseries',
+                        "widgetType": 'c3-chart',
+                        "name": 'Date Histogram',
+                        "width": 12,
+                        "post_body": {
+                            "query": {
+                                 "bool": {
+                                    "must": [
+                                        {
+                                            "query_string": {
+                                                "query": "hiv"
+                                            }
+                                        },
+                                        {
+                                            "range" : {
+                                                "date" : {
+                                                    "gte" : "now-10y/d",
+                                                    "lt" :  "now/d"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "size": 10,
+                            "aggregations": {
+                                "sorted_by_type": {
+                                    "terms": {
+                                        "field": "type"
+                                    },
+                                    "aggregations": {
+                                        "type_over_time": {
+                                            "date_histogram": {
+                                                "field": "date_updated",
+                                                "interval": "1M",
+                                                "format": "yyyy-MM-dd"
+                                            }
+                                        }
+                                    }
+                                },
+                                "all_over_time": {
+                                    "date_histogram": {
+                                        "field": "date_updated",
+                                        "interval": "1M",
+                                        "format": "yyyy-MM-dd"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "chartType": 'topContributors',
+                        "widgetType": 'list-widget',
+                        "name": 'Top Tags',
+                        "width": 4,
+                        "post_body" : {
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "query_string": {
+                                            "query": query
+                                        }
+                                    }
+                                }
+                            },
+                            "from": 0,
+                            "aggregations": {
+                                "listWidgetData" : {
+                                    "terms": {
+                                        "field": 'tags',
+                                        "size": 10
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'c3-chart',
+                        name: 'Events by Source',
+                        width: 4,
+                        post_body: {
+                            query: {
+                                bool: { must: [{
+                                        query_string: {query: query}
+                                    },{
+                                        range: { date: {
+                                                   gte: gte,
+                                                   lte: lte,
+                                                   format: "yyyy-MM-dd||yyyy"
+                                                   }
+                                        }
+                                    }
+                                ]}
+                            },
+                            from: 0,
+                            aggregations: {
+                                sources: {
+                                    terms: {
+                                         field: 'sources.raw',
+                                         size: 200
+                                    }
+                                },
+                            }
+                        }
+                    },
+                    {
+                        "chartType": 'topContributors',
+                        "widgetType": 'list-widget',
+                        "name": 'Top Contributors',
+                        "width": 4,
+                        "post_body" : {
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "query_string": {"query": query}
+                                    }
+                                }
+                            },
+                            "from": 0,
+                            "aggregations": {
+                                "listWidgetData": {
+                                    "terms": {
+                                        "field": 'contributors.raw',
+                                        "size": 10
+                                    }
+                                }
+                            }
+                        }
                     },
                     {
                         chartType: 'relevanceHistogram',
@@ -430,239 +602,6 @@ export default Ember.Route.extend({
                             }
                         }
                     }
-                ]
-            },
-            topic: {
-                dasboardName: 'Institution Subject Area Dashboard',
-                query: 'plasma',
-                widgets: [
-                    {
-                        chartType: 'totalResults',
-                        widgetType: 'number-widget',
-                        name: 'Total Results',
-                        width: 4,
-                        post_body: {
-                            query: {
-                                bool: {
-                                  must: {
-                                    query_string: {query: query}
-                                  }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        chartType: 'totalPublications',
-                        widgetType: 'number-widget',
-                        name: 'Total Publications',
-                        width: 4,
-                        post_body: {
-                            query: {
-                                bool: {
-                                    must: {
-                                        query_string: {query: query}
-                                    },
-                                    filter: [{
-                                        term: {
-                                            'type.raw': "publication"
-                                        }
-                                    }]
-                                }
-                            }
-                        }
-                    },
-                    {
-                        chartType: 'timeseries',
-                        widgetType: 'c3-chart',
-                        name:'timeser',
-                        width: 12,
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                    query_string: { query: query }
-                                }, {
-                                    range: { date: {
-                                        gte: gte,
-                                        lte: lte,
-                                        format: "yyyy-MM-dd||yyyy"
-                                    }}
-                                }]}
-                            },
-                            from: 0,
-                            aggregations: {
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
-                                    },
-                                    aggregations: {
-                                        arttype: { terms: { field: 'type' } }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        chartType: 'donut',
-                        widgetType: 'c3-chart',
-                        name: 'don1',
-                        width: 3,
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
-                                        }
-                                    }
-                                ]}
-                            },
-                            from: 0,
-                            aggregations: {
-                                sources: {
-                                    terms: {
-                                         field: 'sources.raw',
-                                         size: 200
-                                    }
-                                },
-                                contributors : {
-                                    terms : {
-                                        field: 'contributors.raw',
-                                        size: 200
-                                    }
-                                },
-                                tags : {
-                                    terms : {
-                                        field: 'tags.raw',
-                                        size: 200
-                                    }
-                                },
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
-                                    },
-                                    aggregations: {
-                                        arttype: {terms: {field: 'type'}}
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        chartType: 'donut',
-                        widgetType: 'c3-chart',
-                        name: 'don2',
-                        width: 3,
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
-                                        }
-                                    }
-                                ]}
-                            },
-                            from: 0,
-                            aggregations: {
-                                sources: {
-                                    terms: {
-                                         field: 'sources.raw',
-                                         size: 200
-                                    }
-                                },
-                                contributors : {
-                                    terms : {
-                                        field: 'contributors.raw',
-                                        size: 200
-                                    }
-                                },
-                                tags : {
-                                    terms : {
-                                        field: 'tags.raw',
-                                        size: 200
-                                    }
-                                },
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
-                                    },
-                                    aggregations: {
-                                        arttype: {terms: {field: 'type'}}
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        chartType: 'relevanceHistogram',
-                        widgetType: 'c3-chart',
-                        name:'timeser',
-                        width: 6,
-                        post_body: {
-                            query: {
-                                bool: {
-                                    must: [{
-                                        query_string: {
-                                            query: "plasma"
-                                        }
-                                    }]
-                                }
-                            },
-                            size: 0,
-                            aggregations: {
-                                all_score: {
-                                    histogram: {
-                                            interval: 1,
-                                            script: {
-                                            lang: "expression",
-                                                inline: "_score * 10"
-                                        }
-                                    }
-                                },
-                                filtered_score: {
-                                    filters: {
-                                        filters: {
-                                            "UC": {
-                                                term: {
-                                                   'sources.raw': "eScholarship @ University of California"
-                                                }
-                                            },
-                                            "DOE": {
-                                                term: {
-                                                    'sources.raw': "DoE's SciTech Connect Database"
-                                                }
-                                            }
-                                        }
-                                    },
-                                    aggregations: {
-                                        score: {
-                                            histogram: {
-                                                interval: 1,
-                                                script: {
-                                                    lang: "expression",
-                                                    inline: "_score * 10"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
                 ]
             }
         }[params.dashboard];

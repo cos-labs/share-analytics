@@ -436,6 +436,7 @@ export default Ember.Component.extend({
         //    data: post_body[this.get('item').chartType]
             data: JSON.stringify(this.get('item').post_body)
         });
+        this.set('data', data);
         this.set('aggregations', data.aggregations);
         this.set('total', data.hits.total);
         if(chartType === 'relatedResearchers') {

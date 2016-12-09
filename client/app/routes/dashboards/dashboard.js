@@ -22,7 +22,6 @@ export default Ember.Route.extend({
     }),
 
     model: function(params) {
-        debugger;
         let query = this.get('query');
         let gte = this.get('gte');
         let lte = this.get('lte');
@@ -126,59 +125,7 @@ export default Ember.Route.extend({
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
-                        name: 'don1',
-                        width: 2,
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
-                                        }
-                                    }
-                                ]}
-                            },
-                            from: 0,
-                            aggregations: {
-                                sources: {
-                                    terms: {
-                                         field: 'sources.raw',
-                                         size: 200
-                                    }
-                                },
-                                contributors : {
-                                    terms : {
-                                        field: 'contributors.raw',
-                                        size: 200
-                                    }
-                                },
-                                tags : {
-                                    terms : {
-                                        field: 'tags.raw',
-                                        size: 200
-                                    }
-                                },
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
-                                    },
-                                    aggregations: {
-                                        arttype: {terms: {field: 'type'}}
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        chartType: 'donut',
-                        widgetType: 'c3-chart',
-                        name: 'don2',
+                        name: 'NIH Funding Sources 2016',
                         width: 2,
                         post_body: {
                             query: {
@@ -364,7 +311,7 @@ export default Ember.Route.extend({
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
-                        name: 'Source',
+                        name: 'NIH Funding Sources 2016',
                         width: 4,
                         post_body: {
                             query: {
@@ -469,46 +416,28 @@ export default Ember.Route.extend({
                         }
                     },
                     {
-                        chartType: 'totalPublications',
-                        widgetType: 'number-widget',
-                        name: 'Total Publications',
-                        width: 4,
-                        post_body: {
-                            query: {
-                                bool: {
-                                    must: {
-                                        query_string: {query: query}
-                                    },
-                                    filter: [{
-                                        term: {
-                                            'type.raw': "publication"
-                                        }
-                                    }]
-                                }
-                            }
-                        }
-                    },
-                    {
                         "chartType": 'timeseries',
                         "widgetType": 'c3-chart',
                         "name": 'Date Histogram',
                         "width": 12,
                         "post_body": {
                             "query": {
-                                 bool: {
-                                    must: [{
-                                        query_string: {
-                                            query: "hiv"
-                                        }
-                                    },
-                                    {
-                                        "range" : {
-                                            "date" : {
-                                                "gte" : "now-10y/d",
-                                                "lt" :  "now/d"
+                                 "bool": {
+                                    "must": [
+                                        {
+                                            "query_string": {
+                                                "query": "hiv"
+                                            }
+                                        },
+                                        {
+                                            "range" : {
+                                                "date" : {
+                                                    "gte" : "now-10y/d",
+                                                    "lt" :  "now/d"
+                                                }
                                             }
                                         }
-                                    }]
+                                    ]
                                 }
                             },
                             "size": 10,
@@ -546,7 +475,9 @@ export default Ember.Route.extend({
                             "query": {
                                 "bool": {
                                     "must": {
-                                        "query_string": {"query": query}
+                                        "query_string": {
+                                            "query": query
+                                        }
                                     }
                                 }
                             },

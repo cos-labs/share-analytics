@@ -16,7 +16,6 @@ export default Ember.Component.extend({
         if (this.get('resizedSignal') == false) return;
         this.updateChart();
         this.set('resizedSignal', false);
-        //debugger;
     }),
 
     charTypeChange: Ember.observer('chartType', function(){
@@ -83,7 +82,6 @@ export default Ember.Component.extend({
             let total_hits = this.get('total')
             console.log(UC_hits)
             console.log(total_hits)
-            debugger;
             var columns = [
                 //['x'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
                 //    return datum.key

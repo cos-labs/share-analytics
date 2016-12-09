@@ -92,7 +92,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'timeseries',
-                        widgetType: 'generic-chart',
+                        widgetType: 'c3-chart',
                         width: 2,
                         name:'timeser',
                         post_body: {
@@ -124,7 +124,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'donut',
-                        widgetType: 'generic-chart',
+                        widgetType: 'c3-chart',
                         name: 'don1',
                         width: 2,
                         post_body: {
@@ -176,7 +176,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'donut',
-                        widgetType: 'generic-chart',
+                        widgetType: 'c3-chart',
                         name: 'don2',
                         width: 2,
                         post_body: {
@@ -298,7 +298,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'timeseries',
-                        widgetType: 'generic-chart',
+                        widgetType: 'c3-chart',
                         name:'Date Histogram',
                         width: 12,
                         post_body: {
@@ -362,7 +362,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'donut',
-                        widgetType: 'generic-chart',
+                        widgetType: 'c3-chart',
                         name: 'Source',
                         width: 4,
                         post_body: {
@@ -428,7 +428,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'relevanceHistogram',
-                        widgetType: 'generic-chart',
+                        widgetType: 'c3-chart',
                         name:'Relevance Histogram',
                         width: 12,
                         post_body: {
@@ -545,7 +545,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'timeseries',
-                        widgetType: 'generic-chart',
+                        widgetType: 'c3-chart',
                         name:'timeser',
                         width: 12,
                         post_body: {
@@ -577,7 +577,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'donut',
-                        widgetType: 'generic-chart',
+                        widgetType: 'c3-chart',
                         name: 'don1',
                         width: 3,
                         post_body: {
@@ -629,7 +629,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'donut',
-                        widgetType: 'generic-chart',
+                        widgetType: 'c3-chart',
                         name: 'don2',
                         width: 3,
                         post_body: {
@@ -681,7 +681,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'relevanceHistogram',
-                        widgetType: 'generic-chart',
+                        widgetType: 'c3-chart',
                         name:'timeser',
                         width: 6,
                         post_body: {

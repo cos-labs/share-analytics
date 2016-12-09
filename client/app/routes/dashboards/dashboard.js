@@ -425,8 +425,8 @@ export default Ember.Route.extend({
                                 }
                             }
                         }
-                    },
-                                   ]
+                    }
+                ]
             },
             topic: {
                 dasboardName: 'Institution Subject Area Dashboard',
@@ -488,17 +488,26 @@ export default Ember.Route.extend({
                         }
                     },
                     {
-                        chartType: 'timeseries',
-                        widgetType: 'c3-chart',
-                        name:'Date Histogram',
-                        width: 12,
-                        post_body: {
+                        "chartType": 'timeseries',
+                        "widgetType": 'c3-chart',
+                        "name": 'Date Histogram',
+                        "width": 12,
+                        "post_body": {
                             "query": {
-                                "range" : {
-                                    "date" : {
-                                        "gte" : "now-10y/d",
-                                        "lt" :  "now/d"
-                                    }
+                                 bool: {
+                                    must: [{
+                                        query_string: {
+                                            query: "hiv"
+                                        }
+                                    },
+                                    {
+                                        "range" : {
+                                            "date" : {
+                                                "gte" : "now-10y/d",
+                                                "lt" :  "now/d"
+                                            }
+                                        }
+                                    }]
                                 }
                             },
                             "size": 10,
@@ -528,52 +537,24 @@ export default Ember.Route.extend({
                         }
                     },
                     {
-                        chartType: 'donut',
-                        widgetType: 'c3-chart',
-                        name: 'don1',
-                        width: 3,
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
-                                        }
+                        "chartType": 'topContributors',
+                        "widgetType": 'list-widget',
+                        "name": 'Top Tags',
+                        "width": 4,
+                        "post_body" : {
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "query_string": {"query": query}
                                     }
-                                ]}
+                                }
                             },
-                            from: 0,
-                            aggregations: {
-                                sources: {
-                                    terms: {
-                                         field: 'sources.raw',
-                                         size: 200
-                                    }
-                                },
-                                contributors : {
-                                    terms : {
-                                        field: 'contributors.raw',
-                                        size: 200
-                                    }
-                                },
-                                tags : {
-                                    terms : {
-                                        field: 'tags.raw',
-                                        size: 200
-                                    }
-                                },
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
-                                    },
-                                    aggregations: {
-                                        arttype: {terms: {field: 'type'}}
+                            "from": 0,
+                            "aggregations": {
+                                "listWidgetData" : {
+                                    "terms": {
+                                        "field": 'tags',
+                                        "size": 10
                                     }
                                 }
                             }
@@ -582,8 +563,8 @@ export default Ember.Route.extend({
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
-                        name: 'don2',
-                        width: 3,
+                        name: 'Events by Source',
+                        width: 4,
                         post_body: {
                             query: {
                                 bool: { must: [{
@@ -606,26 +587,28 @@ export default Ember.Route.extend({
                                          size: 200
                                     }
                                 },
-                                contributors : {
-                                    terms : {
-                                        field: 'contributors.raw',
-                                        size: 200
+                            }
+                        }
+                    },
+                    {
+                        "chartType": 'topContributors',
+                        "widgetType": 'list-widget',
+                        "name": 'Top Contributors',
+                        "width": 4,
+                        "post_body" : {
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "query_string": {"query": query}
                                     }
-                                },
-                                tags : {
-                                    terms : {
-                                        field: 'tags.raw',
-                                        size: 200
-                                    }
-                                },
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
-                                    },
-                                    aggregations: {
-                                        arttype: {terms: {field: 'type'}}
+                                }
+                            },
+                            "from": 0,
+                            "aggregations": {
+                                "listWidgetData": {
+                                    "terms": {
+                                        "field": 'contributors.raw',
+                                        "size": 10
                                     }
                                 }
                             }

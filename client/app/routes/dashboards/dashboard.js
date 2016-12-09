@@ -22,6 +22,7 @@ export default Ember.Route.extend({
     }),
 
     model: function(params) {
+        debugger;
         let query = this.get('query');
         let gte = this.get('gte');
         let lte = this.get('lte');

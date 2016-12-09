@@ -420,11 +420,14 @@ export default Ember.Component.extend({
     },
 
     fetchWidgetData: async function() {
+        if(this.get('item').post_body === null){
+            return;
+        }
         let query = this.get('query');
         let gte = this.get('gte');
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
-
+        let chartType = this.get('item').chartType;
         let data = await Ember.$.ajax({
             url: ENV.apiUrl + '/search/creativeworks/_search',
             crossDomain: true,
@@ -435,6 +438,9 @@ export default Ember.Component.extend({
         });
         this.set('aggregations', data.aggregations);
         this.set('total', data.hits.total);
+        if(chartType === 'relatedResearchers') {
+            this.set('total', data.aggregations.relatedContributors.value);
+        }
         this.set('docs', data.hits.hits.map((hit) => {
             let source = Ember.Object.create(hit._source);
             let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');

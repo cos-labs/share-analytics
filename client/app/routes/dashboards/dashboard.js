@@ -27,8 +27,8 @@ export default Ember.Route.extend({
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
         return {
-            overview: {
-                dasboardName: 'Institution Overview Dashboard',
+            user: {
+                dasboardName: 'Scholar Dashboard',
                 query: "eScholarship @ University of California",
                 widgets: [
                     {
@@ -229,7 +229,7 @@ export default Ember.Route.extend({
                 ]
             },
             institution: {
-                dasboardName: 'Institution Contributor Overview Dashboard',
+                dasboardName: 'Institution Overview Dashboard',
                 query: 'UC San Diego',
                 widgets: [
                     {
@@ -426,63 +426,7 @@ export default Ember.Route.extend({
                             }
                         }
                     },
-                    {
-                        chartType: 'relevanceHistogram',
-                        widgetType: 'c3-chart',
-                        name:'Relevance Histogram',
-                        width: 12,
-                        post_body: {
-                            query: {
-                                bool: {
-                                    must: [{
-                                        query_string: {
-                                            query: "hiv"
-                                        }
-                                    }]
-                                }
-                            },
-                            size: 0,
-                            aggregations: {
-                                all_score: {
-                                    histogram: {
-                                            interval: 1,
-                                            script: {
-                                            lang: "expression",
-                                                inline: "_score * 10"
-                                        }
-                                    }
-                                },
-                                filtered_score: {
-                                    filters: {
-                                        filters: {
-                                            "UC": {
-                                                term: {
-                                                   'sources.raw': "eScholarship @ University of California"
-                                                }
-                                            },
-                                            "DOE": {
-                                                term: {
-                                                    'sources.raw': "DoE's SciTech Connect Database"
-                                                }
-                                            }
-                                        }
-                                    },
-                                    aggregations: {
-                                        score: {
-                                            histogram: {
-                                                interval: 1,
-                                                script: {
-                                                    lang: "expression",
-                                                    inline: "_score * 10"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                ]
+                                   ]
             },
             topic: {
                 dasboardName: 'Institution Subject Area Dashboard',
@@ -546,30 +490,38 @@ export default Ember.Route.extend({
                     {
                         chartType: 'timeseries',
                         widgetType: 'c3-chart',
-                        name:'timeser',
+                        name:'Date Histogram',
                         width: 12,
                         post_body: {
-                            query: {
-                                bool: { must: [{
-                                    query_string: { query: query }
-                                }, {
-                                    range: { date: {
-                                        gte: gte,
-                                        lte: lte,
-                                        format: "yyyy-MM-dd||yyyy"
-                                    }}
-                                }]}
+                            "query": {
+                                "range" : {
+                                    "date" : {
+                                        "gte" : "now-10y/d",
+                                        "lt" :  "now/d"
+                                    }
+                                }
                             },
-                            from: 0,
-                            aggregations: {
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
+                            "size": 10,
+                            "aggregations": {
+                                "sorted_by_type": {
+                                    "terms": {
+                                        "field": "type"
                                     },
-                                    aggregations: {
-                                        arttype: { terms: { field: 'type' } }
+                                    "aggregations": {
+                                        "type_over_time": {
+                                            "date_histogram": {
+                                                "field": "date_updated",
+                                                "interval": "1M",
+                                                "format": "yyyy-MM-dd"
+                                            }
+                                        }
+                                    }
+                                },
+                                "all_over_time": {
+                                    "date_histogram": {
+                                        "field": "date_updated",
+                                        "interval": "1M",
+                                        "format": "yyyy-MM-dd"
                                     }
                                 }
                             }
@@ -682,14 +634,14 @@ export default Ember.Route.extend({
                     {
                         chartType: 'relevanceHistogram',
                         widgetType: 'c3-chart',
-                        name:'timeser',
-                        width: 6,
+                        name:'Relevance Histogram',
+                        width: 12,
                         post_body: {
                             query: {
                                 bool: {
                                     must: [{
                                         query_string: {
-                                            query: "plasma"
+                                            query: "hiv"
                                         }
                                     }]
                                 }
@@ -734,7 +686,7 @@ export default Ember.Route.extend({
                                 }
                             }
                         }
-                    },
+                    }
                 ]
             }
         }[params.dashboard];

@@ -15,7 +15,7 @@ export default Ember.Component.extend({
     sizeChanged: Ember.observer('resizedSignal', function() {
         if (this.get('resizedSignal') == false) return;
         this.updateChart();
-        this.set('resizedSignal', false); 
+        this.set('resizedSignal', false);
         //debugger;
     }),
 
@@ -52,8 +52,8 @@ export default Ember.Component.extend({
         if (chart_type == 'donut') {
 
             this.set('data', this.get('aggregations.sources.buckets'));
-            var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
-            var title = 'Published in...';
+            var columns = [['FIC', 685870], ['NCATS', 11798267], ['NCCIH', 527109], ['NCI', 37421432], ['NEI', 9258786], ['NHGRI', 5050824], ['NHLBI', 37973512], ['NIA', 30039371], ['NIAAA', 6709896], ['NIAID', 44746441], ['NIAMS', 6571101], ['NIBIB', 4005180], ['NICHD', 13278402], ['NIDA', 29823005], ['NIDCD', 4439991], ['NIDCR', 1155900], ['NIDDK', 32526462], ['NIEHS', 4674188], ['NIGMS', 53652460], ['NIMH', 38119017], ['NINDS', 20635337], ['NINR', 1976020], ['NLM', 1069055], ['OD', 4275564]];
+            var title = '';
 
         } else if (chart_type == 'bar') {
 

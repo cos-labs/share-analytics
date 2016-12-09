@@ -125,59 +125,7 @@ export default Ember.Route.extend({
                     {
                         chartType: 'donut',
                         widgetType: 'generic-chart',
-                        name: 'don1',
-                        width: 2,
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
-                                        }
-                                    }
-                                ]}
-                            },
-                            from: 0,
-                            aggregations: {
-                                sources: {
-                                    terms: {
-                                         field: 'sources.raw',
-                                         size: 200
-                                    }
-                                },
-                                contributors : {
-                                    terms : {
-                                        field: 'contributors.raw',
-                                        size: 200
-                                    }
-                                },
-                                tags : {
-                                    terms : {
-                                        field: 'tags.raw',
-                                        size: 200
-                                    }
-                                },
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
-                                    },
-                                    aggregations: {
-                                        arttype: {terms: {field: 'type'}}
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        chartType: 'donut',
-                        widgetType: 'generic-chart',
-                        name: 'don2',
+                        name: 'NIH Funding Sources 2016',
                         width: 2,
                         post_body: {
                             query: {

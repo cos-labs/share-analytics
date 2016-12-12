@@ -9,25 +9,25 @@ export default Ember.Route.extend({
         this._super(controller, model);
         let self = this;
         Ember.run.schedule('afterRender', this, function() {
-            var wall =  new Freewall('#freewall');
-            wall.reset({
-                draggable: true,
-                selector: '.widget',
-                animate: true,
-                cellW: 150,
-                cellH: 150,
-                fixSize: 0,
-                cacheSize: true,
-                onResize: function() {
-                    wall.refresh();
-                },
-                onBlockMove: function() {
-                    console.log(this);
-                }
-            });
-            wall.fitWidth();
-            Ember.$(window).trigger('resize');
-            controller.set('wall', wall);
+           // var wall =  new Freewall('#freewall');
+           // wall.reset({
+           //     draggable: true,
+           //     selector: '.widget',
+           //     animate: true,
+           //     cellW: 150,
+           //     cellH: 150,
+           //     fixSize: 0,
+           //     cacheSize: true,
+           //     onResize: function() {
+           //         wall.refresh();
+           //     },
+           //     onBlockMove: function() {
+           //         console.log(this);
+           //     }
+           // });
+           // wall.fitWidth();
+           // Ember.$(window).trigger('resize');
+           // controller.set('wall', wall);
         });
         this.addObserver('controller.q', function() {
             this.refresh();

@@ -42,6 +42,8 @@ env/
 static
 latest.dump
 local_settings.py
+local.py
+local.yml
 log
 media
 **/local.py

@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import ENV from '../config/environment';
+import ENV from 'tc3/config/environment';
 
-
+//import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
 
     //
@@ -344,176 +344,282 @@ const agg_types = [ // agg_types is this array literal, reduced by the following
 
 }, {});
 
-
 export default Ember.Component.extend({
 
-  // widgetType: 'wild-card',
-  // chartType: 'donut-chart',
-  aggregations: false,
-  docs: false,
+    // widgetType: 'wild-card',
+    // chartType: 'donut-chart',
+    aggregations: false,
+    docs: false,
 
-  classNames: ['widget'],
-  classNameBindings: ['configuring', 'width', 'height'],
+    classNameBindings: ['configuring', 'picking', 'width', 'height'],
 
-  widthSetting: 2,
-  heightSetting: 2,
+    widgetType: 'wild-card',
+    name: 'tobeDetermined',
+    jsEngine: 'c3',
+    widthSetting: 2,
+    heightSetting: 2,
 
-  width: 'width-2',
-  height: 'height-2',
+    width: Ember.computed('widthSetting', function() {
 
-  computedHeight: 200,
-  computedWidth: 200,
+        let new_setting = this.get('widthSetting');
+        let current_setting = this.get('currentWidth');
 
-  downloadHook: false,
-  resizedSignal: false,
+        if (new_setting < 1) {
+            new_setting = current_setting;
+        }
+        if (new_setting > 12) {
+            new_setting = 12;
+        }
 
-  // Initialize our query parameters
-  q: 'UC Santa Barbara',
-  gte: "1996-01-01",
-  lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
+        this.set('currentWidth', new_setting)
 
-  tsInterval: Ember.computed('gte','lte', function() { // Initialize the "bucket size" for our timeseries aggregations
-      let d1 = new Date(this.get('gte'));
-      let d2 = new Date(this.get('lte'));
-      if((d2 - d1) >= 31622400000) { // If our dates are more than a year apart
-         return 'month'; // We want to increment our TS data by months
-      }
-      if((7948800000 <= (d2 - d1)) && ((d2 - d1) < 31622400000)) { // If our dates are less than a year apart but more than three months apart
-          return 'week'; // We want to increment our TS data by weeks
-      }
-      if((d2 - d1) < 7948800000) { // If our data are less than three months apart
-          return 'day'; // We want to increment our TS data by days
-      }
-  }),
+        return "col-md-" + new_setting;
 
-  configuring: false,
+    }),
 
-  init() {
-      this._super(...arguments);
-      this.fetchWidgetData();
-  },
+    computedHeight: 200,
+    computedWidth: 200,
 
-  didRender() {
-      this.sendAction('refreshWall');
-      this.set('computedHeight',  this.$().height());
-      this.set('computedWidth', this.$().width());
-  },
+    router: Ember.inject.service('router'),
+    resizedSignal: false,
 
-  fetchWidgetData: async function() {
-      let query = this.get('q');
-      let gte = this.get('gte');
-      let lte = this.get('lte');
-      let interval = this.get('tsInterval');
-      let data = await Ember.$.ajax({
-          url: ENV.apiUrl +  '/search/abstractcreativework/_search',
-          crossDomain: true,
-          type: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({
-              query: { bool: { must: [{
-                  query_string: {query: query}
-              },{
-                  range: { date: {
-                      gte: gte,
-                      lte: lte,
-                      format: "yyyy-MM-dd||yyyy"
-                  }}
-              }]}},
-              from: 0,
-              aggregations: {
-                  sources: {
-                      terms: {
-                           field: 'sources.raw',
-                           size: 200
-                      }
-                  },
-                  contributors : {
-                      terms : {
-                          field: 'contributors.raw',
-                          size: 200
-                      }
-                  },
-                  tags : {
-                      terms : {
-                          field: 'tags.raw',
-                          size: 200
-                      }
-                  },
-                  articles_over_time: {
-                      date_histogram: {
-                          field: 'date',
-                          interval: interval,
-                          format:'yyyy-MM-dd'
-                      },
-                      aggregations: {
-                          arttype: {terms: {field: 'type'}}
-                      }
-                  }
-              }
-          })
-      });
-      this.set('aggregations', data.aggregations);
-      this.set('docs', data.hits.hits.map((hit) => {
-          let source = Ember.Object.create(hit._source);
-          let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
-          r.id = hit._id;
-          r.contributors = source.lists.contributors;
-          r.funders = source.lists.funders;
-          r.publishers = source.lists.publishers;
-          r.institutions = source.lists.institutions;
-          r.organizations = source.lists.organizations;
-          return r;
-      }));
+    // Initialize our query parameters
+    query: 'UC',
+    gte: "1996-01-01",
+    lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
 
-      this.set('widgetType', 'generic-chart');
-      this.set('chartType', 'donut');
+    tsInterval: Ember.computed('gte','lte', function() { // Initialize the "bucket size" for our timeseries aggregations
+        let d1 = new Date(this.get('gte'));
+        let d2 = new Date(this.get('lte'));
+        if((d2 - d1) >= 31622400000) { // If our dates are more than a year apart
+           return 'month'; // We want to increment our TS data by months
+        }
+        if((7948800000 <= (d2 - d1)) && ((d2 - d1) < 31622400000)) { // If our dates are less than a year apart but more than three months apart
+            return 'week'; // We want to increment our TS data by weeks
+        }
+        if((d2 - d1) < 7948800000) { // If our data are less than three months apart
+            return 'day'; // We want to increment our TS data by days
+        }
+    }),
 
-  },
+    configuring: false,
+    picking: false,
+    downloadHook: false ,
 
-  actions: {
+    init() {
+        this._super(...arguments);
+        this.set('widthSetting', this.get('item').width);
+        Promise.resolve(this.fetchWidgetData()).then(() =>{
+            return this.applyGraphSetting();
+        });
+    },
 
-      addChart: function(option) {
-          this.sendAction('addChart', option);
-      },
-      showConfig: function() {
-          this.set('configuring', !this.get('configuring'));
-      },
+    didRender() {
+        this.sendAction('refreshWall');
+        this.set('computedHeight',  this.$().height());
+        this.set('computedWidth', this.$().width());
+    },
 
-      changeEngine: function(jsEngine){
-          console.log(jsEngine);
-      },
+    fetchWidgetData: async function() {
+        if(this.get('item').post_body === null){
+            return;
+        }
+        let query = this.get('query');
+        let gte = this.get('gte');
+        let lte = this.get('lte');
+        let interval = this.get('tsInterval');
+        let chartType = this.get('item').chartType;
+        let data = await Ember.$.ajax({
+            url: ENV.apiUrl + '/search/creativeworks/_search',
+            crossDomain: true,
+            type: 'POST',
+            contentType: 'application/json',
+        //    data: post_body[this.get('item').chartType]
+            data: JSON.stringify(this.get('item').post_body)
+        });
+        this.set('data', data);
+        this.set('aggregations', data.aggregations);
+        this.set('total', data.hits.total);
+        if(chartType === 'relatedResearchers') {
+            this.set('total', data.aggregations.relatedContributors.value);
+        }
+        this.set('docs', data.hits.hits.map((hit) => {
+            let source = Ember.Object.create(hit._source);
+            let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
+            r.id = hit._id;
+            r.contributors = source.lists.contributors;
+            r.funders = source.lists.funders;
+            r.publishers = source.lists.publishers;
+            r.institutions = source.lists.institutions;
+            r.organizations = source.lists.organizations;
+            return r;
+        }));
+    },
 
-      changeChart: function(chart){
+    applyGraphSetting: function(){
 
-          this.set('chartType', chart);
-      },
+        this.set('chartType', this.get('item').chartType);
 
-      removeWidget: function() {
-          this.sendAction('removeChart', this.get('item'))
-      },
+        //this.set('widthSetting', this.get('item').width);
+        //this.set('heightSetting', this.get('item').height);
+        //this.set('name', this.get('item').name);
+        //let width = this.get('widthSetting');
+        //let height = this.get('heightSetting');
+        //let wall = this.get('wall');
+        //wall.fixSize({
+        //    block: this.$(),
+        //    width: width*150,
+        //    height: height*150,
+        //});
+        //this.set('chartType', this.get('item').settings.chart_type);
+        this.set('widgetType', this.get('item').widgetType);
+        //this.sendAction('refreshWall');
 
-      download : function() {
-          this.set( 'downloadHook', true );
-          console.log() ;
-      },
+    },
 
-      configChanged: function() {
-          console.log('changing config');
-          let width = this.get('widthSetting');
-          let height = this.get('heightSetting');
-          let wall = this.get('wall');
-          wall.fixSize({
-              block: this.$(),
-              width: width*150,
-              height: height*150,
-          });
-          //wall.fitWidth();
-          this.sendAction('refreshWall');
-          this.set('resizedSignal', true);
-          this.set('configuring', !this.get('configuring'));
-      },
+    actions: {
 
-  },
+        addChart: function(option) {
+            this.sendAction('addChart', option);
+        },
 
+        showConfig: function() {
+            this.set('configuring', !this.get('configuring'));
+            this.set('picking', false);
+        },
+
+        showPicker: function() {
+            this.set('picking', !this.get('picking'));
+            this.set('configuring', false);
+        },
+
+        changeEngine: function(jsEngine){
+            console.log(jsEngine);
+        },
+
+        changeChart: function(chart){
+            this.set('chartType', chart);
+        },
+
+        widgetPicked: function(index){
+            let selectedWidget = this.get('widgets')[index];
+            this.set('item', selectedWidget);
+            console.log(this.get('item').name);
+            Promise.resolve(this.fetchWidgetData()).then(() => {
+                return this.applyGraphSetting();
+            });
+        },
+
+        removeWidget: function() {
+            this.sendAction('removeChart', this.get('item'))
+        },
+        configChanged: function() {
+            this.set('configuring', !this.get('configuring'));
+            let width = this.get('widthSetting');
+            let height = this.get('heightSetting');
+            let name = this.get('name');
+            let wall = this.get('wall');
+            wall.fixSize({
+                block: this.element,
+                width: width*150,
+                height: height*150,
+            });
+            wall.fitWidth();
+            this.sendAction('refreshWall');
+            if (this.get('resizedSignal') == true) return;
+            this.set('resizedSignal', true);
+            this.set('configuring', false);
+        },
+
+        transitionToFacet: function(dashboardName, queryParams) {
+            let self = this;
+            this.get('router').transitionTo('dashboards.dashboard', dashboardName).then(function(route) {
+                Ember.run.schedule('afterRender', self, function() {
+                    debugger;
+                    let controller = route.get('controller');
+                    controller.set('query', queryParams);
+                    controller.set('back', 'backroute');
+                });
+            });
+            //let url = 'https://share.osf.io/discover?q=' + d.name;
+            //window.open(url, '_blank');
+        },
+
+        download : function() {
+            this.set( 'downloadHook', true );
+            console.log() ;
+        },
+
+        saveWidget: function(){
+            console.log('saveWidget');
+            let widgetType = this.get('chartType');
+            let name = this.get('name');
+            let jsEngine = this.get('jsEngine');
+            let chartType = this.get('chartType');
+            let author = "tobeDetermined";
+            let width = this.get('widthSetting');
+            let height = this.get('heightSetting');
+
+            let q = this.get('q');
+            let gte = this.get('gte');
+            let lte = this.get('lte');
+            let interval = this.get('tsInterval');
+            let query = {
+                query: {bool: {
+                    must: [{
+                        query_string: {query: q}
+                    }, {
+                        range: {date: {
+                            gte: gte,
+                            lte: lte,
+                            format: "yyyy-MM-dd||yyyy"
+                        }}
+                    }]
+                }},
+                from: 0,
+                aggregations: {
+                    sources: {
+                        terms: {
+                             field: 'sources.raw',
+                             size: 200
+                        }
+                    },
+                    contributors : {
+                        terms : {
+                            field: 'contributors.raw',
+                            size: 200
+                        }
+                    },
+                    tags : {
+                        terms : {
+                            field: 'tags.raw',
+                            size: 200
+                        }
+                    },
+                    articles_over_time: {
+                        date_histogram: {
+                            field: 'date',
+                            interval: interval,
+                            format:'yyyy-MM-dd'
+                        },
+                        aggregations: {
+                            arttype: {terms: {field: 'type'}}
+                        }
+                    }
+                }
+            };
+            let settings = {jsEngine: jsEngine, chartType: chartType};
+            let information = {
+                name: name,
+                width: width,
+                height: height,
+                query: query,
+                settings: settings,
+            };
+
+            this.sendAction('dashboardSaveWidget', information);
+        }
+
+    },
 
 });

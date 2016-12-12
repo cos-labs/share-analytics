@@ -364,7 +364,7 @@ export default Ember.Component.extend({
         let new_setting = this.get('widthSetting');
         let current_setting = this.get('currentWidth');
 
-        if (new_setting == 0) {
+        if (new_setting < 1) {
             new_setting = current_setting;
         }
         if (new_setting > 12) {
@@ -530,11 +530,13 @@ export default Ember.Component.extend({
             this.set('configuring', false);
         },
 
-        transitionToFacet: function(d) {
-            this.get('router').transitionTo('dashboards.dashboard', 'topic').then((route) => {
-                Ember.run.schedule('afterRender', this, () => {
+        transitionToFacet: function(dashboardName, queryParams) {
+            let self = this;
+            this.get('router').transitionTo('dashboards.dashboard', dashboardName).then(function(route) {
+                Ember.run.schedule('afterRender', self, function() {
+                    debugger;
                     let controller = route.get('controller');
-                    controller.set('query', {topic: d});
+                    controller.set('query', queryParams);
                     controller.set('back', 'backroute');
                 });
             });

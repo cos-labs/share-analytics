@@ -25,7 +25,7 @@ export default Ember.Component.extend({
     updateChart() {
 
         function log10ToLinear(log_num) {
-            if (log_num > 0) {
+            if (log_num <= 0) {
                 return 0;
             }
             return Math.pow(10, log_num-1).toFixed(0);
@@ -46,7 +46,10 @@ export default Ember.Component.extend({
                 columns: null, //to be filled later
                 type: chart_type,
                 onclick: (d) => {
-                    this.attrs.transitionToFacet(d);
+                    let queryParams = {
+                        'topic': d
+                    };
+                    this.attrs.transitionToFacet('topic', queryParams);
                 },
             },
             legend: { show: false },

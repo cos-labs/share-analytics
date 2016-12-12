@@ -2,6 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
+    queryParams: ['id'],
+    id: '',
+
     wall: false,
     
     currentUser: Ember.inject.service(),

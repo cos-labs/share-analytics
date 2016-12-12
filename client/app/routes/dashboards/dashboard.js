@@ -27,7 +27,7 @@ export default Ember.Route.extend({
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
         return {
-            user: {
+            scholar: {
                 dasboardName: 'Scholar Dashboard',
                 query: "eScholarship @ University of California",
                 widgets: [
@@ -35,7 +35,7 @@ export default Ember.Route.extend({
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
-                        width: 2,
+                        width: 4,
                         post_body: {
                             query: {
                                 bool: {
@@ -44,13 +44,19 @@ export default Ember.Route.extend({
                                   }
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            }
+                        ],
                     },
                     {
                         chartType: 'totalPublications',
                         widgetType: 'number-widget',
                         name: 'Total Publications',
-                        width: 2,
+                        width: 4,
                         post_body: {
                             query: {
                                 bool: {
@@ -64,13 +70,74 @@ export default Ember.Route.extend({
                                     }]
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            }
+                        ],
+                    },
+                    {
+                        chartType: 'timeseries',
+                        widgetType: 'c3-chart',
+                        name:'Date Histogram',
+                        width: 12,
+                        post_body: {
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "range" : {
+                                            "date" : {
+                                                "gte" : "now-10y/d",
+                                                "lt" :  "now/d"
+                                            }
+                                        }
+                                    },
+                                    "filter": {
+                                        "term": {
+                                            "contributors.raw": null
+                                        }
+                                    }
+                                }
+                            },
+                            "size": 10,
+                            "aggregations": {
+                                "sorted_by_type": {
+                                    "terms": {
+                                        "field": "type"
+                                    },
+                                    "aggregations": {
+                                        "type_over_time": {
+                                            "date_histogram": {
+                                                "field": "date_updated",
+                                                "interval": "1M",
+                                                "format": "yyyy-MM-dd"
+                                            }
+                                        }
+                                    }
+                                },
+                                "all_over_time": {
+                                    "date_histogram": {
+                                        "field": "date",
+                                        "interval": "1M",
+                                        "format": "yyyy-MM-dd"
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "filter", "term", "contributors.raw"],
+                                parameterName: "id"
+                            }
+                        ],
                     },
                     {
                         chartType: 'topContributors',
                         widgetType: 'top-contributors',
                         name: 'Top Contributors',
-                        width: 2,
+                        width: 4,
                         post_body: {
                             query: {
                                 bool: {
@@ -88,45 +155,19 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
-                        }
-                    },
-                    {
-                        chartType: 'timeseries',
-                        widgetType: 'c3-chart',
-                        width: 2,
-                        name:'timeser',
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                    query_string: { query: query }
-                                }, {
-                                    range: { date: {
-                                        gte: gte,
-                                        lte: lte,
-                                        format: "yyyy-MM-dd||yyyy"
-                                    }}
-                                }]}
-                            },
-                            from: 0,
-                            aggregations: {
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
-                                    },
-                                    aggregations: {
-                                        arttype: { terms: { field: 'type' } }
-                                    }
-                                }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
-                        }
+                        ],
                     },
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'NIH Funding Sources 2016',
-                        width: 2,
+                        width: 4,
                         post_body: {
                             query: {
                                 bool: { must: [{
@@ -172,7 +213,13 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
+                            }
+                        ],
                     }
                 ]
             },
@@ -188,12 +235,23 @@ export default Ember.Route.extend({
                         post_body: {
                             query: {
                                 bool: {
-                                  must: {
-                                    query_string: {query: query}
-                                  }
+                                    must: {
+                                        query_string: {query: null}
+                                    },
+                                    "filter": [{
+                                        "term": {
+                                            "sources.raw": "eScholarship @ University of California"
+                                        }
+                                    }]
                                 }
                             }
                         },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            }
+                        ],
                         widgetSettings : {
                             fontSize: 2,
                             fontColor: '#F44336'
@@ -205,6 +263,7 @@ export default Ember.Route.extend({
                         name: 'Funding from NIH',
                         width: 4,
                         post_body: null,
+                        postBodyParams: [],
                         widgetSettings : {
                             value : '400',
                             fontSize: 2,
@@ -218,27 +277,37 @@ export default Ember.Route.extend({
                         widgetType: 'number-widget',
                         name: 'Related Researchers',
                         width: 4,
-                        post_body : {
-                            query: {
-                                bool: {
-                                    must: {
-                                        query_string: {query: query}
+                        post_body: {
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "query_string": {"query": query}
                                     },
-                                    filter: [{
-                                        term: {
+                                    "filter": [{
+                                        "term": {
                                             "sources.raw": "eScholarship @ University of California"
                                         }
                                     }]
                                 }
                             },
-                            aggregations: {
+                            "aggregations": {
                                 "relatedContributors" : {
-                                    cardinality : {
-                                        field: "lists.contributors.id"
+                                    "cardinality": {
+                                        "field": "lists.contributors.id"
                                     }
                                 }
                             }
                         },
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                parameterName: "query"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterName: "institutionName"
+                            }
+                        ],
                         widgetSettings : {
                             fontSize: 2,
                             fontColor: '#F44336'
@@ -251,10 +320,19 @@ export default Ember.Route.extend({
                         width: 12,
                         post_body: {
                             "query": {
-                                "range" : {
-                                    "date" : {
-                                        "gte" : "now-10y/d",
-                                        "lt" :  "now/d"
+                                "bool": {
+                                    "must": {
+                                        "range" : {
+                                            "date" : {
+                                                "gte" : "now-10y/d",
+                                                "lt" :  "now/d"
+                                            }
+                                        }
+                                    },
+                                    "filter": {
+                                        "term": {
+                                            "sources.raw": "eScholarship @ University of California"
+                                        }
                                     }
                                 }
                             },
@@ -276,13 +354,19 @@ export default Ember.Route.extend({
                                 },
                                 "all_over_time": {
                                     "date_histogram": {
-                                        "field": "date_updated",
+                                        "field": "date",
                                         "interval": "1M",
                                         "format": "yyyy-MM-dd"
                                     }
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "filter", "term", "sources.raw"],
+                                parameterName: "institutionName"
+                            }
+                        ],
                     },
                     {
                         chartType: 'topContributors',
@@ -306,7 +390,13 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            }
+                        ],
                     },
                     {
                         chartType: 'donut',
@@ -348,7 +438,13 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
+                            }
+                        ],
                     },
                     {
                         chartType: 'topContributors',
@@ -372,7 +468,13 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            }
+                        ],
                     }
                 ]
             },
@@ -393,7 +495,13 @@ export default Ember.Route.extend({
                                   }
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            }
+                        ],
                     },
                     {
                         chartType: 'totalPublications',
@@ -413,14 +521,20 @@ export default Ember.Route.extend({
                                     }]
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            }
+                        ],
                     },
                     {
-                        "chartType": 'timeseries',
-                        "widgetType": 'c3-chart',
-                        "name": 'Date Histogram',
-                        "width": 12,
-                        "post_body": {
+                        chartType: 'timeseries',
+                        widgetType: 'c3-chart',
+                        name: 'Date Histogram',
+                        width: 12,
+                        post_body: {
                             "query": {
                                  "bool": {
                                     "must": [
@@ -464,14 +578,20 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
+                            }
+                        ],
                     },
                     {
-                        "chartType": 'topContributors',
-                        "widgetType": 'list-widget',
-                        "name": 'Top Tags',
-                        "width": 4,
-                        "post_body" : {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Top Tags',
+                        width: 4,
+                        post_body: {
                             "query": {
                                 "bool": {
                                     "must": {
@@ -490,7 +610,13 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            }
+                        ],
                     },
                     {
                         chartType: 'donut',
@@ -520,14 +646,16 @@ export default Ember.Route.extend({
                                     }
                                 },
                             }
-                        }
+                        },
+                        postBodyParams: [
+                        ],
                     },
                     {
-                        "chartType": 'topContributors',
-                        "widgetType": 'list-widget',
-                        "name": 'Top Contributors',
-                        "width": 4,
-                        "post_body" : {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Top Contributors',
+                        width: 4,
+                        post_body : {
                             "query": {
                                 "bool": {
                                     "must": {
@@ -544,7 +672,13 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            }
+                        ],
                     },
                     {
                         chartType: 'relevanceHistogram',
@@ -600,7 +734,13 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
+                            }
+                        ],
                     }
                 ]
             }
@@ -622,8 +762,25 @@ export default Ember.Route.extend({
 
     setupController: function(controller, model) {
         this._super(controller, model);
-        controller.set('widgets', model.widgets)
-        controller.set('query', model.query)
+        controller.set('query', model.query);
+        controller.set('institutionName', "eScholarship @ University of California");
+        controller.set('widgets', model.widgets.map((widget) => {
+            if (widget.postBodyParams) {
+                widget.postBodyParams.map((param) => {
+                    let path_parts = param.parameterPath.slice(0, -1)
+                    let nested_object = path_parts.reduce((nested, pathPart) => {
+                        return nested[pathPart];
+                    }, widget.post_body)
+                    let parameter_key = param.parameterPath[param.parameterPath.length-1];
+                    let parameter_value = controller.get(param.parameterName);
+                    nested_object[parameter_key] = parameter_value;
+                    return 
+                });
+            }
+            return widget;
+        }));
+
+
         Ember.run.schedule('afterRender', this, () => {
            // var wall =  new Freewall('#freewall');
            // wall.reset({

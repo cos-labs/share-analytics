@@ -771,7 +771,6 @@ export default Ember.Route.extend({
                     let nested_object = path_parts.reduce((nested, pathPart) => {
                         return nested[pathPart];
                     }, widget.post_body)
-                    debugger;
                     let parameter_key = param.parameterPath[param.parameterPath.length-1];
                     let parameter_value = controller.get(param.parameterName);
                     nested_object[parameter_key] = parameter_value;

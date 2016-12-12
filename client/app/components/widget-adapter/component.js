@@ -536,7 +536,6 @@ export default Ember.Component.extend({
                 Ember.run.schedule('afterRender', self, function() {
                     let controller = route.get('controller');
                     controller.set('query', queryParams);
-                    debugger;
                     controller.set('id', queryParams.id);
                     controller.set('back', 'backroute');
                 });

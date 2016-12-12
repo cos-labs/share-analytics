@@ -534,9 +534,10 @@ export default Ember.Component.extend({
             let self = this;
             this.get('router').transitionTo('dashboards.dashboard', dashboardName).then(function(route) {
                 Ember.run.schedule('afterRender', self, function() {
-                    debugger;
                     let controller = route.get('controller');
                     controller.set('query', queryParams);
+                    debugger;
+                    controller.set('id', queryParams.id);
                     controller.set('back', 'backroute');
                 });
             });

@@ -24,7 +24,7 @@ export default Ember.Component.extend({
             let queryParams = {
                 "id": parameter
             };
-            this.attrs.transitionToFacet('topic', queryParams);
+            this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
         }
 
     }

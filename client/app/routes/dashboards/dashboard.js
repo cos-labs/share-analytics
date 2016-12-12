@@ -132,6 +132,7 @@ export default Ember.Route.extend({
                                 parameterName: "id"
                             }
                         ],
+                        facetDash: "worktype"
                     },
                     {
                         chartType: 'topContributors',
@@ -162,6 +163,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
                         ],
+                        facetDash: "scholar"
                     },
                     {
                         chartType: 'donut',
@@ -220,6 +222,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
                             }
                         ],
+                        facetDash: "funder"
                     }
                 ]
             },
@@ -311,13 +314,15 @@ export default Ember.Route.extend({
                         widgetSettings : {
                             fontSize: 2,
                             fontColor: '#F44336'
-                        }
+                        },
+                        facedtDash: "scholar"
                     },
                     {
                         chartType: 'timeseries',
                         widgetType: 'c3-chart',
                         name:'Date Histogram',
                         width: 12,
+                        facetDash: "arttype",
                         post_body: {
                             "query": {
                                 "bool": {
@@ -366,7 +371,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", "term", "sources.raw"],
                                 parameterName: "institutionName"
                             }
-                        ],
+                        ]
                     },
                     {
                         chartType: 'topContributors',
@@ -397,6 +402,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
                         ],
+                        facetDash: "scholar"
                     },
                     {
                         chartType: 'donut',
@@ -445,6 +451,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
                             }
                         ],
+                        facetDash: "funder"
                     },
                     {
                         chartType: 'topContributors',
@@ -475,6 +482,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
                         ],
+                        facetDash: "topic"
                     }
                 ]
             },
@@ -585,6 +593,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
                             }
                         ],
+                        facetDash: "arttype"
                     },
                     {
                         chartType: 'topContributors',
@@ -617,6 +626,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
                         ],
+                        facetDash: "scholar"
                     },
                     {
                         chartType: 'donut',
@@ -649,6 +659,7 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                         ],
+                        facetDash: "institution",
                     },
                     {
                         chartType: 'topContributors',
@@ -679,6 +690,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
                         ],
+                        facetDash: "scholar"
                     },
                     {
                         chartType: 'relevanceHistogram',
@@ -735,6 +747,7 @@ export default Ember.Route.extend({
                                 }
                             }
                         },
+                        facetDash: "shareresults",
                         postBodyParams: [
                             {
                                 parameterName: "query",

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ENV from '../config/environment';
+import ENV from 'tc3/config/environment';
 
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
@@ -351,7 +351,6 @@ export default Ember.Component.extend({
     aggregations: false,
     docs: false,
 
-    classNames: ['widget'],
     classNameBindings: ['configuring', 'picking', 'width', 'height'],
 
     widgetType: 'wild-card',
@@ -360,8 +359,23 @@ export default Ember.Component.extend({
     widthSetting: 2,
     heightSetting: 2,
 
-    width: 'width-2',
-    height: 'height-2',
+    width: Ember.computed('widthSetting', function() {
+
+        let new_setting = this.get('widthSetting');
+        let current_setting = this.get('currentWidth');
+
+        if (new_setting == 0) {
+            new_setting = current_setting;
+        }
+        if (new_setting > 12) {
+            new_setting = 12;
+        }
+
+        this.set('currentWidth', new_setting)
+
+        return "col-md-" + new_setting;
+
+    }),
 
     computedHeight: 200,
     computedWidth: 200,
@@ -370,7 +384,7 @@ export default Ember.Component.extend({
     resizedSignal: false,
 
     // Initialize our query parameters
-    q: 'UC',
+    query: 'UC',
     gte: "1996-01-01",
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
 
@@ -393,6 +407,7 @@ export default Ember.Component.extend({
 
     init() {
         this._super(...arguments);
+        this.set('widthSetting', this.get('item').width);
         Promise.resolve(this.fetchWidgetData()).then(() =>{
             return this.applyGraphSetting();
         });
@@ -405,208 +420,45 @@ export default Ember.Component.extend({
     },
 
     fetchWidgetData: async function() {
-        let query = this.get('q');
+        if(this.get('item').post_body === null){
+            return;
+        }
+        let query = this.get('query');
         let gte = this.get('gte');
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
-        let post_body = {
-            relevance: JSON.stringify({
-                query: {
-                    bool: {
-                        must: [{
-                            query_string: {
-                                query: "Biology"
-                            }
-                        },{
-                            range: {
-                                date: {
-                                    gte: "1996-01-01",
-                                    lte: "2007-01-01",
-                                    format: "yyyy-MM-dd||yyyy"
-                                }
-                            }
-                        }]
-                    }
-                },
-                size: 0,
-                aggregations: {
-                    test: {
-                        histogram: {
-                            interval: 10,
-                            script: {
-                                lang: "expression",
-                                inline: "_score * 100"
-                            }
-                        }
-                    }
-                }
-            }),
-            stats: JSON.stringify({
-                query: {
-                    bool: { must: [{
-                        query_string: { query: query }
-                    }, {
-                        range: { date: {
-                            gte: gte,
-                            lte: lte,
-                            format: "yyyy-MM-dd||yyyy"
-                        }}
-                    }]}
-                },
-                from: 0,
-                aggregations: {
-                    creativework_stats: { stats: { field: "id" } }
-                }
-            }),
-            timeseries: JSON.stringify({
-                query: {
-                    bool: { must: [{
-                        query_string: { query: query }
-                    }, {
-                        range: { date: {
-                            gte: gte,
-                            lte: lte,
-                            format: "yyyy-MM-dd||yyyy"
-                        }}
-                    }]}
-                },
-                from: 0,
-                aggregations: {
-                    articles_over_time: {
-                        date_histogram: {
-                            field: 'date',
-                            interval: interval,
-                            format:'yyyy-MM-dd'
-                        },
-                        aggregations: {
-                            arttype: { terms: { field: 'type' } }
-                        }
-                    }
-                }
-            }),
-            totalResults: JSON.stringify({
-                query: {
-                    bool: {
-                      must: {
-                        query_string: {query: query}
-                      }
-                    }
-                }
-            }),
-            totalPublications: JSON.stringify({
-                query: {
-                    bool: {
-                        must: {
-                            query_string: {query: query}
-                        },
-                        filter: [{
-                            term: {
-                                "type.raw": "publication"
-                            }
-                        }]
-                    }
-                }
-            }),
-            donut: JSON.stringify({
-                query: {
-                    bool: { must: [{
-                            query_string: {query: query}
-                        },{
-                            range: { date: {
-                                       gte: gte,
-                                       lte: lte,
-                                       format: "yyyy-MM-dd||yyyy"
-                                       }
-                            }
-                        }
-                    ]}
-                },
-                from: 0,
-                aggregations: {
-                    sources: {
-                        terms: {
-                             field: 'sources.raw',
-                             size: 200
-                        }
-                    },
-                    contributors : {
-                        terms : {
-                            field: 'contributors.raw',
-                            size: 200
-                        }
-                    },
-                    tags : {
-                        terms : {
-                            field: 'tags.raw',
-                            size: 200
-                        }
-                    },
-                    articles_over_time: {
-                        date_histogram: {
-                            field: 'date',
-                            interval: interval,
-                            format:'yyyy-MM-dd'
-                        },
-                        aggregations: {
-                            arttype: {terms: {field: 'type'}}
-                        }
-                    }
-                }
-            }),
-            topContributors: JSON.stringify({
-                query: {
-                    bool: {
-                        must: {
-                            query_string: {query: query}
-                        }
-                    }
-                },
-                from: 0,
-                aggregations: {
-                    contributors : {
-                        terms : {
-                            field: 'contributors.raw',
-                            size: 10
-                        }
-                    }
-                }
-            })
-        };
+        let chartType = this.get('item').chartType;
         let data = await Ember.$.ajax({
             url: ENV.apiUrl + '/search/creativeworks/_search',
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
-            data: post_body[this.get('item').chartType]
+        //    data: post_body[this.get('item').chartType]
+            data: JSON.stringify(this.get('item').post_body)
         });
-        //let data = await Ember.$.ajax({
-        //    url: ENV.apiUrl +  '/search/abstractcreativework/_search',
-        //    crossDomain: true,
-        //    type: 'POST',
-        //    contentType: 'application/json',
-        //    data: JSON.stringify(this.get('item').query)
-        //});
+        this.set('data', data);
         this.set('aggregations', data.aggregations);
         this.set('total', data.hits.total);
+        if(chartType === 'relatedResearchers') {
+            this.set('total', data.aggregations.relatedContributors.value);
+        }
         this.set('docs', data.hits.hits.map((hit) => {
-              let source = Ember.Object.create(hit._source);
-              let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
-              r.id = hit._id;
-              r.contributors = source.lists.contributors;
-              r.funders = source.lists.funders;
-              r.publishers = source.lists.publishers;
-              r.institutions = source.lists.institutions;
-              r.organizations = source.lists.organizations;
-              return r;
-          }));
-
-          //Promise.resolve(this).then(function() {
-          //});
+            let source = Ember.Object.create(hit._source);
+            let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
+            r.id = hit._id;
+            r.contributors = source.lists.contributors;
+            r.funders = source.lists.funders;
+            r.publishers = source.lists.publishers;
+            r.institutions = source.lists.institutions;
+            r.organizations = source.lists.organizations;
+            return r;
+        }));
     },
 
     applyGraphSetting: function(){
 
         this.set('chartType', this.get('item').chartType);
+
         //this.set('widthSetting', this.get('item').width);
         //this.set('heightSetting', this.get('item').height);
         //this.set('name', this.get('item').name);
@@ -678,16 +530,16 @@ export default Ember.Component.extend({
             this.set('configuring', false);
         },
 
-        transitionToFacet: function() {
-            this.get('router').transitionTo('dashboards.dashboard', 'subject').then((route) => {
+        transitionToFacet: function(d) {
+            this.get('router').transitionTo('dashboards.dashboard', 'topic').then((route) => {
                 Ember.run.schedule('afterRender', this, () => {
                     let controller = route.get('controller');
-                    controller.set('subject', d);
+                    controller.set('query', {topic: d});
                     controller.set('back', 'backroute');
                 });
             });
-            let url = 'https://share.osf.io/discover?q=' + d.name;
-            window.open(url, '_blank');
+            //let url = 'https://share.osf.io/discover?q=' + d.name;
+            //window.open(url, '_blank');
         },
 
         saveWidget: function(){

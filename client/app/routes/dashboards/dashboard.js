@@ -325,7 +325,7 @@ export default Ember.Route.extend({
                             fontSize: 2,
                             fontColor: '#F44336'
                         },
-                        facedtDash: "scholar"
+                        facetDash: "scholar"
                     },
                     {
                         chartType: 'timeseries',
@@ -516,7 +516,7 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterName: "query",
+                                parameterName: "id",
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
                         ],
@@ -542,7 +542,7 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterName: "query",
+                                parameterName: "id",
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
                         ],
@@ -599,7 +599,7 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterName: "query",
+                                parameterName: "id",
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
                             }
                         ],
@@ -632,7 +632,7 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterName: "query",
+                                parameterName: "id",
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
                         ],
@@ -696,7 +696,7 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterName: "query",
+                                parameterName: "id",
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
                         ],
@@ -760,7 +760,7 @@ export default Ember.Route.extend({
                         facetDash: "shareresults",
                         postBodyParams: [
                             {
-                                parameterName: "query",
+                                parameterName: "id",
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
                             }
                         ],
@@ -785,7 +785,9 @@ export default Ember.Route.extend({
 
     setupController: function(controller, model) {
         this._super(controller, model);
-        controller.set('query', model.query);
+        if (controller.get('query') === undefined) {
+            controller.set('query', model.query);
+        }
         controller.set('institutionName', "eScholarship @ University of California");
         controller.set('widgets', model.widgets.map((widget) => {
             if (widget.postBodyParams) {

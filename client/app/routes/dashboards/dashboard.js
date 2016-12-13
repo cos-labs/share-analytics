@@ -574,7 +574,7 @@ export default Ember.Route.extend({
                                 parameterName: "query",
                                 parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             }
-                        ],
+                        ]
                     },
                     {
                         chartType: 'timeseries',
@@ -643,9 +643,21 @@ export default Ember.Route.extend({
                                 "bool": {
                                     "must": {
                                         "query_string": {
-                                            "query": query
+                                            "query": "*"
                                         }
-                                    }
+                                    },
+                                    "filter": [
+                                        {
+                                            "term": {
+                                                "sources.raw": "eScholarship @ University of California"
+                                            }
+                                        },
+                                        {
+                                            "term": {
+                                                "tags": ""
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             "from": 0,
@@ -661,9 +673,9 @@ export default Ember.Route.extend({
                         postBodyParams: [
                             {
                                 parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             }
-                        ],
+                        ]
                     },
                     {
                         chartType: 'donut',
@@ -706,8 +718,20 @@ export default Ember.Route.extend({
                             "query": {
                                 "bool": {
                                     "must": {
-                                        "query_string": {"query": query}
-                                    }
+                                        "query_string": {"query": "*"}
+                                    },
+                                    "filter": [
+                                        {
+                                            "term": {
+                                                "sources.raw": "eScholarship @ University of California"
+                                            }
+                                        },
+                                        {
+                                            "term": {
+                                                "tags": ""
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             "from": 0,
@@ -723,9 +747,9 @@ export default Ember.Route.extend({
                         postBodyParams: [
                             {
                                 parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             }
-                        ],
+                        ]
                     },
                     {
                         chartType: 'relevanceHistogram',

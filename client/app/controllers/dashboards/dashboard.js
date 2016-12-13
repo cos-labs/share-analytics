@@ -2,13 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    queryParams: ['id'],
+    queryParams: ['id', 'query'],
     id: '',
 
     wall: false,
-    
+
     currentUser: Ember.inject.service(),
-    
+
     // Initialize the dashboard with no widgets.
     widgets: [],
 

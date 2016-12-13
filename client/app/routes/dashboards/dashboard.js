@@ -480,7 +480,7 @@ export default Ember.Route.extend({
             },
             topic: {
                 dasboardName: 'Institution Subject Area Dashboard',
-                query: 'plasma',
+                query: 'california',
                 widgets: [
                     {
                         chartType: 'totalResults',
@@ -491,7 +491,7 @@ export default Ember.Route.extend({
                             query: {
                                 bool: {
                                   must: {
-                                    query_string: {query: query}
+                                    query_string: {query: "*"}
                                   }
                                 }
                             }
@@ -512,22 +512,63 @@ export default Ember.Route.extend({
                             query: {
                                 bool: {
                                     must: {
-                                        query_string: {query: query}
+                                        query_string: {query: "*"}
                                     },
-                                    filter: [{
-                                        term: {
-                                            'type.raw': "publication"
+                                    filter: [
+                                        {
+                                            "term": {
+                                                "sources.raw": "eScholarship @ University of California"
+                                            }
+                                        },
+                                        {
+                                            "term": {
+                                                "tags": ""
+                                            }
                                         }
-                                    }]
+                                    ]
                                 }
                             }
                         },
                         postBodyParams: [
                             {
                                 parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             }
                         ],
+                    },
+                    {
+                        chartType: 'relatedResearchers',
+                        widgetType: 'number-widget',
+                        name: 'Related Researchers',
+                        width: 4,
+                        post_body: {
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        query_string: {query: query}
+                                    },
+                                    "filter": [
+                                        {
+                                            "term": {
+                                                "sources.raw": "eScholarship @ University of California"
+                                            }
+                                        },
+                                        {
+                                            "term": {
+                                                "tags": "california"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "aggregations": {
+                                "relatedContributors" : {
+                                    "cardinality": {
+                                        "field": "lists.contributors.id"
+                                    }
+                                }
+                            }
+                        }
                     },
                     {
                         chartType: 'timeseries',
@@ -767,14 +808,14 @@ export default Ember.Route.extend({
         controller.set('widgets', model.widgets.map((widget) => {
             if (widget.postBodyParams) {
                 widget.postBodyParams.map((param) => {
-                    let path_parts = param.parameterPath.slice(0, -1)
+                    let path_parts = param.parameterPath.slice(0, -1);
                     let nested_object = path_parts.reduce((nested, pathPart) => {
                         return nested[pathPart];
-                    }, widget.post_body)
+                    }, widget.post_body);
                     let parameter_key = param.parameterPath[param.parameterPath.length-1];
                     let parameter_value = controller.get(param.parameterName);
                     nested_object[parameter_key] = parameter_value;
-                    return 
+                    return;
                 });
             }
             return widget;

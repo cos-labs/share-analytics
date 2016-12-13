@@ -174,65 +174,6 @@ export default Ember.Route.extend({
                             }
                         ],
                         facetDash: "scholar"
-                    },
-                    {
-                        chartType: 'donut',
-                        widgetType: 'c3-chart',
-                        name: 'NIH Funding Sources 2016',
-                        width: 4,
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
-                                        }
-                                    }
-                                ]}
-                            },
-                            from: 0,
-                            aggregations: {
-                                sources: {
-                                    terms: {
-                                         field: 'sources.raw',
-                                         size: 200
-                                    }
-                                },
-                                contributors : {
-                                    terms : {
-                                        field: 'contributors.raw',
-                                        size: 200
-                                    }
-                                },
-                                tags : {
-                                    terms : {
-                                        field: 'tags.raw',
-                                        size: 200
-                                    }
-                                },
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
-                                    },
-                                    aggregations: {
-                                        arttype: {terms: {field: 'type'}}
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
-                            }
-                        ],
-                        facetDash: "funder"
                     }
                 ]
             },
@@ -799,7 +740,7 @@ export default Ember.Route.extend({
                     let parameter_key = param.parameterPath[param.parameterPath.length-1];
                     let parameter_value = controller.get(param.parameterName);
                     nested_object[parameter_key] = parameter_value;
-                    return 
+                    return
                 });
             }
             return widget;

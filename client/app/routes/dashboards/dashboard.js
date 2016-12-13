@@ -184,6 +184,11 @@ export default Ember.Route.extend({
                                 bool: {
                                     must: {
                                         query_string: {query: query}
+                                    },
+                                    filter: {
+                                        "term": {
+                                            "lists.contributors.name.raw": null
+                                        }
                                     }
                                 }
                             },
@@ -201,6 +206,10 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "query",
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            },
+                            {
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
                             }
                         ],
                         facetDash: "scholar"

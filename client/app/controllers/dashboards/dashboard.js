@@ -2,8 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    queryParams: ['id', 'query'],
-    id: '',
+    queryParams: ['id', 'query', 'q', 'institutionName', 'tag', 'topic'],
 
     wall: false,
 
@@ -56,7 +55,7 @@ export default Ember.Controller.extend({
             this.get('currentUser').load().then((c) => {
                 widget.author = c.get('fullName');
                 this.set('widgets', this.get('widgets').addObject(widget));
-                let widget = this.store.createRecord('widget', widget);
+                widget = this.store.createRecord('widget', widget);
                 widget.save();
                 // TODO: This should not be an alert, but a growl-style notification.
                 // alert("Chart has been successfully saved!");

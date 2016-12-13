@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ENV from 'tc3/config/environment';
+import ENV from 'analytics-dashboard/config/environment';
 
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
@@ -534,9 +534,9 @@ export default Ember.Component.extend({
             let self = this;
             this.get('router').transitionTo('dashboards.dashboard', dashboardName).then(function(route) {
                 Ember.run.schedule('afterRender', self, function() {
-                    debugger;
                     let controller = route.get('controller');
                     controller.set('query', queryParams);
+                    controller.set('id', queryParams.id);
                     controller.set('back', 'backroute');
                 });
             });

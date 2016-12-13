@@ -16,6 +16,17 @@ export default Ember.Component.extend({
                 name: item.key,
             };
         }));
+    },
+
+    actions: {
+
+        transitionToFacet(parameter) {
+            let queryParams = {
+                "id": parameter.name
+            };
+            this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
+        }
+
     }
 
 });

@@ -37,44 +37,54 @@ export default Ember.Route.extend({
                         name: 'Total Results',
                         width: 4,
                         post_body: {
-                            query: {
-                                bool: {
-                                  must: {
-                                    query_string: {query: query}
-                                  }
+                            "query": {
+                                "bool": {
+                                    "filter": {
+                                        "term": {
+                                            "contributors.raw": null
+                                        }
+                                    }
                                 }
                             }
                         },
                         postBodyParams: [
                             {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", "term", "contributors.raw"]
                             }
                         ],
                     },
                     {
                         chartType: 'totalPublications',
                         widgetType: 'number-widget',
-                        name: 'Total Publications',
+                        name: 'Total Papers',
                         width: 4,
                         post_body: {
-                            query: {
-                                bool: {
-                                    must: {
-                                        query_string: {query: query}
-                                    },
-                                    filter: [{
-                                        term: {
-                                            'type.raw': "publication"
+                            "query": {
+                                "filtered": {
+                                    "filter": {
+                                        "bool": {
+                                            "must": [
+                                                {
+                                                    "term": {
+                                                        'type': "paper"
+                                                    }
+                                                },
+                                                {
+                                                    "term": {
+                                                        "contributors.raw": null
+                                                    }
+                                                }
+                                            ]
                                         }
-                                    }]
+                                    }
                                 }
                             }
                         },
                         postBodyParams: [
                             {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterName: "id",
+                                parameterPath: ["query", "filtered", "filter", "bool", "must", 1, "term", "contributors.raw"]
                             }
                         ],
                     },
@@ -132,6 +142,7 @@ export default Ember.Route.extend({
                                 parameterName: "id"
                             }
                         ],
+                        facetDash: "worktype"
                     },
                     {
                         chartType: 'topContributors',
@@ -162,6 +173,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
                         ],
+                        facetDash: "scholar"
                     },
                     {
                         chartType: 'donut',
@@ -220,6 +232,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
                             }
                         ],
+                        facetDash: "funder"
                     }
                 ]
             },
@@ -311,13 +324,15 @@ export default Ember.Route.extend({
                         widgetSettings : {
                             fontSize: 2,
                             fontColor: '#F44336'
-                        }
+                        },
+                        facetDash: "scholar"
                     },
                     {
                         chartType: 'timeseries',
                         widgetType: 'c3-chart',
                         name:'Date Histogram',
                         width: 12,
+                        facetDash: "arttype",
                         post_body: {
                             "query": {
                                 "bool": {
@@ -366,7 +381,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", "term", "sources.raw"],
                                 parameterName: "institutionName"
                             }
-                        ],
+                        ]
                     },
                     {
                         chartType: 'topContributors',
@@ -397,6 +412,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
                         ],
+                        facetDash: "scholar"
                     },
                     {
                         chartType: 'donut',
@@ -445,6 +461,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
                             }
                         ],
+                        facetDash: "funder"
                     },
                     {
                         chartType: 'topContributors',
@@ -475,6 +492,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             }
                         ],
+                        facetDash: "topic"
                     }
                 ]
             },
@@ -492,16 +510,17 @@ export default Ember.Route.extend({
                                 bool: {
                                   must: {
                                     query_string: {query: "*"}
-                                  }
+                                  },
+                                  filter: [
+                                    {
+                                        "term": {
+                                            "sources.raw": "eScholarship @ University of California"
+                                        }
+                                    }
+                                  ]
                                 }
                             }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
-                            }
-                        ],
+                        }
                     },
                     {
                         chartType: 'totalPublications',
@@ -631,12 +650,7 @@ export default Ember.Route.extend({
                                 }
                             }
                         },
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
-                            }
-                        ],
+                        facetDash: "arttype"
                     },
                     {
                         chartType: 'topContributors',
@@ -680,7 +694,8 @@ export default Ember.Route.extend({
                                 parameterName: "query",
                                 parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             }
-                        ]
+                        ],
+                        facetDash: "scholar"
                     },
                     {
                         chartType: 'donut',
@@ -713,6 +728,7 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                         ],
+                        facetDash: "institution",
                     },
                     {
                         chartType: 'topContributors',
@@ -754,7 +770,8 @@ export default Ember.Route.extend({
                                 parameterName: "query",
                                 parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             }
-                        ]
+                        ],
+                        facetDash: "scholar"
                     },
                     {
                         chartType: 'timeseries',
@@ -806,12 +823,7 @@ export default Ember.Route.extend({
                                 }
                             }
                         },
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
-                            }
-                        ],
+                        facetDash: "shareresults"                        
                     },
                 ]
             }
@@ -833,7 +845,9 @@ export default Ember.Route.extend({
 
     setupController: function(controller, model) {
         this._super(controller, model);
-        controller.set('query', model.query);
+        if (controller.get('query') === undefined) {
+            controller.set('query', model.query);
+        }
         controller.set('institutionName', "eScholarship @ University of California");
         controller.set('widgets', model.widgets.map((widget) => {
             if (widget.postBodyParams) {

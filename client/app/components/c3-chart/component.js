@@ -47,7 +47,7 @@ export default Ember.Component.extend({
                 type: chart_type,
                 onclick: (d) => {
                     let queryParams = {
-                        'topic': d
+                        'id': d.id
                     };
                     this.attrs.transitionToFacet('topic', queryParams);
                 },

@@ -37,44 +37,54 @@ export default Ember.Route.extend({
                         name: 'Total Results',
                         width: 4,
                         post_body: {
-                            query: {
-                                bool: {
-                                  must: {
-                                    query_string: {query: query}
-                                  }
+                            "query": {
+                                "bool": {
+                                    "filter": {
+                                        "term": {
+                                            "contributors.raw": null
+                                        }
+                                    }
                                 }
                             }
                         },
                         postBodyParams: [
                             {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", "term", "contributors.raw"]
                             }
                         ],
                     },
                     {
                         chartType: 'totalPublications',
                         widgetType: 'number-widget',
-                        name: 'Total Publications',
+                        name: 'Total Papers',
                         width: 4,
                         post_body: {
-                            query: {
-                                bool: {
-                                    must: {
-                                        query_string: {query: query}
-                                    },
-                                    filter: [{
-                                        term: {
-                                            'type.raw': "publication"
+                            "query": {
+                                "filtered": {
+                                    "filter": {
+                                        "bool": {
+                                            "must": [
+                                                {
+                                                    "term": {
+                                                        'type': "paper"
+                                                    }
+                                                },
+                                                {
+                                                    "term": {
+                                                        "contributors.raw": null
+                                                    }
+                                                }
+                                            ]
                                         }
-                                    }]
+                                    }
                                 }
                             }
                         },
                         postBodyParams: [
                             {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterName: "id",
+                                parameterPath: ["query", "filtered", "filter", "bool", "must", 1, "term", "contributors.raw"]
                             }
                         ],
                     },

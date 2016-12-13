@@ -41,7 +41,7 @@ export default Ember.Route.extend({
                                 "bool": {
                                     "filter": {
                                         "term": {
-                                            "contributors.raw": null
+                                            "lists.contributors.name.raw": null
                                         }
                                     }
                                 }
@@ -50,7 +50,7 @@ export default Ember.Route.extend({
                         postBodyParams: [
                             {
                                 parameterName: "id",
-                                parameterPath: ["query", "bool", "filter", "term", "contributors.raw"]
+                                parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
                             }
                         ]
                     },
@@ -72,7 +72,7 @@ export default Ember.Route.extend({
                                                 },
                                                 {
                                                     "term": {
-                                                        "contributors.raw": null
+                                                        "lists.contributors.name.raw": null
                                                     }
                                                 }
                                             ]
@@ -201,6 +201,39 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "query",
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            }
+                        ],
+                        facetDash: "scholar"
+                    },
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Top Tags',
+                        width: 4,
+                        post_body : {
+                            query: {
+                                bool: {
+                                    filter: {
+                                        "term": {
+                                            "lists.contributors.name.raw": null
+                                        }
+                                    }
+                                }
+                            },
+                            from: 0,
+                            aggregations: {
+                                listWidgetData : {
+                                    terms : {
+                                        field: 'tags',
+                                        size: 10
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
                             }
                         ],
                         facetDash: "scholar"

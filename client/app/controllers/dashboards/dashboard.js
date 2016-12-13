@@ -2,8 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    queryParams: ['id'],
-    id: '',
+    queryParams: ['id', 'query', 'q', 'institutionName', 'tag', 'topic'],
 
     wall: false,
     

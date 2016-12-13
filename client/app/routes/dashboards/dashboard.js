@@ -577,51 +577,56 @@ export default Ember.Route.extend({
                         ]
                     },
                     {
-                        chartType: 'timeseries',
+                        chartType: 'relevanceHistogram',
                         widgetType: 'c3-chart',
-                        name: 'Date Histogram',
+                        name:'Relevance Histogram',
                         width: 12,
                         post_body: {
-                            "query": {
-                                 "bool": {
-                                    "must": [
-                                        {
-                                            "query_string": {
-                                                "query": "hiv"
-                                            }
-                                        },
-                                        {
-                                            "range" : {
-                                                "date" : {
-                                                    "gte" : "now-10y/d",
-                                                    "lt" :  "now/d"
-                                                }
-                                            }
+                            query: {
+                                bool: {
+                                    must: [{
+                                        query_string: {
+                                            query: "hiv"
                                         }
-                                    ]
+                                    }]
                                 }
                             },
-                            "size": 10,
-                            "aggregations": {
-                                "sorted_by_type": {
-                                    "terms": {
-                                        "field": "type"
-                                    },
-                                    "aggregations": {
-                                        "type_over_time": {
-                                            "date_histogram": {
-                                                "field": "date_updated",
-                                                "interval": "1M",
-                                                "format": "yyyy-MM-dd"
-                                            }
+                            size: 0,
+                            aggregations: {
+                                all_score: {
+                                    histogram: {
+                                            interval: 1,
+                                            script: {
+                                            lang: "expression",
+                                                inline: "_score * 10"
                                         }
                                     }
                                 },
-                                "all_over_time": {
-                                    "date_histogram": {
-                                        "field": "date_updated",
-                                        "interval": "1M",
-                                        "format": "yyyy-MM-dd"
+                                filtered_score: {
+                                    filters: {
+                                        filters: {
+                                            "UC": {
+                                                term: {
+                                                   'sources.raw': "eScholarship @ University of California"
+                                                }
+                                            },
+                                            "DOE": {
+                                                term: {
+                                                    'sources.raw': "DoE's SciTech Connect Database"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    aggregations: {
+                                        score: {
+                                            histogram: {
+                                                interval: 1,
+                                                script: {
+                                                    lang: "expression",
+                                                    inline: "_score * 10"
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -752,56 +757,51 @@ export default Ember.Route.extend({
                         ]
                     },
                     {
-                        chartType: 'relevanceHistogram',
+                        chartType: 'timeseries',
                         widgetType: 'c3-chart',
-                        name:'Relevance Histogram',
+                        name: 'Date Histogram',
                         width: 12,
                         post_body: {
-                            query: {
-                                bool: {
-                                    must: [{
-                                        query_string: {
-                                            query: "hiv"
+                            "query": {
+                                 "bool": {
+                                    "must": [
+                                        {
+                                            "query_string": {
+                                                "query": "hiv"
+                                            }
+                                        },
+                                        {
+                                            "range" : {
+                                                "date" : {
+                                                    "gte" : "now-10y/d",
+                                                    "lt" :  "now/d"
+                                                }
+                                            }
                                         }
-                                    }]
+                                    ]
                                 }
                             },
-                            size: 0,
-                            aggregations: {
-                                all_score: {
-                                    histogram: {
-                                            interval: 1,
-                                            script: {
-                                            lang: "expression",
-                                                inline: "_score * 10"
+                            "size": 10,
+                            "aggregations": {
+                                "sorted_by_type": {
+                                    "terms": {
+                                        "field": "type"
+                                    },
+                                    "aggregations": {
+                                        "type_over_time": {
+                                            "date_histogram": {
+                                                "field": "date_updated",
+                                                "interval": "1M",
+                                                "format": "yyyy-MM-dd"
+                                            }
                                         }
                                     }
                                 },
-                                filtered_score: {
-                                    filters: {
-                                        filters: {
-                                            "UC": {
-                                                term: {
-                                                   'sources.raw': "eScholarship @ University of California"
-                                                }
-                                            },
-                                            "DOE": {
-                                                term: {
-                                                    'sources.raw': "DoE's SciTech Connect Database"
-                                                }
-                                            }
-                                        }
-                                    },
-                                    aggregations: {
-                                        score: {
-                                            histogram: {
-                                                interval: 1,
-                                                script: {
-                                                    lang: "expression",
-                                                    inline: "_score * 10"
-                                                }
-                                            }
-                                        }
+                                "all_over_time": {
+                                    "date_histogram": {
+                                        "field": "date_updated",
+                                        "interval": "1M",
+                                        "format": "yyyy-MM-dd"
                                     }
                                 }
                             }
@@ -812,7 +812,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
                             }
                         ],
-                    }
+                    },
                 ]
             }
         }[params.dashboard];

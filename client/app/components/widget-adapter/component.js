@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ENV from 'tc3/config/environment';
+import ENV from 'analytics-dashboard/config/environment';
 
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn

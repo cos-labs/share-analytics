@@ -206,6 +206,38 @@ export default Ember.Route.extend({
                         facetDash: "scholar"
                     },
                     {
+                        chartType: 'donut',
+                        widgetType: 'c3-chart',
+                        name: 'Publishers',
+                        width: 4,
+                        post_body : {
+                            query: {
+                                bool: {
+                                    filter: {
+                                        "term": {
+                                            "lists.contributors.name.raw": null
+                                        }
+                                    }
+                                }
+                            },
+                            from: 0,
+                            aggregations: {
+                                publishers : {
+                                    terms : {
+                                        field: 'publishers.raw'
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
+                            }
+                        ],
+                        facetDash: "scholar"
+              },
+                    {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Tags',

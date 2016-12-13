@@ -545,7 +545,7 @@ export default Ember.Route.extend({
                             "query": {
                                 "bool": {
                                     "must": {
-                                        query_string: {query: query}
+                                        query_string: {query: "*"}
                                     },
                                     "filter": [
                                         {
@@ -555,7 +555,7 @@ export default Ember.Route.extend({
                                         },
                                         {
                                             "term": {
-                                                "tags": "california"
+                                                "tags": ""
                                             }
                                         }
                                     ]
@@ -568,7 +568,13 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
-                        }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                            }
+                        ],
                     },
                     {
                         chartType: 'timeseries',

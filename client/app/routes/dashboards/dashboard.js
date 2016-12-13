@@ -52,7 +52,7 @@ export default Ember.Route.extend({
                                 parameterName: "id",
                                 parameterPath: ["query", "bool", "filter", "term", "contributors.raw"]
                             }
-                        ],
+                        ]
                     },
                     {
                         chartType: 'totalPublications',
@@ -86,7 +86,37 @@ export default Ember.Route.extend({
                                 parameterName: "id",
                                 parameterPath: ["query", "filtered", "filter", "bool", "must", 1, "term", "contributors.raw"]
                             }
-                        ],
+                        ]
+                    },
+                    {
+                        chartType: 'relatedResearchers',
+                        widgetType: 'number-widget',
+                        name: 'Total Collaborators',
+                        width: 4,
+                        post_body: {
+                            query: {
+                                bool: {
+                                    filter: [{
+                                        term: {
+                                            "lists.contributors.name.raw": null
+                                        }
+                                    }]
+                                }
+                            },
+                            aggregations: {
+                                relatedContributors: {
+                                    "cardinality": {
+                                        "field": "lists.contributors.id"
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "lists.contributors.name.raw"]
+                            }
+                        ]
                     },
                     {
                         chartType: 'timeseries',

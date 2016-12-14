@@ -700,13 +700,13 @@ export default Ember.Route.extend({
                     {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
-                        name: 'Top Tags',
+                        name: 'Top Contributors',
                         width: 4,
-                        post_body: {
+                        post_body : {
                             "aggregations": {
-                                "listWidgetData" : {
+                                "listWidgetData": {
                                     "terms": {
-                                        "field": 'tags',
+                                        "field": 'contributors.raw',
                                         "size": 10
                                     }
                                 }
@@ -769,13 +769,13 @@ export default Ember.Route.extend({
                     {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
-                        name: 'Top Contributors',
+                        name: 'Top Tags',
                         width: 4,
-                        post_body : {
+                        post_body: {
                             "aggregations": {
-                                "listWidgetData": {
+                                "listWidgetData" : {
                                     "terms": {
-                                        "field": 'contributors.raw',
+                                        "field": 'tags',
                                         "size": 10
                                     }
                                 }

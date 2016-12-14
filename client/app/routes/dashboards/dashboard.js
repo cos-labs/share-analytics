@@ -21,12 +21,12 @@ export default Ember.Route.extend({
         }
     }),
 
-    model: function(params) {
+    model: function(params, transition, queryParams) {
         let query = this.get('query');
         let gte = this.get('gte');
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
-        return {
+        let dashboards = {
             scholar: {
                 dasboardName: 'Scholar Dashboard',
                 parameters: [
@@ -326,7 +326,7 @@ export default Ember.Route.extend({
                             "query": {
                                 "bool": {
                                     "must": {
-                                        "query_string": {"query": ""}
+                                        "query_string": {"query": "*"}
                                     },
                                     "filter": [{
                                         "term": {
@@ -372,11 +372,11 @@ export default Ember.Route.extend({
                                             }
                                         }
                                     },
-                                    "filter": {
+                                    "filter": [{
                                         "term": {
                                             "sources.raw": "eScholarship @ University of California"
                                         }
-                                    }
+                                    }]
                                 }
                             },
                             "size": 10,
@@ -406,7 +406,7 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterPath: ["query", "bool", "filter", "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                                 parameterName: "institution"
                             }
                         ]
@@ -417,11 +417,16 @@ export default Ember.Route.extend({
                         name: 'Top Contributors',
                         width: 4,
                         post_body : {
-                            query: {
-                                bool: {
-                                    must: {
-                                        query_string: {query: query}
-                                    }
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "query_string": {"query": "*"}
+                                    },
+                                    "filter": [{
+                                        "term": {
+                                            "sources.raw": "eScholarship @ University of California"
+                                        }
+                                    }]
                                 }
                             },
                             from: 0,
@@ -436,8 +441,8 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                             }
                         ],
                         facetDash: "scholar"
@@ -448,18 +453,17 @@ export default Ember.Route.extend({
                         name: 'NIH Funding Sources 2016',
                         width: 4,
                         post_body: {
-                            query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "query_string": {"query": "*"}
+                                    },
+                                    "filter": [{
+                                        "term": {
+                                            "sources.raw": "eScholarship @ University of California"
                                         }
-                                    }
-                                ]}
+                                    }]
+                                }
                             },
                             from: 0,
                             aggregations: {
@@ -485,8 +489,13 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                            },
+                            {
                                 parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                defaultValue: "*"
                             }
                         ],
                         facetDash: "funder"
@@ -497,11 +506,16 @@ export default Ember.Route.extend({
                         name: 'Top Tags',
                         width: 4,
                         post_body : {
-                            query: {
-                                bool: {
-                                    must: {
-                                        query_string: {query: query}
-                                    }
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "query_string": {"query": "*"}
+                                    },
+                                    "filter": [{
+                                        "term": {
+                                            "sources.raw": "eScholarship @ University of California"
+                                        }
+                                    }]
                                 }
                             },
                             from: 0,
@@ -516,8 +530,13 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                            },
+                            {
                                 parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                defaultValue: "*"
                             }
                         ],
                         facetDash: "topic"
@@ -550,15 +569,18 @@ export default Ember.Route.extend({
                         postBodyParams: [
                             {
                                 parameterName: "topic",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                defaultValue: "*"
                             },
                             {
                                 parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"]
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                defaultValue: "*"
                             },
                             {
                                 parameterName: "contributor",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"]
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                                defaultValue: "*"
                             }
                         ],
                     },
@@ -584,7 +606,8 @@ export default Ember.Route.extend({
                         postBodyParams: [
                             {
                                 parameterName: "id",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                defaultValue: "*"
                             }
                         ],
                     },
@@ -641,7 +664,8 @@ export default Ember.Route.extend({
                         postBodyParams: [
                             {
                                 parameterName: "id",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
                             }
                         ],
                         facetDash: "arttype"
@@ -674,7 +698,8 @@ export default Ember.Route.extend({
                         postBodyParams: [
                             {
                                 parameterName: "id",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                defaultValue: "*"
                             }
                         ],
                         facetDash: "scholar"
@@ -738,7 +763,8 @@ export default Ember.Route.extend({
                         postBodyParams: [
                             {
                                 parameterName: "id",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                defaultValue: "*"
                             }
                         ],
                         facetDash: "scholar"
@@ -802,53 +828,63 @@ export default Ember.Route.extend({
                         postBodyParams: [
                             {
                                 parameterName: "id",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
                             }
                         ],
                     }
                 ]
             }
-        }[params.dashboard];
-        //return Ember.RSVP.hash({
-        //    widgets: this.get('store').peekAll('widget').map((item) => {
-        //        return {
-        //            name: item.get('name'),
-        //            author: item.get('author'),
-        //            width: item.get('width'),
-        //            height: item.get('height'),
-        //            query: item.get('query'),
-        //            settings: item.get('settings')
-        //        }
-        //    }),
-        //    settings: {}
-        //});
-        //
-        let widgets = this.get('widgets');
-        this.set('institutionName', "eScholarship @ University of California");
-        debugger;
-        this.set('widgets', widgets.map((widget) => {
+        }
+
+        let dashboard = dashboards[params.dashboard];
+        let widgets = dashboard.widgets;
+
+        dashboard.widgets = widgets.map((widget) => {
+
             if (widget.postBodyParams) {
-                widget.postBodyParams.map((param) => {
+                widget.postBodyParams.forEach((param) => {
+
+                    let parameter_value;
+                    if (param.parameterName in transition.queryParams) {
+                        parameter_value = transition.queryParams[param.parameterName];
+                    } else if ("defaultValue" in param) {
+                        parameter_value = param.defaultValue;
+                    } else {
+                        return; // The parameter must have a value.
+                    }
+
                     let path_parts = param.parameterPath.slice(0, -1)
-                    let nested_object = path_parts.reduce((nested, pathPart) => {
-                        return nested[pathPart];
-                    }, widget.post_body)
                     let parameter_key = param.parameterPath[param.parameterPath.length-1];
-                    let parameter_value = controller.get(param.parameterName);
+
+                    let nested_object = path_parts.reduce((nested, pathPart) => {
+                        if (!nested[pathPart]) {
+                            nested[pathPart] = {};
+                        }
+                        return nested[pathPart];
+                    }, widget.post_body) // Uses the actual object; changes made on nested change the original.
+
                     nested_object[parameter_key] = parameter_value;
-                    return;
+
                 });
             }
+
             return widget;
-        }));
+
+        });
+
+        return dashboard;
+
     },
 
     setupController: function(controller, model) {
+
         this._super(controller, model);
-        controller.set('queryParams', model.parameters);
-        if (controller.get('query') === undefined) { // This will change depending on what default will be in the storage backend
+
+        if (controller.get('query') === undefined) { // This will change depending on what default will be in the storage backend.
             controller.set('query', model.query);
         }
+
         controller.set('institutionName', "eScholarship @ University of California");
         controller.set('widgets', model.widgets);
     }

@@ -13,7 +13,7 @@ export default Ember.Component.extend({
     data: [],
 
     sizeChanged: Ember.observer('resizedSignal', function() {
-        if (this.get('resizedSignal') == false) return;
+        if (this.get('resizedSignal') === false) { return; }
         this.updateChart();
         this.set('resizedSignal', false);
     }),
@@ -71,8 +71,7 @@ export default Ember.Component.extend({
                 var columns = [['FIC', 685870], ['NCATS', 11798267], ['NCCIH', 527109], ['NCI', 37421432], ['NEI', 9258786], ['NHGRI', 5050824], ['NHLBI', 37973512], ['NIA', 30039371], ['NIAAA', 6709896], ['NIAID', 44746441], ['NIAMS', 6571101], ['NIBIB', 4005180], ['NICHD', 13278402], ['NIDA', 29823005], ['NIDCD', 4439991], ['NIDCR', 1155900], ['NIDDK', 32526462], ['NIEHS', 4674188], ['NIGMS', 53652460], ['NIMH', 38119017], ['NINDS', 20635337], ['NINR', 1976020], ['NLM', 1069055], ['OD', 4275564]];
                 var title = '';
             }
-
-        } else if (chart_type == 'bar') {
+        } else if (chart_type === 'bar') {
 
             this.set('data', this.get('aggregations.contributors.buckets'));
             var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]).slice(0, 10);
@@ -94,12 +93,10 @@ export default Ember.Component.extend({
             };
             chart_options['tooltip'] = tooltip;
 
-        } else if (chart_type == 'relevanceHistogram') {
+        } else if (chart_type === 'relevanceHistogram') {
 
-            let UC_hits = this.get('aggregations.filtered_score.buckets.UC.doc_count')
-            let total_hits = this.get('total')
-            console.log(UC_hits)
-            console.log(total_hits)
+            let UC_hits = this.get('aggregations.filtered_score.buckets.UC.doc_count');
+            let total_hits = this.get('total');
             var columns = [
                 ['overallCountByRelevance'].concat(this.get('data.aggregations.all_score.buckets').map((datum) => {
                     let val = this.get('aggregations.all_score.buckets')[datum.key];
@@ -130,7 +127,6 @@ export default Ember.Component.extend({
                 }
             };
 
-            let zoom = {enabled: true};
             chart_options['data']['types'] = {
                 x: 'bar',
                 overallCountByRelevance: 'bar',
@@ -148,22 +144,21 @@ export default Ember.Component.extend({
             };
 
             chart_options['point'] = {show: false};
-            chart_options['zoom'] = {enabled: true};
 
-        } else if (chart_type == 'timeseries') {
+        } else if (chart_type === 'timeseries') {
 
 
-            let x_axis = this.get('data.aggregations.all_over_time.buckets').map((datum) => { return datum.key_as_string })
+            let x_axis = this.get('data.aggregations.all_over_time.buckets').map((datum) => { return datum.key_as_string; });
             var columns = this.get('data.aggregations.sorted_by_type.buckets').map((bucket) => {
                 return [bucket.key].concat(bucket['type_over_time'].buckets.reduce((ret, bucket) => {
                     ret[x_axis.indexOf(bucket.key_as_string)] = linearToLog10(bucket.doc_count);
                     return ret;
                 }, (new Array(x_axis.length)).fill(0)));
             });
-            columns.unshift(['x'].concat(x_axis))
+            columns.unshift(['x'].concat(x_axis));
             columns.unshift(['All Events'].concat(this.get('data.aggregations.all_over_time.buckets').map((bucket) => {
                 return linearToLog10(bucket.doc_count);
-            })))
+            })));
             console.log(columns);
             let data_x = 'x';
             chart_options['axis'] = {
@@ -196,9 +191,7 @@ export default Ember.Component.extend({
                     }
                 }
             };
-            let zoom = {
-                enabled: true
-            };
+
             let point = {
                 show: false,
             };
@@ -206,7 +199,6 @@ export default Ember.Component.extend({
             chart_options['data']['types'] = data_types;
             chart_options['data']['x'] = data_x;
             chart_options['legend'] = { position: "right" };
-            chart_options['zoom'] = zoom;
             chart_options['point'] = point;
 
         }

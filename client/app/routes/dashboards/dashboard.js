@@ -28,7 +28,7 @@ export default Ember.Route.extend({
         let interval = this.get('tsInterval');
         return {
             scholar: {
-                dasboardName: 'Scholar Dashboard',
+                dashboardName: 'Scholar Dashboard',
                 query: "eScholarship @ University of California",
                 widgets: [
                     {
@@ -282,7 +282,7 @@ export default Ember.Route.extend({
                 ]
             },
             institution: {
-                dasboardName: 'Institution Overview Dashboard',
+                dashboardName: 'Institution Overview Dashboard',
                 query: 'UC San Diego',
                 widgets: [
                     {
@@ -542,7 +542,7 @@ export default Ember.Route.extend({
                 ]
             },
             topic: {
-                dasboardName: 'Institution Subject Area Dashboard',
+                dashboardName: 'Institution Subject Area Dashboard',
                 query: 'california',
                 widgets: [
                     {
@@ -868,7 +868,7 @@ export default Ember.Route.extend({
                                 }
                             }
                         },
-                        facetDash: "shareresults"                        
+                        facetDash: "shareresults"
                     },
                 ]
             }
@@ -893,6 +893,7 @@ export default Ember.Route.extend({
         if (controller.get('query') === undefined) {
             controller.set('query', model.query);
         }
+        controller.set('dashboardName', model.dashboardName);
         controller.set('institutionName', "eScholarship @ University of California");
         controller.set('widgets', model.widgets.map((widget) => {
             if (widget.postBodyParams) {

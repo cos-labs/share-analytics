@@ -8,7 +8,7 @@
 
 <div id='freewall' class='free-wall'>
     {{#each widgets as |item|}}
-        {{widget-adapter options=addableList query=query addChart=(action "addChart") removeChart=(action 'removeChart') item=item widgets=widgets wall=wall refreshWall=(action 'refreshWall') dashboardSaveWidget=(action 'dashboardSaveWidget')}}
+        {{widget-adapter options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item widgets=widgets wall=wall refreshWall=(action 'refreshWall') dashboardSaveWidget=(action 'dashboardSaveWidget') parameters=parameters}}
     {{/each}}
 </div>
 

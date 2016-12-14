@@ -2,18 +2,60 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    queryParams: ['id', 'query', 'q', 'institutionName', 'tag', 'topic'],
+    queryParams: ['id', 'scholar', 'query', 'q', 'institution', 'tag', 'topic'],
+
+    updateParams: Ember.observer('queryParams', function() {
+        debugger;
+        this.set("parameters", Ember.computed.apply(this, this.get('queryParams').concat(() => {
+        debugger;
+            return this.get('queryParams').map((param) => {
+                return this.get(param);
+            })
+        })));
+    }),
 
     wall: false,
-    
+
     currentUser: Ember.inject.service(),
-    
+
     // Initialize the dashboard with no widgets.
     widgets: [],
 
     // Initialize the list of additional charts that the user can add
     addableList: [],
     storedDashboards: [],
+
+    configureQuery: function()  {
+    }.on('init'),
+
+    createWall: function() {
+        Ember.run.schedule('afterRender', this, () => {
+           // var wall =  new Freewall('#freewall');
+           // wall.reset({
+           //     draggable: true,
+           //     selector: '.widget',
+           //     animate: true,
+           //     cellW: 150,
+           //     cellH: 150,
+           //     fixSize: 0,
+           //     cacheSize: true,
+           //     onResize: function() {
+           //         wall.refresh();
+           //     },
+           //     onBlockMove: function() {
+           //         console.log(this);
+           //     }
+           // });
+           // wall.fitWidth();
+           // Ember.$(window).trigger('resize');
+           // controller.set('wall', wall);
+        });
+    }.on('init'),
+
+    init() {
+        let ret = this._super();
+                return ret;
+    },
 
     actions: {
 

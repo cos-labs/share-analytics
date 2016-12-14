@@ -28,11 +28,13 @@ export default Ember.Route.extend({
         let interval = this.get('tsInterval');
         let dashboards = {
             scholar: {
-                dasboardName: 'Scholar Dashboard',
+
+                dashboardName: 'Scholar Dashboard',
                 parameters: [
                     "scholar",
                     "institution"
                 ],
+                query: "eScholarship @ University of California",
                 widgets: [
                     {
                         chartType: 'totalResults',
@@ -317,10 +319,11 @@ export default Ember.Route.extend({
                 ]
             },
             institution: {
-                dasboardName: 'Institution Overview Dashboard',
                 parameters: [
                     "institution"
                 ],
+                dashboardName: 'Institution Overview Dashboard',
+                query: 'UC San Diego',
                 widgets: [
                     {
                         chartType: 'totalResults',
@@ -533,12 +536,12 @@ export default Ember.Route.extend({
                 ]
             },
             topic: {
-                dasboardName: 'Institution Subject Area Dashboard',
                 parameters: [
                     "scholar",
                     "institution",
                     "topic"
                 ],
+                dashboardName: 'Institution Subject Area Dashboard',
                 widgets: [
                     {
                         chartType: 'totalResults',

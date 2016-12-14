@@ -523,7 +523,12 @@ export default Ember.Route.extend({
                                 bool: {
                                     must: {
                                         query_string: {query: query}
-                                    }
+                                    },
+                                    filter: [{
+                                        term: {
+                                            "sources.raw": "eScholarship @ University of California"
+                                        }
+                                   }]
                                 }
                             },
                             from: 0,

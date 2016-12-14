@@ -42,10 +42,11 @@ export default Ember.Route.extend({
                         post_body: {
                             "query": {
                                 "bool": {
-
-                                    "must": {
-                                        "query_string": {"query": "*"}
-                                    },
+                                    "must": [
+                                        {
+                                            "query_string": {"query": "*"}
+                                        }
+                                    ],
                                     "filter": [
                                         {
                                             "term": {
@@ -326,18 +327,13 @@ export default Ember.Route.extend({
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 4,
-                        post_body: {
-                            "query": {
-                                "bool": {
-                                    "filter": [{
-                                        "term": {
-                                            "sources.raw": "eScholarship @ University of California"
-                                        }
-                                    }]
-                                }
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterName: "institution"
                             }
-                        },
-                        postBodyParams: [],
+                        ],
                         widgetSettings : {
                             fontSize: 2,
                             fontColor: '#F44336'
@@ -364,18 +360,6 @@ export default Ember.Route.extend({
                         name: 'Related Researchers',
                         width: 4,
                         post_body: {
-                            "query": {
-                                "bool": {
-                                    "must": {
-                                        "query_string": {"query": "*"}
-                                    },
-                                    "filter": [{
-                                        "term": {
-                                            "sources.raw": "eScholarship @ University of California"
-                                        }
-                                    }]
-                                }
-                            },
                             "aggregations": {
                                 "relatedContributors" : {
                                     "cardinality": {
@@ -385,7 +369,12 @@ export default Ember.Route.extend({
                             }
                         },
                         postBodyParams: [
-                           {
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                                 parameterName: "institution"
                             }
@@ -403,24 +392,6 @@ export default Ember.Route.extend({
                         width: 12,
                         facetDash: "arttype",
                         post_body: {
-                            "query": {
-                                "bool": {
-                                    "must": {
-                                        "range" : {
-                                            "date" : {
-                                                "gte" : "now-10y/d",
-                                                "lt" :  "now/d"
-                                            }
-                                        }
-                                    },
-                                    "filter": [{
-                                        "term": {
-                                            "sources.raw": "eScholarship @ University of California"
-                                        }
-                                    }]
-                                }
-                            },
-                            "size": 10,
                             "aggregations": {
                                 "sorted_by_type": {
                                     "terms": {
@@ -449,6 +420,16 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                                 parameterName: "institution"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "range", "date", "lt"],
+                                parameterName: "tillDate",
+                                defaultValue: "now/d"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "range", "date", "gte"],
+                                parameterName: "fromDate",
+                                defaultValue: "now-10y/d"
                             }
                         ]
                     },
@@ -458,19 +439,6 @@ export default Ember.Route.extend({
                         name: 'Top Contributors',
                         width: 4,
                         post_body : {
-                            "query": {
-                                "bool": {
-                                    "must": {
-                                        "query_string": {"query": "*"}
-                                    },
-                                    "filter": [{
-                                        "term": {
-                                            "sources.raw": "eScholarship @ University of California"
-                                        }
-                                    }]
-                                }
-                            },
-                            from: 0,
                             aggregations: {
                                 listWidgetData : {
                                     terms : {
@@ -481,6 +449,11 @@ export default Ember.Route.extend({
                             }
                         },
                         postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
                             {
                                 parameterName: "institution",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
@@ -494,19 +467,6 @@ export default Ember.Route.extend({
                         name: 'NIH Funding Sources 2016',
                         width: 4,
                         post_body: {
-                            "query": {
-                                "bool": {
-                                    "must": {
-                                        "query_string": {"query": "*"}
-                                    },
-                                    "filter": [{
-                                        "term": {
-                                            "sources.raw": "eScholarship @ University of California"
-                                        }
-                                    }]
-                                }
-                            },
-                            from: 0,
                             aggregations: {
                                 sources: {
                                     terms: {
@@ -535,7 +495,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
                             }
                         ],
@@ -547,18 +507,6 @@ export default Ember.Route.extend({
                         name: 'Top Tags',
                         width: 4,
                         post_body : {
-                            "query": {
-                                "bool": {
-                                    "must": {
-                                        "query_string": {"query": "*"}
-                                    },
-                                    "filter": [{
-                                        "term": {
-                                            "sources.raw": "eScholarship @ University of California"
-                                        }
-                                    }]
-                                }
-                            },
                             from: 0,
                             aggregations: {
                                 listWidgetData : {
@@ -576,7 +524,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
                             }
                         ],
@@ -597,60 +545,7 @@ export default Ember.Route.extend({
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 4,
-                        post_body: {
-                            "query": {
-                                "bool": {
-                                    "must": {
-                                        "query_string": {"query": "*"}
-                                    },
-                                    "filter": []
-                                }
-                            },
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "contributor",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
-                                defaultValue: "*"
-                            }
-                        ],
-                    },
-                    {
-                        chartType: 'totalPublications',
-                        widgetType: 'number-widget',
-                        name: 'Total Publications',
-                        width: 4,
-                        post_body: {
-                            query: {
-                                bool: {
-                                    must: {
-                                        query_string: {query: "*"}
-                                    },
-                                    filter: [
-                                        {
-                                            "term": {
-                                                "sources.raw": "eScholarship @ University of California"
-                                            }
-                                        },
-                                        {
-                                            "term": {
-                                                "tags": ""
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        },
+                        post_body: {},
                         postBodyParams: [
                             {
                                 parameterName: "query",
@@ -659,7 +554,46 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "contributor",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
+                            }
+                        ],
+                    },
+                    {
+                        chartType: 'totalPublications',
+                        widgetType: 'number-widget',
+                        name: 'Total Publications',
+                        width: 4,
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "type"],
+                                defaultType: "publication"
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "contributor",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
                             }
                         ],
                     },
@@ -669,25 +603,6 @@ export default Ember.Route.extend({
                         name: 'Related Researchers',
                         width: 4,
                         post_body: {
-                            "query": {
-                                "bool": {
-                                    "must": {
-                                        query_string: {query: "*"}
-                                    },
-                                    "filter": [
-                                        {
-                                            "term": {
-                                                "sources.raw": "eScholarship @ University of California"
-                                            }
-                                        },
-                                        {
-                                            "term": {
-                                                "tags": ""
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
                             "aggregations": {
                                 "relatedContributors" : {
                                     "cardinality": {
@@ -702,9 +617,17 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", "query_string", "query"],
                                 defaultValue: "*"
                             },
-                            }
+                            {
                                 parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]                            
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "scholar",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
                             }
                         ]
                     },
@@ -713,57 +636,53 @@ export default Ember.Route.extend({
                         widgetType: 'c3-chart',
                         name:'Relevance Histogram',
                         width: 12,
-                        post_body: {
-                            query: {
-                                bool: {
-                                    must: [{
-                                        query_string: {
-                                            query: "hiv"
+                        facetDash: "arttype",
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["aggregations", "filtered_score", "filters", "filters", "institution", "term", "sources.raw"]
+                            },
+                            {
+                                parameterName: "scoring",
+                                parameterPath: ["aggregations", "filtered_score", "aggregations", "score"],
+                                defaultValue: {
+                                    histogram: {
+                                        interval: 1,
+                                        script: {
+                                            lang: "expression",
+                                            inline: "_score * 10"
                                         }
-                                    }]
+                                    }
                                 }
                             },
-                            size: 0,
-                            aggregations: {
-                                all_score: {
+                            {
+                                parameterName: "scoring",
+                                parameterPath: ["aggregations", "all_score"],
+                                defaultValue: {
                                     histogram: {
-                                            interval: 1,
-                                            script: {
+                                        interval: 1,
+                                        script: {
                                             lang: "expression",
-                                                inline: "_score * 10"
-                                        }
-                                    }
-                                },
-                                filtered_score: {
-                                    filters: {
-                                        filters: {
-                                            "UC": {
-                                                term: {
-                                                   'sources.raw': "eScholarship @ University of California"
-                                                }
-                                            },
-                                            "DOE": {
-                                                term: {
-                                                    'sources.raw': "DoE's SciTech Connect Database"
-                                                }
-                                            }
-                                        }
-                                    },
-                                    aggregations: {
-                                        score: {
-                                            histogram: {
-                                                interval: 1,
-                                                script: {
-                                                    lang: "expression",
-                                                    inline: "_score * 10"
-                                                }
-                                            }
+                                            inline: "_score * 10"
                                         }
                                     }
                                 }
+                            },
+                            {
+                                parameterName: "scholar",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
                             }
-                        },
-                        facetDash: "arttype"
+                        ]
                     },
                     {
                         chartType: 'topContributors',
@@ -811,7 +730,7 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "topic",
                                 parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
-d                            }
+                            }
                         ],
                         facetDash: "scholar"
                     },
@@ -962,6 +881,7 @@ d                            }
 
         let dashboard = dashboards[params.dashboard];
         let widgets = dashboard.widgets;
+        let array_keys = new Set(["filter", "must"]);
 
         dashboard.widgets = widgets.map((widget) => {
 
@@ -979,10 +899,13 @@ d                            }
 
                     let path_parts = param.parameterPath.slice(0, -1)
                     let parameter_key = param.parameterPath[param.parameterPath.length-1];
-
                     let nested_object = path_parts.reduce((nested, pathPart) => {
                         if (!nested[pathPart]) {
-                            nested[pathPart] = {};
+                            if (array_keys.has(pathPart)) {
+                                nested[pathPart] = [];
+                            } else {
+                                nested[pathPart] = {};
+                            }
                         }
                         return nested[pathPart];
                     }, widget.post_body) // Uses the actual object; changes made on nested change the original.

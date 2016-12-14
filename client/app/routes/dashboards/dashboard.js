@@ -134,6 +134,7 @@ export default Ember.Route.extend({
                         widgetType: 'c3-chart',
                         name:'Date Histogram',
                         width: 12,
+                        facetDash: "worktype",
                         post_body: {
                             "query": {
                                 "bool": {
@@ -187,7 +188,6 @@ export default Ember.Route.extend({
                                 parameterName: "scholar"
                             }
                         ],
-                        facetDash: "worktype"
                     },
                     {
                         chartType: 'topContributors',
@@ -347,6 +347,8 @@ export default Ember.Route.extend({
                         chartType: 'relatedResearchers',
                         widgetType: 'number-widget',
                         name: 'Related Researchers',
+                        facetDashParameter: "scholar",
+                        facetDash: "scholar",
                         width: 4,
                         post_body: {
                             "aggregations": {
@@ -372,7 +374,6 @@ export default Ember.Route.extend({
                             fontSize: 2,
                             fontColor: '#F44336'
                         },
-                        facetDash: "scholar"
                     },
                     {
                         chartType: 'timeseries',
@@ -380,6 +381,7 @@ export default Ember.Route.extend({
                         name:'Date Histogram',
                         width: 12,
                         facetDash: "arttype",
+                        facetDashParameter: "funder",
                         post_body: {
                             "aggregations": {
                                 "sorted_by_type": {
@@ -427,6 +429,8 @@ export default Ember.Route.extend({
                         widgetType: 'list-widget',
                         name: 'Top Contributors',
                         width: 4,
+                        facetDash: "scholar",
+                        facetDashParameter: "scholar",
                         post_body : {
                             aggregations: {
                                 listWidgetData : {
@@ -448,12 +452,13 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                             }
                         ],
-                        facetDash: "scholar"
                     },
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'NIH Funding Sources 2016',
+                        facetDash: "funder",
+                        facetDashParameter: "funder",
                         width: 4,
                         post_body: {
                             aggregations: {
@@ -488,12 +493,13 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             }
                         ],
-                        facetDash: "funder"
                     },
                     {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Tags',
+                        facetDash: "topic",
+                        facetDashParameter: "topic",
                         width: 4,
                         post_body : {
                             from: 0,
@@ -517,7 +523,6 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             }
                         ],
-                        facetDash: "topic"
                     }
                 ]
             },

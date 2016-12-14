@@ -333,6 +333,11 @@ export default Ember.Route.extend({
                         post_body: {},
                         postBodyParams: [
                             {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                                 parameterName: "institution"
                             }
@@ -433,6 +438,11 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "range", "date", "gte"],
                                 parameterName: "fromDate",
                                 defaultValue: "now-10y/d"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
                             }
                         ]
                     },
@@ -855,7 +865,7 @@ export default Ember.Route.extend({
                     }
                 ]
             }
-        }
+        };
 
         let dashboard = dashboards[params.dashboard];
         let widgets = dashboard.widgets;

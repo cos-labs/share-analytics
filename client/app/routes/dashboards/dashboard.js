@@ -283,7 +283,7 @@ export default Ember.Route.extend({
             },
             institution: {
                 dasboardName: 'Institution Overview Dashboard',
-                query: 'UC San Diego',
+                query: '*',
                 widgets: [
                     {
                         chartType: 'totalResults',
@@ -438,7 +438,12 @@ export default Ember.Route.extend({
                                 bool: {
                                     must: {
                                         query_string: {query: query}
-                                    }
+                                    },
+                                   "filter": [{
+                                        "term": {
+                                            "sources.raw": "eScholarship @ University of California"
+                                        }
+                                   }]
                                 }
                             },
                             from: 0,
@@ -868,7 +873,7 @@ export default Ember.Route.extend({
                                 }
                             }
                         },
-                        facetDash: "shareresults"                        
+                        facetDash: "shareresults"
                     },
                 ]
             }

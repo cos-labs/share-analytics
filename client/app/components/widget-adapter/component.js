@@ -420,7 +420,6 @@ export default Ember.Component.extend({
     },
 
     fetchWidgetData: async function() {
-        debugger;
         if(this.get('item').post_body === null){
             return;
         }
@@ -429,18 +428,18 @@ export default Ember.Component.extend({
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
         let item = this.get('item');
-        if (item.postBodyParams) {
-            item.postBodyParams.map((param) => {
-                let path_parts = param.parameterPath.slice(0, -1)
-                let nested_object = path_parts.reduce((nested, pathPart) => {
-                    return nested[pathPart];
-                }, item.post_body)
-                let parameter_key = param.parameterPath[param.parameterPath.length-1];
-                let parameter_value = this.get(param.parameterName);
-                nested_object[parameter_key] = parameter_value;
-                return;
-            });
-        }
+        //if (item.postBodyParams) {
+        //    item.postBodyParams.map((param) => {
+        //        let path_parts = param.parameterPath.slice(0, -1)
+        //        let nested_object = path_parts.reduce((nested, pathPart) => {
+        //            return nested[pathPart];
+        //        }, item.post_body)
+        //        let parameter_key = param.parameterPath[param.parameterPath.length-1];
+        //        let parameter_value = this.get(param.parameterName);
+        //        nested_object[parameter_key] = parameter_value;
+        //        return;
+        //    });
+        //}
         let data = await Ember.$.ajax({
             url: ENV.apiUrl + '/search/creativeworks/_search',
             crossDomain: true,

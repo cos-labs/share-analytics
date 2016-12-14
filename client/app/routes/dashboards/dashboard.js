@@ -34,36 +34,13 @@ export default Ember.Route.extend({
                     "scholar",
                     "institution"
                 ],
-                query: "eScholarship @ University of California",
                 widgets: [
                     {
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 4,
-                        post_body: {
-                            "query": {
-                                "bool": {
-                                    "must": [
-                                        {
-                                            "query_string": {"query": "*"}
-                                        }
-                                    ],
-                                    "filter": [
-                                        {
-                                            "term": {
-                                                "sources.raw": "eScholarship @ University of California"
-                                            }
-                                        },
-                                        {
-                                            "term": {
-                                                "contributors.raw": ""
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        },
+                        post_body: {},
                         postBodyParams: [
                             {
                                 parameterName: "query",

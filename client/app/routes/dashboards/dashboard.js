@@ -305,11 +305,7 @@ export default Ember.Route.extend({
                 ]
             },
             institution: {
-                parameters: [
-                    "institution"
-                ],
-                dashboardName: 'Institution Overview Dashboard',
-                query: 'UC San Diego',
+                dasboardName: 'Institution Overview Dashboard',
                 widgets: [
                     {
                         chartType: 'totalResults',
@@ -817,7 +813,6 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
-                        },
                         facetDash: "shareresults",
                         postBodyParams: [
                             {

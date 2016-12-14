@@ -888,7 +888,10 @@ export default Ember.Route.extend({
 
         });
 
-        return dashboard;
+        return {
+            dashboard: dashboard,
+            parameters: transition.queryParams
+        };
 
     },
 
@@ -897,11 +900,13 @@ export default Ember.Route.extend({
         this._super(controller, model);
 
         if (controller.get('query') === undefined) { // This will change depending on what default will be in the storage backend.
-            controller.set('query', model.query);
+            controller.set('query', model.dashboard.query);
         }
 
+        controller.set('parameters', model.parameters)
+
         controller.set('institutionName', "eScholarship @ University of California");
-        controller.set('widgets', model.widgets);
+        controller.set('widgets', model.dashboard.widgets);
     }
 
 });

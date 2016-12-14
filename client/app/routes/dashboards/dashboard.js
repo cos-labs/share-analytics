@@ -34,45 +34,31 @@ export default Ember.Route.extend({
                     "scholar",
                     "institution"
                 ],
-                query: "eScholarship @ University of California",
                 widgets: [
                     {
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 4,
-                        post_body: {
-                            "query": {
-                                "bool": {
-                                    "must": [
-                                        {
-                                            "query_string": {"query": "*"}
-                                        }
-                                    ],
-                                    "filter": [
-                                        {
-                                            "term": {
-                                                "sources.raw": "eScholarship @ University of California"
-                                            }
-                                        },
-                                        {
-                                            "term": {
-                                                "contributors.raw": ""
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        },
+                        post_body: {},
                         postBodyParams: [
                             {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", "term", 0, "sources.raw"]
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                defaultValue: "*"
                             },
                             {
                                 parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", "term", 1, "contributors.raw"]
-                            }
+                                parameterPath: ["query", "bool", "filter", 0,  "term", "contributors.raw"]
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
                         ]
                     },
                     {

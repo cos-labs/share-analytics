@@ -42,6 +42,7 @@ export default Ember.Route.extend({
                         post_body: {
                             "query": {
                                 "bool": {
+
                                     "must": {
                                         "query_string": {"query": "*"}
                                     },
@@ -69,7 +70,7 @@ export default Ember.Route.extend({
                                 parameterName: "scholar",
                                 parameterPath: ["query", "bool", "filter", "term", 1, "contributors.raw"]
                             }
-                        ],
+                        ]
                     },
                     {
                         chartType: 'totalPublications',
@@ -107,7 +108,37 @@ export default Ember.Route.extend({
                                 parameterName: "scholar",
                                 parameterPath: ["query", "filtered", "filter", "bool", "must", 1, "term", "contributors.raw"]
                             }
-                        ],
+                        ]
+                    },
+                    {
+                        chartType: 'relatedResearchers',
+                        widgetType: 'number-widget',
+                        name: 'Total Collaborators',
+                        width: 4,
+                        post_body: {
+                            query: {
+                                bool: {
+                                    filter: [{
+                                        term: {
+                                            "lists.contributors.name.raw": null
+                                        }
+                                    }]
+                                }
+                            },
+                            aggregations: {
+                                relatedContributors: {
+                                    "cardinality": {
+                                        "field": "lists.contributors.id"
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "lists.contributors.name.raw"]
+                            }
+                        ]
                     },
                     {
                         chartType: 'timeseries',
@@ -206,56 +237,66 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "scholar",
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            },
+                            {
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
                             }
                         ]
                     },
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
-                        name: 'NIH Funding Sources 2016',
+                        name: 'Publishers',
                         width: 4,
-                        post_body: {
+                        post_body : {
                             query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
+                                bool: {
+                                    filter: {
+                                        "term": {
+                                            "lists.contributors.name.raw": null
                                         }
                                     }
-                                ]}
+                                }
                             },
                             from: 0,
                             aggregations: {
-                                sources: {
-                                    terms: {
-                                         field: 'sources.raw',
-                                         size: 200
-                                    }
-                                },
-                                contributors : {
+                                publishers : {
                                     terms : {
-                                        field: 'contributors.raw',
-                                        size: 200
+                                        field: 'publishers.raw'
                                     }
-                                },
-                                tags : {
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
+                            }
+                        ],
+                        facetDash: "scholar"
+              },
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Top Tags',
+                        width: 4,
+                        post_body : {
+                            query: {
+                                bool: {
+                                    filter: {
+                                        "term": {
+                                            "lists.contributors.name.raw": null
+                                        }
+                                    }
+                                }
+                            },
+                            from: 0,
+                            aggregations: {
+                                listWidgetData : {
                                     terms : {
-                                        field: 'tags.raw',
-                                        size: 200
-                                    }
-                                },
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
-                                    },
-                                    aggregations: {
-                                        arttype: {terms: {field: 'type'}}
+                                        field: 'tags',
+                                        size: 10
                                     }
                                 }
                             }
@@ -270,7 +311,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
                             }
                         ],
-                        facetDash: "funder"
+                        facetDash: "scholar"
                     }
                 ]
             },
@@ -560,7 +601,7 @@ export default Ember.Route.extend({
                             "query": {
                                 "bool": {
                                     "must": {
-                                        "query_string": {"query": ""}
+                                        "query_string": {"query": "*"}
                                     },
                                     "filter": []
                                 }
@@ -593,181 +634,79 @@ export default Ember.Route.extend({
                             query: {
                                 bool: {
                                     must: {
-                                        query_string: {query: query}
+                                        query_string: {query: "*"}
                                     },
-                                    filter: [{
-                                        term: {
-                                            'type.raw': "*"
+                                    filter: [
+                                        {
+                                            "term": {
+                                                "sources.raw": "eScholarship @ University of California"
+                                            }
+                                        },
+                                        {
+                                            "term": {
+                                                "tags": ""
+                                            }
                                         }
-                                    }]
+                                    ]
                                 }
                             }
                         },
                         postBodyParams: [
                             {
-                                parameterName: "id",
+                                parameterName: "query",
                                 parameterPath: ["query", "bool", "must", "query_string", "query"],
                                 defaultValue: "*"
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             }
                         ],
                     },
                     {
-                        chartType: 'timeseries',
-                        widgetType: 'c3-chart',
-                        name: 'Date Histogram',
-                        width: 12,
+                        chartType: 'relatedResearchers',
+                        widgetType: 'number-widget',
+                        name: 'Related Researchers',
+                        width: 4,
                         post_body: {
                             "query": {
-                                 "bool": {
-                                    "must": [
+                                "bool": {
+                                    "must": {
+                                        query_string: {query: "*"}
+                                    },
+                                    "filter": [
                                         {
-                                            "query_string": {
-                                                "query": "hiv"
+                                            "term": {
+                                                "sources.raw": "eScholarship @ University of California"
                                             }
                                         },
                                         {
-                                            "range" : {
-                                                "date" : {
-                                                    "gte" : "now-10y/d",
-                                                    "lt" :  "now/d"
-                                                }
+                                            "term": {
+                                                "tags": ""
                                             }
                                         }
                                     ]
                                 }
                             },
-                            "size": 10,
                             "aggregations": {
-                                "sorted_by_type": {
-                                    "terms": {
-                                        "field": "type"
-                                    },
-                                    "aggregations": {
-                                        "type_over_time": {
-                                            "date_histogram": {
-                                                "field": "date_updated",
-                                                "interval": "1M",
-                                                "format": "yyyy-MM-dd"
-                                            }
-                                        }
-                                    }
-                                },
-                                "all_over_time": {
-                                    "date_histogram": {
-                                        "field": "date_updated",
-                                        "interval": "1M",
-                                        "format": "yyyy-MM-dd"
+                                "relatedContributors" : {
+                                    "cardinality": {
+                                        "field": "lists.contributors.id"
                                     }
                                 }
                             }
                         },
                         postBodyParams: [
                             {
-                                parameterName: "id",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            }
-                        ],
-                        facetDash: "arttype"
-                    },
-                    {
-                        chartType: 'topContributors',
-                        widgetType: 'list-widget',
-                        name: 'Top Tags',
-                        width: 4,
-                        post_body: {
-                            "query": {
-                                "bool": {
-                                    "must": {
-                                        "query_string": {
-                                            "query": query
-                                        }
-                                    }
-                                }
-                            },
-                            "from": 0,
-                            "aggregations": {
-                                "listWidgetData" : {
-                                    "terms": {
-                                        "field": 'tags',
-                                        "size": 10
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "id",
+                                parameterName: "query",
                                 parameterPath: ["query", "bool", "must", "query_string", "query"],
                                 defaultValue: "*"
-                            }
-                        ],
-                        facetDash: "scholar"
-                    },
-                    {
-                        chartType: 'donut',
-                        widgetType: 'c3-chart',
-                        name: 'Events by Source',
-                        width: 4,
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
-                                        }
-                                    }
-                                ]}
                             },
-                            from: 0,
-                            aggregations: {
-                                sources: {
-                                    terms: {
-                                         field: 'sources.raw',
-                                         size: 200
-                                    }
-                                },
                             }
-                        },
-                        postBodyParams: [
-                        ],
-                        facetDash: "institution",
-                    },
-                    {
-                        chartType: 'topContributors',
-                        widgetType: 'list-widget',
-                        name: 'Top Contributors',
-                        width: 4,
-                        post_body : {
-                            "query": {
-                                "bool": {
-                                    "must": {
-                                        "query_string": {"query": query}
-                                    }
-                                }
-                            },
-                            "from": 0,
-                            "aggregations": {
-                                "listWidgetData": {
-                                    "terms": {
-                                        "field": 'contributors.raw',
-                                        "size": 10
-                                    }
-                                }
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]                            
                             }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "id",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"],
-                                defaultValue: "*"
-                            }
-                        ],
-                        facetDash: "scholar"
+                        ]
                     },
                     {
                         chartType: 'relevanceHistogram',
@@ -824,10 +763,194 @@ export default Ember.Route.extend({
                                 }
                             }
                         },
+                        facetDash: "arttype"
+                    },
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Top Tags',
+                        width: 4,
+                        post_body: {
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "query_string": {
+                                            "query": "*"
+                                        }
+                                    },
+                                    "filter": [
+                                        {
+                                            "term": {
+                                                "sources.raw": "eScholarship @ University of California"
+                                            }
+                                        },
+                                        {
+                                            "term": {
+                                                "tags": ""
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "from": 0,
+                            "aggregations": {
+                                "listWidgetData" : {
+                                    "terms": {
+                                        "field": 'tags',
+                                        "size": 10
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+d                            }
+                        ],
+                        facetDash: "scholar"
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'c3-chart',
+                        name: 'Events by Source',
+                        width: 4,
+                        post_body: {
+                            query: {
+                                bool: { must: [{
+                                        query_string: {query: query}
+                                    },{
+                                        range: { date: {
+                                                   gte: gte,
+                                                   lte: lte,
+                                                   format: "yyyy-MM-dd||yyyy"
+                                                   }
+                                        }
+                                    }
+                                ]}
+                            },
+                            from: 0,
+                            aggregations: {
+                                sources: {
+                                    terms: {
+                                         field: 'sources.raw',
+                                         size: 200
+                                    }
+                                },
+                            }
+                        },
+                        postBodyParams: [
+                        ],
+                        facetDash: "institution",
+                    },
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Top Contributors',
+                        width: 4,
+                        post_body : {
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "query_string": {"query": "*"}
+                                    },
+                                    "filter": [
+                                        {
+                                            "term": {
+                                                "sources.raw": "eScholarship @ University of California"
+                                            }
+                                        },
+                                        {
+                                            "term": {
+                                                "tags": ""
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "from": 0,
+                            "aggregations": {
+                                "listWidgetData": {
+                                    "terms": {
+                                        "field": 'contributors.raw',
+                                        "size": 10
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                            }
+                        ],
+                        facetDash: "scholar"
+                    },
+                    {
+                        chartType: 'timeseries',
+                        widgetType: 'c3-chart',
+                        name: 'Date Histogram',
+                        width: 12,
+                        post_body: {
+                            "query": {
+                                 "bool": {
+                                    "must": [
+                                        {
+                                            "query_string": {
+                                                "query": "hiv"
+                                            }
+                                        },
+                                        {
+                                            "range" : {
+                                                "date" : {
+                                                    "gte" : "now-10y/d",
+                                                    "lt" :  "now/d"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "size": 10,
+                            "aggregations": {
+                                "sorted_by_type": {
+                                    "terms": {
+                                        "field": "type"
+                                    },
+                                    "aggregations": {
+                                        "type_over_time": {
+                                            "date_histogram": {
+                                                "field": "date_updated",
+                                                "interval": "1M",
+                                                "format": "yyyy-MM-dd"
+                                            }
+                                        }
+                                    }
+                                },
+                                "all_over_time": {
+                                    "date_histogram": {
+                                        "field": "date_updated",
+                                        "interval": "1M",
+                                        "format": "yyyy-MM-dd"
+                                    }
+                                }
+                            }
+                        },
                         facetDash: "shareresults",
                         postBodyParams: [
                             {
-                                parameterName: "id",
+                                parameterName: "query",
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
                             }

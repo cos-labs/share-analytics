@@ -588,13 +588,13 @@ export default Ember.Route.extend({
                         postBodyParams: [
                             {
                                 parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
                                 defaultValue: "*"
                             },
                             {
-                                parameterName: "sdfkjl",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "type"],
-                                defaultValue: "paper"
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "types.raw"],
+                                defaultValue: "publication"
                             },
                             {
                                 parameterName: "topic",

@@ -64,13 +64,22 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", "term", 0, "sources.raw"]
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
+                                defaultValue: "*"
                             },
                             {
                                 parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", "term", 1, "contributors.raw"]
-                            }
+                                parameterPath: ["query", "bool", "filter", 0,  "term", "contributors.raw"]
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
                         ]
                     },
                     {

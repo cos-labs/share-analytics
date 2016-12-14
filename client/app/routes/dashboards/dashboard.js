@@ -74,7 +74,7 @@ export default Ember.Route.extend({
                                             "must": [
                                                 {
                                                     "term": {
-                                                        'type': "paper"
+                                                        'types.raw': "publication"
                                                     }
                                                 },
                                                 {
@@ -124,7 +124,7 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterName: "id",
+                                parameterName: "scholar",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "lists.contributors.name.raw"]
                             }
                         ]
@@ -191,7 +191,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'topContributors',
-                        widgetType: 'top-contributors',
+                        widgetType: 'list-widget',
                         name: 'Top Contributors',
                         facetDash: "scholar",
                         width: 4,
@@ -210,7 +210,7 @@ export default Ember.Route.extend({
                             },
                             from: 0,
                             aggregations: {
-                                contributors : {
+                                listWidgetData : {
                                     terms : {
                                         field: 'contributors.raw',
                                         size: 10

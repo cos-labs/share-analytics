@@ -95,8 +95,11 @@ export default Ember.Component.extend({
 
         } else if (chart_type === 'relevanceHistogram') {
 
-            let UC_hits = this.get('aggregations.filtered_score.buckets.UC.doc_count');
-            let total_hits = this.get('total');
+
+            let UC_hits = this.get('aggregations.filtered_score.buckets.institution.doc_count')
+            let total_hits = this.get('total')
+            console.log(UC_hits)
+            console.log(total_hits)
             var columns = [
                 ['overallCountByRelevance'].concat(this.get('data.aggregations.all_score.buckets').map((datum) => {
                     let val = this.get('aggregations.all_score.buckets')[datum.key];
@@ -104,7 +107,7 @@ export default Ember.Component.extend({
                     return 0;
                 })),
                 ['ucCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
-                    let val = this.get('aggregations.filtered_score.buckets.UC.score.buckets')[datum.key];
+                    let val = this.get('aggregations.filtered_score.buckets.institution.score.buckets')[datum.key];
                     if (val && val.doc_count > 0) { return val.doc_count; }
                     return 0;
                 })),

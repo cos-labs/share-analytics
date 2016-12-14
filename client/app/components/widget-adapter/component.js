@@ -427,19 +427,30 @@ export default Ember.Component.extend({
         let gte = this.get('gte');
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
-        let chartType = this.get('item').chartType;
+        let item = this.get('item');
+        //if (item.postBodyParams) {
+        //    item.postBodyParams.map((param) => {
+        //        let path_parts = param.parameterPath.slice(0, -1)
+        //        let nested_object = path_parts.reduce((nested, pathPart) => {
+        //            return nested[pathPart];
+        //        }, item.post_body)
+        //        let parameter_key = param.parameterPath[param.parameterPath.length-1];
+        //        let parameter_value = this.get(param.parameterName);
+        //        nested_object[parameter_key] = parameter_value;
+        //        return;
+        //    });
+        //}
         let data = await Ember.$.ajax({
             url: ENV.apiUrl + '/search/creativeworks/_search',
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
-        //    data: post_body[this.get('item').chartType]
             data: JSON.stringify(this.get('item').post_body)
         });
         this.set('data', data);
         this.set('aggregations', data.aggregations);
         this.set('total', data.hits.total);
-        if(chartType === 'relatedResearchers') {
+        if(item.chartType === 'relatedResearchers') {
             this.set('total', data.aggregations.relatedContributors.value);
         }
         this.set('docs', data.hits.hits.map((hit) => {
@@ -475,6 +486,9 @@ export default Ember.Component.extend({
         //this.sendAction('refreshWall');
 
     },
+
+    configureQuery: function() {
+            },
 
     actions: {
 

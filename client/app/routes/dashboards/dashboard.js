@@ -41,7 +41,7 @@ export default Ember.Route.extend({
                                 "bool": {
                                     "filter": {
                                         "term": {
-                                            "contributors.raw": null
+                                            "lists.contributors.name.raw": null
                                         }
                                     }
                                 }
@@ -50,9 +50,9 @@ export default Ember.Route.extend({
                         postBodyParams: [
                             {
                                 parameterName: "id",
-                                parameterPath: ["query", "bool", "filter", "term", "contributors.raw"]
+                                parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
                             }
-                        ],
+                        ]
                     },
                     {
                         chartType: 'totalPublications',
@@ -72,7 +72,7 @@ export default Ember.Route.extend({
                                                 },
                                                 {
                                                     "term": {
-                                                        "contributors.raw": null
+                                                        "lists.contributors.name.raw": null
                                                     }
                                                 }
                                             ]
@@ -86,7 +86,37 @@ export default Ember.Route.extend({
                                 parameterName: "id",
                                 parameterPath: ["query", "filtered", "filter", "bool", "must", 1, "term", "contributors.raw"]
                             }
-                        ],
+                        ]
+                    },
+                    {
+                        chartType: 'relatedResearchers',
+                        widgetType: 'number-widget',
+                        name: 'Total Collaborators',
+                        width: 4,
+                        post_body: {
+                            query: {
+                                bool: {
+                                    filter: [{
+                                        term: {
+                                            "lists.contributors.name.raw": null
+                                        }
+                                    }]
+                                }
+                            },
+                            aggregations: {
+                                relatedContributors: {
+                                    "cardinality": {
+                                        "field": "lists.contributors.id"
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "lists.contributors.name.raw"]
+                            }
+                        ]
                     },
                     {
                         chartType: 'timeseries',
@@ -154,6 +184,11 @@ export default Ember.Route.extend({
                                 bool: {
                                     must: {
                                         query_string: {query: query}
+                                    },
+                                    filter: {
+                                        "term": {
+                                            "lists.contributors.name.raw": null
+                                        }
                                     }
                                 }
                             },
@@ -171,6 +206,10 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "query",
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
+                            },
+                            {
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
                             }
                         ],
                         facetDash: "scholar"
@@ -178,61 +217,67 @@ export default Ember.Route.extend({
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
-                        name: 'NIH Funding Sources 2016',
+                        name: 'Publishers',
                         width: 4,
-                        post_body: {
+                        post_body : {
                             query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
+                                bool: {
+                                    filter: {
+                                        "term": {
+                                            "lists.contributors.name.raw": null
                                         }
                                     }
-                                ]}
+                                }
                             },
                             from: 0,
                             aggregations: {
-                                sources: {
-                                    terms: {
-                                         field: 'sources.raw',
-                                         size: 200
-                                    }
-                                },
-                                contributors : {
+                                publishers : {
                                     terms : {
-                                        field: 'contributors.raw',
-                                        size: 200
-                                    }
-                                },
-                                tags : {
-                                    terms : {
-                                        field: 'tags.raw',
-                                        size: 200
-                                    }
-                                },
-                                articles_over_time: {
-                                    date_histogram: {
-                                        field: 'date',
-                                        interval: interval,
-                                        format:'yyyy-MM-dd'
-                                    },
-                                    aggregations: {
-                                        arttype: {terms: {field: 'type'}}
+                                        field: 'publishers.raw'
                                     }
                                 }
                             }
                         },
                         postBodyParams: [
                             {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
                             }
                         ],
-                        facetDash: "funder"
+                        facetDash: "scholar"
+              },
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Top Tags',
+                        width: 4,
+                        post_body : {
+                            query: {
+                                bool: {
+                                    filter: {
+                                        "term": {
+                                            "lists.contributors.name.raw": null
+                                        }
+                                    }
+                                }
+                            },
+                            from: 0,
+                            aggregations: {
+                                listWidgetData : {
+                                    terms : {
+                                        field: 'tags',
+                                        size: 10
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
+                            }
+                        ],
+                        facetDash: "scholar"
                     }
                 ]
             },

@@ -1,8 +1,13 @@
 /*Packery grid styling*/
 
-.background {
-    background: url("http://localhost:4200/images/geometric.jpg");
-    background-size: cover;
+.wrapper {
+    background: url("http://localhost:4200/images/stardust.png");
+    padding-bottom: 40px;
+    margin-top: 50px;
+}
+
+.wrapper h2 {
+    color: #f8f4f9;
 }
 
 
@@ -13,11 +18,14 @@
     color: #fff;
     padding: 15px;
     font-weight: 500 !important;
-    -webkit-box-shadow: inset 0px 83px 72px -90px rgba(0,0,0,0.75);
-    -moz-box-shadow: inset 0px 83px 72px -90px rgba(0,0,0,0.75);
-    box-shadow: inset 0px 83px 72px -90px rgba(0,0,0,0.75);
+    -webkit-box-shadow: inset 0px -3px 10px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px -3px 10px rgba(0,0,0,0.75);
+    box-shadow: inset 0px -3px 10px rgba(0,0,0,0.75)
 }
 
+.widgetpicker {
+    overflow: hidden;
+}
 footer.footer {
     margin: 0;
 }
@@ -32,10 +40,23 @@ footer.footer {
     border: 2px solid #b6b5b4;
     overflow: hidden;
 }
-input[type="button" i], input[type="submit" i], input[type="reset" i], input[type="file" i]::-webkit-file-upload-button, button
 button.edit-title {
     background-color: rgba(0,0,0,0);
     border: none;
+    line-height: 1.0;
+    font-size: 18px;
+    margin: 5px;
+    border-radius: 3px;
+    padding: 5px;
+    vertical-align: top;
+    display: inline-block;
+}
+button.edit-title:hover {
+    background-color: rgba(0,0,0,0.2);
+    border: none;
+    line-height: 1.0;
+    font-size: 18px;
+
 }
 nav.navbar {
     -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
@@ -95,15 +116,15 @@ nav.navbar {
     display: none;
 }
 
-.configuring > .configmenu {
+.configuring > .widget > .configmenu {
     display: block;
 }
 
-.configuring > .chart {
+.configuring > .widget > .chart {
     display: none;
 }
 
-.configuring > .widgetpicker {
+.configuring > .widget > .widgetpicker {
     display: none;
 }
 
@@ -120,11 +141,8 @@ nav.navbar {
     z-index: 1000;
     position: relative;
     min-height: 5px;
-    background-color: rgba(0,0,0,0);
-    border-top:1px solid #eee;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
     overflow: hidden;
-    padding: 5px;
+    padding: 0 10px;
 }
 
 .widget .configureButton {
@@ -132,16 +150,42 @@ nav.navbar {
     border: none;
     background-color: rgba(0,0,0,0);
     padding: 5px;
+    color: #888;
+}
+.widget .configureButton:hover {
+    color: #666;
 }
 
 .widget {
     background-color: #f8f4f9;
-    border: 1px solid #e0d5e2;
     margin-top: 20px;
-    border-radius: 3px;
+    border-radius: 2px;
     -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
     -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
     box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    padding: 5px;
+    min-height: 100px;
+}
+.widget-body {
+    padding: 0 10px;
+}
+.widget-number {
+    font-weight: bold;
+    color: #F44336;
+    float: right;
+    margin-top: -5px;
+}
+.widget-number.size-1 {
+    font-size: 32px;
+    line-height: 32px;
+}
+.widget-number.size-2 {
+    font-size: 48px;
+    line-height: 48px;
+}
+.widget-number.size-3 {
+    font-size: 64px;
+    line-height: 64px;
 }
 .chart svg {
     width: 100%;
@@ -152,7 +196,7 @@ nav.navbar {
 }
 
 .free-wall {
-    margin: 15px;
+    margin-bottom: 40px;
 }
 .cell {
     cursor: move;
@@ -303,4 +347,27 @@ nav.navbar {
     border-top-color: rgba(0, 0, 0, .6);
     animation: spinner .6s linear infinite;
     -webkit-animation: spinner .6s linear infinite;
+}
+
+.list-widget {
+    padding-bottom: 20px;
+}
+.list-widget-item {
+    padding: 4px 10px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 2px;
+}
+a.list-widget-item{
+    display: block;
+    cursor: pointer;
+}
+a.list-widget-item:hover {
+    background: #e3ecf3;
+}
+.list-widget .item-number {
+    font-size: 18px;
+    color: #F44336;
+}
+.list-widget .item-name {
+    font-size: 16px;
 }

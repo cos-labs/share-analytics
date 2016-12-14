@@ -1,0 +1,48 @@
+<div class='widgetButtons'>
+    <button class='configureButton' onclick={{action 'removeWidget'}}>{{fa-icon "close"}}</button>
+    <button class='configureButton' onclick={{action 'showConfig'}}>{{fa-icon "cogs"}}</button>
+    <button class='configureButton' onclick={{action 'download'}}>{{fa-icon 'download'}}</button>
+</div>
+<div class='configmenu'>
+    <form {{action 'configChanged' on='submit'}}>
+        <div class="col-xs-4">JS Engine:</div>
+        <div class="col-xs-8">
+          <select onchange={{action 'changeEngine' value="target.value"}}>
+            <option value="c3">C3</option>
+            <option value="dimple">Dimple</option>
+          </select>
+        </div>
+        <hr>
+        <div class="col-xs-4">Chart</div>
+        <div class="col-xs-8">
+          <select onchange={{action 'changeChart' value="target.value"}}>
+            <option value="donut">Donut</option>
+            <option value="timeseries">Time-Series</option>
+            <option value="bar">Bar</option>
+          </select>
+        </div>
+        <hr>
+        <div class="col-xs-4">Width:</div>
+        <div class="col-xs-8">
+          {{input type='text' size="10" value=widthSetting}}
+        </div>
+        <hr>
+        <div class="col-xs-4">Height:</div>
+        <div class="col-xs-8">
+          {{input type='text' size="10" value=heightSetting}}
+        </div>
+        <hr>
+        <div class="col-xs-4">Query:</div>
+        <div class="col-xs-12">
+          {{textarea value=query cols="36" rows="5"}}
+        </div>
+        <hr>
+        <div class="col-xs-12">
+          <button class="btn btn-primary" style="margin-right:10px" type='submit'>OK</button>
+        </div>
+    </form>
+</div>
+
+{{component widgetType chartType=chartType aggregations=aggregations width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal downloadHook=downloadHook}}
+
+{{yield}}

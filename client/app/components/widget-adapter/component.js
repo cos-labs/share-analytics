@@ -404,6 +404,7 @@ export default Ember.Component.extend({
 
     configuring: false,
     picking: false,
+    downloadHook: false ,
 
     init() {
         this._super(...arguments);
@@ -542,6 +543,11 @@ export default Ember.Component.extend({
             });
             //let url = 'https://share.osf.io/discover?q=' + d.name;
             //window.open(url, '_blank');
+        },
+
+        download : function() {
+            this.set( 'downloadHook', true );
+            console.log() ;
         },
 
         saveWidget: function(){

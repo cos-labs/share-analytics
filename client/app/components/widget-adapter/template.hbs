@@ -1,5 +1,6 @@
 <div class='widget'>
     <div class='widgetButtons'>
+        <button class='configureButton' onclick={{action 'download'}}>{{fa-icon 'download'}}</button>
         <h4>{{item.name}}</h4>
     </div>
     <div class='configmenu'>
@@ -50,7 +51,7 @@
         </div>
     </div>
 
-    {{component widgetType data=data widgetSettings=item.widgetSettings chartType=chartType aggregations=aggregations name=item.name item=item width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal total=total transitionToFacet=(action 'transitionToFacet')}}
+    {{component widgetType data=data widgetSettings=item.widgetSettings chartType=chartType aggregations=aggregations name=item.name item=item width=widthSetting height=heightSetting interval=tsInterval downloadHook=downloadHook resizedSignal=resizedSignal total=total transitionToFacet=(action 'transitionToFacet')}}
 
     {{yield}}
 </div>

@@ -333,6 +333,11 @@ export default Ember.Route.extend({
                         post_body: {},
                         postBodyParams: [
                             {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                                 parameterName: "institution"
                             }
@@ -433,6 +438,11 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "range", "date", "gte"],
                                 parameterName: "fromDate",
                                 defaultValue: "now-10y/d"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
                             }
                         ]
                     },
@@ -578,13 +588,13 @@ export default Ember.Route.extend({
                         postBodyParams: [
                             {
                                 parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterPath: ["query", "bool", "must", "query_string", "query"],
                                 defaultValue: "*"
                             },
                             {
-                                parameterName: "sdfkjl",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "type"],
-                                defaultValue: "paper"
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "types.raw"],
+                                defaultValue: "publication"
                             },
                             {
                                 parameterName: "topic",
@@ -690,13 +700,13 @@ export default Ember.Route.extend({
                     {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
-                        name: 'Top Tags',
+                        name: 'Top Contributors',
                         width: 4,
-                        post_body: {
+                        post_body : {
                             "aggregations": {
-                                "listWidgetData" : {
+                                "listWidgetData": {
                                     "terms": {
-                                        "field": 'tags',
+                                        "field": 'contributors.raw',
                                         "size": 10
                                     }
                                 }
@@ -759,13 +769,13 @@ export default Ember.Route.extend({
                     {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
-                        name: 'Top Contributors',
+                        name: 'Top Tags',
                         width: 4,
-                        post_body : {
+                        post_body: {
                             "aggregations": {
-                                "listWidgetData": {
+                                "listWidgetData" : {
                                     "terms": {
-                                        "field": 'contributors.raw',
+                                        "field": 'tags',
                                         "size": 10
                                     }
                                 }
@@ -855,7 +865,7 @@ export default Ember.Route.extend({
                     }
                 ]
             }
-        }
+        };
 
         let dashboard = dashboards[params.dashboard];
         let widgets = dashboard.widgets;

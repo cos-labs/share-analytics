@@ -357,11 +357,11 @@ nav.navbar {
     border-bottom: 1px solid #ddd;
     border-radius: 2px;
 }
-a.list-widget-item{
+.list-widget-item{
     display: block;
     cursor: pointer;
 }
-a.list-widget-item:hover {
+.list-widget-item:hover {
     background: #e3ecf3;
 }
 .list-widget .item-number {
@@ -370,4 +370,5 @@ a.list-widget-item:hover {
 }
 .list-widget .item-name {
     font-size: 16px;
+    color: #2a7ec1;
 }

@@ -5,9 +5,7 @@ export default Ember.Controller.extend({
     queryParams: ['id', 'scholar', 'query', 'q', 'institution', 'tag', 'topic'],
 
     updateParams: Ember.observer('queryParams', function() {
-        debugger;
         this.set("parameters", Ember.computed.apply(this, this.get('queryParams').concat(() => {
-        debugger;
             return this.get('queryParams').map((param) => {
                 return this.get(param);
             })

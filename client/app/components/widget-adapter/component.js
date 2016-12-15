@@ -546,8 +546,11 @@ export default Ember.Component.extend({
 
         transitionToFacet: function(dashboardName, queryParams) {
             let self = this;
-            debugger;
-            this.get('router').transitionTo('dashboards.dashboard', dashboardName, {queryParams: queryParams}).then(function(route) {
+            let institution = this.get('parameters.institution');
+            queryParams['institution'] = institution;
+            this.get('router').transitionTo('dashboards.dashboard', dashboardName, {
+                queryParams: queryParams
+            }).then(function(route) {
                 Ember.run.schedule('afterRender', self, function() {
                     let controller = route.get('controller');
                     queryParams.keys().map((key) => {

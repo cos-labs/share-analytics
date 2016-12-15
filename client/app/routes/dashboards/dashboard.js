@@ -66,37 +66,25 @@ export default Ember.Route.extend({
                         widgetType: 'number-widget',
                         name: 'Total Papers',
                         width: 4,
-                        post_body: {
-                            "query": {
-                                "filtered": {
-                                    "filter": {
-                                        "bool": {
-                                            "must": [
-                                                {
-                                                    "term": {
-                                                        'types.raw': "publication"
-                                                    }
-                                                },
-                                                {
-                                                    "term": {
-                                                        "contributors.raw": ""
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            }
-                        },
+                        post_body: {},
                         postBodyParams: [
                             {
-                                parameterName: "institution",
+                                parameterName: "query",
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             },
                             {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "types.raw"],
+                                defaultValue: "publication"
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                            },
+                            {
                                 parameterName: "scholar",
-                                parameterPath: ["query", "filtered", "filter", "bool", "must", 1, "term", "contributors.raw"]
-                            }
+                                parameterPath: ["query", "bool", "filter", 2,  "term", "contributors.raw"]
+                            },
                         ]
                     },
                     {
@@ -132,27 +120,9 @@ export default Ember.Route.extend({
                     {
                         chartType: 'timeseries',
                         widgetType: 'c3-chart',
-                        name:'Date Histogram',
+                        name: 'Date Histogram',
                         width: 12,
                         post_body: {
-                            "query": {
-                                "bool": {
-                                    "must": {
-                                        "range" : {
-                                            "date" : {
-                                                "gte" : "now-10y/d",
-                                                "lt" :  "now/d"
-                                            }
-                                        }
-                                    },
-                                    "filter": {
-                                        "term": {
-                                            "contributors.raw": ""
-                                        }
-                                    }
-                                }
-                            },
-                            "size": 10,
                             "aggregations": {
                                 "sorted_by_type": {
                                     "terms": {
@@ -170,24 +140,43 @@ export default Ember.Route.extend({
                                 },
                                 "all_over_time": {
                                     "date_histogram": {
-                                        "field": "date",
+                                        "field": "date_updated",
                                         "interval": "1M",
                                         "format": "yyyy-MM-dd"
                                     }
                                 }
                             }
                         },
+                        facetDash: "shareresults",
                         postBodyParams: [
                             {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", "term", "contributors.raw"],
-                                parameterName: "scholar"
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lt"],
+                                parameterName: "tillDate",
+                                defaultValue: "now/d"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "gte"],
+                                parameterName: "fromDate",
+                                defaultValue: "now-10y/d"
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "scholar",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
                             }
-                        ],
-                        facetDash: "worktype"
+                        ]
                     },
                     {
                         chartType: 'topContributors',
@@ -239,16 +228,6 @@ export default Ember.Route.extend({
                         name: 'Publishers',
                         width: 4,
                         post_body : {
-                            query: {
-                                bool: {
-                                    filter: {
-                                        "term": {
-                                            "lists.contributors.name.raw": null
-                                        }
-                                    }
-                                }
-                            },
-                            from: 0,
                             aggregations: {
                                 publishers : {
                                     terms : {
@@ -259,49 +238,48 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterName: "id",
+                                parameterName: "scholar",
                                 parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
                             }
                         ],
                         facetDash: "scholar"
-              },
+                    },
                     {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Tags',
                         width: 4,
-                        post_body : {
-                            query: {
-                                bool: {
-                                    filter: {
-                                        "term": {
-                                            "lists.contributors.name.raw": null
-                                        }
-                                    }
-                                }
-                            },
-                            from: 0,
-                            aggregations: {
-                                listWidgetData : {
-                                    terms : {
-                                        field: 'tags',
-                                        size: 10
+                        post_body: {
+                            "aggregations": {
+                                "listWidgetData" : {
+                                    "terms": {
+                                        "field": 'tags',
+                                        "size": 10
                                     }
                                 }
                             }
                         },
                         postBodyParams: [
                             {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
+                            {
                                 parameterName: "institution",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
                             },
                             {
                                 parameterName: "scholar",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"]
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
                             }
                         ],
                         facetDash: "scholar"
-                    }
+                    },
                 ]
             },
             institution: {
@@ -348,6 +326,8 @@ export default Ember.Route.extend({
                         chartType: 'relatedResearchers',
                         widgetType: 'number-widget',
                         name: 'Related Researchers',
+                        facetDashParameter: "scholar",
+                        facetDash: "scholar",
                         width: 4,
                         post_body: {
                             "aggregations": {
@@ -373,7 +353,6 @@ export default Ember.Route.extend({
                             fontSize: 2,
                             fontColor: '#F44336'
                         },
-                        facetDash: "scholar"
                     },
                     {
                         chartType: 'timeseries',
@@ -381,6 +360,7 @@ export default Ember.Route.extend({
                         name:'Date Histogram',
                         width: 12,
                         facetDash: "arttype",
+                        facetDashParameter: "funder",
                         post_body: {
                             "aggregations": {
                                 "sorted_by_type": {
@@ -433,6 +413,8 @@ export default Ember.Route.extend({
                         widgetType: 'list-widget',
                         name: 'Top Contributors',
                         width: 4,
+                        facetDash: "scholar",
+                        facetDashParameter: "scholar",
                         post_body : {
                             aggregations: {
                                 listWidgetData : {
@@ -454,12 +436,13 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                             }
                         ],
-                        facetDash: "scholar"
                     },
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'NIH Funding Sources 2016',
+                        facetDash: "funder",
+                        facetDashParameter: "funder",
                         width: 4,
                         post_body: {
                             aggregations: {
@@ -494,12 +477,13 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             }
                         ],
-                        facetDash: "funder"
                     },
                     {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Tags',
+                        facetDash: "topic",
+                        facetDashParameter: "topic",
                         width: 4,
                         post_body : {
                             from: 0,
@@ -523,7 +507,6 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             }
                         ],
-                        facetDash: "topic"
                     }
                 ]
             },
@@ -635,15 +618,11 @@ export default Ember.Route.extend({
                         post_body: {},
                         postBodyParams: [
                             {
-                                parameterName: "query",
+                                parameterName: "topic",
                                 parameterPath: ["query", "bool", "must", 0,  "query_string", "query"],
                                 defaultValue: "*"
                             },
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            },
-                            {
+                                                        {
                                 parameterName: "institution",
                                 parameterPath: ["aggregations", "filtered_score", "filters", "filters", "institution", "term", "sources.raw"]
                             },
@@ -813,6 +792,7 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
+                        },
                         facetDash: "shareresults",
                         postBodyParams: [
                             {
@@ -888,7 +868,10 @@ export default Ember.Route.extend({
 
         });
 
-        return dashboard;
+        return {
+            dashboard: dashboard,
+            parameters: transition.queryParams
+        };
 
     },
 
@@ -897,11 +880,13 @@ export default Ember.Route.extend({
         this._super(controller, model);
 
         if (controller.get('query') === undefined) { // This will change depending on what default will be in the storage backend.
-            controller.set('query', model.query);
+            controller.set('query', model.dashboard.query);
         }
 
+        controller.set('parameters', model.parameters)
+
         controller.set('institutionName', "eScholarship @ University of California");
-        controller.set('widgets', model.widgets);
+        controller.set('widgets', model.dashboard.widgets);
     }
 
 });

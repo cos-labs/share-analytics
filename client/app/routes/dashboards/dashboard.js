@@ -66,37 +66,25 @@ export default Ember.Route.extend({
                         widgetType: 'number-widget',
                         name: 'Total Papers',
                         width: 4,
-                        post_body: {
-                            "query": {
-                                "filtered": {
-                                    "filter": {
-                                        "bool": {
-                                            "must": [
-                                                {
-                                                    "term": {
-                                                        'types.raw': "publication"
-                                                    }
-                                                },
-                                                {
-                                                    "term": {
-                                                        "contributors.raw": ""
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            }
-                        },
+                        post_body: {},
                         postBodyParams: [
                             {
-                                parameterName: "institution",
+                                parameterName: "query",
                                 parameterPath: ["query", "bool", "must", "query_string", "query"]
                             },
                             {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "types.raw"],
+                                defaultValue: "publication"
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                            },
+                            {
                                 parameterName: "scholar",
-                                parameterPath: ["query", "filtered", "filter", "bool", "must", 1, "term", "contributors.raw"]
-                            }
+                                parameterPath: ["query", "bool", "filter", 2,  "term", "contributors.raw"]
+                            },
                         ]
                     },
                     {
@@ -240,16 +228,6 @@ export default Ember.Route.extend({
                         name: 'Publishers',
                         width: 4,
                         post_body : {
-                            query: {
-                                bool: {
-                                    filter: {
-                                        "term": {
-                                            "lists.contributors.name.raw": null
-                                        }
-                                    }
-                                }
-                            },
-                            from: 0,
                             aggregations: {
                                 publishers : {
                                     terms : {
@@ -260,7 +238,7 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterName: "id",
+                                parameterName: "scholar",
                                 parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
                             }
                         ],
@@ -814,6 +792,7 @@ export default Ember.Route.extend({
                                     }
                                 }
                             }
+                        },
                         facetDash: "shareresults",
                         postBodyParams: [
                             {

@@ -3,7 +3,7 @@
 module.exports = function(environment) {
     var ENV = {
         authorizationType: 'token',
-        modulePrefix: 'tc3',
+        modulePrefix: 'analytics-dashboard',
         environment: environment,
         rootURL: '/',
         locationType: 'auto',

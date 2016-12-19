@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ENV from 'tc3/config/environment';
+import ENV from 'analytics-dashboard/config/environment';
 
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
@@ -364,7 +364,7 @@ export default Ember.Component.extend({
         let new_setting = this.get('widthSetting');
         let current_setting = this.get('currentWidth');
 
-        if (new_setting == 0) {
+        if (new_setting < 1) {
             new_setting = current_setting;
         }
         if (new_setting > 12) {
@@ -427,19 +427,30 @@ export default Ember.Component.extend({
         let gte = this.get('gte');
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
-        let chartType = this.get('item').chartType;
+        let item = this.get('item');
+        //if (item.postBodyParams) {
+        //    item.postBodyParams.map((param) => {
+        //        let path_parts = param.parameterPath.slice(0, -1)
+        //        let nested_object = path_parts.reduce((nested, pathPart) => {
+        //            return nested[pathPart];
+        //        }, item.post_body)
+        //        let parameter_key = param.parameterPath[param.parameterPath.length-1];
+        //        let parameter_value = this.get(param.parameterName);
+        //        nested_object[parameter_key] = parameter_value;
+        //        return;
+        //    });
+        //}
         let data = await Ember.$.ajax({
             url: ENV.apiUrl + '/search/creativeworks/_search',
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
-        //    data: post_body[this.get('item').chartType]
             data: JSON.stringify(this.get('item').post_body)
         });
         this.set('data', data);
         this.set('aggregations', data.aggregations);
         this.set('total', data.hits.total);
-        if(chartType === 'relatedResearchers') {
+        if(item.chartType === 'relatedResearchers') {
             this.set('total', data.aggregations.relatedContributors.value);
         }
         this.set('docs', data.hits.hits.map((hit) => {
@@ -475,6 +486,9 @@ export default Ember.Component.extend({
         //this.sendAction('refreshWall');
 
     },
+
+    configureQuery: function() {
+            },
 
     actions: {
 
@@ -530,11 +544,18 @@ export default Ember.Component.extend({
             this.set('configuring', false);
         },
 
-        transitionToFacet: function(d) {
-            this.get('router').transitionTo('dashboards.dashboard', 'topic').then((route) => {
-                Ember.run.schedule('afterRender', this, () => {
+        transitionToFacet: function(dashboardName, queryParams) {
+            let self = this;
+            let institution = this.get('parameters.institution');
+            queryParams['institution'] = institution;
+            this.get('router').transitionTo('dashboards.dashboard', dashboardName, {
+                queryParams: queryParams
+            }).then(function(route) {
+                Ember.run.schedule('afterRender', self, function() {
                     let controller = route.get('controller');
-                    controller.set('query', {topic: d});
+                    queryParams.keys().map((key) => {
+                        controller.set(key, queryParams[key]);
+                    });
                     controller.set('back', 'backroute');
                 });
             });

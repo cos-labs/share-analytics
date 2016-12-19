@@ -13,7 +13,7 @@ export default Ember.Component.extend({
     data: [],
 
     sizeChanged: Ember.observer('resizedSignal', function() {
-        if (this.get('resizedSignal') == false) return;
+        if (this.get('resizedSignal') === false) return;
         this.updateChart();
         this.set('resizedSignal', false);
     }),
@@ -59,9 +59,18 @@ export default Ember.Component.extend({
         };
 
         if (chart_type == 'donut') {
-
-            this.set('data', this.get('aggregations.sources.buckets'));
-            var columns = [['FIC', 685870], ['NCATS', 11798267], ['NCCIH', 527109], ['NCI', 37421432], ['NEI', 9258786], ['NHGRI', 5050824], ['NHLBI', 37973512], ['NIA', 30039371], ['NIAAA', 6709896], ['NIAID', 44746441], ['NIAMS', 6571101], ['NIBIB', 4005180], ['NICHD', 13278402], ['NIDA', 29823005], ['NIDCD', 4439991], ['NIDCR', 1155900], ['NIDDK', 32526462], ['NIEHS', 4674188], ['NIGMS', 53652460], ['NIMH', 38119017], ['NINDS', 20635337], ['NINR', 1976020], ['NLM', 1069055], ['OD', 4275564]];
+            var title = '';
+            var columns;
+            if (this.get('name') === 'Publishers') {
+              this.set('data', this.get('aggregations.publishers.buckets'));
+              columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
+            } else if (this.get('name') === 'Events by Source'){
+              this.set('data', this.get('aggregations.sources.buckets'));
+              columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
+            } else {
+                this.set('data', this.get('aggregations.sources.buckets'));
+                columns = [['FIC', 685870], ['NCATS', 11798267], ['NCCIH', 527109], ['NCI', 37421432], ['NEI', 9258786], ['NHGRI', 5050824], ['NHLBI', 37973512], ['NIA', 30039371], ['NIAAA', 6709896], ['NIAID', 44746441], ['NIAMS', 6571101], ['NIBIB', 4005180], ['NICHD', 13278402], ['NIDA', 29823005], ['NIDCD', 4439991], ['NIDCR', 1155900], ['NIDDK', 32526462], ['NIEHS', 4674188], ['NIGMS', 53652460], ['NIMH', 38119017], ['NINDS', 20635337], ['NINR', 1976020], ['NLM', 1069055], ['OD', 4275564]];
+            }
             let labels = columns.map(function(value, index){ return value[0];});
             let values = columns.map(function(value, index){ return value[1];});
             var data = [{
@@ -84,7 +93,8 @@ export default Ember.Component.extend({
                   y: 0.5,
                   text: '',
                 }],
-
+              paper_bgcolor	:	'rgba(0,0,0,0)',
+              autosize: true,
               height: 320,
               margin:{l: 25, r: 20, t: 20, b: 20, pad: 0},
               showlegend: false,
@@ -114,8 +124,9 @@ export default Ember.Component.extend({
 
         } else if (chart_type == 'relevanceHistogram') {
 
-            let UC_hits = this.get('aggregations.filtered_score.buckets.UC.doc_count')
-            let total_hits = this.get('total')
+            let UC_hits = this.get('aggregations.filtered_score.buckets.institution.doc_count');
+            let total_hits = this.get('total');
+
             var columns = [
                 ['overallCountByRelevance'].concat(this.get('data.aggregations.all_score.buckets').map((datum) => {
                     let val = this.get('aggregations.all_score.buckets')[datum.key];
@@ -123,34 +134,25 @@ export default Ember.Component.extend({
                     return 0;
                 })),
                 ['ucCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
-                    let val = this.get('aggregations.filtered_score.buckets.UC.score.buckets')[datum.key];
+                    let val = this.get('aggregations.filtered_score.buckets.institution.score.buckets')[datum.key];
                     if (val && val.doc_count > 0) { return val.doc_count; }
                     return 0;
                 })),
             ];
+
             var data = [
-              {y:[].concat(this.get('data.aggregations.all_score.buckets').map((datum) => {
-                  let val = this.get('aggregations.all_score.buckets')[datum.key];
-                  if (val && val.doc_count > 0) { return val.doc_count * UC_hits / total_hits; }
-                  return 0;
-                })),
+              {y:columns[0].slice(1, -1),
                name: 'overallCountByRelevance',
                type: 'bar'
              },
-             {y:[].concat(this.get('aggregations.all_score.buckets').map((datum) => {
-                 let val = this.get('aggregations.filtered_score.buckets.UC.score.buckets')[datum.key];
-                 if (val && val.doc_count > 0) { return val.doc_count; }
-                 return 0;
-               })),
+             {y:columns[1].slice(1, -1),
               name: 'ucCountByRelevance',
               type: 'bar'
              }
            ];
-            var layout = {barmode: 'group', xaxis:{title: 'Relevnace Score'}, yaxis: {title: 'Number of Items', showline: true}};
+            var layout = {barmode: 'group', paper_bgcolor	:	'rgba(0,0,0,0)', xaxis:{title: 'Relevnace Score'}, yaxis: {title: 'Number of Items', showline: true}};
 
         } else if (chart_type == 'timeseries') {
-
-
             let x_axis = this.get('data.aggregations.all_over_time.buckets').map((datum) => { return datum.key_as_string })
             var columns = this.get('data.aggregations.sorted_by_type.buckets').map((bucket) => {
                 return [bucket.key].concat(bucket['type_over_time'].buckets.reduce((ret, bucket) => {
@@ -170,10 +172,7 @@ export default Ember.Component.extend({
               data.push({x:x_axis, y: columns[i].slice(1, columns[i].length), fill: 'tozeroy', type: 'scatter', name: columns[i][0], line:{shape:'spline'}});
             }
 
-            layout = {xaxis:{}, yaxis:{title: 'Number of Items (Log Scale)', tickformat: log10ToLinear, showline:true, showticklabels: true}};
-
-
-
+            layout = {xaxis:{}, paper_bgcolor	:	'rgba(0,0,0,0)', yaxis:{title: 'Number of Items (Log Scale)', tickformat: log10ToLinear, showline:true, showticklabels: true}};
         }
 
         Plotly.newPlot(this.element, data, layout, {displayModeBar: false});

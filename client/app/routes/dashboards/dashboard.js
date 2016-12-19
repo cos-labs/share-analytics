@@ -36,6 +36,12 @@ export default Ember.Route.extend({
                 ],
                 widgets: [
                     {
+                        widgetType: "query-widget",
+                        background_color: "000000",
+                        name: "Search",
+                        width: 12,
+                    },
+                    {
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
@@ -286,6 +292,12 @@ export default Ember.Route.extend({
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
                     {
+                        widgetType: "query-widget",
+                        background_color: "000000",
+                        name: "Search",
+                        width: 12,
+                    },
+                    {
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
@@ -518,6 +530,12 @@ export default Ember.Route.extend({
                 ],
                 dashboardName: 'Institution Subject Area Dashboard',
                 widgets: [
+                    {
+                        widgetType: "query-widget",
+                        background_color: "000000",
+                        name: "Search",
+                        width: 12,
+                    },
                     {
                         chartType: 'totalResults',
                         widgetType: 'number-widget',

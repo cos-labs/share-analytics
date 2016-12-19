@@ -6,7 +6,17 @@ export default Ember.Component.extend({
 
     init(){
         this._super(...arguments);
-        this.processData(this.get('aggregations.listWidgetData.buckets'));
+        if (this.get('chartType') === 'recentlyAdded') {
+            var data = this.get('data.hits.hits').map(function(hits, index) {
+                return {
+                    number: index + 1,
+                    name: hits._source.title
+                }
+            });
+            this.set('data', data);
+        } else {
+            this.processData(this.get('aggregations.listWidgetData.buckets'));
+        }
     },
 
     processData (data) {

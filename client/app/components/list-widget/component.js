@@ -30,14 +30,14 @@ export default Ember.Component.extend({
     },
 
     actions: {
-        transitionToFacet(parameter) {
+        transitionToFacet(item) {
             let queryParams = {};
             var facet = this.get("item.facetDashParameter");
             if (facet) {
-                queryParams[facet] = parameter.name;
+                queryParams[facet] = item.name;
                 this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
-            } else if (parameter.url) {
-              window.location.href = parameter.url;
+            } else if (item.url) {
+              window.location.href = item.url;
             }
         }
     }

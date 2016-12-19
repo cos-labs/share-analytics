@@ -10,7 +10,8 @@ export default Ember.Component.extend({
             var data = this.get('data.hits.hits').map(function(hits, index) {
                 return {
                     number: index + 1,
-                    name: hits._source.title
+                    name: hits._source.title,
+                    url: 'https://share.osf.io/article/' + hits._source.id
                 }
             });
             this.set('data', data);
@@ -29,13 +30,16 @@ export default Ember.Component.extend({
     },
 
     actions: {
-
         transitionToFacet(parameter) {
             let queryParams = {};
-            queryParams[this.get("item.facetDashParameter")] = parameter.name;
-            this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
+            var facet = this.get("item.facetDashParameter");
+            if (facet) {
+                queryParams[facet] = parameter.name;
+                this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
+            } else if (parameter.url) {
+              window.location.href = parameter.url;
+            }
         }
-
     }
 
 });

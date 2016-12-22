@@ -13,6 +13,7 @@ export default Ember.Component.extend({
     data: [],
 
     sizeChanged: Ember.observer('resizedSignal', function() {
+        console.log("get resizedSignal");
         if (this.get('resizedSignal') === false) return;
         this.updateChart();
         this.set('resizedSignal', false);
@@ -94,8 +95,8 @@ export default Ember.Component.extend({
                   text: '',
                 }],
               paper_bgcolor	:	'rgba(0,0,0,0)',
-              autosize: true,
               height: 320,
+              // autosize: true,
               margin:{l: 25, r: 20, t: 20, b: 20, pad: 0},
               showlegend: false,
             };
@@ -176,6 +177,10 @@ export default Ember.Component.extend({
         }
 
         Plotly.newPlot(this.element, data, layout, {displayModeBar: false});
+        var graph = this.element;
+        window.addEventListener("resize", function(){
+          Plotly.Plots.resize(graph);
+        });
       },
 
       didRender() {

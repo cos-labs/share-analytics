@@ -1,15 +1,44 @@
 /*Packery grid styling*/
 
-.wrapper {
-    background: url("http://localhost:4200/images/stardust.png");
-    padding-bottom: 40px;
-    margin-top: 50px;
+.ucsd_header {
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+    padding-bottom: 18px;
+    background-color:#006A96; 
+    border-bottom: 3px solid #FFCD00; 
+    -webkit-box-shadow: 0 0 30px 10px rgba(0,0,0,.5);
+    box-shadow: 0 0 30px 10px rgba(0,0,0,.5);
+    z-index: 10000;
+}
+
+.ucsd_header img {
+    max-height: 30px;
+    float: right;
+}
+
+.dashboard {
+    background: url("http://localhost:4200/images/ucsd_background-dark.gif");
+    padding-bottom: 80px;
+    margin-top: 70px;
+    background-size: 800px 800px;
+    background-position: center;
+
 }
 
 .wrapper h2 {
     color: #f8f4f9;
 }
 
+.related_services {
+    background-color:#747678;
+    border-top: 1px solid rgba(250,250,250,0.1);
+    -webkit-box-shadow: 0px 0px 30px 15px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:    0px 0px 30px 15px rgba(0, 0, 0, 0.5);
+    box-shadow:         0px 0px 30px 15px rgba(0, 0, 0, 0.5);
+}
 
 .container.copyright {
     width: 100%;
@@ -18,9 +47,9 @@
     color: #fff;
     padding: 15px;
     font-weight: 500 !important;
-    -webkit-box-shadow: inset 0px -3px 10px rgba(0,0,0,0.75);
-    -moz-box-shadow: inset 0px -3px 10px rgba(0,0,0,0.75);
-    box-shadow: inset 0px -3px 10px rgba(0,0,0,0.75)
+    -webkit-box-shadow: inset 0px 3px 10px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 3px 10px -3px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 3px 10px 3px -rgba(0,0,0,0.75)
 }
 
 .widgetpicker {
@@ -371,4 +400,67 @@ nav.navbar {
 .list-widget .item-name {
     font-size: 16px;
     color: #2a7ec1;
+}
+.query-widget {
+    color: #fff;
+    background-color: rgba(0,0,0,0.65);
+    padding-bottom: 20px;
+}
+
+.query-widget .search-box {
+    display: block;
+    font-size: 20px;
+    color: #000;
+    border-radius: 2px;
+    border: none;
+}
+
+.query-widget .form-group {
+    margin: 20px auto;
+    width: 700px;
+    max-width: 100%;
+}
+.query-widget .form-group .input-group input.form-control {
+    height: 40px;
+
+}
+.query-widget .form-group .input-group input.form-control,
+.query-widget .form-group .input-group .input-group-btn button  {
+    font-size: 20px !important;
+    line-height: 20px;
+    padding: 12px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+
+}
+.query-widget .form-group .input-group .input-group-btn button  {
+    background-color: #FFCD00;
+    border: 1px solid #ffcd00;
+    border-left: 1px solid #ccc;
+}
+
+.related_services button {
+    background-color: #ffcd00;
+    border: 1px solid rgba(0,0,0,0.2);
+    margin: 20px auto;
+    margin-bottom: 50px;
+    display: block;
+    padding: 0 20px;
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    border-radius: 2px;
+
+}
+
+
+.service-box img {
+    display: block;
+    width: 100%;
+    border-radius: 2px;
+    margin-bottom: 40px;
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+
 }

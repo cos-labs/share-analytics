@@ -478,6 +478,7 @@ export default Ember.Route.extend({
                                 }
                             }
                         },
+
                         postBodyParams: [
                             {
                                 parameterName: "institution",
@@ -519,7 +520,40 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             }
                         ],
-                    }
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'c3-chart',
+                        name: 'Publishers',
+                        width: 4,
+                        post_body: {
+                            query: {
+                                bool: { must: [{
+                                        query_string: {query: query}
+                                    },{
+                                        range: { date: {
+                                                   gte: gte,
+                                                   lte: lte,
+                                                   format: "yyyy-MM-dd||yyyy"
+                                                   }
+                                        }
+                                    }
+                                ]}
+                            },
+                            from: 0,
+                            aggregations: {
+                                publishers: {
+                                    terms: {
+                                         field: 'publishers.raw',
+                                         size: 200
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                        ],
+                        facetDash: "institution"
+          }
                 ]
             },
             topic: {

@@ -5,6 +5,7 @@ export default Ember.Component.extend({
     init(){
         this._super(...arguments);
         this.processData(this.get('aggregations.listWidgetData.buckets'));
+        console.log(this.get('item'));
     },
     processData (data) {
         this.set('data', data.map((item) => {

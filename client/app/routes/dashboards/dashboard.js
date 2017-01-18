@@ -427,6 +427,10 @@ export default Ember.Route.extend({
                         width: 4,
                         facetDash: "scholar",
                         facetDashParameter: "scholar",
+                        link: {
+                            label : 'View all contributors',
+                            route: 'top-contributors'
+                        },
                         post_body : {
                             aggregations: {
                                 listWidgetData : {

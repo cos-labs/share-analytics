@@ -8,4 +8,9 @@
             </div>
         </span>
     {{/each}}
+    {{#if item.link}}
+        <div class="text-right">
+            {{#link-to item.link.route}}{{item.link.label}}{{/link-to}}
+        </div>
+    {{/if}}
 </div>

@@ -3,7 +3,7 @@
         <div class="input-group">
             {{input class="form-control" type="text" value=query placeholder="e.g., HIV"}}
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button">{{fa-icon "search"}}</button>
+                <button class="btn btn-default" type="button" {{action "transitionToFacet" query}}>{{fa-icon "search"}}</button>
             </span>
         </div>
     </div>

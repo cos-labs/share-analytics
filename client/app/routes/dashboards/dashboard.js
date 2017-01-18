@@ -322,7 +322,7 @@ export default Ember.Route.extend({
                     {
                         chartType: 'numberValue',
                         widgetType: 'number-widget',
-                        name: 'Funding from NIH',
+                        name: 'Awards from NIH',
                         width: 4,
                         post_body: null,
                         postBodyParams: [],
@@ -452,7 +452,7 @@ export default Ember.Route.extend({
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
-                        name: 'NIH Funding Sources 2016',
+                        name: 'NIH Awards 2016',
                         facetDash: "funder",
                         facetDashParameter: "funder",
                         width: 4,

@@ -292,7 +292,7 @@ export default Ember.Route.extend({
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
                     {
-                        widgetType: "text-widget",
+                        widgetType: "about-text-widget",
                         name: "About",
                         width: 12,
                         widgetSettings : {

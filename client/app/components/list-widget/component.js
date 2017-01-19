@@ -1,9 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-
     data : [],
-
     init(){
         this._super(...arguments);
         if (this.get('chartType') === 'recentlyAdded') {
@@ -19,7 +17,6 @@ export default Ember.Component.extend({
             this.processData(this.get('aggregations.listWidgetData.buckets'));
         }
     },
-
     processData (data) {
         this.set('data', data.map((item) => {
             return {
@@ -28,7 +25,6 @@ export default Ember.Component.extend({
             };
         }));
     },
-
     actions: {
         transitionToFacet(item) {
             let queryParams = {};
@@ -39,7 +35,10 @@ export default Ember.Component.extend({
             } else if (item.url) {
               window.location.href = item.url;
             }
+        },
+        transitionToViewAll(item) {
+            this.attrs.transitionToFacet(item.dataType, item);
+
         }
     }
-
 });

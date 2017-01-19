@@ -190,6 +190,7 @@ export default Ember.Route.extend({
                         name: 'Top Contributors',
                         facetDash: "scholar",
                         width: 4,
+                        dataType: 'contributors',
                         post_body: {
                             "query": {
                                 "bool": {
@@ -255,6 +256,7 @@ export default Ember.Route.extend({
                         widgetType: 'list-widget',
                         name: 'Top Tags',
                         width: 4,
+                        dataType: 'tags',
                         post_body: {
                             "aggregations": {
                                 "listWidgetData" : {
@@ -318,6 +320,14 @@ export default Ember.Route.extend({
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
                     {
+                        widgetType: "about-text-widget",
+                        name: "About",
+                        width: 12,
+                        widgetSettings : {
+                            institution_id: 'ucsd'
+                        }
+                    },
+                    {
                         widgetType: "query-widget",
                         background_color: "000000",
                         name: "Search",
@@ -350,7 +360,7 @@ export default Ember.Route.extend({
                     {
                         chartType: 'numberValue',
                         widgetType: 'number-widget',
-                        name: 'Funding from NIH',
+                        name: 'Awards from NIH',
                         width: 4,
                         post_body: null,
                         postBodyParams: [],
@@ -454,6 +464,7 @@ export default Ember.Route.extend({
                         name: 'Top Contributors',
                         width: 4,
                         facetDash: "scholar",
+                        dataType: 'contributors',
                         facetDashParameter: "scholar",
                         post_body : {
                             aggregations: {
@@ -480,7 +491,7 @@ export default Ember.Route.extend({
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
-                        name: 'NIH Funding Sources 2016',
+                        name: 'NIH Awards 2016',
                         facetDash: "funder",
                         facetDashParameter: "funder",
                         width: 4,
@@ -506,6 +517,7 @@ export default Ember.Route.extend({
                                 }
                             }
                         },
+
                         postBodyParams: [
                             {
                                 parameterName: "institution",
@@ -525,6 +537,7 @@ export default Ember.Route.extend({
                         facetDash: "topic",
                         facetDashParameter: "topic",
                         width: 4,
+                        dataType: 'tags',
                         post_body : {
                             from: 0,
                             aggregations: {
@@ -547,7 +560,40 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             }
                         ],
-                    }
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'c3-chart',
+                        name: 'Publishers',
+                        width: 4,
+                        post_body: {
+                            query: {
+                                bool: { must: [{
+                                        query_string: {query: query}
+                                    },{
+                                        range: { date: {
+                                                   gte: gte,
+                                                   lte: lte,
+                                                   format: "yyyy-MM-dd||yyyy"
+                                                   }
+                                        }
+                                    }
+                                ]}
+                            },
+                            from: 0,
+                            aggregations: {
+                                publishers: {
+                                    terms: {
+                                         field: 'publishers.raw',
+                                         size: 200
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                        ],
+                        facetDash: "institution"
+          }
                 ]
             },
             topic: {
@@ -709,6 +755,7 @@ export default Ember.Route.extend({
                         widgetType: 'list-widget',
                         name: 'Top Contributors',
                         width: 4,
+                        dataType: 'contributors',
                         post_body : {
                             "aggregations": {
                                 "listWidgetData": {
@@ -778,6 +825,7 @@ export default Ember.Route.extend({
                         widgetType: 'list-widget',
                         name: 'Top Tags',
                         width: 4,
+                        dataType: 'tags',
                         post_body: {
                             "aggregations": {
                                 "listWidgetData" : {
@@ -871,13 +919,98 @@ export default Ember.Route.extend({
                         ]
                     }
                 ]
+            },
+            contributors: {
+                dashboardName: 'Top Contributors',
+                wrapperClass: 'index-page',
+                widgets: [
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Top Contributors',
+                        width: 12,
+                        hideViewAll: true,
+                        post_body : {
+                            "aggregations": {
+                                "listWidgetData": {
+                                    "terms": {
+                                        "field": 'contributors.raw',
+                                        "size": 100
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "scholar",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
+                            }
+                        ],
+                        facetDash: "scholar"
+                    }
+                ]
+            },
+            tags: {
+                dashboardName: 'Top Tags',
+                wrapperClass: 'index-page',
+                widgets: [
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Top Tags',
+                        width: 12,
+                        hideViewAll: true,
+                        post_body: {
+                            "aggregations": {
+                                "listWidgetData" : {
+                                    "terms": {
+                                        "field": 'tags',
+                                        "size": 100
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "scholar",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
+                            }
+                        ],
+                        facetDash: "scholar"
+                    },
+                ]
             }
         };
 
         let dashboard = dashboards[params.dashboard];
         let widgets = dashboard.widgets;
         let array_keys = new Set(["filter", "must"]);
-
         dashboard.widgets = widgets.map((widget) => {
 
             if (widget.postBodyParams) {
@@ -932,6 +1065,8 @@ export default Ember.Route.extend({
         controller.set('parameters', model.parameters)
 
         controller.set('institutionName', "eScholarship @ University of California");
+        // controller.set('dashboardName', model.dashboard.dashboardName);
+        controller.set('wrapperClass', model.dashboard.wrapperClass);
         controller.set('widgets', model.dashboard.widgets);
     }
 

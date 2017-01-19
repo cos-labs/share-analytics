@@ -1,16 +1,16 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  text: Ember.computed(function() {
-      return this.get('widgetSettings').text;
+  id: Ember.computed(function() {
+      return this.get('widgetSettings').institution_id;
   }),
   institution: Ember.computed(function() {
-      var id = this.get('widgetSettings').institution_id;
+      var id = this.get('institution_id');
       // look up institution model
       return {
          'id': id,
          'name': 'UC San Diego',
-         'about': 'This is some info',
+         'description': 'Data from the UC San Diego research community in the SHARE catalog.',
          'dashboards': []
       }
   })

@@ -296,7 +296,6 @@ export default Ember.Route.extend({
                         name: "About",
                         width: 12,
                         widgetSettings : {
-                            text: "Data from the UC San Diego research community in the SHARE catalog.",
                             institution_id: 'ucsd'
                         }
                     },

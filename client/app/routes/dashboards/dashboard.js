@@ -28,7 +28,6 @@ export default Ember.Route.extend({
         let interval = this.get('tsInterval');
         let dashboards = {
             scholar: {
-
                 dashboardName: 'Scholar Dashboard',
                 parameters: [
                     "scholar",
@@ -739,11 +738,70 @@ export default Ember.Route.extend({
                         ]
                     },
                     {
-                        chartType: 'topContributors',
-                        widgetType: 'list-widget',
-                        name: 'Top Contributors',
-                        width: 4,
-                        post_body : {
+                      chartType: 'relevanceHistogram',
+                      widgetType: 'plotly-chart',
+                      name:'Relevance Histogram',
+                      width: 12,
+                      facetDash: "arttype",
+                      post_body: {},
+                      postBodyParams: [
+                          {
+                              parameterName: "topic",
+                              parameterPath: ["query", "bool", "must", 0,  "query_string", "query"],
+                              defaultValue: "*"
+                          },
+                                                      {
+                              parameterName: "institution",
+                              parameterPath: ["aggregations", "filtered_score", "filters", "filters", "institution", "term", "sources.raw"]
+                          },
+                          {
+                              parameterName: "scoring",
+                              parameterPath: ["aggregations", "filtered_score", "aggregations", "score"],
+                              defaultValue: {
+                                  histogram: {
+                                      interval: 1,
+                                      script: {
+                                          lang: "expression",
+                                          inline: "_score * 10"
+                                      }
+                                  }
+                              }
+                          },
+                          {
+                              parameterName: "scoring",
+                              parameterPath: ["aggregations", "all_score"],
+                              defaultValue: {
+                                  histogram: {
+                                      interval: 1,
+                                      script: {
+                                          lang: "expression",
+                                          inline: "_score * 10"
+                                      }
+                                  }
+                              }
+                          },
+                          {
+                              parameterName: "scholar",
+                              parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
+                          }
+                      ]
+                    },
+                    {
+                        "chartType": 'topContributors',
+                        "widgetType": 'list-widget',
+                        "name": 'Top Tags',
+                        "width": 4,
+                        "post_body" : {
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "query_string": {
+                                            "query": query
+                                        }
+                                    }
+                                }
+                            },
+                            "from": 0,
                             "aggregations": {
                                 "listWidgetData": {
                                     "terms": {
@@ -808,11 +866,52 @@ export default Ember.Route.extend({
                         facetDash: "institution",
                     },
                     {
-                        chartType: 'topContributors',
-                        widgetType: 'list-widget',
-                        name: 'Top Tags',
+                        chartType: 'donut',
+                        widgetType: 'plotly-chart',
+                        name: 'Events by Source',
                         width: 4,
                         post_body: {
+                            query: {
+                                bool: { must: [{
+                                        query_string: {query: query}
+                                    },{
+                                        range: { date: {
+                                                   gte: gte,
+                                                   lte: lte,
+                                                   format: "yyyy-MM-dd||yyyy"
+                                                   }
+                                        }
+                                    }
+                                ]}
+                            },
+                            from: 0,
+                            aggregations: {
+                                sources: {
+                                    terms: {
+                                         field: 'sources.raw',
+                                         size: 200
+                                    }
+                                },
+                            }
+                        },
+                        postBodyParams: [
+                        ],
+                        facetDash: "institution",
+                    },
+                    {
+                        "chartType": 'topContributors',
+                        "widgetType": 'list-widget',
+                        "name": 'Top Contributors',
+                        "width": 4,
+                        "post_body" : {
+                            "query": {
+                                "bool": {
+                                    "must": {
+                                        "query_string": {"query": query}
+                                    }
+                                }
+                            },
+                            "from": 0,
                             "aggregations": {
                                 "listWidgetData" : {
                                     "terms": {
@@ -847,6 +946,67 @@ export default Ember.Route.extend({
                         chartType: 'timeseries',
                         widgetType: 'c3-chart',
                         name: 'Date Histogram',
+                        width: 12,
+                        post_body: {
+                            "aggregations": {
+                                "sorted_by_type": {
+                                    "terms": {
+                                        "field": "type"
+                                    },
+                                    "aggregations": {
+                                        "type_over_time": {
+                                            "date_histogram": {
+                                                "field": "date_updated",
+                                                "interval": "1M",
+                                                "format": "yyyy-MM-dd"
+                                            }
+                                        }
+                                    }
+                                },
+                                "all_over_time": {
+                                    "date_histogram": {
+                                        "field": "date_updated",
+                                        "interval": "1M",
+                                        "format": "yyyy-MM-dd"
+                                    }
+                                }
+                            }
+                        },
+                        facetDash: "shareresults",
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lt"],
+                                parameterName: "tillDate",
+                                defaultValue: "now/d"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "gte"],
+                                parameterName: "fromDate",
+                                defaultValue: "now-10y/d"
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "scholar",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
+                            }
+                        ]
+                    },
+                    {
+                        chartType: 'timeseries',
+                        widgetType: 'plotly-chart',
+                        name:'Data Histogram',
                         width: 12,
                         post_body: {
                             "aggregations": {

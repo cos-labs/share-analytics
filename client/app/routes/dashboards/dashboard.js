@@ -292,6 +292,15 @@ export default Ember.Route.extend({
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
                     {
+                        widgetType: "text-widget",
+                        name: "About",
+                        width: 12,
+                        widgetSettings : {
+                            text: "Data from the UC San Diego research community in the SHARE catalog.",
+                            institution_id: 'ucsd'
+                        }
+                    },
+                    {
                         widgetType: "query-widget",
                         background_color: "000000",
                         name: "Search",

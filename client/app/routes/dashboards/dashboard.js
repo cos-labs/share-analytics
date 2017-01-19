@@ -320,6 +320,14 @@ export default Ember.Route.extend({
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
                     {
+                        widgetType: "about-text-widget",
+                        name: "About",
+                        width: 12,
+                        widgetSettings : {
+                            institution_id: 'ucsd'
+                        }
+                    },
+                    {
                         widgetType: "query-widget",
                         background_color: "000000",
                         name: "Search",

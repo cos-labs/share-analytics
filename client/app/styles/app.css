@@ -354,6 +354,7 @@ nav.navbar {
 }
 
 .spinner {
+    margin-top: 30px;
     min-width: 50px;
     min-height: 50px;
 }
@@ -472,4 +473,21 @@ nav.navbar {
     -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
     box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
 
+}
+
+.list-page {
+    width: 100%;
+    height: 600px;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+}
+.index-page .widget {
+    border-radius: 0;
+    padding:20px;
+}
+.index-page .widgetButtons {
+    margin-bottom: 20px;
+}
+.index-page h4 {
+    font-size: 22px;
 }

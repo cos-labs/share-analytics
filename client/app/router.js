@@ -11,8 +11,6 @@ Router.map(function() {
       this.route('dashboard', {path: ':dashboard'});
   });
   this.route('gridtest');
-  this.route('top-contributors');
-  this.route('top-tags');
 });
 
 export default Router;

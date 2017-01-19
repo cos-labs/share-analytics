@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/creator-output_path-nt9Z9jnK.tmp/version.js

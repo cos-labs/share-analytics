@@ -21,7 +21,7 @@ class Dashboard(Model):
         blank=True
     )
     widgets = ManyToManyField(
-        'widgetrepo.Widget',
+        'widget.Widget',
         related_name='containing_dashboards'
     )
 

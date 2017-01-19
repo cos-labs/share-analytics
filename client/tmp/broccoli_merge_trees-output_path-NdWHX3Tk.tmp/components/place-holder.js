@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/app/components/place-holder.js

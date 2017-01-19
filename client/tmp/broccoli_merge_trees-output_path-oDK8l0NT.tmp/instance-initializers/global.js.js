@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/app/instance-initializers/global.js.js

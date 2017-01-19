@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/tmp/funnel-input_base_path-nDUy2hPk.tmp/0/orm/model.js

@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/node_modules/ember-simple-auth/app/services/session.js

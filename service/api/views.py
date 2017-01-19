@@ -7,8 +7,8 @@ from rest_framework.reverse import reverse
 from rest_framework_json_api.views import RelationshipView
 
 from django.contrib.auth.models import User
-from dashrepo.models import Dashboard
-from widgetrepo.models import Widget
+from dashboard.models import Dashboard
+from widget.models import Widget
 
 from api.serializers import WidgetSerializer
 from api.serializers import DashboardSerializer

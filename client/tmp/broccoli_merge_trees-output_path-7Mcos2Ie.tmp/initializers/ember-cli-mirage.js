@@ -1,1 +1,0 @@
-/Users/admin/projects/sharedash/client/tmp/broccoli_merge_trees-input_base_path-SFPnQff3.tmp/14/initializers/ember-cli-mirage.js

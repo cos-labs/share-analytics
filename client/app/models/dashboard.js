@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-    
+
     name: DS.attr('string'),
     q: DS.attr('string'),
     gte: DS.attr('date'),
@@ -11,3 +11,4 @@ export default DS.Model.extend({
     addableList: DS.attr()
 
 });
+

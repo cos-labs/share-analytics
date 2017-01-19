@@ -1,1 +1,0 @@
-/Users/admin/projects/c3-ember/node_modules/ember-test-helpers/lib/ember-test-helpers.js

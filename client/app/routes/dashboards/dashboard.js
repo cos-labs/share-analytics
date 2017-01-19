@@ -290,6 +290,32 @@ export default Ember.Route.extend({
                     },
                 ]
             },
+            resultsList: {
+                dasboardName: 'Institution Overview Dashboard',
+                widgets: [
+                    {
+                        widgetType: "query-widget",
+                        background_color: "000000",
+                        name: "Search",
+                        width: 12,
+                        facetDashParameter: "query",
+                        facetDash: "resultsList",
+                    },
+                    {
+                        widgetType: "results-list",
+                        name: "Search Results",
+                        width: 12,
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            }
+                        ]
+                    }
+                ]
+            },
             institution: {
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
@@ -298,6 +324,8 @@ export default Ember.Route.extend({
                         background_color: "000000",
                         name: "Search",
                         width: 12,
+                        facetDashParameter: "query",
+                        facetDash: "resultsList",
                     },
                     {
                         chartType: 'totalResults',
@@ -324,7 +352,7 @@ export default Ember.Route.extend({
                     {
                         chartType: 'numberValue',
                         widgetType: 'number-widget',
-                        name: 'Funding from NIH',
+                        name: 'Awards from NIH',
                         width: 4,
                         post_body: null,
                         postBodyParams: [],
@@ -455,7 +483,7 @@ export default Ember.Route.extend({
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
-                        name: 'NIH Funding Sources 2016',
+                        name: 'NIH Awards 2016',
                         facetDash: "funder",
                         facetDashParameter: "funder",
                         width: 4,
@@ -481,6 +509,7 @@ export default Ember.Route.extend({
                                 }
                             }
                         },
+
                         postBodyParams: [
                             {
                                 parameterName: "institution",
@@ -523,7 +552,40 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             }
                         ],
-                    }
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'c3-chart',
+                        name: 'Publishers',
+                        width: 4,
+                        post_body: {
+                            query: {
+                                bool: { must: [{
+                                        query_string: {query: query}
+                                    },{
+                                        range: { date: {
+                                                   gte: gte,
+                                                   lte: lte,
+                                                   format: "yyyy-MM-dd||yyyy"
+                                                   }
+                                        }
+                                    }
+                                ]}
+                            },
+                            from: 0,
+                            aggregations: {
+                                publishers: {
+                                    terms: {
+                                         field: 'publishers.raw',
+                                         size: 200
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                        ],
+                        facetDash: "institution"
+          }
                 ]
             },
             topic: {

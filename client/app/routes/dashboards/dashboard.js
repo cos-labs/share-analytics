@@ -288,6 +288,32 @@ export default Ember.Route.extend({
                     },
                 ]
             },
+            resultsList: {
+                dasboardName: 'Institution Overview Dashboard',
+                widgets: [
+                    {
+                        widgetType: "query-widget",
+                        background_color: "000000",
+                        name: "Search",
+                        width: 12,
+                        facetDashParameter: "query",
+                        facetDash: "resultsList",
+                    },
+                    {
+                        widgetType: "results-list",
+                        name: "Search Results",
+                        width: 12,
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            }
+                        ]
+                    }
+                ]
+            },
             institution: {
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
@@ -296,6 +322,8 @@ export default Ember.Route.extend({
                         background_color: "000000",
                         name: "Search",
                         width: 12,
+                        facetDashParameter: "query",
+                        facetDash: "resultsList",
                     },
                     {
                         chartType: 'totalResults',

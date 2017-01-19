@@ -1,0 +1,17 @@
+<div class="list-widget widget-body">
+    {{#each data as |item|}}
+        <span href="#" class="list-widget-item" {{action "transitionToFacet" item}}>
+            <div class="row">
+                <div class="item-number col-xs-1">{{item._score}}</div>
+                <div class="item-number col-xs-5">{{item._source.title}}</div>
+                    <div class="item-name col-xs-2">
+                        {{#each item._source.contributors as |contributor|}}
+                            {{contributor}}
+                        {{/each}}
+                    </div>
+                <div class="item-number col-xs-1">{{item._source.type}}</div>
+                <div class="item-name col-xs-1"><i class="fa fa-angle-right"></i></div>
+            </div>
+        </span>
+    {{/each}}
+</div>

@@ -562,6 +562,26 @@ export default Ember.Route.extend({
                         ],
                     },
                     {
+                        chartType: 'recentlyAdded',
+                        widgetType: 'list-widget',
+                        name: 'Recently Added',
+                        width: 4,
+                        post_body : {
+                          "sort": { "date": { "order": "desc" }}
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            }
+                        ],
+                    },
+                    {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Publishers',
@@ -593,7 +613,7 @@ export default Ember.Route.extend({
                         postBodyParams: [
                         ],
                         facetDash: "institution"
-          }
+                  }
                 ]
             },
             topic: {

@@ -8,4 +8,9 @@
             </div>
         </span>
     {{/each}}
+    {{#unless item.hideViewAll}}
+    <div class="text-right m-t-md">
+        <button class="btn btn-link text-bigger" {{action 'transitionToViewAll' item}}>View all</button>
+    </div>
+    {{/unless}}
 </div>

@@ -1,8 +1,28 @@
 <div style='display: flex; min-height:100vh; flex-direction: column;'>
-    <div class='wrapper' style='flex: 1;'>
-        {{osf-navbar class='fedhead' loginAction=(action 'login')}}
+    <div class='wrapper dashboard' style='flex: 1;'>
+        <div class="ucsd_header">
+            <div class="container">
+                <img src="/images/logo_UCSD.png">
+            </div>
+        </div>
         <div class="container">
         	{{outlet}}
+        </div>
+    </div>
+    <div class="wrapper related_services">
+        <div class="container">
+            <h2>Related Resources and Services</h2> 
+            <div class="row">
+                <div class="col-md-4">
+                    <button><h3>Geisel Library</h3> </button>
+                </div>
+                <div class="col-md-4">
+                    <button><h3>SHARE</h3></button>
+                </div>
+                <div class="col-md-4">
+                    <button><h3>UC San Diego</h3></button>
+                </div>
+            </div>
         </div>
     </div>
     {{osf-copyright}}

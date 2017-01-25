@@ -358,6 +358,13 @@ export default Ember.Route.extend({
                         }
                     },
                     {
+                        chartType: 'highlightedCollections',
+                        widgetType: 'list-widget',
+                        name: 'Highlighted Collections',
+                        width: 6,
+                        hideViewAll: true
+                    },
+                    {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Contributors',

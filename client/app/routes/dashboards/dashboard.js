@@ -373,60 +373,6 @@ export default Ember.Route.extend({
                         }
                     },
                     {
-                        chartType: 'timeseries',
-                        widgetType: 'c3-chart',
-                        name:'Date Histogram',
-                        width: 12,
-                        facetDash: "arttype",
-                        facetDashParameter: "funder",
-                        post_body: {
-                            "aggregations": {
-                                "sorted_by_type": {
-                                    "terms": {
-                                        "field": "type"
-                                    },
-                                    "aggregations": {
-                                        "type_over_time": {
-                                            "date_histogram": {
-                                                "field": "date_updated",
-                                                "interval": "1M",
-                                                "format": "yyyy-MM-dd"
-                                            }
-                                        }
-                                    }
-                                },
-                                "all_over_time": {
-                                    "date_histogram": {
-                                        "field": "date",
-                                        "interval": "1M",
-                                        "format": "yyyy-MM-dd"
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
-                                parameterName: "institution"
-                            },
-                            {
-                                parameterPath: ["query", "bool", "must", 0, "range", "date", "lt"],
-                                parameterName: "tillDate",
-                                defaultValue: "now/d"
-                            },
-                            {
-                                parameterPath: ["query", "bool", "must", 0, "range", "date", "gte"],
-                                parameterName: "fromDate",
-                                defaultValue: "now-10y/d"
-                            },
-                            {
-                                parameterPath: ["query", "bool", "must", 1, "query_string", "query"],
-                                parameterName: "query",
-                                defaultValue: "*"
-                            }
-                        ]
-                    },
-                    {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Contributors',

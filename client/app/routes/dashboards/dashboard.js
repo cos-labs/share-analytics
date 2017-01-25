@@ -373,38 +373,6 @@ export default Ember.Route.extend({
                         }
                     },
                     {
-                        chartType: 'relatedResearchers',
-                        widgetType: 'number-widget',
-                        name: 'Related Researchers',
-                        facetDashParameter: "scholar",
-                        facetDash: "scholar",
-                        width: 4,
-                        post_body: {
-                            "aggregations": {
-                                "relatedContributors" : {
-                                    "cardinality": {
-                                        "field": "lists.contributors.id"
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                parameterName: "query",
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
-                                parameterName: "institution"
-                            }
-                        ],
-                        widgetSettings : {
-                            fontSize: 2,
-                            fontColor: '#F44336'
-                        },
-                    },
-                    {
                         chartType: 'timeseries',
                         widgetType: 'c3-chart',
                         name:'Date Histogram',

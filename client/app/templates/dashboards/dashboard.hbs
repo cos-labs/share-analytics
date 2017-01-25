@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<div id='freewall' class='free-wall'>
+<div id='freewall' class='free-wall {{wrapperClass}}'>
     {{#each widgets as |item|}}
         {{widget-adapter options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item widgets=widgets wall=wall refreshWall=(action 'refreshWall') dashboardSaveWidget=(action 'dashboardSaveWidget') parameters=parameters}}
     {{/each}}

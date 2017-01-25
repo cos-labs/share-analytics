@@ -20,13 +20,14 @@ export default Ember.Component.extend({
         }
     },
 
-    didReceiveAttrs() {
-        this._super(...arguments);
-        var unformatted = this.total
-        if (!unformatted) {
-            unformatted = this.settings.value
+    actions: {
+
+        transitionToFacet(parameter) {
+            let queryParams = {};
+            queryParams[this.get("item.facetDashParameter")] = parameter;
+            this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
         }
-        this.set('total', unformatted.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
     }
 
 });

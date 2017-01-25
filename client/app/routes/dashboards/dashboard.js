@@ -358,21 +358,6 @@ export default Ember.Route.extend({
                         }
                     },
                     {
-                        chartType: 'numberValue',
-                        widgetType: 'number-widget',
-                        name: 'Awards from NIH',
-                        width: 4,
-                        post_body: null,
-                        postBodyParams: [],
-                        widgetSettings : {
-                            value : '400',
-                            fontSize: 2,
-                            fontColor: '#F44336',
-                            pre : '$',
-                            post: 'M'
-                        }
-                    },
-                    {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Contributors',

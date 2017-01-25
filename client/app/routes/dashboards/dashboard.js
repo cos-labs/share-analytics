@@ -483,7 +483,7 @@ export default Ember.Route.extend({
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
-                        name: 'Publishers',
+                        name: 'Data providers',
                         width: 4,
                         post_body: {
                             query: {
@@ -923,6 +923,45 @@ export default Ember.Route.extend({
                         ],
                         facetDash: "scholar"
                     },
+                ]
+            },
+            providers: {
+                dashboardName: 'Data providers',
+                wrapperClass: 'index-page',
+                widgets: [
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Data providers',
+                        width: 12,
+                        post_body: {
+                            query: {
+                                bool: { must: [{
+                                        query_string: {query: query}
+                                    },{
+                                        range: { date: {
+                                                   gte: gte,
+                                                   lte: lte,
+                                                   format: "yyyy-MM-dd||yyyy"
+                                                   }
+                                        }
+                                    }
+                                ]}
+                            },
+                            from: 0,
+                            aggregations: {
+                                listWidgetData: {
+                                    terms: {
+                                         field: 'publishers.raw',
+                                         size: 100
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                        ],
+                        facetDash: "institution"
+                  }
                 ]
             }
         };

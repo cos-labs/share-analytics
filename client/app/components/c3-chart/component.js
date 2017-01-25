@@ -41,7 +41,7 @@ export default Ember.Component.extend({
         let chart_type = this.get('chartType');
 
         let chart_options = {
-            bindto: this.element,
+            bindto: this.$(this.element).find('.renderChart')[0],
             data: {
                 columns: null, //to be filled later
                 type: chart_type,
@@ -217,5 +217,10 @@ export default Ember.Component.extend({
     didRender() {
         this.updateChart();
     },
+    actions : {
+        transitionToViewAll(item) {
+            this.attrs.transitionToFacet('providers', item);
+        }
+    }
 
 });

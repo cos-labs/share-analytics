@@ -485,6 +485,9 @@ export default Ember.Route.extend({
                         widgetType: 'c3-chart',
                         name: 'Data providers',
                         width: 4,
+                        widgetSettings : {
+                            viewAllRoute: 'providers'
+                        },
                         post_body: {
                             query: {
                                 bool: { must: [{

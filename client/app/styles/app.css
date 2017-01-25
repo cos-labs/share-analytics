@@ -29,11 +29,11 @@
 }
 
 .wrapper h2 {
-    color: rgb(72, 73, 73);
+    color: #fff;
 }
 /* light grey 747678 */
 .related_services {
-    background-color:#ffcd00;
+    background-color:#00668d;
     border-top: 1px solid rgba(250,250,250,0.1);
     -webkit-box-shadow: 0px 0px 100px 15px rgba(0, 0, 0, 0.5);
     -moz-box-shadow:    0px 0px 100px 15px rgba(0, 0, 0, 0.5);
@@ -442,9 +442,9 @@ nav.navbar {
 }
 
 .related-services-button {
-    background-color: #006A96;
+    background-color: #ffcd00;
     border: 1px solid rgba(0,0,0,0.2);
-    color: #fff;
+    color: rgb(72, 73, 73);
     margin: 20px auto;
     margin-bottom: 50px;
     display: block;
@@ -457,12 +457,12 @@ nav.navbar {
 }
 
 .related-services-button a {
-    color: #fff;
+    color: rgb(72, 73, 73);
 }
 
 .related-services-button:hover {
-    background-color: #00668d;
-    color: #fff;
+    background-color: #ffcd00;
+    color: rgb(72, 73, 73);
 }
 
 .service-box img {

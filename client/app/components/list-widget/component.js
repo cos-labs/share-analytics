@@ -13,7 +13,37 @@ export default Ember.Component.extend({
                 }
             });
             this.set('data', data);
-        } else {
+        } else if (this.get('chartType') == 'highlightedCollections') {
+            data = [
+              {
+                number: 1,
+                name: 'CAVEcam Virtual Reality Photography Collection',
+                url: 'https://share.osf.io/creativework/46002-874-0B4'
+              },
+              {
+                number: 2,
+                name: 'Data from: Carbonic Anhydrases, EPF2 and a Novel Protease Mediate CO2 Control of Stomatal Development',
+                url: 'https://share.osf.io/dataset/4619D-B54-28E'
+              },
+              {
+                number: 3,
+                name: 'Heavy Metals in the Ocean Insect, Halobates',
+                url: '#'
+              },
+              {
+                number: 4,
+                name: 'Keith Rayner Eye Movements in Reading Data Collection',
+                url: 'https://share.osf.io/creativework/4601B-68A-696'
+              },
+              {
+                number: 5,
+                name: 'Stack Gas and Plume Aerosol Measurements from Renewable Diesel and Ultra Low Sulfur Diesel in At-Sea Operation of Research Vessel Robert Gordon Sproul',
+                url: '#'
+              }
+            ];
+            this.set('data', data);
+        }
+        else {
             this.processData(this.get('aggregations.listWidgetData.buckets'));
         }
     },

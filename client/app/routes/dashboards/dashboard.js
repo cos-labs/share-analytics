@@ -331,7 +331,7 @@ export default Ember.Route.extend({
                         widgetType: "query-widget",
                         background_color: "000000",
                         name: "Search",
-                        width: 12,
+                        width: 8,
                         facetDashParameter: "query",
                         facetDash: "resultsList",
                     },

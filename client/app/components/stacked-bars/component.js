@@ -32,7 +32,7 @@ export default Ember.Component.extend({
         let chartElement = this.$(this.element).find(this.get('chartSelector'));
         chartElement.html('');
         for (var value of items) {
-            chartElement.append('<div class="stack" data-tooltip="'+ value.label + ': ' + value.percentage  + '%" style="width:'+ value.percentage +'%; background-color:'+ value.background+';"><span>'+ value.label +'</span></div>');
+            chartElement.append('<div class="stack" data-tooltip="'+ value.label + ': ' + value.percentage  + '%" style="width:'+ value.percentage +'%; background-color:'+ value.background+';"><span>'+ value.label + ': ' + value.percentage  + '%</span></div>');
         }
     },
     showHideLabel(component) {

@@ -455,17 +455,7 @@ nav.navbar {
     border-radius: 2px;
 
 }
-.related_services button:hover {
-    background-color: #00668d;
 
-}
-
-.related_services button h3 {
-    color: #fff;
-    margin-top: 9px;
-    font-weight: 400;
-
-}
 
 .service-box img {
     display: block;

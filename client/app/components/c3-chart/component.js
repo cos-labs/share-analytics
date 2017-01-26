@@ -63,7 +63,7 @@ export default Ember.Component.extend({
 
         if (chart_type == 'donut') {
             var title = '';
-            if (this.get('name') === 'Publishers') {
+            if (this.get('name') === 'Data Providers') {
               this.set('data', this.get('aggregations.publishers.buckets'));
               var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
             } else if (this.get('name') === 'Events by Source'){

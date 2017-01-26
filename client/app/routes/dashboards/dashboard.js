@@ -424,7 +424,8 @@ export default Ember.Route.extend({
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
-                        name: 'Data providers',
+                        name: 'Data Providers',
+                        height: 459,
                         width: 6,
                         widgetSettings : {
                             viewAllRoute: 'providers'
@@ -551,6 +552,27 @@ export default Ember.Route.extend({
                         ],
                     },
                     {
+                        widgetType: "stacked-bars",
+                        name: "Types",
+                        width: 12,
+                        post_body: {
+                            "aggregations": {
+                                "stackedData" : {
+                                    "terms": {
+                                        "field": 'types.raw'
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            }
+                        ]
+                    },
+                    {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Tags',
@@ -590,27 +612,6 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             }
                         ],
-                    },
-                    {
-                        widgetType: "stacked-bars",
-                        name: "Types",
-                        width: 12,
-                        post_body: {
-                            "aggregations": {
-                                "stackedData" : {
-                                    "terms": {
-                                        "field": 'types.raw'
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            }
-                        ]
                     },
                     {
                         chartType: 'recentlyAdded',

@@ -418,10 +418,43 @@ export default Ember.Route.extend({
                         hideViewAll: true
                     },
                     {
+                        chartType: 'donut',
+                        widgetType: 'c3-chart',
+                        name: 'Publishers',
+                        width: 6,
+                        post_body: {
+                            query: {
+                                bool: { must: [{
+                                        query_string: {query: query}
+                                    },{
+                                        range: { date: {
+                                                   gte: gte,
+                                                   lte: lte,
+                                                   format: "yyyy-MM-dd||yyyy"
+                                                   }
+                                        }
+                                    }
+                                ]}
+                            },
+                            from: 0,
+                            aggregations: {
+                                publishers: {
+                                    terms: {
+                                         field: 'publishers.raw',
+                                         size: 200
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                        ],
+                        facetDash: "institution"
+                    },
+                    {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Contributors',
-                        width: 6,
+                        width: 12,
                         facetDash: "scholar",
                         dataType: 'contributors',
                         facetDashParameter: "scholar",
@@ -511,7 +544,7 @@ export default Ember.Route.extend({
                         name: 'NIH Awards 2016',
                         facetDash: "funder",
                         facetDashParameter: "funder",
-                        width: 4,
+                        width: 6,
                         post_body: {
                             aggregations: {
                                 sources: {
@@ -611,7 +644,7 @@ export default Ember.Route.extend({
                         name: 'Top Tags',
                         facetDash: "topic",
                         facetDashParameter: "topic",
-                        width: 4,
+                        width: 6,
                         dataType: 'tags',
                         post_body : {
                             from: 0,
@@ -771,40 +804,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             }
                         ],
-                    },
-                    {
-                        chartType: 'donut',
-                        widgetType: 'c3-chart',
-                        name: 'Publishers',
-                        width: 4,
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
-                                        }
-                                    }
-                                ]}
-                            },
-                            from: 0,
-                            aggregations: {
-                                publishers: {
-                                    terms: {
-                                         field: 'publishers.raw',
-                                         size: 200
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                        ],
-                        facetDash: "institution"
-                  }
+                    }
                 ]
             },
             topic: {

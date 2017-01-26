@@ -1,10 +1,10 @@
 <div class="widget-body clearfix">
-    <div class="form-group">
+    <form class="form-group" {{action "transitionToFacet" query on="submit"}}>
         <div class="input-group">
             {{input class="form-control" type="text" value=query placeholder="e.g., Light Cones"}}
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button" {{action "transitionToFacet" query}}>{{fa-icon "search"}}</button>
+                <button class="btn btn-default" type="submit">{{fa-icon "search"}}</button>
             </span>
         </div>
-    </div>
+    </form>
 </div>

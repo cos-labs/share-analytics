@@ -55,6 +55,11 @@ const ucsd_query = [
 
 export default Ember.Route.extend({
 
+    queryParams: {
+        query: {
+            refreshModel: true
+        }
+    },
     query: 'UC',
     gte: "1996-01-01",
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default

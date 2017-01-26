@@ -340,6 +340,7 @@ export default Ember.Route.extend({
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 4,
+                        height: 144,
                         post_body: {},
                         postBodyParams: [
                             {
@@ -422,6 +423,7 @@ export default Ember.Route.extend({
                         widgetType: 'c3-chart',
                         name: 'Publishers',
                         width: 6,
+                        height: 459,
                         post_body: {
                             query: {
                                 bool: { must: [{
@@ -545,6 +547,7 @@ export default Ember.Route.extend({
                         facetDash: "funder",
                         facetDashParameter: "funder",
                         width: 6,
+                        height: 474,
                         post_body: {
                             aggregations: {
                                 sources: {
@@ -731,7 +734,7 @@ export default Ember.Route.extend({
                         chartType: 'recentlyAdded',
                         widgetType: 'list-widget',
                         name: 'Recently Added',
-                        width: 4,
+                        width: 12,
                         post_body : {
                           "sort": { "date": { "order": "desc" }}
                         },

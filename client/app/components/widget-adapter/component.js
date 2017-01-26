@@ -358,7 +358,9 @@ export default Ember.Component.extend({
     jsEngine: 'c3',
     widthSetting: 2,
     heightSetting: 2,
-
+    height: Ember.computed(function() {
+      return this.get('item').height;
+    }),
     width: Ember.computed('widthSetting', function() {
 
         let new_setting = this.get('widthSetting');

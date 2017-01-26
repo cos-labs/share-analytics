@@ -372,7 +372,7 @@ export default Ember.Route.extend({
                 widgets: [
                     {
                         widgetType: "about-text-widget",
-                        name: "About",
+                        name: "",
                         width: 12,
                         widgetSettings : {
                             institution_id: 'ucsd'

@@ -1,3 +1,9 @@
 <div class="widget-body clearfix">
-    {{yield}}
+    <div class="renderChart"></div>
+    {{#if widgetSettings.viewAllRoute}}
+        <div class="text-right m-t-md">
+            <button class="btn btn-link text-bigger" {{action 'transitionToViewAll' item}}>View all</button>
+        </div>
+    {{/if}}
+
 </div>

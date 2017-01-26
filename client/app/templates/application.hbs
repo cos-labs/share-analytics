@@ -1,5 +1,5 @@
 <div style='display: flex; min-height:100vh; flex-direction: column;'>
-    <div class='wrapper dashboard' style='flex: 1;'>
+    <div class='wrapper dashboard' style='flex: 1 0 auto; overflow:hidden;'>
         <div class="ucsd_header">
             <div class="container">
                 <img src="/images/logo_UCSD.png">
@@ -9,18 +9,20 @@
         	{{outlet}}
         </div>
     </div>
-    <div class="wrapper related_services">
+    <div style="clear: both" class="wrapper related_services">
         <div class="container">
-            <h2>Related Resources and Services</h2> 
+            <h2>Related Resources and Services</h2>
             <div class="row">
-                <div class="col-md-4">
-                    <button><h3>Geisel Library</h3> </button>
+                <div class="col-md-4 text-center">
+                    <a href="http://libraries.ucsd.edu/services/data-curation/" class="btn btn-lg related-services-button text-center">
+                        Research Data Curation Program
+                    </a>
                 </div>
-                <div class="col-md-4">
-                    <button><h3>SHARE</h3></button>
+                <div class="col-md-4 text-center">
+                    <a href="https://share.osf.io/" class="btn btn-lg related-services-button">SHARE</a>
                 </div>
-                <div class="col-md-4">
-                    <button><h3>UC San Diego</h3></button>
+                <div class="col-md-4 text-center">
+                    <a href="https://ucsd.edu/" class="btn btn-lg related-services-button">UC San Diego</a>
                 </div>
             </div>
         </div>

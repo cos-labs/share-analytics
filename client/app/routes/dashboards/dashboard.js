@@ -2,6 +2,57 @@ import Ember from 'ember';
 /* global Freewall */
 //import 'bower_components/freewall/freewall';
 //
+const ucsd_query = [
+    {"match_phrase": {"contributors": "UCSD"}},
+    {"match_phrase": {"contributors": "UC San Diego"}},
+    {"match_phrase": {"contributors": "UC San Diego Library"}},
+    {"match_phrase": {"contributors": "UC San Diego Library Digital Collections"}},
+    {"match_phrase": {"contributors": "Scripps Institution of Oceanography"}},
+    {"match_phrase": {"contributors": "Scripps Institute of Oceanography"}},
+    {"match_phrase": {"contributors": "University of California San Diego"}},
+    {"match_phrase": {"contributors": "Univ of california san diego"}},
+    {"match_phrase": {"contributors": "University of CA San Diego"}},
+    {"match_phrase": {"publishers": "UCSD"}},
+    {"match_phrase": {"publishers": "UC San Diego"}},
+    {"match_phrase": {"publishers": "UC San Diego Library"}},
+    {"match_phrase": {"publishers": "UC San Diego Library Digital Collections"}},
+    {"match_phrase": {"publishers": "Scripps Institution of Oceanography"}},
+    {"match_phrase": {"publishers": "Scripps Institute of Oceanography"}},
+    {"match_phrase": {"publishers": "University of California San Diego"}},
+    {"match_phrase": {"publishers": "Univ of california san diego"}},
+    {"match_phrase": {"publishers": "University of CA San Diego"}},
+    {"match_phrase": {"funders": "UCSD"}},
+    {"match_phrase": {"funders": "UC San Diego"}},
+    {"match_phrase": {"funders": "UC San Diego Library"}},
+    {"match_phrase": {"funders": "UC San Diego Library Digital Collections"}},
+    {"match_phrase": {"funders": "Scripps Institution of Oceanography"}},
+    {"match_phrase": {"funders": "Scripps Institute of Oceanography"}},
+    {"match_phrase": {"funders": "University of California San Diego"}},
+    {"match_phrase": {"funders": "Univ of california san diego"}},
+    {"match_phrase": {"funders": "University of CA San Diego"}},
+    {"match_phrase": {"title": "UCSD"}},
+    {"match_phrase": {"title": "UC San Diego"}},
+    {"match_phrase": {"title": "UC San Diego Library"}},
+    {"match_phrase": {"title": "UC San Diego Library Digital Collections"}},
+    {"match_phrase": {"title": "Scripps Institution of Oceanography"}},
+    {"match_phrase": {"title": "Scripps Institute of Oceanography"}},
+    {"match_phrase": {"title": "University of California San Diego"}},
+    {"match_phrase": {"title": "Univ of california san diego"}},
+    {"match_phrase": {"title": "University of CA San Diego"}},
+    {"match_phrase": {"hosts": "UCSD"}},
+    {"match_phrase": {"hosts": "UC San Diego"}},
+    {"match_phrase": {"hosts": "UC San Diego Library"}},
+    {"match_phrase": {"hosts": "UC San Diego Library Digital Collections"}},
+    {"match_phrase": {"hosts": "Scripps Institution of Oceanography"}},
+    {"match_phrase": {"hosts": "Scripps Institute of Oceanography"}},
+    {"match_phrase": {"hosts": "University of California San Diego"}},
+    {"match_phrase": {"hosts": "Univ of california san diego"}},
+    {"match_phrase": {"hosts": "University of CA San Diego"}},
+    {"match_phrase": {"tags": "ucsd"}},
+    {"match_phrase": {"tags": "cdl.ucsd"}},
+    {"match_phrase": {"tags": "Scripps institution of oceanography"}},
+]
+
 export default Ember.Route.extend({
 
     query: 'UC',
@@ -331,7 +382,7 @@ export default Ember.Route.extend({
                         widgetType: "query-widget",
                         background_color: "000000",
                         name: "Search",
-                        width: 12,
+                        width: 8,
                         facetDashParameter: "query",
                         facetDash: "resultsList",
                     },
@@ -340,12 +391,18 @@ export default Ember.Route.extend({
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 4,
+                        height: 144,
                         post_body: {},
                         postBodyParams: [
                             {
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                parameterName: "query",
-                                defaultValue: "*"
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                parameterName: "source",
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
@@ -358,10 +415,53 @@ export default Ember.Route.extend({
                         }
                     },
                     {
+                        chartType: 'highlightedCollections',
+                        widgetType: 'list-widget',
+                        name: 'Highlighted Collections',
+                        width: 6,
+                        hideViewAll: true
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'c3-chart',
+                        name: 'Data providers',
+                        width: 6,
+                        widgetSettings : {
+                            viewAllRoute: 'providers'
+                        },
+                        post_body: {
+                            query: {
+                                bool: { must: [{
+                                        query_string: {query: query}
+                                    },{
+                                        range: { date: {
+                                                   gte: gte,
+                                                   lte: lte,
+                                                   format: "yyyy-MM-dd||yyyy"
+                                                   }
+                                        }
+                                    }
+                                ]}
+                            },
+                            from: 0,
+                            aggregations: {
+                                publishers: {
+                                    terms: {
+                                         field: 'publishers.raw',
+                                         size: 200
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                        ],
+                        facetDash: "institution"
+                    },
+                    {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Contributors',
-                        width: 4,
+                        width: 12,
                         facetDash: "scholar",
                         dataType: 'contributors',
                         facetDashParameter: "scholar",
@@ -376,6 +476,16 @@ export default Ember.Route.extend({
                             }
                         },
                         postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                parameterName: "source",
+                                defaultValue: ucsd_query
+                            },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 parameterName: "query",
@@ -393,7 +503,8 @@ export default Ember.Route.extend({
                         name: 'NIH Awards 2016',
                         facetDash: "funder",
                         facetDashParameter: "funder",
-                        width: 4,
+                        width: 6,
+                        height: 474,
                         post_body: {
                             aggregations: {
                                 sources: {
@@ -419,6 +530,16 @@ export default Ember.Route.extend({
 
                         postBodyParams: [
                             {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                parameterName: "source",
+                                defaultValue: ucsd_query
+                            },
+                            {
                                 parameterName: "institution",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                             },
@@ -435,7 +556,7 @@ export default Ember.Route.extend({
                         name: 'Top Tags',
                         facetDash: "topic",
                         facetDashParameter: "topic",
-                        width: 4,
+                        width: 6,
                         dataType: 'tags',
                         post_body : {
                             from: 0,
@@ -449,6 +570,16 @@ export default Ember.Route.extend({
                             }
                         },
                         postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                parameterName: "source",
+                                defaultValue: ucsd_query
+                            },
                             {
                                 parameterName: "institution",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
@@ -485,11 +616,21 @@ export default Ember.Route.extend({
                         chartType: 'recentlyAdded',
                         widgetType: 'list-widget',
                         name: 'Recently Added',
-                        width: 4,
+                        width: 12,
                         post_body : {
                           "sort": { "date": { "order": "desc" }}
                         },
                         postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                parameterName: "source",
+                                defaultValue: ucsd_query
+                            },
                             {
                                 parameterName: "institution",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
@@ -500,43 +641,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             }
                         ],
-                    },
-                    {
-                        chartType: 'donut',
-                        widgetType: 'c3-chart',
-                        name: 'Data providers',
-                        width: 4,
-                        widgetSettings : {
-                            viewAllRoute: 'providers'
-                        },
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
-                                        }
-                                    }
-                                ]}
-                            },
-                            from: 0,
-                            aggregations: {
-                                publishers: {
-                                    terms: {
-                                         field: 'publishers.raw',
-                                         size: 200
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                        ],
-                        facetDash: "institution"
-                  }
+                    }
                 ]
             },
             topic: {

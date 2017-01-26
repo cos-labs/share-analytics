@@ -28,7 +28,7 @@ export default Ember.Component.extend({
               {
                 number: 3,
                 name: 'Heavy Metals in the Ocean Insect, Halobates',
-                url: '#'
+                url: 'https://share.osf.io/creativework/4612B-AF0-7FB'
               },
               {
                 number: 4,
@@ -38,7 +38,7 @@ export default Ember.Component.extend({
               {
                 number: 5,
                 name: 'Stack Gas and Plume Aerosol Measurements from Renewable Diesel and Ultra Low Sulfur Diesel in At-Sea Operation of Research Vessel Robert Gordon Sproul',
-                url: '#'
+                url: 'https://share.osf.io/dataset/4607A-27C-FB9'
               }
             ];
             this.set('data', data);
@@ -68,7 +68,6 @@ export default Ember.Component.extend({
         },
         transitionToViewAll(item) {
             this.attrs.transitionToFacet(item.dataType, item);
-
         }
     }
 });

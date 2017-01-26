@@ -421,7 +421,7 @@ export default Ember.Route.extend({
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Contributors',
-                        width: 4,
+                        width: 6,
                         facetDash: "scholar",
                         dataType: 'contributors',
                         facetDashParameter: "scholar",

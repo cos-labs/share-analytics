@@ -461,6 +461,27 @@ export default Ember.Route.extend({
                         ],
                     },
                     {
+                        widgetType: "stacked-bars",
+                        name: "Types",
+                        width: 12,
+                        post_body: {
+                            "aggregations": {
+                                "stackedData" : {
+                                    "terms": {
+                                        "field": 'types.raw'
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            }
+                        ]
+                    },
+                    {
                         chartType: 'recentlyAdded',
                         widgetType: 'list-widget',
                         name: 'Recently Added',
@@ -483,8 +504,11 @@ export default Ember.Route.extend({
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
-                        name: 'Publishers',
+                        name: 'Data providers',
                         width: 4,
+                        widgetSettings : {
+                            viewAllRoute: 'providers'
+                        },
                         post_body: {
                             query: {
                                 bool: { must: [{
@@ -923,6 +947,45 @@ export default Ember.Route.extend({
                         ],
                         facetDash: "scholar"
                     },
+                ]
+            },
+            providers: {
+                dashboardName: 'Data providers',
+                wrapperClass: 'index-page',
+                widgets: [
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Data providers',
+                        width: 12,
+                        post_body: {
+                            query: {
+                                bool: { must: [{
+                                        query_string: {query: query}
+                                    },{
+                                        range: { date: {
+                                                   gte: gte,
+                                                   lte: lte,
+                                                   format: "yyyy-MM-dd||yyyy"
+                                                   }
+                                        }
+                                    }
+                                ]}
+                            },
+                            from: 0,
+                            aggregations: {
+                                listWidgetData: {
+                                    terms: {
+                                         field: 'publishers.raw',
+                                         size: 100
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                        ],
+                        facetDash: "institution"
+                  }
                 ]
             }
         };

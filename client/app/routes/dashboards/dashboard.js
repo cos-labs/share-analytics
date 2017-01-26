@@ -381,17 +381,17 @@ export default Ember.Route.extend({
                     {
                         widgetType: "query-widget",
                         background_color: "000000",
-                        name: "Search",
+                        name: "",
                         width: 8,
                         facetDashParameter: "query",
-                        facetDash: "resultsList",
+                        facetDash: "resultsList"
                     },
                     {
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 4,
-                        height: 144,
+                        height: 115,
                         post_body: {},
                         postBodyParams: [
                             {

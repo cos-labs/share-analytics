@@ -19,6 +19,12 @@
     float: right;
 }
 
+.share {
+    font-size: 18px;
+    color: #575955;
+    padding-left: 10px;
+}
+
 .dashboard {
     background: url("/images/ucsd_background.gif");
     padding-bottom: 80px;

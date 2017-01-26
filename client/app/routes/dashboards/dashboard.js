@@ -474,6 +474,27 @@ export default Ember.Route.extend({
                         facetDash: "institution"
                     },
                     {
+                        widgetType: "stacked-bars",
+                        name: "Types",
+                        width: 12,
+                        post_body: {
+                            "aggregations": {
+                                "stackedData" : {
+                                    "terms": {
+                                        "field": 'types.raw'
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            }
+                        ]
+                    },
+                    {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Contributors',
@@ -565,27 +586,6 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             }
                         ],
-                    },
-                    {
-                        widgetType: "stacked-bars",
-                        name: "Types",
-                        width: 12,
-                        post_body: {
-                            "aggregations": {
-                                "stackedData" : {
-                                    "terms": {
-                                        "field": 'types.raw'
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            }
-                        ]
                     },
                     {
                         chartType: 'topContributors',

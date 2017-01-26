@@ -364,6 +364,16 @@ export default Ember.Route.extend({
                         post_body: {},
                         postBodyParams: [
                             {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                parameterName: "source",
+                                defaultValue: ucsd_query
+                            },
+                            {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 parameterName: "query",
                                 defaultValue: "*"

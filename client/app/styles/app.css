@@ -444,7 +444,7 @@ nav.navbar {
 .related-services-button {
     background-color: #ffcd00;
     border: 1px solid rgba(0,0,0,0.2);
-    color: rgb(72, 73, 73);
+    color: #333;
     margin: 20px auto;
     margin-bottom: 50px;
     display: block;
@@ -454,15 +454,6 @@ nav.navbar {
     box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
     border-radius: 2px;
 
-}
-
-.related-services-button a {
-    color: rgb(72, 73, 73);
-}
-
-.related-services-button:hover {
-    background-color: #ffcd00;
-    color: rgb(72, 73, 73);
 }
 
 .service-box img {

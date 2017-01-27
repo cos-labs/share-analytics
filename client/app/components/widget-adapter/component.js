@@ -549,6 +549,7 @@ export default Ember.Component.extend({
                     controller.set('back', 'backroute');
                 });
             });
+            route.refresh();
             //let url = 'https://share.osf.io/discover?q=' + d.name;
             //window.open(url, '_blank');
         },

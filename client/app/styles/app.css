@@ -389,7 +389,6 @@ nav.navbar {
     border-radius: 2px;
 }
 .list-widget-item{
-    display: block;
     cursor: pointer;
 }
 .list-widget-item:hover {
@@ -402,6 +401,9 @@ nav.navbar {
 .list-widget .item-name {
     font-size: 16px;
     color: #2a7ec1;
+}
+.list-widget-item > td{
+    padding: 10px;
 }
 .query-widget {
     color: #fff;

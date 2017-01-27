@@ -55,6 +55,11 @@ const ucsd_query = [
 
 export default Ember.Route.extend({
 
+    queryParams: {
+        query: {
+            refreshModel: true
+        }
+    },
     query: 'UC',
     gte: "1996-01-01",
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
@@ -347,17 +352,27 @@ export default Ember.Route.extend({
                     {
                         widgetType: "query-widget",
                         background_color: "000000",
-                        name: "Search",
+                        name: "",
                         width: 12,
                         facetDashParameter: "query",
                         facetDash: "resultsList",
                     },
                     {
                         widgetType: "results-list",
-                        name: "Search Results",
+                        name: "",
                         width: 12,
                         post_body: {},
                         postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                parameterName: "source",
+                                defaultValue: ucsd_query
+                            },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 parameterName: "query",
@@ -381,7 +396,7 @@ export default Ember.Route.extend({
                     {
                         widgetType: "query-widget",
                         background_color: "000000",
-                        name: "Search",
+                        name: "",
                         width: 8,
                         facetDashParameter: "query",
                         facetDash: "resultsList",
@@ -457,6 +472,27 @@ export default Ember.Route.extend({
                         postBodyParams: [
                         ],
                         facetDash: "institution"
+                    },
+                    {
+                        widgetType: "stacked-bars",
+                        name: "Types",
+                        width: 12,
+                        post_body: {
+                            "aggregations": {
+                                "stackedData" : {
+                                    "terms": {
+                                        "field": 'types.raw'
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            }
+                        ]
                     },
                     {
                         chartType: 'topContributors',
@@ -550,27 +586,6 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             }
                         ],
-                    },
-                    {
-                        widgetType: "stacked-bars",
-                        name: "Types",
-                        width: 12,
-                        post_body: {
-                            "aggregations": {
-                                "stackedData" : {
-                                    "terms": {
-                                        "field": 'types.raw'
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            }
-                        ]
                     },
                     {
                         chartType: 'topContributors',

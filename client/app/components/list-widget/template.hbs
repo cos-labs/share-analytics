@@ -1,16 +1,14 @@
-<div class="list-widget widget-body">
+<table style="width: 100%;"class="list-widget widget-body">
     {{#each data as |item|}}
-        <span href="#" class="list-widget-item" {{action "transitionToFacet" item}}>
-            <div class="row">
-                <div class="item-number col-xs-3">{{item.number}}</div>
-                <div class="item-name col-xs-7">{{item.name}}</div>
-                <div class="item-name col-xs-2"><i class="fa fa-angle-right"></i></div>
-            </div>
-        </span>
+        <tr href="#" class="list-widget-item" {{action "transitionToFacet" item}}>
+                <td class="item-number">{{item.number}}</td>
+                <td class="item-name">{{item.name}}</td>
+                <td class="item-name"><i class="fa fa-angle-right"></i></td>
+        </tr>
     {{/each}}
-    {{#unless item.hideViewAll}}
+</table>
+{{#unless item.hideViewAll}}
     <div class="text-right m-t-md">
         <button class="btn btn-link text-bigger" {{action 'transitionToViewAll' item}}>View all</button>
     </div>
-    {{/unless}}
-</div>
+{{/unless}}

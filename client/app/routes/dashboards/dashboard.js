@@ -288,6 +288,47 @@ export default Ember.Route.extend({
                     },
                 ]
             },
+
+//word cloud test section
+
+            wordcloud: {
+                dasboardName: 'Word Cloud Dashboard',
+                query: 'UC San Diego',
+                widgets: [
+                    {
+                      chartType: 'topContributors',
+                      widgetType: 'word-cloud',
+                      name: 'Top Tags',
+                      width: 4,
+                      post_body : {
+                          query: {
+                              bool: {
+                                  must: {
+                                      query_string: {query: query}
+                                  }
+                              }
+                          },
+                          from: 0,
+                          aggregations: {
+                              listWidgetData : {
+                                  terms : {
+                                      field: 'tags',
+                                      size: 10
+                                  }
+                              }
+                          }
+                      },
+                      postBodyParams: [
+                          {
+                              parameterName: "query",
+                              parameterPath: ["query", "bool", "must", "query_string", "query"]
+                          }
+                      ],
+                  }]
+            },
+
+//end word cloud test section
+
             institution: {
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
@@ -879,6 +920,7 @@ export default Ember.Route.extend({
 
                     nested_object[parameter_key] = parameter_value;
 
+                    return //??
                 });
             }
 

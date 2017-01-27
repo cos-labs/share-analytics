@@ -401,6 +401,7 @@ nav.navbar {
     font-size: 16px;
     color: #2a7ec1;
 }
+<<<<<<< Updated upstream
 .query-widget {
     color: #fff;
     background-color: rgba(0,0,0,0.65);
@@ -463,4 +464,31 @@ nav.navbar {
     -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
     box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
 
+=======
+
+
+
+.word-cloud-widget {
+    padding-bottom: 20px;
+}
+.word-cloud-widget-item {
+    padding: 4px 10px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 2px;
+}
+.word-cloud-widget-item{
+    display: block;
+    cursor: pointer;
+}
+.word-cloud-widget-item:hover {
+    background: #e3ecf3;
+}
+.word-cloud-widget .item-number {
+    font-size: 18px;
+    color: #F44336;
+}
+.word-cloud-widget .item-name {
+    font-size: 16px;
+    color: #2a7ec1;
+>>>>>>> Stashed changes
 }

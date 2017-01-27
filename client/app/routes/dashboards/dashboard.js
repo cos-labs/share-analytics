@@ -536,7 +536,7 @@ export default Ember.Route.extend({
                         facetDash: "funder",
                         facetDashParameter: "funder",
                         width: 6,
-                        height: 474,
+                        height: 574,
                         post_body: {
                             aggregations: {
                                 sources: {

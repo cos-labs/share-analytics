@@ -387,7 +387,7 @@ export default Ember.Route.extend({
                 widgets: [
                     {
                         widgetType: "about-text-widget",
-                        name: "About",
+                        name: "",
                         width: 12,
                         widgetSettings : {
                             institution_id: 'ucsd'
@@ -399,14 +399,14 @@ export default Ember.Route.extend({
                         name: "",
                         width: 8,
                         facetDashParameter: "query",
-                        facetDash: "resultsList",
+                        facetDash: "resultsList"
                     },
                     {
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 4,
-                        height: 144,
+                        height: 115,
                         post_body: {},
                         postBodyParams: [
                             {

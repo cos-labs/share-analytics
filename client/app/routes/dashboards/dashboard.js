@@ -440,7 +440,7 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
-                        height: 459,
+                        height: 417,
                         width: 6,
                         widgetSettings : {
                             viewAllRoute: 'providers'
@@ -541,7 +541,7 @@ export default Ember.Route.extend({
                         facetDash: "funder",
                         facetDashParameter: "funder",
                         width: 6,
-                        height: 474,
+                        height: 574,
                         post_body: {
                             aggregations: {
                                 sources: {

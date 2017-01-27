@@ -440,7 +440,6 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
-                        height: 459,
                         width: 6,
                         widgetSettings : {
                             viewAllRoute: 'providers'
@@ -496,23 +495,19 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'topContributors',
-                        widgetType: 'list-widget',
+                        widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 12,
                         facetDash: "scholar",
                         dataType: 'contributors',
                         facetDashParameter: "scholar",
-                        post_body : {
-                            aggregations: {
-                                listWidgetData : {
-                                    terms : {
-                                        field: 'contributors.raw',
-                                        size: 10
-                                    }
-                                }
-                            }
-                        },
+                        post_body : {},
                         postBodyParams: [
+                            {
+                                parameterPath: ["aggregations", "contributors", "terms", "field"],
+                                parameterName: "contributors_id_field",
+                                defaultValue: "lists.contributors.id.raw",
+                            },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
                                 parameterName: "shouldMatch",

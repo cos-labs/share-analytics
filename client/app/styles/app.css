@@ -399,6 +399,7 @@ nav.navbar {
 .list-widget .item-number {
     font-size: 18px;
     color: #F44336;
+    word-break: normal;
 }
 .list-widget .item-name {
     font-size: 16px;

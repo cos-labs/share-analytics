@@ -583,10 +583,10 @@ export default Ember.Route.extend({
                         ],
                     },
                     {
-                        chartType: 'topContributors',
+                        chartType: 'tagsList',
                         widgetType: 'list-widget',
                         name: 'Top Tags',
-                        facetDash: "topic",
+                        facetDash: "url",
                         facetDashParameter: "topic",
                         width: 6,
                         dataType: 'tags',

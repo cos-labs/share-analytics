@@ -1,9 +1,7 @@
 import Ember from 'ember';
-import ENV from 'analytics-dashboard/config/environment';
-
 
 export default Ember.Component.extend({
-    data: [],
+    data : [],
     init(){
         this._super(...arguments);
         if (this.get('chartType') === 'recentlyAdded') {
@@ -46,22 +44,16 @@ export default Ember.Component.extend({
             this.set('data', data);
         }
         else {
-            this.processData(this.get('aggregations.contributors.buckets'));
+            this.processData(this.get('aggregations.listWidgetData.buckets'));
         }
     },
-    processData: function(data) {
-        data.forEach(async (item, index) => {
-            let datum = await Ember.$.ajax({
-                url: ENV.apiUrl + '/search/agents/' + item.key,
-                crossDomain: true,
-                type: 'GET',
-                contentType: 'application/json',
-            });
-            let data = this.get('data');
-            data[index] = datum._source;
-            data[index].number = item.doc_count;
-            this.set("data", Array.prototype.slice.call(data));
-        });
+    processData (data) {
+        this.set('data', data.map((item) => {
+            return {
+                number: item.doc_count,
+                name: item.key,
+            };
+        }));
     },
     actions: {
         transitionToFacet(item) {

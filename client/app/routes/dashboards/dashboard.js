@@ -434,6 +434,7 @@ export default Ember.Route.extend({
                         widgetType: 'list-widget',
                         name: 'Highlighted Collections',
                         width: 6,
+                        facetDash: "url",
                         hideViewAll: true
                     },
                     {
@@ -536,7 +537,6 @@ export default Ember.Route.extend({
                         facetDash: "funder",
                         facetDashParameter: "funder",
                         width: 6,
-                        height: 574,
                         post_body: {
                             aggregations: {
                                 sources: {

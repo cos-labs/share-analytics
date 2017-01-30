@@ -1,0 +1,46 @@
+<h1 style="padding: 30px; text-align: center; margin: 0; background-color: #eee; overflow: hidden; position: relative; margin: 0 10px;">{{data._source.title}}</h1>
+<div>Date: {{data._source.date}}</div>
+<div>Date Created: {{data._source.date_created}}</div>
+<div>Date Modified: {{data._source.date_modified}}</div>
+<div>Date Published: {{data._source.date_published}}</div>
+<div>Date Updated: {{data._source.date_updated}}</div>
+<div>Description: {{data._source.description}}</div>
+<div>ID: {{data._source.id}}</div>
+<div>Identifiers: <ul>
+{{#each data._source.identifiers as |identifier|}}
+    <li>{{identifier}}</li>
+{{/each}}
+</ul></div>
+<div>Language: {{data._source.language}}</div>
+<div>Contributors: <ul>
+{{#each data._source.contributors as |contributor|}}
+    <li>{{contributor}}</li>
+{{/each}}
+</ul></div>
+<div>Publishers: <ul>
+{{#each data._source.publishers as |publisher|}}
+    <li>{{publisher}}</li>
+{{/each}}
+</ul></div>
+<div>Sources: <ul>
+{{#each data._source.sources as |source|}}
+    <li>{{source}}</li>
+{{/each}}
+</ul></div>
+<div>Sources: <ul>
+{{#each data._source.sources as |source|}}
+    <li>{{source}}</li>
+{{/each}}
+</ul></div>
+
+<h3>Raw JSON</h3>
+<pre>
+    {{dataAsString}}
+</pre>
+
+
+{{#unless item.hideViewAll}}
+    <div class="text-right m-t-md">
+        <button class="btn btn-link text-bigger" {{action 'transitionToViewAll' item}}>View all</button>
+    </div>
+{{/unless}}

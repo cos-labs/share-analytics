@@ -56,9 +56,12 @@ const ucsd_query = [
 export default Ember.Route.extend({
 
     queryParams: {
-        query: {
-            refreshModel: true
-        }
+        query: {refreshModel: true},
+        tags: {refreshModel: true},
+        source: {refreshModel: true},
+        id: {refreshModel: true},
+        contributors: {refreshModel: true},
+        
     },
     query: 'UC',
     gte: "1996-01-01",
@@ -346,6 +349,24 @@ export default Ember.Route.extend({
                     },
                 ]
             },
+            objectDetail: {
+                dasboardName: 'Object Detail Dashboard',
+                widgets: [
+                    {
+                        widgetType: "object-detail-widget",
+                        background_color: "000000",
+                        name: "",
+                        width: 12,
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "must", 0, "term", "_id"],
+                            }
+                        ]
+                    },
+                ]
+            },
             resultsList: {
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
@@ -354,7 +375,6 @@ export default Ember.Route.extend({
                         background_color: "000000",
                         name: "",
                         width: 12,
-                        facetDashParameter: "query",
                         facetDash: "resultsList",
                     },
                     {
@@ -362,6 +382,7 @@ export default Ember.Route.extend({
                         name: "",
                         width: 12,
                         post_body: {},
+                        facetDash: "resultsList",
                         postBodyParams: [
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
@@ -377,7 +398,11 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 parameterName: "query",
                                 defaultValue: "*"
-                            }
+                            },
+                            {
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
                         ]
                     }
                 ]
@@ -406,6 +431,7 @@ export default Ember.Route.extend({
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 4,
+                        facetDash: "resultsList",
                         height: 115,
                         post_body: {},
                         postBodyParams: [
@@ -627,6 +653,7 @@ export default Ember.Route.extend({
                         chartType: 'recentlyAdded',
                         widgetType: 'list-widget',
                         name: 'Recently Added',
+                        facetDash: "url",
                         width: 12,
                         post_body : {
                           "sort": { "date": { "order": "desc" }}

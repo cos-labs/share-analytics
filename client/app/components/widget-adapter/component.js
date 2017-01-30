@@ -431,7 +431,7 @@ export default Ember.Component.extend({
         let interval = this.get('tsInterval');
         let item = this.get('item');
         let data = await Ember.$.ajax({
-            url: ENV.apiUrl + '/search/creativeworks/_search',
+            url: ENV.apiUrl + '/search/creativeworks/_search?request_cache=true',
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',

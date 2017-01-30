@@ -1,0 +1,22 @@
+<table style="width: 100%;"class="list-widget widget-body">
+    {{#each data as |item|}}
+        <tr href="#" class="list-widget-item">
+                    <td class="item-number">{{item.number}}</td>
+                    <td class="item-name">
+                        <a href="https://share.osf.io/agent/{{ item.id }}">
+                            {{item.name}}
+                        </a>
+                    </td>
+                    <td class="item-name">
+                        <a href="https://share.osf.io/agent/{{ item.id }}">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </td>
+        </tr>
+    {{/each}}
+</table>
+{{#unless item.hideViewAll}}
+    <div class="text-right m-t-md">
+        <button class="btn btn-link text-bigger" {{action 'transitionToViewAll' item}}>View all</button>
+    </div>
+{{/unless}}

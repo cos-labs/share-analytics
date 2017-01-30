@@ -434,13 +434,13 @@ export default Ember.Route.extend({
                         widgetType: 'list-widget',
                         name: 'Highlighted Collections',
                         width: 6,
+                        facetDash: "url",
                         hideViewAll: true
                     },
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
-                        height: 417,
                         width: 6,
                         widgetSettings : {
                             viewAllRoute: 'providers'
@@ -496,23 +496,19 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'topContributors',
-                        widgetType: 'list-widget',
+                        widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 12,
                         facetDash: "scholar",
                         dataType: 'contributors',
                         facetDashParameter: "scholar",
-                        post_body : {
-                            aggregations: {
-                                listWidgetData : {
-                                    terms : {
-                                        field: 'contributors.raw',
-                                        size: 10
-                                    }
-                                }
-                            }
-                        },
+                        post_body : {},
                         postBodyParams: [
+                            {
+                                parameterPath: ["aggregations", "contributors", "terms", "field"],
+                                parameterName: "contributors_id_field",
+                                defaultValue: "lists.contributors.id.raw",
+                            },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
                                 parameterName: "shouldMatch",
@@ -541,7 +537,6 @@ export default Ember.Route.extend({
                         facetDash: "funder",
                         facetDashParameter: "funder",
                         width: 6,
-                        height: 574,
                         post_body: {
                             aggregations: {
                                 sources: {
@@ -588,10 +583,10 @@ export default Ember.Route.extend({
                         ],
                     },
                     {
-                        chartType: 'topContributors',
+                        chartType: 'tagsList',
                         widgetType: 'list-widget',
                         name: 'Top Tags',
-                        facetDash: "topic",
+                        facetDash: "url",
                         facetDashParameter: "topic",
                         width: 6,
                         dataType: 'tags',

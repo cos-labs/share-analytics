@@ -1254,7 +1254,12 @@ export default Ember.Route.extend({
                         facetDash: "institution"
                   }
                 ]
+            },
+            awards: {
+                "dashboardName": "Awards Dashboard",
+                "widgets": []
             }
+
         };
 
         let dashboard = dashboards[params.dashboard];

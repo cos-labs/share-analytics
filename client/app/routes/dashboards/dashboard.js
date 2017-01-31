@@ -346,6 +346,60 @@ export default Ember.Route.extend({
                     },
                 ]
             },
+            funding: {
+               dasboardName: 'Applicaiton Funding',
+               widgets: [
+                   {
+                       widgetType: "about-text-widget",
+                       name: "About (Test)",
+                       width: 12,
+                       widgetSettings : {
+                           institution_id: 'ucsd'
+                       }
+                   },
+                   {
+                       widgetType: "query-widget",
+                       background_color: "000000",
+                       name: "Search (Test)",
+                       width: 12,
+                       facetDashParameter: "query",
+                       facetDash: "resultsList",
+                   },
+                   {
+                       chartType: 'donut',
+                       widgetType: 'c3-chart',
+                       name: 'Popular Funders (Test)',
+                       width: 4,
+                       post_body: {
+                           query: {
+                               bool: { must: [{
+                                       query_string: {query: query}
+                                   },{
+                                       range: { date: {
+                                                  gte: gte,
+                                                  lte: lte,
+                                                  format: "yyyy-MM-dd||yyyy"
+                                                  }
+                                       }
+                                   }
+                               ]}
+                           },
+                           from: 0,
+                           aggregations: {
+                               publishers: {
+                                   terms: {
+                                        field: 'publishers.raw',
+                                        size: 200
+                                   }
+                               }
+                           }
+                       },
+                       postBodyParams: [
+                       ],
+                       facetDash: "institution"
+                 }
+               ]
+           },
             resultsList: {
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [

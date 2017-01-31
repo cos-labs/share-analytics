@@ -61,7 +61,7 @@ export default Ember.Route.extend({
         source: {refreshModel: true},
         id: {refreshModel: true},
         contributors: {refreshModel: true},
-        
+        special_filter: {refresh_model: true}
     },
     query: 'UC',
     gte: "1996-01-01",
@@ -391,8 +391,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                parameterName: "source",
-                                defaultValue: ucsd_query
+                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -400,9 +399,13 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterName: "tags",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"],
+                                parameterName: "tags"
                             },
+                            {
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                                parameterName: "source"
+                            }
                         ]
                     }
                 ]
@@ -442,12 +445,16 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                parameterName: "source",
-                                defaultValue: ucsd_query
+                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
-                                parameterName: "institution"
+                                parameterName: "source"
                             }
                         ],
                         widgetSettings : {
@@ -471,31 +478,51 @@ export default Ember.Route.extend({
                         widgetSettings : {
                             viewAllRoute: 'providers'
                         },
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
-                                        }
-                                    }
-                                ]}
-                            },
-                            from: 0,
-                            aggregations: {
-                                publishers: {
-                                    terms: {
-                                         field: 'publishers.raw',
-                                         size: 200
-                                    }
-                                }
-                            }
-                        },
+                        post_body: {},
                         postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterName: "source"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "min_date",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "max_date",
+                                defaultValue: lte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
+                                parameterName: "date_range_format",
+                                defaultValue: "yyyy-MM-dd||yyyy"
+                            },
+                            {
+                                parameterPath: ["aggregations", "publishers", "terms", "field"],
+                                parameterName: "publisher_field",
+                                defaultValue: "publishers.raw",
+                            },
+                            {
+                                parameterPath: ["aggregations", "publishers", "terms", "size"],
+                                parameterName: "publisher_size",
+                                defaultValue: 200,
+                            },
                         ],
                         facetDash: "institution"
                     },
@@ -503,21 +530,31 @@ export default Ember.Route.extend({
                         widgetType: "stacked-bars",
                         name: "Types",
                         width: 12,
-                        post_body: {
-                            "aggregations": {
-                                "stackedData" : {
-                                    "terms": {
-                                        "field": 'types.raw'
-                                    }
-                                }
-                            }
-                        },
+                        post_body: {},
                         postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterName: "source"
+                            },
                             {
                                 parameterName: "query",
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
-                            }
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["aggregations", "stackedData", "terms", "field"],
+                                parameterName: "type_field",
+                                defaultValue: "types.raw",
+                            },
                         ]
                     },
                     {
@@ -542,8 +579,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                parameterName: "source",
-                                defaultValue: ucsd_query
+                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -551,7 +587,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterName: "institution",
+                                parameterName: "source",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                             }
                         ],
@@ -563,29 +599,7 @@ export default Ember.Route.extend({
                         facetDash: "funder",
                         facetDashParameter: "funder",
                         width: 6,
-                        post_body: {
-                            aggregations: {
-                                sources: {
-                                    terms: {
-                                         field: 'sources.raw',
-                                         size: 200
-                                    }
-                                },
-                                contributors : {
-                                    terms : {
-                                        field: 'contributors.raw',
-                                        size: 200
-                                    }
-                                },
-                                tags : {
-                                    terms : {
-                                        field: 'tags.raw',
-                                        size: 200
-                                    }
-                                }
-                            }
-                        },
-
+                        post_body: {},
                         postBodyParams: [
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
@@ -594,11 +608,10 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                parameterName: "source",
-                                defaultValue: ucsd_query
+                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
                             },
                             {
-                                parameterName: "institution",
+                                parameterName: "source",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                             },
                             {
@@ -635,11 +648,10 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                parameterName: "source",
-                                defaultValue: ucsd_query
+                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
                             },
                             {
-                                parameterName: "institution",
+                                parameterName: "source",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                             },
                             {
@@ -666,12 +678,16 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                parameterName: "source",
-                                defaultValue: ucsd_query
+                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
                             },
                             {
-                                parameterName: "institution",
+                                parameterName: "source",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "recently_added_sort",
+                                parameterPath: ["sort", "date", "order"],
+                                defaultValue: "desc"
                             },
                             {
                                 parameterName: "query",

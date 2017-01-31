@@ -13,9 +13,8 @@ export default Ember.Component.extend({
     },
 
     processData: function(data) {
-        debugger;
         this.set("data", data[0]);
-        this.set("dataAsString", JSON.stringify(data[0],  null, '\t'));
+        this.set("dataAsString", JSON.stringify(data[0],  null, '    '));
     },
 
     actions: {

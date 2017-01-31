@@ -419,6 +419,15 @@ export default Ember.Component.extend({
         this.sendAction('refreshWall');
         this.set('computedHeight',  this.$().height());
         this.set('computedWidth', this.$().width());
+
+  //
+  //  Use a closure to hide the local variables from the
+  //  global namespace
+  //
+
+
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+
     },
 
     fetchWidgetData: async function() {
@@ -544,7 +553,6 @@ export default Ember.Component.extend({
                 acc[cur] = newQueryParams[cur];
                 return acc;
             }, this.get("parameters"));
-            debugger;
             this.get('router').transitionTo('dashboards.dashboard', dashboardName, {
                 queryParams: queryParams
             }).then(function(route) {

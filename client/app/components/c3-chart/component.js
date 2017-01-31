@@ -69,6 +69,9 @@ export default Ember.Component.extend({
             } else if (this.get('name') === 'Events by Source'){
               this.set('data', this.get('aggregations.sources.buckets'));
               var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
+            } else if (this.get('name') === 'Funding by NIH Department') {
+              this.set('data', this.get('aggregations.funders.buckets'));
+              var columns = this.get('data').map(({ key, doc_count, awards }) => [key, awards.value]);
             } else {
                 this.set('data', this.get('aggregations.sources.buckets'));
                 var columns = [['FIC', 685870], ['NCATS', 11798267], ['NCCIH', 527109], ['NCI', 37421432], ['NEI', 9258786], ['NHGRI', 5050824], ['NHLBI', 37973512], ['NIA', 30039371], ['NIAAA', 6709896], ['NIAID', 44746441], ['NIAMS', 6571101], ['NIBIB', 4005180], ['NICHD', 13278402], ['NIDA', 29823005], ['NIDCD', 4439991], ['NIDCR', 1155900], ['NIDDK', 32526462], ['NIEHS', 4674188], ['NIGMS', 53652460], ['NIMH', 38119017], ['NINDS', 20635337], ['NINR', 1976020], ['NLM', 1069055], ['OD', 4275564]];

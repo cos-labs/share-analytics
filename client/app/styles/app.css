@@ -21,6 +21,25 @@
     float: right;
 }
 
+.object-detail {
+    margin: 0;
+    padding: 0 10px;
+}
+
+.object-detail > div {
+    margin-top: 10px;
+    margin-bottom: 8px 
+}
+
+.object-detail > div > span.label {
+    font-weight: 600; 
+}
+
+.object-detail h5 {
+    margin-top: 30px;
+}
+
+
 .dashboard {
     background: url("/images/ucsd_background.gif");
     padding-bottom: 80px;

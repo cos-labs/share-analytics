@@ -24,9 +24,8 @@ export default Ember.Component.extend({
 
         transitionToFacet(parameter) {
             let queryParams = {};
-            queryParams[this.get("item.facetDashParameter")] = parameter;
-            this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams).then(() => {
-            });
+            queryParams["query"] = parameter;
+            this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
         }
 
     }

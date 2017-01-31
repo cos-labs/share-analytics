@@ -419,6 +419,15 @@ export default Ember.Component.extend({
         this.sendAction('refreshWall');
         this.set('computedHeight',  this.$().height());
         this.set('computedWidth', this.$().width());
+
+  //
+  //  Use a closure to hide the local variables from the
+  //  global namespace
+  //
+
+
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+
     },
 
     fetchWidgetData: async function() {
@@ -430,19 +439,23 @@ export default Ember.Component.extend({
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
         let item = this.get('item');
+        let endpoint ='/search/creativeworks/_search?request_cache=true';
         let data = await Ember.$.ajax({
-            url: ENV.apiUrl + '/search/creativeworks/_search?request_cache=true',
+            url: ENV.apiUrl + endpoint,
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(this.get('item').post_body)
         });
+
         this.set('data', data);
         this.set('aggregations', data.aggregations);
         this.set('total', data.hits.total);
+
         if(item.chartType === 'relatedResearchers') {
             this.set('total', data.aggregations.relatedContributors.value);
         }
+
         this.set('docs', data.hits.hits.map((hit) => {
             let source = Ember.Object.create(hit._source);
             let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
@@ -534,24 +547,24 @@ export default Ember.Component.extend({
             this.set('configuring', false);
         },
 
-        transitionToFacet: function(dashboardName, queryParams) {
+        transitionToFacet: function(dashboardName, newQueryParams) {
             let self = this;
-            let institution = this.get('parameters.institution');
-            queryParams['institution'] = institution;
+            let queryParams = Object.keys(newQueryParams).reduce((acc, cur, idx, arr) => {
+                acc[cur] = newQueryParams[cur];
+                return acc;
+            }, this.get("parameters"));
             this.get('router').transitionTo('dashboards.dashboard', dashboardName, {
                 queryParams: queryParams
             }).then(function(route) {
-                Ember.run.schedule('afterRender', self, function() {
-                    let controller = route.get('controller');
-                    queryParams.keys().map((key) => {
-                        controller.set(key, queryParams[key]);
-                    });
-                    controller.set('back', 'backroute');
-                });
+                //Ember.run.schedule('afterRender', self, function() {
+                //    let controller = route.get('controller');
+                //    Object.keys(queryParams).map((key) => {
+                //        controller.set(key, queryParams[key]);
+                //    });
+                //    controller.set('back', 'backroute');
+                //});
+                //route.refresh();
             });
-            route.refresh();
-            //let url = 'https://share.osf.io/discover?q=' + d.name;
-            //window.open(url, '_blank');
         },
 
         saveWidget: function(){

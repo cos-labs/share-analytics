@@ -346,8 +346,8 @@ export default Ember.Route.extend({
                     },
                 ]
             },
-            funding: {
-               dasboardName: 'Applicaiton Funding',
+            awards: {
+               dasboardName: 'Applicaiton Awards',
                widgets: [
                    {
                        widgetType: "about-text-widget",

@@ -335,11 +335,17 @@ export default Ember.Component.extend({
                 }
                 d3.select(this.parentNode).append('text')
                     .text(self.data.reduce(function(acc, cur, idx, arr) {
+                        var string;
                         if (cur._source.id === d.data.id) {
                             if (cur._source.name) {
-                                return cur._source.name;
+                                string = cur._source.name
+                            } else {
+                                string = cur._source.id;
                             }
-                            return cur._source.id
+                            if (string.length > 38) {
+                                return string.substring(0,25) + "...";
+                            }
+                            return string;
                         }
                         return acc;
                     }, false))

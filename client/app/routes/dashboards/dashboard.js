@@ -1182,10 +1182,12 @@ export default Ember.Route.extend({
                 widgets: [
                     {
                         chartType: 'topContributors',
-                        widgetType: 'list-widget',
+                        widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 12,
-                        hideViewAll: true,
+                        facetDash: "agentDetail",
+                        dataType: 'contributors',
+                        facetDashParameter: "id",
                         post_body : {
                             "aggregations": {
                                 "listWidgetData": {
@@ -1198,24 +1200,29 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterName: "query",
+                                parameterPath: ["aggregations", "contributors", "terms", "field"],
+                                parameterName: "contributors_id_field",
+                                defaultValue: "lists.contributors.id.raw",
+                            },
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
                                 defaultValue: "*"
                             },
                             {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
+                                parameterName: "source",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
                             }
                         ],
-                        facetDash: "scholar"
                     }
                 ]
             },

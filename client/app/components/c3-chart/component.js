@@ -367,7 +367,9 @@ export default Ember.Component.extend({
     },
 
     actions: {
-        transitionToFacet(id) { //Two different items here; one refers to the widget; one refers to the datum.
+
+        transitionToFacet(id, override) { //Two different items here; one refers to the widget; one refers to the datum.
+            override = override || false;
             let queryParams = {};
             let data = this.get('data');
             let item = data.reduce((acc, cur, idx, arr) => {
@@ -377,7 +379,10 @@ export default Ember.Component.extend({
                 return acc;
             }, false);
             var facet = this.get("item.facetDashParameter");
-            let facetDash = this.get("item.facetDash");
+            var facetDash = this.get("item.facetDash");
+            if(override){
+                facetDash = override;
+            }
             if (facetDash === "url" && item.url) {
                 window.location.href = item.url;
                 return;
@@ -387,7 +392,7 @@ export default Ember.Component.extend({
                 if (facetDash === "objectDetail" || facetDash === "agentDetail") {
                     queryParams[facet] = item.id;
                 }
-                this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
+                this.attrs.transitionToFacet(facetDash, queryParams);
             }
         },
     }

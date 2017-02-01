@@ -1268,41 +1268,59 @@ export default Ember.Route.extend({
                 widgets: [
                     {
                         chartType: 'topContributors',
-                        widgetType: 'list-widget',
+                        widgetType: 'contributors-widget',
                         name: 'Data providers',
                         width: 12,
-                        post_body: {
-                            query: {
-                                bool: {
-                                    must: [
-                                        {
-                                            query_string: {query: query}
-                                        },
-                                        {
-                                            range: {
-                                                date: {
-                                                    gte: gte,
-                                                    lte: lte,
-                                                    format: "yyyy-MM-dd||yyyy"
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            from: 0,
-                            aggregations: {
-                                listWidgetData: {
-                                    terms: {
-                                        field: 'publishers.raw',
-                                        size: 100
-                                    }
-                                }
-                            }
-                        },
+                        indexVersion: "2",
+                        facetDash: "agentDetail",
+                        facetDashParameter: "id",
+                        hideViewAll: true,
+                        post_body: {},
                         postBodyParams: [
-                        ],
-                        facetDash: "institution"
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterName: "source"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "min_date",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "max_date",
+                                defaultValue: lte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
+                                parameterName: "date_range_format",
+                                defaultValue: "yyyy-MM-dd||yyyy"
+                            },
+                            {
+                                parameterPath: ["aggregations", "publishers", "terms", "field"],
+                                parameterName: "publisher_field",
+                                defaultValue: "lists.publishers.id.exact",
+                            },
+                            {
+                                parameterPath: ["aggregations", "publishers", "terms", "size"],
+                                parameterName: "publisher_size",
+                                defaultValue: 200,
+                            },
+                        ]
                     }
                 ]
             },

@@ -71,9 +71,8 @@ export default Ember.Component.extend({
             this.processData(NIH_HARDCODE);
         }
         if (this.get('name') === "Funding") {
-            this.processData('aggregations.funders.buckets'));
+            this.processData(this.get('aggregations.funders.buckets'));
         }
-            
     },
 
     processData: async function(data) {
@@ -99,6 +98,13 @@ export default Ember.Component.extend({
             this.set("data", await data);
         }
         if (this.get('name') === "Funding") {
+            data =  data.map(function(datum) {
+                datum._source = {
+                    id: datum.key
+                }
+                return datum;
+            });
+            debugger;
             this.set('data', await data);
         }
 
@@ -145,7 +151,8 @@ export default Ember.Component.extend({
 
             if (this.get('item.mappingType') === 'OBJECT_TO_ARRAY') {
                 var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
-                    
+            }
+
             if (this.get('item.mappingType') === 'OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY') {
                 var columns = this.get('data').map(({ key, doc_count, awards }) => [key, awards.value]);
             }
@@ -316,8 +323,12 @@ export default Ember.Component.extend({
                 }
                 d3.select(this.parentNode).append('text')
                     .text(self.data.reduce(function(acc, cur, idx, arr) {
+                        debugger;
                         if (cur._source.id === d.data.id) {
-                            return cur._source.name;
+                            if (cur._source.name) {
+                                return cur._source.name;
+                            }
+                            return cur._source.id
                         }
                         return acc;
                     }, false))
@@ -356,6 +367,7 @@ export default Ember.Component.extend({
     didRender() {
         //this.updateChart();
     },
+
     actions: {
         transitionToFacet(id) { //Two different items here; one refers to the widget; one refers to the datum.
             let queryParams = {};

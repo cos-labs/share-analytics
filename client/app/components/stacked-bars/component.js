@@ -17,10 +17,11 @@ export default Ember.Component.extend({
         let total = this.calculateTotal(items);
 
         let data = items.map((item, index) => {
+            let percentage = (item.doc_count*100/total).toFixed(2);
             return {
                 number: item.doc_count,
                 label: item.key,
-                percentage: Math.round(item.doc_count*100/total),
+                percentage: percentage,
                 background: this.get('pattern')[index] || '#666666'
             };
         });
@@ -31,12 +32,14 @@ export default Ember.Component.extend({
         let items = this.get('data');
         let chartElement = this.$(this.element).find(this.get('chartSelector'));
         chartElement.html('');
+        this.setWidths();
         for (var value of items) {
-            chartElement.append('<div class="stack" data-tooltip="'+ value.label + ': ' + value.percentage  + '%" style="width:'+ value.percentage +'%; background-color:'+ value.background+';"><span>'+ value.label + ': ' + value.percentage  + '%</span></div>');
+            chartElement.append('<div class="stack" data-tooltip="'+ value.label + ': ' + value.percentage  + '%" style="width:'+ value.width +'px; background-color:'+ value.background+';"><span>'+ value.label + ': ' + value.percentage  + '%</span></div>');
         }
     },
-    showHideLabel(component) {
-        let elements = component.$(this.element).find(this.get('chartSelector') + ' .stack');
+    showHideLabel() {
+        let component = this;
+        let elements = this.$(this.element).find(this.get('chartSelector') + ' .stack');
         elements.map(function(index, stack){
             let stackEl = component.$(stack);
             if(stackEl.width() < 100){
@@ -46,13 +49,39 @@ export default Ember.Component.extend({
             }
         });
     },
+    setWidths(){
+        let items = this.get('data');
+        let chartElementWidth = this.$(this.element).find(this.get('chartSelector')).width();
+        let residualPixel = 0; // How much percentage is left after rounding down
+        let topItem = null; // The item that has the highest percentage
+        let topItemPercentage = 0; // The highest item Percentage
+        for(var item of items){
+            let itemWidth;
+            let rawWidth = chartElementWidth/100*item.percentage;
+            if (rawWidth < 1){
+                itemWidth = 1;
+                residualPixel -= 1 - rawWidth;
+            } else {
+                itemWidth = Math.floor(rawWidth);
+                residualPixel += rawWidth - itemWidth;
+            }
+            if(item.percentage > topItemPercentage ) {
+                topItem = item;
+                topItemPercentage = item.percentage;
+            }
+            item.width = itemWidth;
+        }
+        topItem.itemWidth += residualPixel; // Add all residual pixel to biggest item;
+
+    },
     didInsertElement(){
         this.generateChart();
         let component  = this;
         component.$(window).on('resize', function(){
-            component.showHideLabel(component);
+            component.generateChart.call(component);// This is very expensive, will need to be revised for actual app
+            component.showHideLabel.call(component);
         });
-        component.showHideLabel(component);
+        component.showHideLabel.call(component);
     },
     init(){
         this._super(...arguments);

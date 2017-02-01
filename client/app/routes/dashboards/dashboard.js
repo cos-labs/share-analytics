@@ -1391,6 +1391,309 @@ export default Ember.Route.extend({
                             facetDash: "awards"
                         }
                 ]
+            },
+            institution2: {
+                dasboardName: 'Institution Overview Dashboard',
+                widgets: [
+                    {
+                        widgetType: "text-widget",
+                        name: "",
+                        width: 12,
+                        facetDash: "aboutDash",
+                        widgetSettings : {
+                            institution_id: 'ucsd'
+                        },
+                        content: "Data from the UC San Diego research community in the SHARE catalog.",
+                        showButton: true,
+                    },
+                    {
+                        widgetType: "query-widget",
+                        background_color: "000000",
+                        name: "",
+                        width: 8,
+                        facetDashParameter: "query",
+                        facetDash: "resultsList"
+                    },
+                    {
+                        chartType: 'totalResults',
+                        widgetType: 'number-widget',
+                        name: 'Total Results',
+                        width: 4,
+                        facetDash: "resultsList",
+                        height: 115,
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterName: "source"
+                            }
+                        ],
+                        widgetSettings : {
+                            fontSize: 2,
+                            fontColor: '#F44336'
+                        }
+                    },
+                    {
+                        chartType: 'highlightedCollections',
+                        widgetType: 'list-widget',
+                        name: 'Highlighted Collections',
+                        width: 12,
+                        facetDash: "objectDetail",
+                        facetDashParameter: "id",
+                        hideViewAll: true
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'c3-chart',
+                        name: 'Data Providers',
+                        indexVersion: "2",
+                        width: 6,
+                        mappingType: "OBJECT_TO_ARRAY",
+                        facetDash: "agentDetail",
+                        facetDashParameter: "id",
+                        widgetSettings : {
+                            viewAllRoute: 'providers'
+                        },
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterName: "source"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "min_date",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "max_date",
+                                defaultValue: lte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
+                                parameterName: "date_range_format",
+                                defaultValue: "yyyy-MM-dd||yyyy"
+                            },
+                            {
+                                parameterPath: ["aggregations", "publishers", "terms", "field"],
+                                parameterName: "publisher_field",
+                                defaultValue: "lists.publishers.id.exact",
+                            },
+                            {
+                                parameterPath: ["aggregations", "publishers", "terms", "size"],
+                                parameterName: "publisher_size",
+                                defaultValue: 200,
+                            },
+                        ],
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'c3-chart',
+                        name: 'Awards',
+                        facetDash: "funder",
+                        facetDashParameter: "funder",
+                        mappingType: "OBJECT_TO_ARRAY",
+                        width: 6,
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterName: "source",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            }
+                        ],
+                    },
+                    {
+                        widgetType: "stacked-bars",
+                        name: "Types",
+                        width: 12,
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterName: "source"
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["aggregations", "stackedData", "terms", "field"],
+                                parameterName: "type_field",
+                                defaultValue: "types.raw",
+                            },
+                        ]
+                    },
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'contributors-widget',
+                        name: 'Top Contributors',
+                        width: 6,
+                        facetDash: "agentDetail",
+                        dataType: 'contributors',
+                        facetDashParameter: "id",
+                        post_body : {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["aggregations", "contributors", "terms", "field"],
+                                parameterName: "contributors_id_field",
+                                defaultValue: "lists.contributors.id.raw",
+                            },
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "source",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                            }
+                        ],
+                    },
+
+                    {
+                        chartType: 'tagsList',
+                        widgetType: 'list-widget',
+                        name: 'Top Tags',
+                        facetDash: "resultsList",
+                        facetDashParameter: "tags",
+                        width: 6,
+                        dataType: 'tags',
+                        post_body : {
+                            from: 0,
+                            aggregations: {
+                                listWidgetData : {
+                                    terms : {
+                                        field: 'tags',
+                                        size: 10
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterName: "source",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "tag_blacklist",
+                                parameterPath: ["query", "bool", "must_not", 0, "terms", "tags"],
+                                defaultValue: tag_blacklist
+                            }
+                        ],
+                    },
+                    {
+                        chartType: 'recentlyAdded',
+                        widgetType: 'list-widget',
+                        name: 'Recently Added',
+                        facetDash: "objectDetail",
+                        facetDashParameter: "id",
+                        width: 12,
+                        post_body : {
+                          "sort": { "date": { "order": "desc" }}
+                        },
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterName: "source",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                            },
+                            {
+                                parameterName: "recently_added_sort",
+                                parameterPath: ["sort", "date", "order"],
+                                defaultValue: "desc"
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            }
+                        ],
+                    }
+                ]
             }
         };
 

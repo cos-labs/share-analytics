@@ -1312,8 +1312,9 @@ export default Ember.Route.extend({
                         {
                             chartType: 'donut',
                             widgetType: 'c3-chart',
-                            name: 'Funding by NIH Department',
+                            name: 'Funding',
                             width: 6,
+                            mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
                             post_body: {
                                 "aggregations": {
                                     "funders": {

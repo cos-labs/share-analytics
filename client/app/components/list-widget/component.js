@@ -92,7 +92,7 @@ export default Ember.Component.extend({
                 window.location.href = "http://share.osf.io/agent/" + id;
             }
         },
-        
+
         transitionToViewAll(item) {
             this.attrs.transitionToFacet(item.dataType, item);
         }

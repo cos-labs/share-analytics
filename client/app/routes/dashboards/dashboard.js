@@ -773,8 +773,8 @@ export default Ember.Route.extend({
                         chartType: 'tagsList',
                         widgetType: 'list-widget',
                         name: 'Top Tags',
-                        facetDash: "url",
-                        facetDashParameter: "topic",
+                        facetDash: "resultsList",
+                        facetDashParameter: "tags",
                         width: 6,
                         dataType: 'tags',
                         post_body : {
@@ -818,7 +818,8 @@ export default Ember.Route.extend({
                         chartType: 'recentlyAdded',
                         widgetType: 'list-widget',
                         name: 'Recently Added',
-                        facetDash: "url",
+                        facetDash: "objectDetail",
+                        facetDashParameter: "id",
                         width: 12,
                         post_body : {
                           "sort": { "date": { "order": "desc" }}

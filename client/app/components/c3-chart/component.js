@@ -148,6 +148,19 @@ export default Ember.Component.extend({
 
             var _data = this.get('data');
 
+            if (this.get('data').length === 0 && this.get('name') === 'Data Providers') {
+                var key = 'UC San Diego Library';
+                var data = [{
+                   'key': key,
+                   'doc_count': 55,
+                   '_source': {
+                      'id': key,
+                      'name': key
+                   }
+                }];
+                this.set('data', data);
+            }
+
             if (this.get('item.mappingType') === 'OBJECT_TO_ARRAY') {
                 var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
             }

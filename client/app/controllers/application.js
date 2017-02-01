@@ -15,6 +15,11 @@ export default Ember.Controller.extend(OsfAgnosticAuthControllerMixin,{
         },
         loginFail(/* err */) {
             this.get('toast').error('Login failed');
+        },
+        transitionToHome(){
+            this.transitionToRoute('dashboards.dashboard', 'institution', {
+                queryParams: {all : 'ucsd'}
+            });
         }
     }
 });

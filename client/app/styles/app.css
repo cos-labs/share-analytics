@@ -7,18 +7,24 @@
     overflow: hidden;
     top: 0;
     width: 100%;
-    padding: 20px;
-    padding-bottom: 18px;
+    padding: 8px 0;
     background-color:#fff;
     border-bottom: 3px solid #FFCD00;
     -webkit-box-shadow: 0 0 50px 10px rgba(0,0,0,.4);
     box-shadow: 0 0 50px 10px rgba(0,0,0,.4);
     z-index: 10000;
 }
+.navbar-brand {
+    font-size: 23px;
+    cursor: pointer;
+}
+.navbar-brand:hover {
+    opacity: 0.8;
+}
 /* light blue 006A96 */
 .ucsd_header img {
     max-height: 30px;
-    float: right;
+    margin-top: 12px;
 }
 
 .object-detail {
@@ -28,11 +34,11 @@
 
 .object-detail > div {
     margin-top: 10px;
-    margin-bottom: 8px 
+    margin-bottom: 8px
 }
 
 .object-detail > div > span.label {
-    font-weight: 600; 
+    font-weight: 600;
 }
 
 .object-detail h5 {

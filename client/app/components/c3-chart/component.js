@@ -104,7 +104,6 @@ export default Ember.Component.extend({
                 }
                 return datum;
             });
-            debugger;
             this.set('data', await data);
         }
 
@@ -323,7 +322,6 @@ export default Ember.Component.extend({
                 }
                 d3.select(this.parentNode).append('text')
                     .text(self.data.reduce(function(acc, cur, idx, arr) {
-                        debugger;
                         if (cur._source.id === d.data.id) {
                             if (cur._source.name) {
                                 return cur._source.name;

@@ -163,6 +163,8 @@ export default Ember.Route.extend({
         tags: {refreshModel: true},
         source: {refreshModel: true},
         id: {refreshModel: true},
+        scholar: {refreshModel: true},
+        all: {refreshModel: true},
         contributors: {refreshModel: true},
         special_filter: {refresh_model: true}
     },
@@ -470,6 +472,25 @@ export default Ember.Route.extend({
                     },
                 ]
             },
+            agentDetail: {
+                dasboardName: 'Agent Detail Dashboard',
+                widgets: [
+                    {
+                        widgetType: "agent-detail-widget",
+                        background_color: "000000",
+                        name: "",
+                        width: 12,
+                        endpoint: "agents",
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterName: "id",
+                                parameterPath: ["query", "bool", "must", 0, "term", "_id"],
+                            }
+                        ]
+                    },
+                ]
+            },
             resultsList: {
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
@@ -494,7 +515,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -513,16 +534,34 @@ export default Ember.Route.extend({
                     }
                 ]
             },
+            aboutDash: {
+                dashboardName: "About",
+                widgets: [
+                    {
+                        widgetType: "text-widget",
+                        name: "",
+                        width: 12,
+                        facetDash: "aboutDash",
+                        widgetSettings : {
+                            institution_id: 'ucsd'
+                        },
+                        content: "<h5><b>What is this?</b></h5><p>The Research Data Catalog pulls information about data created by members of the UC San Diego research community from the SHARE database.</p><h5><b>Where does the data come from?</b></h5><p>SHARE is a higher education initiative whose mission is to maximize research impact by making a comprehensive inventory of research widely discoverable, accessible, and reusable. To fulfill this mission SHARE is creating an openly available data set about research activities across their life cycle.</p><p>The SHARE infrastructure was developed by the Association of Research Libraries in partnership with the Center for Open Science. SHARE is funded by the Institute of Museum and Library Services and the Alfred P. Sloan Foundation. The SHARE initiative was founded in 2013 by ARL, the Association of American Universities (AAU), and the Association of Public and Land-grant Universities (APLU).</p><p>The Research Data Catalog is a joint development effort between the SHARE team and the UC San Diego Library. The Library team includes members of the Research Data Curation, Metadata Services and Information Technology Programs.</p><h5>How do I get my data listed?</h5><p>SHARE harvests from {X number of} sources from around the world. Publishing data in any of these services will have it harvested. NOTE HOWEVER that for your data to be represented in the Research Data Catalog, it must be clearly identified as coming from UC San Diego. How this is done will vary by source. For help, please contact the UC San Diego Library.</p><p>In addition to these sources, the UC San Diego Library can manually enter information into the SHARE catalog. Contact them to begin the process. The Library also hosts data data via its Data Collections website, which also publishes to the SHARE catalog. Contact them for more information.</p><h5>I see an error in the representation of my data! How do I correct it?</h5><p>Because SHARE harvests from more than X number of international services, there will be different answers to this question. Contact the UC San Diego Library for help.</p>"
+                    },
+                ]
+            },
             institution: {
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
                     {
-                        widgetType: "about-text-widget",
+                        widgetType: "text-widget",
                         name: "",
                         width: 12,
+                        facetDash: "aboutDash",
                         widgetSettings : {
                             institution_id: 'ucsd'
-                        }
+                        },
+                        content: "Data from the UC San Diego research community in the SHARE catalog.",
+                        showButton: true,
                     },
                     {
                         widgetType: "query-widget",
@@ -548,7 +587,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -570,14 +609,19 @@ export default Ember.Route.extend({
                         widgetType: 'list-widget',
                         name: 'Highlighted Collections',
                         width: 6,
-                        facetDash: "url",
+                        facetDash: "objectDetail",
+                        facetDashParameter: "id",
                         hideViewAll: true
                     },
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
+                        indexVersion: "2",
                         width: 6,
+                        mappingType: "OBJECT_TO_ARRAY",
+                        facetDash: "agentDetail",
+                        facetDashParameter: "id",
                         widgetSettings : {
                             viewAllRoute: 'providers'
                         },
@@ -590,7 +634,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -619,7 +663,7 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "publishers", "terms", "field"],
                                 parameterName: "publisher_field",
-                                defaultValue: "publishers.raw",
+                                defaultValue: "lists.publishers.id.exact",
                             },
                             {
                                 parameterPath: ["aggregations", "publishers", "terms", "size"],
@@ -627,7 +671,6 @@ export default Ember.Route.extend({
                                 defaultValue: 200,
                             },
                         ],
-                        facetDash: "institution"
                     },
                     {
                         widgetType: "stacked-bars",
@@ -651,7 +694,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
                                 parameterPath: ["aggregations", "stackedData", "terms", "field"],
@@ -682,7 +725,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -698,9 +741,10 @@ export default Ember.Route.extend({
                     {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
-                        name: 'NIH Awards 2016',
+                        name: 'Awards',
                         facetDash: "funder",
                         facetDashParameter: "funder",
+                        mappingType: "OBJECT_TO_ARRAY",
                         width: 6,
                         post_body: {},
                         postBodyParams: [
@@ -711,7 +755,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
                                 parameterName: "source",
@@ -751,7 +795,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
                                 parameterName: "source",
@@ -786,7 +830,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
                                 parameterName: "source",
@@ -1227,24 +1271,29 @@ export default Ember.Route.extend({
                         width: 12,
                         post_body: {
                             query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
+                                bool: {
+                                    must: [
+                                        {
+                                            query_string: {query: query}
+                                        },
+                                        {
+                                            range: {
+                                                date: {
+                                                    gte: gte,
+                                                    lte: lte,
+                                                    format: "yyyy-MM-dd||yyyy"
+                                                }
+                                            }
                                         }
-                                    }
-                                ]}
+                                    ]
+                                }
                             },
                             from: 0,
                             aggregations: {
                                 listWidgetData: {
                                     terms: {
-                                         field: 'publishers.raw',
-                                         size: 100
+                                        field: 'publishers.raw',
+                                        size: 100
                                     }
                                 }
                             }
@@ -1252,7 +1301,7 @@ export default Ember.Route.extend({
                         postBodyParams: [
                         ],
                         facetDash: "institution"
-                  }
+                    }
                 ]
             }
         };

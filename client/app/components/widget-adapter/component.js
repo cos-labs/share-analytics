@@ -439,7 +439,13 @@ export default Ember.Component.extend({
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
         let item = this.get('item');
-        let endpoint ='/search/creativeworks/_search?request_cache=true';
+        var endpoint ='/search/creativeworks/_search?request_cache=true';
+        if (item.endpoint) {
+            endpoint = '/search/' + item.endpoint + '/_search?request_cache=true';
+        }
+        if (item.indexVersion) {
+            endpoint += "&v=" + item.indexVersion;
+        }
         let data = await Ember.$.ajax({
             url: ENV.apiUrl + endpoint,
             crossDomain: true,
@@ -456,7 +462,7 @@ export default Ember.Component.extend({
             this.set('total', data.aggregations.relatedContributors.value);
         }
 
-        this.set('docs', data.hits.hits.map((hit) => {
+        /*this.set('docs', data.hits.hits.map((hit) => {
             let source = Ember.Object.create(hit._source);
             let r = source.getProperties('type', 'title', 'description', 'language', 'date', 'date_created', 'date_modified', 'date_updated', 'date_published', 'tags', 'sources');
             r.id = hit._id;
@@ -467,6 +473,7 @@ export default Ember.Component.extend({
             r.organizations = source.lists.organizations;
             return r;
         }));
+        */
     },
 
     applyGraphSetting: function(){

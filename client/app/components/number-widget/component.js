@@ -40,7 +40,7 @@ export default Ember.Component.extend({
                 return;
             }
             if (facetDash) {
-                this.attrs.transitionToFacet(this.get('item.facetDash'));
+                this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
             }
         }
 

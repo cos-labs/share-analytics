@@ -1,16 +1,83 @@
 /* global c3 */
 import Ember from 'ember';
+import ENV from 'analytics-dashboard/config/environment';
+
+const NIH_HARDCODE = [
+    {key: 'FIC', doc_count: 685870},
+    {key: 'NCATS', doc_count: 11798267},
+    {key:'NCCIH', doc_count: 527109},
+    {key:'NCI', doc_count: 37421432},
+    {key:'NEI', doc_count: 9258786},
+    {key:'NHGRI', doc_count: 5050824},
+    {key:'NHLBI', doc_count: 37973512},
+    {key:'NIA', doc_count: 30039371},
+    {key:'NIAAA', doc_count: 6709896},
+    {key:'NIAID', doc_count: 44746441},
+    {key:'NIAMS', doc_count: 6571101},
+    {key:'NIBIB', doc_count: 4005180},
+    {key:'NICHD', doc_count: 13278402},
+    {key:'NIDA', doc_count: 29823005},
+    {key:'NIDCD', doc_count: 4439991},
+    {key:'NIDCR', doc_count: 1155900},
+    {key:'NIDDK', doc_count: 32526462},
+    {key:'NIEHS', doc_count: 4674188},
+    {key:'NIGMS', doc_count: 53652460},
+    {key:'NIMH', doc_count: 38119017},
+    {key:'NINDS', doc_count: 20635337},
+    {key:'NINR', doc_count: 1976020},
+    {key:'NLM', doc_count: 1069055},
+    {key:'OD', doc_count: 4275564}
+];
 
 export default Ember.Component.extend({
 
     classNames: ['chart'],
     charttitle: 'Untitled Chart',
 
-    dataChanged: Ember.observer('aggregations', function() {
+    dataChanged: Ember.observer('data', function() {
+        this.updateChart();
+    }),
+
+    dataChanged2: Ember.observer('data.[]', function() {
         this.updateChart();
     }),
 
     data: [],
+
+    init() {
+        this._super(...arguments);
+        if (this.get('name') === 'Data Providers') {
+            this.processData(this.get("aggregations.publishers.buckets"))
+        }
+        if (this.get('name') === "Awards") {
+            this.processData(NIH_HARDCODE);
+        }
+    },
+
+    processData: async function(data) {
+        if (this.get('name') === 'Data Providers') {
+            this.set("data",
+                await Ember.RSVP.Promise.all(
+                    data.map(async function(datum, index, array) {
+                        let agent_info = await Ember.$.ajax({
+                            url: ENV.apiUrl + '/search/agents/' + datum.key,
+                            crossDomain: true,
+                            type: 'GET',
+                            contentType: 'application/json',
+                        });
+                        data[index]._source = agent_info._source;
+                        data[index].doc_count = data[index].doc_count;
+                        data[index].key = data[index].key;
+                        return data[index];
+                    })
+                )
+            );
+        }
+        if (this.get('name') === "Awards") {
+            this.set("data", await data);
+        }
+        
+    },
 
     sizeChanged: Ember.observer('resizedSignal', function() {
         if (this.get('resizedSignal') === false) { return; }
@@ -22,8 +89,9 @@ export default Ember.Component.extend({
         this.updateChart();
     }),
 
-    updateChart() {
+    updateChart: async function() {
 
+        var self = this;
         function log10ToLinear(log_num) {
             if (log_num <= 0) {
                 return 0;
@@ -46,10 +114,7 @@ export default Ember.Component.extend({
                 columns: null, //to be filled later
                 type: chart_type,
                 onclick: (d) => {
-                    let queryParams = {
-                        'id': d.id
-                    };
-                    this.attrs.transitionToFacet('topic', queryParams);
+                    self.get('actions').transitionToFacet.call(self, d.id);
                 },
             },
             legend: { show: false },
@@ -63,16 +128,13 @@ export default Ember.Component.extend({
 
         if (chart_type == 'donut') {
             var title = '';
-            if (this.get('name') === 'Data Providers') {
-              this.set('data', this.get('aggregations.publishers.buckets'));
-              var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
-            } else if (this.get('name') === 'Events by Source'){
-              this.set('data', this.get('aggregations.sources.buckets'));
-              var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
-            } else {
-                this.set('data', this.get('aggregations.sources.buckets'));
-                var columns = [['FIC', 685870], ['NCATS', 11798267], ['NCCIH', 527109], ['NCI', 37421432], ['NEI', 9258786], ['NHGRI', 5050824], ['NHLBI', 37973512], ['NIA', 30039371], ['NIAAA', 6709896], ['NIAID', 44746441], ['NIAMS', 6571101], ['NIBIB', 4005180], ['NICHD', 13278402], ['NIDA', 29823005], ['NIDCD', 4439991], ['NIDCR', 1155900], ['NIDDK', 32526462], ['NIEHS', 4674188], ['NIGMS', 53652460], ['NIMH', 38119017], ['NINDS', 20635337], ['NINR', 1976020], ['NLM', 1069055], ['OD', 4275564]];
+
+            var _data = this.get('data');
+
+            if (this.get('item.mappingType') === 'OBJECT_TO_ARRAY') {
+                var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
             }
+
         } else if (chart_type === 'bar') {
 
             this.set('data', this.get('aggregations.contributors.buckets'));
@@ -215,12 +277,32 @@ export default Ember.Component.extend({
     },
 
     didRender() {
-        this.updateChart();
+        //this.updateChart();
     },
-    actions : {
-        transitionToViewAll(item) {
-            this.attrs.transitionToFacet('providers', item);
-        }
+    actions: {
+        transitionToFacet(id) { //Two different items here; one refers to the widget; one refers to the datum.
+            let queryParams = {};
+            let data = this.get('data');
+            let item = data.reduce((acc, cur, idx, arr) => {
+                if (cur.id = id) {
+                    return cur;
+                }
+                return acc;
+            }, false);
+            var facet = this.get("item.facetDashParameter");
+            let facetDash = this.get("item.facetDash");
+            if (facetDash === "url" && item.url) {
+                window.location.href = item.url;
+                return;
+            }
+            if (facet) {
+                queryParams[facet] = item.name;
+                if (facetDash === "objectDetail" || facetDash === "agentDetail") {
+                    queryParams[facet] = item.id;
+                }
+                this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
+            }
+        },
     }
 
 });

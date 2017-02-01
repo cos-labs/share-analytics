@@ -17,6 +17,7 @@ export default Ember.Controller.extend(OsfAgnosticAuthControllerMixin,{
             this.get('toast').error('Login failed');
         },
         transitionToHome(){
+            debugger;
             this.transitionToRoute('dashboards.dashboard', 'institution', {
                 queryParams: {all : 'ucsd'}
             });

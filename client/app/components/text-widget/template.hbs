@@ -1,6 +1,7 @@
-<div class="widget-body" style="overflow: hidden;">
-    {{{item.content}}}
-    {{#if item.showButton}}
-        <button class="btn" style="float: right; margin-bottom: 15px; margin-top:20px;" {{action "transitionToFacet"}}>More details.</button>
-    {{/if}}
+<div class="widget-body text-widget {{if item.showButton 'summary'}}" style="overflow: hidden;">
+    <div>{{{item.content}}}
+        {{#if item.showButton}}
+            <button class="btn btn-info pull-right" {{action "transitionToFacet"}}>Read more</button>
+        {{/if}}
+    </div>
 </div>

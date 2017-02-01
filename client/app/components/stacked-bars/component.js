@@ -1,5 +1,8 @@
 import Ember from 'ember';
 
+const ucsd_lucene_query = 'contributors:(UCSD%20OR%20"UC%20San%20Diego"%20OR%20"UC%20San%20Diego%20Library"%20OR%20"UC%20San%20Diego%20Library%20Digital%20Collections"%20OR%20"Scripps%20Institution%20of%20Oceanography"%20OR%20"Scripps%20Institute%20of%20Oceanography"%20OR%20"University%20of%20California%20San%20Diego"%20OR%20"Univ%20of%20california%20san%20diego"%20OR%20"University%20of%20CA%20San%20Diego")%20OR%20publishers:(UCSD%20OR%20"UC%20San%20Diego"%20OR%20"UC%20San%20Diego%20Library"%20OR%20"UC%20San%20Diego%20Library%20Digital%20Collections"%20OR%20"Scripps%20Institution%20of%20Oceanography"%20OR%20"Scripps%20Institute%20of%20Oceanography"%20OR%20"University%20of%20California%20San%20Diego"%20OR%20"Univ%20of%20california%20san%20diego"%20OR%20"University%20of%20CA%20San%20Diego")%20OR%20funders:(UCSD%20OR%20"UC%20San%20Diego"%20OR%20"UC%20San%20Diego%20Library"%20OR%20"UC%20San%20Diego%20Library%20Digital%20Collections"%20OR%20"Scripps%20Institution%20of%20Oceanography"%20OR%20"Scripps%20Institute%20of%20Oceanography"%20OR%20"University%20of%20California%20San%20Diego"%20OR%20"Univ%20of%20california%20san%20diego"%20OR%20"University%20of%20CA%20San%20Diego")%20OR%20title:(UCSD%20OR%20"UC%20San%20Diego"%20OR%20"UC%20San%20Diego%20Library"%20OR%20"UC%20San%20Diego%20Library%20Digital%20Collections"%20OR%20"Scripps%20Institution%20of%20Oceanography"%20OR%20"Scripps%20Institute%20of%20Oceanography"%20OR%20"University%20of%20California%20San%20Diego"%20OR%20"Univ%20of%20california%20san%20diego"%20OR%20"University%20of%20CA%20San%20Diego")%20OR%20hosts:(UCSD%20OR%20"UC%20San%20Diego"%20OR%20"UC%20San%20Diego%20Library"%20OR%20"UC%20San%20Diego%20Library%20Digital%20Collections"%20OR%20"Scripps%20Institution%20of%20Oceanography"%20OR%20"Scripps%20Institute%20of%20Oceanography"%20OR%20"University%20of%20California%20San%20Diego"%20OR%20"Univ%20of%20california%20san%20diego"%20OR%20"University%20of%20CA%20San%20Diego")%20OR%20%20tags:ucsd%20OR%20tags:"scripps%20institution%20of%20oceanography"';
+const minLabelWidth = 90;
+
 export default Ember.Component.extend({
     chartSelector: '.widget-stackedBar',
     data:[],
@@ -22,7 +25,8 @@ export default Ember.Component.extend({
                 number: item.doc_count,
                 label: item.key,
                 percentage: percentage,
-                background: this.get('pattern')[index] || '#666666'
+                background: this.get('pattern')[index] || '#666666',
+                url: "https://share.osf.io/discover?q=" + ucsd_lucene_query + "&type=" + item.key
             };
         });
         this.set('data', data);
@@ -33,8 +37,9 @@ export default Ember.Component.extend({
         let chartElement = this.$(this.element).find(this.get('chartSelector'));
         chartElement.html('');
         this.setWidths();
-        for (var value of items) {
-            chartElement.append('<div class="stack" data-tooltip="'+ value.label + ': ' + value.percentage  + '%" style="width:'+ value.width +'px; background-color:'+ value.background+';"><span>'+ value.label + ': ' + value.percentage  + '%</span></div>');
+        for (var j = 0; j < items.length; j++) {
+            let value = items[j];
+            chartElement.append('<div class="stack" data-index="' + j + '" data-tooltip="'+ value.label + ': ' + value.percentage  + '%" style="width:'+ value.width +'px; background-color:'+ value.background+';"><span>'+ value.label + ': ' + value.percentage  + '%</span></div>');
         }
     },
     showHideLabel() {
@@ -42,7 +47,7 @@ export default Ember.Component.extend({
         let elements = this.$(this.element).find(this.get('chartSelector') + ' .stack');
         elements.map(function(index, stack){
             let stackEl = component.$(stack);
-            if(stackEl.width() < 100){
+            if(stackEl.width() < minLabelWidth){
                 stackEl.children('span').hide();
             } else {
                 stackEl.children('span').show();
@@ -82,10 +87,18 @@ export default Ember.Component.extend({
             component.showHideLabel.call(component);
         });
         component.showHideLabel.call(component);
+        component.$('.stack').click(function(event){
+            let index = component.$(event.target).attr('data-index');
+            let item = component.get('data')[index];
+            if (item.url) {
+                window.location.href = item.url;
+                return;
+            }
+        })
     },
     init(){
         this._super(...arguments);
         this.setData();
-    },
+    }
 
 });

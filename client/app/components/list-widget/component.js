@@ -63,6 +63,10 @@ export default Ember.Component.extend({
             if (this.get("chartType") === "tagsList") {
                 processed_datum["url"] = "https://share.osf.io/discover?q=" + ucsd_lucene_query + "&tags=" + raw_datum["key"];
             }
+            if (this.get("chartType") === "topContributors") {
+                processed_datum["url"] = "https://share.osf.io/discover?q=" + ucsd_lucene_query + "&publisher=" + raw_datum["key"];
+            }
+
             return processed_datum;
         }));
     },

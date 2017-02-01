@@ -49,7 +49,12 @@ export default Ember.Component.extend({
             this.set('data', data);
         }
         else {
-            this.processData(this.get('aggregations.contributors.buckets'));
+            if(this.get('aggregations.contributors')){
+                this.processData(this.get('aggregations.contributors.buckets'));
+            }
+            if(this.get('aggregations.publishers')){
+                this.processData(this.get('aggregations.publishers.buckets'));
+            }
         }
 
     },

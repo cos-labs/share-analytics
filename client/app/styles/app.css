@@ -45,7 +45,12 @@
     margin-top: 30px;
 }
 
-
+.is-link {
+    cursor: pointer;
+}
+.is-link:hover {
+    opacity: 0.8;
+}
 .dashboard {
     background: url("/images/ucsd_background.gif");
     padding-bottom: 80px;

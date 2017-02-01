@@ -741,35 +741,68 @@ export default Ember.Route.extend({
                         ],
                     },
                     {
-                        chartType: 'donut',
-                        widgetType: 'c3-chart',
-                        name: 'Awards',
-                        facetDash: "funder",
-                        facetDashParameter: "funder",
-                        mappingType: "OBJECT_TO_ARRAY",
-                        width: 6,
-                        post_body: {},
-                        postBodyParams: [
-                            {
-                                parameterPath: ["query", "bool", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
+                            chartType: 'donut',
+                            widgetType: 'c3-chart',
+                            name: 'Funding',
+                            width: 6,
+                            mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
+                            post_body: {
+                                "aggregations": {
+                                    "funders": {
+                                        "terms": {
+                                            "field": "funders.raw"
+                                        },
+                                        "aggs": {
+                                            "awards": {
+                                                "sum": {
+                                                    "script": {
+                                                        "lang": "expression",
+                                                        "inline": "doc['lists.funders.awards.amount'].sum()"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             },
-                            {
-                                parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
-                            },
-                            {
-                                parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
-                            },
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            }
-                        ],
-                    },
+                            postBodyParams: [
+                                {
+                                    parameterPath: ["query", "bool", "minimum_should_match"],
+                                    parameterName: "shouldMatch",
+                                    defaultValue: 1
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "should"],
+                                    defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                    parameterName: "query",
+                                    defaultValue: "affiliations: \"University of California San Diego\""
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "filter", 0, "terms", "sources.raw"],
+                                    parameterName: "sources",
+                                    defaultValue: ["NIH Research Portal Online Reporting Tools", "NSF Awards"]
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                    parameterName: "min_date",
+                                    defaultValue: gte
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                    parameterName: "max_date",
+                                    defaultValue: lte
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
+                                    parameterName: "date_range_format",
+                                    defaultValue: "yyyy-MM-dd||yyyy"
+                                }
+                            ],
+                            facetDash: "awards"
+                        },
                     {
                         chartType: 'tagsList',
                         widgetType: 'list-widget',
@@ -1525,35 +1558,68 @@ export default Ember.Route.extend({
                         ],
                     },
                     {
-                        chartType: 'donut',
-                        widgetType: 'c3-chart',
-                        name: 'Awards',
-                        facetDash: "funder",
-                        facetDashParameter: "funder",
-                        mappingType: "OBJECT_TO_ARRAY",
-                        width: 6,
-                        post_body: {},
-                        postBodyParams: [
-                            {
-                                parameterPath: ["query", "bool", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
+                            chartType: 'donut',
+                            widgetType: 'c3-chart',
+                            name: 'Awards',
+                            width: 6,
+                            mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
+                            post_body: {
+                                "aggregations": {
+                                    "funders": {
+                                        "terms": {
+                                            "field": "funders.raw"
+                                        },
+                                        "aggs": {
+                                            "awards": {
+                                                "sum": {
+                                                    "script": {
+                                                        "lang": "expression",
+                                                        "inline": "doc['lists.funders.awards.amount'].sum()"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             },
-                            {
-                                parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
-                            },
-                            {
-                                parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
-                            },
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            }
-                        ],
-                    },
+                            postBodyParams: [
+                                {
+                                    parameterPath: ["query", "bool", "minimum_should_match"],
+                                    parameterName: "shouldMatch",
+                                    defaultValue: 1
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "should"],
+                                    defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                    parameterName: "query",
+                                    defaultValue: "affiliations: \"University of California San Diego\""
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "filter", 0, "terms", "sources.raw"],
+                                    parameterName: "sources",
+                                    defaultValue: ["NIH Research Portal Online Reporting Tools", "NSF Awards"]
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                    parameterName: "min_date",
+                                    defaultValue: gte
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                    parameterName: "max_date",
+                                    defaultValue: lte
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
+                                    parameterName: "date_range_format",
+                                    defaultValue: "yyyy-MM-dd||yyyy"
+                                }
+                            ],
+                            facetDash: "awards"
+                        },
                     {
                         widgetType: "stacked-bars",
                         name: "Types",
@@ -1620,7 +1686,6 @@ export default Ember.Route.extend({
                             }
                         ],
                     },
-
                     {
                         chartType: 'tagsList',
                         widgetType: 'list-widget',

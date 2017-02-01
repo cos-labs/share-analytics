@@ -100,8 +100,9 @@ export default Ember.Component.extend({
         if (this.get('name') === "Funding") {
             data =  data.map(function(datum) {
                 datum._source = {
-                    id: datum.key
-                }
+                    id: datum.key,
+                    name: datum.key
+                };
                 return datum;
             });
             this.set('data', await data);

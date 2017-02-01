@@ -1347,7 +1347,7 @@ export default Ember.Route.extend({
                                 {
                                     parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                     parameterName: "query",
-                                    defaultValue: "*"
+                                    defaultValue: "affiliations: \"University of California San Diego\""
                                 },
                                 {
                                     parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],

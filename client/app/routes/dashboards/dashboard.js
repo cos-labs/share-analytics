@@ -1347,12 +1347,12 @@ export default Ember.Route.extend({
                                 {
                                     parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                     parameterName: "query",
-                                    defaultValue: "*"
+                                    defaultValue: "affiliations: \"University of California San Diego\""
                                 },
                                 {
-                                    parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                    parameterPath: ["query", "bool", "filter", 0, "terms", "sources.raw"],
                                     parameterName: "sources",
-                                    defaultValue: "NIH Research Portal Online Reporting Tools"
+                                    defaultValue: ["NIH Research Portal Online Reporting Tools", "NSF Awards"]
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],

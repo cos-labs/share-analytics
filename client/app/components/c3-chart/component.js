@@ -30,6 +30,14 @@ const NIH_HARDCODE = [
     {key:'OD', doc_count: 4275564}
 ];
 
+const NIH_LABELS = {
+  'national cancer institute': 'NCI',
+  'national institute of allergy and infectious diseases': 'NIAID',
+  'national institute on aging': 'NIA',
+  'national institute of general medical sciences': 'NIGMS',
+  'national institute of mental health': 'NIMH',
+  'national heart': 'NHLBI'
+};
 
 function log10ToLinear(log_num) {
     if (log_num <= 0) {
@@ -46,6 +54,12 @@ function linearToLog10(lin_num) {
     return (Math.log(lin_num) / Math.LN10) + 1;
 }
 
+function getLabel(label) {
+    if (NIH_LABELS[label.toLowerCase()]) {
+        return NIH_LABELS[label.toLowerCase()];
+    }
+    return label;
+}
 
 export default Ember.Component.extend({
 
@@ -181,7 +195,8 @@ export default Ember.Component.extend({
                         }, false);
                     },
                     value: function (value, percent, id) {
-                        return Math.floor(percent*100) + "% (" + value + " records)"; // This isn't perfect, but it's at least more verbose than before
+                        var units = self.get('name') === 'Funding' ? 'dollars' : 'records';
+                        return Math.floor(percent*100) + "% (" + value + " " + units; // This isn't perfect, but it's at least more verbose than before
                     }
                 }
             };
@@ -334,7 +349,9 @@ export default Ember.Component.extend({
                     .text(self.data.reduce(function(acc, cur, idx, arr) {
                         var string;
                         if (cur._source.id === d.data.id) {
-                            if (cur._source.name) {
+                            if (self.get('name') === 'Funding') {
+                               string = getLabel(cur._source.id);
+                            } else if (cur._source.name) {
                                 string = cur._source.name
                             } else {
                                 string = cur._source.id;

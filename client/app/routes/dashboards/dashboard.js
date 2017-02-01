@@ -1305,6 +1305,73 @@ export default Ember.Route.extend({
                         facetDash: "institution"
                     }
                 ]
+            },
+            awards: {
+                "dashboardName": "Awards Dashboard",
+                "widgets": [
+                        {
+                            chartType: 'donut',
+                            widgetType: 'c3-chart',
+                            name: 'Funding by NIH Department',
+                            width: 6,
+                            post_body: {
+                                "aggregations": {
+                                    "funders": {
+                                        "terms": {
+                                            "field": "funders.raw"
+                                        },
+                                        "aggs": {
+                                            "awards": {
+                                                "sum": {
+                                                    "script": {
+                                                        "lang": "expression",
+                                                        "inline": "doc['lists.funders.awards.amount'].sum()"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            postBodyParams: [
+                                {
+                                    parameterPath: ["query", "bool", "minimum_should_match"],
+                                    parameterName: "shouldMatch",
+                                    defaultValue: 1
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "should"],
+                                    defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                    parameterName: "query",
+                                    defaultValue: "*"
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                    parameterName: "sources",
+                                    defaultValue: "NIH Research Portal Online Reporting Tools"
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                    parameterName: "min_date",
+                                    defaultValue: gte
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                    parameterName: "max_date",
+                                    defaultValue: lte
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
+                                    parameterName: "date_range_format",
+                                    defaultValue: "yyyy-MM-dd||yyyy"
+                                }
+                            ],
+                            facetDash: "awards"
+                        }
+                ]
             }
         };
 

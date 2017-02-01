@@ -70,6 +70,10 @@ export default Ember.Component.extend({
         if (this.get('name') === "Awards") {
             this.processData(NIH_HARDCODE);
         }
+        if (this.get('name') === "Funding") {
+            this.processData('aggregations.funders.buckets'));
+        }
+            
     },
 
     processData: async function(data) {
@@ -93,6 +97,9 @@ export default Ember.Component.extend({
         }
         if (this.get('name') === "Awards") {
             this.set("data", await data);
+        }
+        if (this.get('name') === "Funding") {
+            this.set('data', await data);
         }
 
     },
@@ -138,6 +145,9 @@ export default Ember.Component.extend({
 
             if (this.get('item.mappingType') === 'OBJECT_TO_ARRAY') {
                 var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
+                    
+            if (this.get('item.mappingType') === 'OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY') {
+                var columns = this.get('data').map(({ key, doc_count, awards }) => [key, awards.value]);
             }
 
             chart_options['tooltip'] = {

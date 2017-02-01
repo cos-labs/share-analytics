@@ -623,6 +623,7 @@ export default Ember.Route.extend({
                         mappingType: "OBJECT_TO_ARRAY",
                         facetDash: "agentDetail",
                         facetDashParameter: "id",
+                        hideViewAll: !transition.queryParams.all,
                         widgetSettings : {
                             viewAllRoute: 'providers'
                         },
@@ -1472,6 +1473,7 @@ export default Ember.Route.extend({
                         mappingType: "OBJECT_TO_ARRAY",
                         facetDash: "agentDetail",
                         facetDashParameter: "id",
+                        hideViewAll: !transition.queryParams.all,
                         widgetSettings : {
                             viewAllRoute: 'providers'
                         },

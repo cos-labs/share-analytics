@@ -3,8 +3,11 @@ import ENV from 'analytics-dashboard/config/environment';
 
 
 export default Ember.Component.extend({
+
     data: [],
+
     init(){
+
         this._super(...arguments);
         if (this.get('chartType') === 'recentlyAdded') {
             var data = this.get('data.hits.hits').map(function(hits, index) {
@@ -48,7 +51,9 @@ export default Ember.Component.extend({
         else {
             this.processData(this.get('aggregations.contributors.buckets'));
         }
+
     },
+
     processData: function(data) {
         data.forEach(async (item, index) => {
             let datum = await Ember.$.ajax({
@@ -63,19 +68,32 @@ export default Ember.Component.extend({
             this.set("data", Array.prototype.slice.call(data));
         });
     },
+
     actions: {
-        transitionToFacet(item) {
+
+        transitionToFacet(id) { //Two different items here; one refers to the widget; one refers to the datum.
             let queryParams = {};
             var facet = this.get("item.facetDashParameter");
+            let facetDash = this.get("item.facetDash");
+            if (facetDash === "url" && item.url) {
+                window.location.href = item.url;
+                return;
+            }
             if (facet) {
-                queryParams[facet] = item.name;
+                if (facetDash === "objectDetail" || facetDash === "agentDetail") {
+                    queryParams[facet] = id;
+                }
                 this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
-            } else if (item.url) {
-              window.location.href = item.url;
             }
         },
+
+        transitionToSHARE(id) {
+            window.location.href = "http://share.osf.io/agent/" + id;
+        },
+
         transitionToViewAll(item) {
             this.attrs.transitionToFacet(item.dataType, item);
         }
+
     }
 });

@@ -1,16 +1,108 @@
 /* global c3 */
 import Ember from 'ember';
+import ENV from 'analytics-dashboard/config/environment';
+
+
+const NIH_HARDCODE = [
+    {key: 'FIC', doc_count: 685870},
+    {key: 'NCATS', doc_count: 11798267},
+    {key:'NCCIH', doc_count: 527109},
+    {key:'NCI', doc_count: 37421432},
+    {key:'NEI', doc_count: 9258786},
+    {key:'NHGRI', doc_count: 5050824},
+    {key:'NHLBI', doc_count: 37973512},
+    {key:'NIA', doc_count: 30039371},
+    {key:'NIAAA', doc_count: 6709896},
+    {key:'NIAID', doc_count: 44746441},
+    {key:'NIAMS', doc_count: 6571101},
+    {key:'NIBIB', doc_count: 4005180},
+    {key:'NICHD', doc_count: 13278402},
+    {key:'NIDA', doc_count: 29823005},
+    {key:'NIDCD', doc_count: 4439991},
+    {key:'NIDCR', doc_count: 1155900},
+    {key:'NIDDK', doc_count: 32526462},
+    {key:'NIEHS', doc_count: 4674188},
+    {key:'NIGMS', doc_count: 53652460},
+    {key:'NIMH', doc_count: 38119017},
+    {key:'NINDS', doc_count: 20635337},
+    {key:'NINR', doc_count: 1976020},
+    {key:'NLM', doc_count: 1069055},
+    {key:'OD', doc_count: 4275564}
+];
+
+
+function log10ToLinear(log_num) {
+    if (log_num <= 0) {
+        return 0;
+    }
+    return Math.pow(10, log_num-1).toFixed(0);
+}
+
+
+function linearToLog10(lin_num) {
+    if (lin_num <= 0) {
+        return 0;
+    }
+    return (Math.log(lin_num) / Math.LN10) + 1;
+}
+
 
 export default Ember.Component.extend({
 
     classNames: ['chart'],
     charttitle: 'Untitled Chart',
 
-    dataChanged: Ember.observer('aggregations', function() {
+    dataChanged: Ember.observer('data', function() {
+        this.updateChart();
+    }),
+
+    dataChanged2: Ember.observer('data.[]', function() {
         this.updateChart();
     }),
 
     data: [],
+
+    init() {
+        this._super(...arguments);
+        if (this.get('name') === 'Data Providers') {
+            this.processData(this.get("aggregations.publishers.buckets"))
+        }
+        if (this.get('name') === "Awards") {
+            this.processData(NIH_HARDCODE);
+        }
+        if (this.get('name') === "Funding") {
+            this.processData('aggregations.funders.buckets'));
+        }
+            
+    },
+
+    processData: async function(data) {
+        if (this.get('name') === 'Data Providers') {
+            this.set("data",
+                await Ember.RSVP.Promise.all(
+                    data.map(async function(datum, index, array) {
+                        let agent_info = await Ember.$.ajax({
+                            url: ENV.apiUrl + '/search/agents/' + datum.key,
+                            crossDomain: true,
+                            type: 'GET',
+                            contentType: 'application/json',
+                        });
+                        data[index]._source = agent_info._source;
+                        data[index].doc_count = data[index].doc_count;
+                        data[index].key = data[index].key;
+                        return data[index];
+                    })
+                )
+            );
+        }
+        if (this.get('name') === "Awards") {
+            this.set("data", await data);
+        }
+        if (this.get('name') === "Funding") {
+            this.set('data', await data);
+        }
+
+    },
 
     sizeChanged: Ember.observer('resizedSignal', function() {
         if (this.get('resizedSignal') === false) { return; }
@@ -22,21 +114,9 @@ export default Ember.Component.extend({
         this.updateChart();
     }),
 
-    updateChart() {
+    updateChart: async function() {
 
-        function log10ToLinear(log_num) {
-            if (log_num <= 0) {
-                return 0;
-            }
-            return Math.pow(10, log_num-1).toFixed(0);
-        }
-
-        function linearToLog10(lin_num) {
-            if (lin_num <= 0) {
-                return 0;
-            }
-            return (Math.log(lin_num) / Math.LN10) + 1;
-        }
+        var self = this;
 
         let chart_type = this.get('chartType');
 
@@ -46,10 +126,7 @@ export default Ember.Component.extend({
                 columns: null, //to be filled later
                 type: chart_type,
                 onclick: (d) => {
-                    let queryParams = {
-                        'id': d.id
-                    };
-                    this.attrs.transitionToFacet('topic', queryParams);
+                    self.get('actions').transitionToFacet.call(self, d.id);
                 },
             },
             legend: { show: false },
@@ -63,19 +140,34 @@ export default Ember.Component.extend({
 
         if (chart_type == 'donut') {
             var title = '';
-            if (this.get('name') === 'Data Providers') {
-              this.set('data', this.get('aggregations.publishers.buckets'));
-              var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
-            } else if (this.get('name') === 'Events by Source'){
-              this.set('data', this.get('aggregations.sources.buckets'));
-              var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
-            } else if (this.get('name') === 'Funding by NIH Department') {
-              this.set('data', this.get('aggregations.funders.buckets'));
-              var columns = this.get('data').map(({ key, doc_count, awards }) => [key, awards.value]);
-            } else {
-                this.set('data', this.get('aggregations.sources.buckets'));
-                var columns = [['FIC', 685870], ['NCATS', 11798267], ['NCCIH', 527109], ['NCI', 37421432], ['NEI', 9258786], ['NHGRI', 5050824], ['NHLBI', 37973512], ['NIA', 30039371], ['NIAAA', 6709896], ['NIAID', 44746441], ['NIAMS', 6571101], ['NIBIB', 4005180], ['NICHD', 13278402], ['NIDA', 29823005], ['NIDCD', 4439991], ['NIDCR', 1155900], ['NIDDK', 32526462], ['NIEHS', 4674188], ['NIGMS', 53652460], ['NIMH', 38119017], ['NINDS', 20635337], ['NINR', 1976020], ['NLM', 1069055], ['OD', 4275564]];
+
+            var _data = this.get('data');
+
+            if (this.get('item.mappingType') === 'OBJECT_TO_ARRAY') {
+                var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
+                    
+            if (this.get('item.mappingType') === 'OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY') {
+                var columns = this.get('data').map(({ key, doc_count, awards }) => [key, awards.value]);
             }
+
+            chart_options['tooltip'] = {
+                format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
+                    name: function (id, percentage) {
+                        return self.data.reduce(function(acc, cur, idx, arr) {
+                            if (cur._source.id === id) {
+                                return cur._source.name;
+                            }
+                            return acc;
+                        }, false);
+                    },
+                    value: function (value, percent, id) {
+                        return Math.floor(percent*100) + "% (" + value + " records)"; // This isn't perfect, but it's at least more verbose than before
+                    }
+                }
+            };
+
+            chart_options['donut'].width = 100;
+
         } else if (chart_type === 'bar') {
 
             this.set('data', this.get('aggregations.contributors.buckets'));
@@ -215,15 +307,79 @@ export default Ember.Component.extend({
         chart_options[chart_type]['title'] = title;
         this.set('chart', c3.generate(chart_options));
 
+        if (chart_type === "donut") {
+            var labels = d3.selectAll(this.$(this.element).find('.c3-chart-arc')).select(function(d) {
+                let angle_size = d.endAngle - d.startAngle;
+                console.log(angle_size);
+                if (angle_size < 0.5) {
+                    return;
+                }
+                d3.select(this.parentNode).append('text')
+                    .text(self.data.reduce(function(acc, cur, idx, arr) {
+                        if (cur._source.id === d.data.id) {
+                            return cur._source.name;
+                        }
+                        return acc;
+                    }, false))
+                    .attr("x", 200*Math.sin((d.startAngle + d.endAngle)/2))
+                    .attr("y", -130*Math.cos((d.startAngle + d.endAngle)/2))
+                    .attr("text-anchor", "middle")
+                    .attr("alignment-baseline", "central")
+                    .attr("font-size", "12px")
+                    .attr("fill", "rgb(250,250,250)")
+                    .each(function(d) {
+                        var rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
+                        this.parentNode.insertBefore(rect, this);
+                        let bbox = this.getBBox();
+                        d3.select(rect)
+                            .attr("fill", "rgba(0,0,0,0.5)")
+                            .attr("stroke", "rgba(0,0,0,0.6)")
+                            .attr("width", bbox.width + 14)
+                            .attr("height", bbox.height + 8)
+                            .attr("x", bbox.x - 7)
+                            .attr("y", bbox.y - 4)
+                    })
+            });
+            /*var labels_bgs = d3.selectAll(this.$(this.element).find('.c3-chart-arc'))
+                .insert('rect', 'text')
+                .each(function(d) {
+                debugger;
+                    d.attr("width", 200).attr("height", 20)
+                })
+
+            labels.select(function() {
+            });*/
+        }
+
     },
 
     didRender() {
-        this.updateChart();
+        //this.updateChart();
     },
-    actions : {
-        transitionToViewAll(item) {
-            this.attrs.transitionToFacet('providers', item);
-        }
+    actions: {
+        transitionToFacet(id) { //Two different items here; one refers to the widget; one refers to the datum.
+            let queryParams = {};
+            let data = this.get('data');
+            let item = data.reduce((acc, cur, idx, arr) => {
+                if (cur.id = id) {
+                    return cur;
+                }
+                return acc;
+            }, false);
+            var facet = this.get("item.facetDashParameter");
+            let facetDash = this.get("item.facetDash");
+            if (facetDash === "url" && item.url) {
+                window.location.href = item.url;
+                return;
+            }
+            if (facet) {
+                queryParams[facet] = item.name;
+                if (facetDash === "objectDetail" || facetDash === "agentDetail") {
+                    queryParams[facet] = item.id;
+                }
+                this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
+            }
+        },
     }
 
 });

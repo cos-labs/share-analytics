@@ -72,7 +72,6 @@ export default Ember.Component.extend({
             var facet = this.get("item.facetDashParameter");
             let facetDash = this.get("item.facetDash");
             if (facetDash === "url" && item.url) {
-                window.location.href = item.url;
                 return;
             }
             if (facet) {
@@ -83,6 +82,17 @@ export default Ember.Component.extend({
                 this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
             }
         },
+
+        transitionToSHARE(item) {
+            if (item.url) {
+                window.location.href = item.url;
+                return;
+            }
+            if (item.id) {
+                window.location.href = "http://share.osf.io/agent/" + id;
+            }
+        },
+        
         transitionToViewAll(item) {
             this.attrs.transitionToFacet(item.dataType, item);
         }

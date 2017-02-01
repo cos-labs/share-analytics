@@ -2,6 +2,7 @@
 import Ember from 'ember';
 import ENV from 'analytics-dashboard/config/environment';
 
+
 const NIH_HARDCODE = [
     {key: 'FIC', doc_count: 685870},
     {key: 'NCATS', doc_count: 11798267},
@@ -28,6 +29,23 @@ const NIH_HARDCODE = [
     {key:'NLM', doc_count: 1069055},
     {key:'OD', doc_count: 4275564}
 ];
+
+
+function log10ToLinear(log_num) {
+    if (log_num <= 0) {
+        return 0;
+    }
+    return Math.pow(10, log_num-1).toFixed(0);
+}
+
+
+function linearToLog10(lin_num) {
+    if (lin_num <= 0) {
+        return 0;
+    }
+    return (Math.log(lin_num) / Math.LN10) + 1;
+}
+
 
 export default Ember.Component.extend({
 
@@ -76,7 +94,7 @@ export default Ember.Component.extend({
         if (this.get('name') === "Awards") {
             this.set("data", await data);
         }
-        
+
     },
 
     sizeChanged: Ember.observer('resizedSignal', function() {
@@ -92,19 +110,6 @@ export default Ember.Component.extend({
     updateChart: async function() {
 
         var self = this;
-        function log10ToLinear(log_num) {
-            if (log_num <= 0) {
-                return 0;
-            }
-            return Math.pow(10, log_num-1).toFixed(0);
-        }
-
-        function linearToLog10(lin_num) {
-            if (lin_num <= 0) {
-                return 0;
-            }
-            return (Math.log(lin_num) / Math.LN10) + 1;
-        }
 
         let chart_type = this.get('chartType');
 
@@ -134,6 +139,24 @@ export default Ember.Component.extend({
             if (this.get('item.mappingType') === 'OBJECT_TO_ARRAY') {
                 var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
             }
+
+            chart_options['tooltip'] = {
+                format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
+                    name: function (id, percentage) {
+                        return self.data.reduce(function(acc, cur, idx, arr) {
+                            if (cur._source.id === id) {
+                                return cur._source.name;
+                            }
+                            return acc;
+                        }, false);
+                    },
+                    value: function (value, percent, id) {
+                        return Math.floor(percent*100) + "% (" + value + " records)"; // This isn't perfect, but it's at least more verbose than before
+                    }
+                }
+            };
+
+            chart_options['donut'].width = 100;
 
         } else if (chart_type === 'bar') {
 
@@ -273,6 +296,50 @@ export default Ember.Component.extend({
         chart_options['data']['columns'] = columns;
         chart_options[chart_type]['title'] = title;
         this.set('chart', c3.generate(chart_options));
+
+        if (chart_type === "donut") {
+            var labels = d3.selectAll(this.$(this.element).find('.c3-chart-arc')).select(function(d) {
+                let angle_size = d.endAngle - d.startAngle;
+                console.log(angle_size);
+                if (angle_size < 0.5) {
+                    return;
+                }
+                d3.select(this.parentNode).append('text')
+                    .text(self.data.reduce(function(acc, cur, idx, arr) {
+                        if (cur._source.id === d.data.id) {
+                            return cur._source.name;
+                        }
+                        return acc;
+                    }, false))
+                    .attr("x", 200*Math.sin((d.startAngle + d.endAngle)/2))
+                    .attr("y", -130*Math.cos((d.startAngle + d.endAngle)/2))
+                    .attr("text-anchor", "middle")
+                    .attr("alignment-baseline", "central")
+                    .attr("font-size", "12px")
+                    .attr("fill", "rgb(250,250,250)")
+                    .each(function(d) {
+                        var rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
+                        this.parentNode.insertBefore(rect, this);
+                        let bbox = this.getBBox();
+                        d3.select(rect)
+                            .attr("fill", "rgba(0,0,0,0.5)")
+                            .attr("stroke", "rgba(0,0,0,0.6)")
+                            .attr("width", bbox.width + 14)
+                            .attr("height", bbox.height + 8)
+                            .attr("x", bbox.x - 7)
+                            .attr("y", bbox.y - 4)
+                    })
+            });
+            /*var labels_bgs = d3.selectAll(this.$(this.element).find('.c3-chart-arc'))
+                .insert('rect', 'text')
+                .each(function(d) {
+                debugger;
+                    d.attr("width", 200).attr("height", 20)
+                })
+
+            labels.select(function() {
+            });*/
+        }
 
     },
 

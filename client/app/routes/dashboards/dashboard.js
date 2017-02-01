@@ -56,6 +56,7 @@ const ucsd_query = [
 const tag_blacklist = [
     "text",
     "cdl",
+    "cdl.ucsd",
     "dataset",
     "text/tab-separated-values",
     "natl_1981_an_37n",
@@ -708,9 +709,9 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 12,
-                        facetDash: "scholar",
+                        facetDash: "agentDetail",
                         dataType: 'contributors',
-                        facetDashParameter: "scholar",
+                        facetDashParameter: "id",
                         post_body : {},
                         postBodyParams: [
                             {

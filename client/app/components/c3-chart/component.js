@@ -104,7 +104,6 @@ export default Ember.Component.extend({
                 }
                 return datum;
             });
-            debugger;
             this.set('data', await data);
         }
 
@@ -323,7 +322,6 @@ export default Ember.Component.extend({
                 }
                 d3.select(this.parentNode).append('text')
                     .text(self.data.reduce(function(acc, cur, idx, arr) {
-                        debugger;
                         if (cur._source.id === d.data.id) {
                             if (cur._source.name) {
                                 return cur._source.name;
@@ -332,7 +330,7 @@ export default Ember.Component.extend({
                         }
                         return acc;
                     }, false))
-                    .attr("x", 200*Math.sin((d.startAngle + d.endAngle)/2))
+                    .attr("x", 160*Math.sin((d.startAngle + d.endAngle)/2))
                     .attr("y", -130*Math.cos((d.startAngle + d.endAngle)/2))
                     .attr("text-anchor", "middle")
                     .attr("alignment-baseline", "central")

@@ -2,8 +2,9 @@
     <div class="renderChart"></div>
     {{#if widgetSettings.viewAllRoute}}
         <div class="text-right m-t-md">
-            <button class="btn btn-link text-bigger" {{action 'transitionToFacet' null 'providers'}}>View all</button>
+            {{#unless item.hideViewAll}}
+                <button class="btn btn-link text-bigger" {{action 'transitionToFacet' null 'providers'}}>View all</button>
+            {{/unless}}
         </div>
     {{/if}}
-
 </div>

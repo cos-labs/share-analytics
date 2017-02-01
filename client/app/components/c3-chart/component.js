@@ -215,8 +215,6 @@ export default Ember.Component.extend({
 
             let UC_hits = this.get('aggregations.filtered_score.buckets.institution.doc_count')
             let total_hits = this.get('total')
-            console.log(UC_hits)
-            console.log(total_hits)
             var columns = [
                 ['overallCountByRelevance'].concat(this.get('data.aggregations.all_score.buckets').map((datum) => {
                     let val = this.get('aggregations.all_score.buckets')[datum.key];
@@ -279,7 +277,6 @@ export default Ember.Component.extend({
             columns.unshift(['All Events'].concat(this.get('data.aggregations.all_over_time.buckets').map((bucket) => {
                 return linearToLog10(bucket.doc_count);
             })));
-            console.log(columns);
             let data_x = 'x';
             chart_options['axis'] = {
                 x: {
@@ -330,7 +327,6 @@ export default Ember.Component.extend({
         if (chart_type === "donut") {
             var labels = d3.selectAll(this.$(this.element).find('.c3-chart-arc')).select(function(d) {
                 let angle_size = d.endAngle - d.startAngle;
-                console.log(angle_size);
                 if (angle_size < 0.5) {
                     return;
                 }

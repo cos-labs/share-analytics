@@ -1503,7 +1503,7 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
-                        indexVersion: "2",
+                        indexVersion: "3",
                         width: 6,
                         mappingType: "OBJECT_TO_ARRAY",
                         facetDash: "agentDetail",

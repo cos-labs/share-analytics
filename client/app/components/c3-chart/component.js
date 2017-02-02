@@ -31,12 +31,30 @@ const NIH_HARDCODE = [
 ];
 
 const NIH_LABELS = {
+  'fogarty international center': 'FIC',
+  'national center for advancing translational sciences': 'NCATS',
+  'national center for complementary and integrative health': 'NCCIH',
   'national cancer institute': 'NCI',
-  'national institute of allergy and infectious diseases': 'NIAID',
+  'national eye institute': 'NEI',
+  'national human genome research institute': 'NHGRI',
+  'national heart': 'NHLBI',
   'national institute on aging': 'NIA',
+  'national institute on alcohol abuse and alcoholism': 'NIAAA',
+  'national institute of allergy and infectious diseases': 'NIAID',
+  'national institute of arthritis and musculoskeletal and skin diseases': 'NIAMS',
+  'national institute of biomedical imaging and bioengineering': 'NIBIB',
+  'national institute of child health and human development': 'NICHD',
+  'national institute on drug abuse': 'NIDA',
+  'national institute on deafness and other communication disorders': 'NIDCD',
+  'national institute of dental and craniofacial research': 'NIDCR',
+  'national institute of diabetes and digestive and kidney diseases': 'NIDDK',
+  'national institute of environmental health sciences': 'NIEHS',
   'national institute of general medical sciences': 'NIGMS',
   'national institute of mental health': 'NIMH',
-  'national heart': 'NHLBI'
+  'national institute of neurological disorders and stroke': 'NINDS',
+  'national institute of nursing research': 'NINR',
+  'national library of medicine': 'NLM',
+  'office of the director': 'OD'
 };
 
 function log10ToLinear(log_num) {

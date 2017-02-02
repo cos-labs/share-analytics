@@ -559,6 +559,10 @@ nav.navbar {
     margin: 0;
 }
 
+.share-small {
+    height: 12px;
+    width: 25px;
+}
 /**
  * Tooltip Styles from : https://chrisbracco.com/a-simple-css-tooltip/
 

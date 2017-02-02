@@ -743,7 +743,7 @@ export default Ember.Route.extend({
                     {
                             chartType: 'donut',
                             widgetType: 'c3-chart',
-                            name: 'Funding',
+                            name: 'Awards',
                             width: 6,
                             mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
                             post_body: {
@@ -1371,7 +1371,7 @@ export default Ember.Route.extend({
                         {
                             chartType: 'donut',
                             widgetType: 'c3-chart',
-                            name: 'Funding',
+                            name: 'Awards',
                             width: 6,
                             mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
                             post_body: {

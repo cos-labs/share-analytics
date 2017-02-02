@@ -72,7 +72,7 @@ export default Ember.Component.extend({
         if (this.get('name') === 'Data Providers') {
             this.processData(this.get("aggregations.publishers.buckets"))
         }
-        if (this.get('name') === "Funding") {
+        if (this.get('name') === "Awards") {
             this.processData(this.get('aggregations.funders.buckets'));
         }
     },
@@ -96,7 +96,7 @@ export default Ember.Component.extend({
                 )
             );
         }
-        if (this.get('name') === "Funding") {
+        if (this.get('name') === "Awards") {
             data =  data.map(function(datum) {
                 datum._source = {
                     id: datum.key,
@@ -180,7 +180,7 @@ export default Ember.Component.extend({
                         }, false);
                     },
                     value: function (value, percent, id) {
-                        var units = self.get('name') === 'Funding' ? 'dollars' : 'records';
+                        var units = self.get('name') === 'Awards' ? 'dollars' : 'records';
                         return Math.floor(percent*100) + "% (" + value + " " + units; // This isn't perfect, but it's at least more verbose than before
                     }
                 }
@@ -334,7 +334,7 @@ export default Ember.Component.extend({
                     .text(self.data.reduce(function(acc, cur, idx, arr) {
                         var string;
                         if (cur._source.id === d.data.id) {
-                            if (self.get('name') === 'Funding') {
+                            if (self.get('name') === 'Awards') {
                                string = getLabel(cur._source.id);
                             } else if (cur._source.name) {
                                 string = cur._source.name

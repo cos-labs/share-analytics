@@ -854,6 +854,7 @@ export default Ember.Route.extend({
                         name: 'Recently Added',
                         facetDash: "objectDetail",
                         facetDashParameter: "id",
+                        hideViewAll: true,
                         width: 12,
                         post_body : {
                           "sort": { "date": { "order": "desc" }}
@@ -870,7 +871,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"]
                             },
                             {
                                 parameterName: "recently_added_sort",
@@ -882,7 +883,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
                             }
-                        ],
+                        ]
                     }
                 ]
             },
@@ -1222,6 +1223,7 @@ export default Ember.Route.extend({
                         facetDash: "agentDetail",
                         dataType: 'contributors',
                         facetDashParameter: "id",
+                        hideViewAll: true,
                         post_body : {
                             "aggregations": {
                                 "listWidgetData": {
@@ -1236,7 +1238,7 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "contributors", "terms", "field"],
                                 parameterName: "contributors_id_field",
-                                defaultValue: "lists.contributors.id.raw",
+                                defaultValue: "lists.contributors.id.raw"
                             },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
@@ -1254,9 +1256,9 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"]
                             }
-                        ],
+                        ]
                     }
                 ]
             },
@@ -1501,7 +1503,7 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
-                        indexVersion: "2",
+                        indexVersion: "3",
                         width: 6,
                         mappingType: "OBJECT_TO_ARRAY",
                         facetDash: "agentDetail",
@@ -1738,6 +1740,7 @@ export default Ember.Route.extend({
                         facetDash: "objectDetail",
                         facetDashParameter: "id",
                         width: 12,
+                        hideViewAll: true,
                         post_body : {
                           "sort": { "date": { "order": "desc" }}
                         },

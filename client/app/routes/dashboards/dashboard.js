@@ -159,6 +159,7 @@ const tag_blacklist = [
 
 export default Ember.Route.extend({
 
+
     queryParams: {
         query: {refreshModel: true},
         tags: {refreshModel: true},
@@ -505,7 +506,7 @@ export default Ember.Route.extend({
                     {
                         widgetType: "results-list",
                         name: "",
-                        width: 12,
+                        width: 9,
                         post_body: {},
                         facetDash: "resultsList",
                         postBodyParams: [
@@ -530,53 +531,18 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
                                 parameterName: "source"
+                            },
+                            {
+                                parameterName: "agent_id",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors._id"],
                             }
                         ]
-                    }
-                ]
-            },
-            aboutDash: {
-                dashboardName: "About",
-                widgets: [
-                    {
-                        widgetType: "text-widget",
-                        name: "",
-                        width: 12,
-                        facetDash: "aboutDash",
-                        widgetSettings : {
-                            institution_id: 'ucsd'
-                        },
-                        content: "<h4><b>What is this?</b></h4><p>The Research Data Catalog pulls information about data created by members of the UC San Diego research community from the SHARE database.</p><h4><b>Where does the data come from?</b></h4><p>SHARE is a higher education initiative whose mission is to maximize research impact by making a comprehensive inventory of research widely discoverable, accessible, and reusable. To fulfill this mission SHARE is creating an openly available data set about research activities across their life cycle.</p><p>The SHARE infrastructure was developed by the Association of Research Libraries in partnership with the Center for Open Science. SHARE is funded by the Institute of Museum and Library Services and the Alfred P. Sloan Foundation. The SHARE initiative was founded in 2013 by ARL, the Association of American Universities (AAU), and the Association of Public and Land-grant Universities (APLU).</p><p>The Research Data Catalog is a joint development effort between the SHARE team and the UC San Diego Library. The Library team includes members of the Research Data Curation, Metadata Services and Information Technology Programs.</p><h4><b>How do I get my data listed?</b></h4><p>SHARE harvests from {X number of} sources from around the world. Publishing data in any of these services will have it harvested. NOTE HOWEVER that for your data to be represented in the Research Data Catalog, it must be clearly identified as coming from UC San Diego. How this is done will vary by source. For help, please contact the UC San Diego Library.</p><p>In addition to these sources, the UC San Diego Library can manually enter information into the SHARE catalog. Contact them to begin the process. The Library also hosts data data via its Data Collections website, which also publishes to the SHARE catalog. Contact them for more information.</p><h4><b>I see an error in the representation of my data! How do I correct it?</b></h4><p>Because SHARE harvests from more than X number of international services, there will be different answers to this question. Contact the UC San Diego Library for help.</p>"
-                    },
-                ]
-            },
-            institution: {
-                dasboardName: 'Institution Overview Dashboard',
-                widgets: [
-                    {
-                        widgetType: "text-widget",
-                        name: "",
-                        width: 12,
-                        facetDash: "aboutDash",
-                        widgetSettings : {
-                            institution_id: 'ucsd'
-                        },
-                        content: "Data from the UC San Diego research community in the SHARE catalog.",
-                        showButton: true,
-                    },
-                    {
-                        widgetType: "query-widget",
-                        background_color: "000000",
-                        name: "",
-                        width: 8,
-                        facetDashParameter: "query",
-                        facetDash: "resultsList"
                     },
                     {
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
-                        width: 4,
+                        width: 3,
                         facetDash: "resultsList",
                         height: 115,
                         post_body: {},
@@ -606,22 +572,13 @@ export default Ember.Route.extend({
                         }
                     },
                     {
-                        chartType: 'highlightedCollections',
-                        widgetType: 'list-widget',
-                        name: 'Highlighted Collections',
-                        width: 6,
-                        facetDash: "objectDetail",
-                        facetDashParameter: "id",
-                        hideViewAll: true
-                    },
-                    {
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
                         indexVersion: "3",
-                        width: 6,
+                        width: 3,
                         mappingType: "OBJECT_TO_ARRAY",
-                        facetDash: "agentDetail",
+                        facetDash: "resultsList",
                         facetDashParameter: "id",
                         hideViewAll: !transition.queryParams.all,
                         widgetSettings : {
@@ -675,44 +632,14 @@ export default Ember.Route.extend({
                         ],
                     },
                     {
-                        widgetType: "stacked-bars",
-                        name: "Types",
-                        width: 12,
-                        post_body: {},
-                        postBodyParams: [
-                            {
-                                parameterPath: ["query", "bool", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
-                                parameterName: "source"
-                            },
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
-                            },
-                            {
-                                parameterPath: ["aggregations", "stackedData", "terms", "field"],
-                                parameterName: "type_field",
-                                defaultValue: "type.raw",
-                            },
-                        ]
-                    },
-                    {
                         chartType: 'topContributors',
                         widgetType: 'contributors-widget',
                         name: 'Top Contributors',
-                        width: 12,
-                        facetDash: "agentDetail",
+                        width: 3,
+                        hideSHAREButton: true,
+                        facetDash: "resultsList",
                         dataType: 'contributors',
-                        facetDashParameter: "id",
+                        facetDashParameter: "scholar",
                         post_body : {},
                         postBodyParams: [
                             {
@@ -740,17 +667,228 @@ export default Ember.Route.extend({
                             }
                         ],
                     },
+                ]
+            },
+            aboutDash: {
+                dashboardName: "About",
+                widgets: [
+                    {
+                        widgetType: "text-widget",
+                        name: "",
+                        width: 12,
+                        facetDash: "aboutDash",
+                        widgetSettings : {
+                            institution_id: 'ucsd'
+                        },
+                        content: "<h4><b>What is this?</b></h4><p>The Research Data Catalog pulls information about data created by members of the UC San Diego research community from the SHARE database.</p><h4><b>Where does the data come from?</b></h4><p>SHARE is a higher education initiative whose mission is to maximize research impact by making a comprehensive inventory of research widely discoverable, accessible, and reusable. To fulfill this mission SHARE is creating an openly available data set about research activities across their life cycle.</p><p>The SHARE infrastructure was developed by the Association of Research Libraries in partnership with the Center for Open Science. SHARE is funded by the Institute of Museum and Library Services and the Alfred P. Sloan Foundation. The SHARE initiative was founded in 2013 by ARL, the Association of American Universities (AAU), and the Association of Public and Land-grant Universities (APLU).</p><p>The Research Data Catalog is a joint development effort between the SHARE team and the UC San Diego Library. The Library team includes members of the Research Data Curation, Metadata Services and Information Technology Programs.</p><h4><b>How do I get my data listed?</b></h4><p>SHARE harvests from {X number of} sources from around the world. Publishing data in any of these services will have it harvested. NOTE HOWEVER that for your data to be represented in the Research Data Catalog, it must be clearly identified as coming from UC San Diego. How this is done will vary by source. For help, please contact the UC San Diego Library.</p><p>In addition to these sources, the UC San Diego Library can manually enter information into the SHARE catalog. Contact them to begin the process. The Library also hosts data data via its Data Collections website, which also publishes to the SHARE catalog. Contact them for more information.</p><h4><b>I see an error in the representation of my data! How do I correct it?</b></h4><p>Because SHARE harvests from more than X number of international services, there will be different answers to this question. Contact the UC San Diego Library for help.</p>"
+                    },
+                ]
+            },
+            institution: {
+                dasboardName: 'Institution Overview Dashboard',
+                widgets: [
+                    {
+                        widgetType: "text-widget",
+                        name: "",
+                        width: 12,
+                        facetDash: "aboutDash",
+                        widgetSettings : {
+                            institution_id: 'ucsd'
+                        },
+                        content: "Data from the UC San Diego research community in the SHARE catalog.",
+                        showButton: true,
+                    },
+                    {
+                        widgetType: "query-widget",
+                        background_color: "000000",
+                        name: "",
+                        width: 8,
+                        facetDashParameter: "query",
+                        facetDash: "resultsList"
+                    },
+                    {
+                        chartType: 'totalResults',
+                        widgetType: 'number-widget',
+                        name: 'Total Results',
+                        width: 4,
+                        facetDash: "resultsList",
+                        indexVersion: 3,
+                        height: 115,
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                parameterName: "source"
+                            }
+                        ],
+                        widgetSettings : {
+                            fontSize: 2,
+                            fontColor: '#F44336'
+                        }
+                    },
+                    {
+                        chartType: 'highlightedCollections',
+                        widgetType: 'list-widget',
+                        name: 'Highlighted Collections',
+                        width: 6,
+                        facetDash: "objectDetail",
+                        facetDashParameter: "id",
+                        hideViewAll: true
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'c3-chart',
+                        name: 'Data Providers',
+                        indexVersion: 3,
+                        width: 6,
+                        mappingType: "OBJECT_TO_ARRAY",
+                        facetDash: "agentDetail",
+                        facetDashParameter: "id",
+                        hideViewAll: !transition.queryParams.all,
+                        widgetSettings : {
+                            viewAllRoute: 'providers'
+                        },
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                parameterName: "source"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "min_date",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "max_date",
+                                defaultValue: lte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
+                                parameterName: "date_range_format",
+                                defaultValue: "yyyy-MM-dd||yyyy"
+                            },
+                            {
+                                parameterPath: ["aggregations", "publishers", "terms", "field"],
+                                parameterName: "publisher_field",
+                                defaultValue: "lists.publishers.id.exact",
+                            },
+                            {
+                                parameterPath: ["aggregations", "publishers", "terms", "size"],
+                                parameterName: "publisher_size",
+                                defaultValue: 200,
+                            },
+                        ],
+                    },
+                    {
+                        widgetType: "stacked-bars",
+                        name: "Types",
+                        width: 12,
+                        indexVersion: 3,
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                parameterName: "source"
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["aggregations", "stackedData", "terms", "field"],
+                                parameterName: "type_field",
+                                defaultValue: "types",
+                            },
+                        ]
+                    },
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'contributors-widget',
+                        name: 'Top Contributors',
+                        width: 12,
+                        facetDash: "agentDetail",
+                        indexVersion: 3,
+                        dataType: 'contributors',
+                        facetDashParameter: "id",
+                        post_body : {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["aggregations", "contributors", "terms", "field"],
+                                parameterName: "contributors_id_field",
+                                defaultValue: "lists.contributors.id.exact",
+                            },
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "source",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                            }
+                        ],
+                    },
                     {
                             chartType: 'donut',
                             widgetType: 'c3-chart',
                             name: 'Awards',
                             width: 6,
+                            indexVersion: 3,
                             mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
                             post_body: {
                                 "aggregations": {
                                     "funders": {
                                         "terms": {
-                                            "field": "funders.raw"
+                                            "field": "funders.exact"
                                         },
                                         "aggs": {
                                             "awards": {
@@ -781,7 +919,7 @@ export default Ember.Route.extend({
                                     defaultValue: "affiliations: \"University of California San Diego\""
                                 },
                                 {
-                                    parameterPath: ["query", "bool", "filter", 0, "terms", "sources.raw"],
+                                    parameterPath: ["query", "bool", "filter", 0, "terms", "sources"],
                                     parameterName: "sources",
                                     defaultValue: ["NIH Research Portal Online Reporting Tools", "NSF Awards"]
                                 },
@@ -810,6 +948,7 @@ export default Ember.Route.extend({
                         facetDash: "resultsList",
                         facetDashParameter: "tags",
                         width: 6,
+                        indexVersion: 3,
                         dataType: 'tags',
                         post_body : {
                             from: 0,
@@ -834,7 +973,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                             },
                             {
                                 parameterName: "query",
@@ -854,6 +993,7 @@ export default Ember.Route.extend({
                         name: 'Recently Added',
                         facetDash: "objectDetail",
                         facetDashParameter: "id",
+                        indexVersion: 3,
                         hideViewAll: true,
                         width: 12,
                         post_body : {
@@ -871,7 +1011,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"]
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             },
                             {
                                 parameterName: "recently_added_sort",
@@ -1283,6 +1423,19 @@ export default Ember.Route.extend({
                             }
                         },
                         postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterName: "source",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"]
+                            },
                             {
                                 parameterName: "query",
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],

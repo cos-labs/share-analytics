@@ -87,18 +87,6 @@ export default Ember.Component.extend({
                 this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
             }
         },
-
-        // Using a links now and conditionals in template
-        // transitionToSHARE(item) {
-        //     if (item.url) {
-        //         window.location.href = item.url;
-        //         return;
-        //     }
-        //     if (item.id) {
-        //         window.location.href = "http://share.osf.io/agent/" + id;
-        //     }
-        // },
-
         transitionToViewAll(item) {
             this.attrs.transitionToFacet(item.dataType, item);
         }

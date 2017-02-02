@@ -773,7 +773,7 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "should"],
-                                    defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                    defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -1401,7 +1401,7 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "should"],
-                                    defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                    defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -1590,7 +1590,7 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "should"],
-                                    defaultValue: (()=>{ return transition.queryParams.special_filter ? ucsd_query : undefined; })()
+                                    defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 0, "query_string", "query"],

@@ -530,7 +530,7 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
                                 parameterName: "source"
-                            }
+                            },
                             {
                                 parameterName: "agent_id",
                                 parameterPath: ["query", "bool", "filter", 2, "term", "contributors._id"],
@@ -1416,6 +1416,19 @@ export default Ember.Route.extend({
                             }
                         },
                         postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterName: "source",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"]
+                            },
                             {
                                 parameterName: "query",
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],

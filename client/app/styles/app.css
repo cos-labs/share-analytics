@@ -23,7 +23,8 @@
 }
 /* light blue 006A96 */
 .ucsd_header img {
-    max-height: 30px;
+    height: 30px;
+    width: 150px;
     margin-top: 12px;
 }
 
@@ -559,6 +560,10 @@ nav.navbar {
     margin: 0;
 }
 
+.share-small {
+    height: 12px;
+    width: 25px;
+}
 /**
  * Tooltip Styles from : https://chrisbracco.com/a-simple-css-tooltip/
 

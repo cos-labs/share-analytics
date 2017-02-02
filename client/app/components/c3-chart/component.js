@@ -30,6 +30,32 @@ const NIH_HARDCODE = [
     {key:'OD', doc_count: 4275564}
 ];
 
+const NIH_LABELS = {
+  'fogarty international center': 'FIC',
+  'national center for advancing translational sciences': 'NCATS',
+  'national center for complementary and integrative health': 'NCCIH',
+  'national cancer institute': 'NCI',
+  'national eye institute': 'NEI',
+  'national human genome research institute': 'NHGRI',
+  'national heart': 'NHLBI',
+  'national institute on aging': 'NIA',
+  'national institute on alcohol abuse and alcoholism': 'NIAAA',
+  'national institute of allergy and infectious diseases': 'NIAID',
+  'national institute of arthritis and musculoskeletal and skin diseases': 'NIAMS',
+  'national institute of biomedical imaging and bioengineering': 'NIBIB',
+  'national institute of child health and human development': 'NICHD',
+  'national institute on drug abuse': 'NIDA',
+  'national institute on deafness and other communication disorders': 'NIDCD',
+  'national institute of dental and craniofacial research': 'NIDCR',
+  'national institute of diabetes and digestive and kidney diseases': 'NIDDK',
+  'national institute of environmental health sciences': 'NIEHS',
+  'national institute of general medical sciences': 'NIGMS',
+  'national institute of mental health': 'NIMH',
+  'national institute of neurological disorders and stroke': 'NINDS',
+  'national institute of nursing research': 'NINR',
+  'national library of medicine': 'NLM',
+  'office of the director': 'OD'
+};
 
 function log10ToLinear(log_num) {
     if (log_num <= 0) {
@@ -46,6 +72,12 @@ function linearToLog10(lin_num) {
     return (Math.log(lin_num) / Math.LN10) + 1;
 }
 
+function getLabel(label) {
+    if (NIH_LABELS[label.toLowerCase()]) {
+        return NIH_LABELS[label.toLowerCase()];
+    }
+    return label;
+}
 
 export default Ember.Component.extend({
 
@@ -181,7 +213,8 @@ export default Ember.Component.extend({
                         }, false);
                     },
                     value: function (value, percent, id) {
-                        return Math.floor(percent*100) + "% (" + value + " records)"; // This isn't perfect, but it's at least more verbose than before
+                        var units = self.get('name') === 'Funding' ? 'dollars' : 'records';
+                        return Math.floor(percent*100) + "% (" + value + " " + units; // This isn't perfect, but it's at least more verbose than before
                     }
                 }
             };
@@ -215,8 +248,6 @@ export default Ember.Component.extend({
 
             let UC_hits = this.get('aggregations.filtered_score.buckets.institution.doc_count')
             let total_hits = this.get('total')
-            console.log(UC_hits)
-            console.log(total_hits)
             var columns = [
                 ['overallCountByRelevance'].concat(this.get('data.aggregations.all_score.buckets').map((datum) => {
                     let val = this.get('aggregations.all_score.buckets')[datum.key];
@@ -279,7 +310,6 @@ export default Ember.Component.extend({
             columns.unshift(['All Events'].concat(this.get('data.aggregations.all_over_time.buckets').map((bucket) => {
                 return linearToLog10(bucket.doc_count);
             })));
-            console.log(columns);
             let data_x = 'x';
             chart_options['axis'] = {
                 x: {
@@ -330,7 +360,6 @@ export default Ember.Component.extend({
         if (chart_type === "donut") {
             var labels = d3.selectAll(this.$(this.element).find('.c3-chart-arc')).select(function(d) {
                 let angle_size = d.endAngle - d.startAngle;
-                console.log(angle_size);
                 if (angle_size < 0.5) {
                     return;
                 }
@@ -338,7 +367,9 @@ export default Ember.Component.extend({
                     .text(self.data.reduce(function(acc, cur, idx, arr) {
                         var string;
                         if (cur._source.id === d.data.id) {
-                            if (cur._source.name) {
+                            if (self.get('name') === 'Funding') {
+                               string = getLabel(cur._source.id);
+                            } else if (cur._source.name) {
                                 string = cur._source.name
                             } else {
                                 string = cur._source.id;

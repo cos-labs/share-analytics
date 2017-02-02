@@ -23,7 +23,8 @@
 }
 /* light blue 006A96 */
 .ucsd_header img {
-    max-height: 30px;
+    height: 30px;
+    width: 150px;
     margin-top: 12px;
 }
 

@@ -94,11 +94,6 @@ export default Ember.Component.extend({
                 this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
             }
         },
-
-        transitionToSHARE(id) {
-            window.location.href = "http://share.osf.io/agent/" + id;
-        },
-
         transitionToViewAll(item) {
             this.attrs.transitionToFacet(item.dataType, item);
         }

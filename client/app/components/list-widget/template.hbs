@@ -3,11 +3,13 @@
         <tr href="#" class="list-widget-item">
                 <td class="item-number" {{action "transitionToFacet" item}}>{{item.number}}</td>
                 <td class="item-name" {{action "transitionToFacet" item}}>{{item.name}}</td>
+                {{#unless item.hideSHAREButton}}
                 <td style="width: 100px;">
                     <button class="btn" style='font-size: 11px; padding-bottom: 5px;' {{action "transitionToSHARE" item}}>
                         View on SHARE&nbsp;&nbsp;<img src="/images/share-logo-small.png" style="height:12px; vertical-align: baseline; margin-bottom: -2px;  ">
                     </button>
                 </td>
+                {{/unless}}
         </tr>
     {{/each}}
 </table>

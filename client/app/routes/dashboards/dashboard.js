@@ -505,7 +505,7 @@ export default Ember.Route.extend({
                     {
                         widgetType: "results-list",
                         name: "",
-                        width: 12,
+                        width: 9,
                         post_body: {},
                         facetDash: "resultsList",
                         postBodyParams: [
@@ -531,8 +531,141 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
                                 parameterName: "source"
                             }
+                            {
+                                parameterName: "agent_id",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors._id"],
+                            }
                         ]
-                    }
+                    },
+                    {
+                        chartType: 'totalResults',
+                        widgetType: 'number-widget',
+                        name: 'Total Results',
+                        width: 3,
+                        facetDash: "resultsList",
+                        height: 115,
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterName: "source"
+                            }
+                        ],
+                        widgetSettings : {
+                            fontSize: 2,
+                            fontColor: '#F44336'
+                        }
+                    },
+                    {
+                        chartType: 'donut',
+                        widgetType: 'c3-chart',
+                        name: 'Data Providers',
+                        indexVersion: "3",
+                        width: 3,
+                        mappingType: "OBJECT_TO_ARRAY",
+                        facetDash: "resultsList",
+                        facetDashParameter: "id",
+                        hideViewAll: !transition.queryParams.all,
+                        widgetSettings : {
+                            viewAllRoute: 'providers'
+                        },
+                        post_body: {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterName: "source"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "min_date",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "max_date",
+                                defaultValue: lte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
+                                parameterName: "date_range_format",
+                                defaultValue: "yyyy-MM-dd||yyyy"
+                            },
+                            {
+                                parameterPath: ["aggregations", "publishers", "terms", "field"],
+                                parameterName: "publisher_field",
+                                defaultValue: "lists.publishers.id.exact",
+                            },
+                            {
+                                parameterPath: ["aggregations", "publishers", "terms", "size"],
+                                parameterName: "publisher_size",
+                                defaultValue: 200,
+                            },
+                        ],
+                    },
+                    {
+                        chartType: 'topContributors',
+                        widgetType: 'contributors-widget',
+                        name: 'Top Contributors',
+                        width: 3,
+                        hideSHAREButton: true,
+                        facetDash: "resultsList",
+                        dataType: 'contributors',
+                        facetDashParameter: "scholar",
+                        post_body : {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["aggregations", "contributors", "terms", "field"],
+                                parameterName: "contributors_id_field",
+                                defaultValue: "lists.contributors.id.raw",
+                            },
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                parameterName: "query",
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "source",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                            }
+                        ],
+                    },
                 ]
             },
             aboutDash: {

@@ -1223,6 +1223,7 @@ export default Ember.Route.extend({
                         facetDash: "agentDetail",
                         dataType: 'contributors',
                         facetDashParameter: "id",
+                        hideViewAll: true,
                         post_body : {
                             "aggregations": {
                                 "listWidgetData": {
@@ -1237,7 +1238,7 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "contributors", "terms", "field"],
                                 parameterName: "contributors_id_field",
-                                defaultValue: "lists.contributors.id.raw",
+                                defaultValue: "lists.contributors.id.raw"
                             },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
@@ -1255,9 +1256,9 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"]
                             }
-                        ],
+                        ]
                     }
                 ]
             },

@@ -88,6 +88,9 @@ export default Ember.Component.extend({
                 if (facetDash === "objectDetail" || facetDash === "agentDetail") {
                     queryParams[facet] = id;
                 }
+                if (facetDash === "resultsList") {
+                    queryParams["agent_id"] = id;
+                }
                 this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
             }
         },

@@ -3,6 +3,7 @@
         <tr href="#" class="list-widget-item">
                 <td class="item-number" {{action "transitionToFacet" item}}>{{item.number}}</td>
                 <td class="item-name" {{action "transitionToFacet" item}}>{{item.name}}</td>
+                {{#unless item.hideSHAREButton}}
                 <td style="width: 100px;">
                     {{#if item.url}}
                         <a href="{{item.url}}" style="z-index:99">
@@ -18,6 +19,7 @@
                         </a>
                     {{/if}}
                 </td>
+                {{/unless}}
         </tr>
     {{/each}}
 </table>

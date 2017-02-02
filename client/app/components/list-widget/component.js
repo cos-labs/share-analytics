@@ -11,7 +11,8 @@ export default Ember.Component.extend({
                 return {
                     number: index + 1,
                     name: hits._source.title,
-                    url: 'https://share.osf.io/article/' + hits._source.id
+                    url: 'https://share.osf.io/article/' + hits._source.id,
+                    id: hits._source.id
                 }
             });
             this.set('data', data);

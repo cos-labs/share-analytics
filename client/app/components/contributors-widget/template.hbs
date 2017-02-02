@@ -1,19 +1,21 @@
 <table style="width: 100%;"class="list-widget widget-body">
-    {{#each data as |item|}}
+    {{#each data as |datum|}}
         <tr href="#" class="list-widget-item">
-                    <td class="item-number">{{item.number}}</td>
+                    <td class="item-number">{{datum.number}}</td>
                     <td class="item-name">
-                        <a {{ action "transitionToFacet" item.id }}>
-                            {{item.name}}
+                        <a {{ action "transitionToFacet" datum.id }}>
+                            {{datum.name}}
                         </a>
                     </td>
+                    {{#unless item.hideSHAREButton}}
                     <td style="width: 100px;">
                         <a href="http://share.osf.io/agent/{{item.id}}" style="z-index:99">
                             <button class="btn" style='font-size: 11px; padding-bottom: 5px;'>
-                                View on SHARE&nbsp;&nbsp;<img src="/images/share-logo-small.png" class="share-small" style="vertical-align: baseline; margin-bottom: -2px;  ">
+                                View on SHARE&nbsp;&nbsp;<img src="/images/share-logo-small.png" class="share-small" style="height:12px; vertical-align: baseline; margin-bottom: -2px;  ">
                             </button>
                         </a>
                     </td>
+                    {{/unless}}
         </tr>
     {{/each}}
 </table>

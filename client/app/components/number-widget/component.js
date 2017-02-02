@@ -42,7 +42,6 @@ export default Ember.Component.extend({
             if (facetDash) {
                 queryParams["query"] = "*";
                 delete queryParams["tags"];
-                debugger;
                 this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
             }
         }

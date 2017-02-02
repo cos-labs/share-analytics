@@ -87,15 +87,16 @@ export default Ember.Component.extend({
             }
         },
 
-        transitionToSHARE(item) {
-            if (item.url) {
-                window.location.href = item.url;
-                return;
-            }
-            if (item.id) {
-                window.location.href = "http://share.osf.io/agent/" + id;
-            }
-        },
+        // Using a links now and conditionals in template
+        // transitionToSHARE(item) {
+        //     if (item.url) {
+        //         window.location.href = item.url;
+        //         return;
+        //     }
+        //     if (item.id) {
+        //         window.location.href = "http://share.osf.io/agent/" + id;
+        //     }
+        // },
 
         transitionToViewAll(item) {
             this.attrs.transitionToFacet(item.dataType, item);

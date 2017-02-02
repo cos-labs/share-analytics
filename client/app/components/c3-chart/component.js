@@ -151,10 +151,10 @@ export default Ember.Component.extend({
             if (this.get('data').length === 0 && this.get('name') === 'Data Providers') {
                 var key = 'UC San Diego Library';
                 var data = [{
-                   'key': key,
+                   'key': '64201-BDE-4D4',
                    'doc_count': 55,
                    '_source': {
-                      'id': key,
+                      'id': '64201-BDE-4D4',
                       'name': key
                    }
                 }];
@@ -391,7 +391,7 @@ export default Ember.Component.extend({
             let queryParams = {};
             let data = this.get('data');
             let item = data.reduce((acc, cur, idx, arr) => {
-                if (cur.id = id) {
+                if (cur._source.id === id) {
                     return cur;
                 }
                 return acc;
@@ -408,7 +408,7 @@ export default Ember.Component.extend({
             if (facet) {
                 queryParams[facet] = item.name;
                 if (facetDash === "objectDetail" || facetDash === "agentDetail") {
-                    queryParams[facet] = item.id;
+                    queryParams[facet] = item._source.id;
                 }
                 this.attrs.transitionToFacet(facetDash, queryParams);
             }

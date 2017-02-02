@@ -8,9 +8,11 @@
                         </a>
                     </td>
                     <td style="width: 100px;">
-                        <button class="btn" style='font-size: 11px; padding-bottom: 5px;' {{action "transitionToSHARE" item.id}}>
-                            View on SHARE&nbsp;&nbsp;<img src="/images/share-logo-small.png" class="share-small" style="vertical-align: baseline; margin-bottom: -2px;  ">
-                        </button>
+                        <a href="http://share.osf.io/agent/{{item.id}}" style="z-index:99">
+                            <button class="btn" style='font-size: 11px; padding-bottom: 5px;'>
+                                View on SHARE&nbsp;&nbsp;<img src="/images/share-logo-small.png" class="share-small" style="vertical-align: baseline; margin-bottom: -2px;  ">
+                            </button>
+                        </a>
                     </td>
         </tr>
     {{/each}}

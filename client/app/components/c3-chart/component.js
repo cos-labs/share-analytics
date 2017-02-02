@@ -3,33 +3,6 @@ import Ember from 'ember';
 import ENV from 'analytics-dashboard/config/environment';
 
 
-const NIH_HARDCODE = [
-    {key: 'FIC', doc_count: 685870},
-    {key: 'NCATS', doc_count: 11798267},
-    {key:'NCCIH', doc_count: 527109},
-    {key:'NCI', doc_count: 37421432},
-    {key:'NEI', doc_count: 9258786},
-    {key:'NHGRI', doc_count: 5050824},
-    {key:'NHLBI', doc_count: 37973512},
-    {key:'NIA', doc_count: 30039371},
-    {key:'NIAAA', doc_count: 6709896},
-    {key:'NIAID', doc_count: 44746441},
-    {key:'NIAMS', doc_count: 6571101},
-    {key:'NIBIB', doc_count: 4005180},
-    {key:'NICHD', doc_count: 13278402},
-    {key:'NIDA', doc_count: 29823005},
-    {key:'NIDCD', doc_count: 4439991},
-    {key:'NIDCR', doc_count: 1155900},
-    {key:'NIDDK', doc_count: 32526462},
-    {key:'NIEHS', doc_count: 4674188},
-    {key:'NIGMS', doc_count: 53652460},
-    {key:'NIMH', doc_count: 38119017},
-    {key:'NINDS', doc_count: 20635337},
-    {key:'NINR', doc_count: 1976020},
-    {key:'NLM', doc_count: 1069055},
-    {key:'OD', doc_count: 4275564}
-];
-
 const NIH_LABELS = {
   'fogarty international center': 'FIC',
   'national center for advancing translational sciences': 'NCATS',
@@ -99,9 +72,6 @@ export default Ember.Component.extend({
         if (this.get('name') === 'Data Providers') {
             this.processData(this.get("aggregations.publishers.buckets"))
         }
-        if (this.get('name') === "Awards") {
-            this.processData(NIH_HARDCODE);
-        }
         if (this.get('name') === "Funding") {
             this.processData(this.get('aggregations.funders.buckets'));
         }
@@ -125,9 +95,6 @@ export default Ember.Component.extend({
                     })
                 )
             );
-        }
-        if (this.get('name') === "Awards") {
-            this.set("data", await data);
         }
         if (this.get('name') === "Funding") {
             data =  data.map(function(datum) {

@@ -370,7 +370,6 @@ export default Ember.Component.extend({
             /*var labels_bgs = d3.selectAll(this.$(this.element).find('.c3-chart-arc'))
                 .insert('rect', 'text')
                 .each(function(d) {
-                debugger;
                     d.attr("width", 200).attr("height", 20)
                 })
 

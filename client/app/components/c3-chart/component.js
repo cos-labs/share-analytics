@@ -406,7 +406,7 @@ export default Ember.Component.extend({
             }
             if (facet) {
                 queryParams[facet] = item.name;
-                if (facetDash === "objectDetail" || facetDash === "agentDetail") {
+                if (item._source.types.indexOf("agent") > -1) {
                     queryParams[facet] = item._source.id;
                 }
                 this.attrs.transitionToFacet(facetDash, queryParams);

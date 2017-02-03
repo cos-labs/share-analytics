@@ -508,6 +508,7 @@ export default Ember.Route.extend({
                         name: "",
                         width: 9,
                         post_body: {},
+                        indexVersion: 3,
                         facetDash: "resultsList",
                         postBodyParams: [
                             {
@@ -529,7 +530,7 @@ export default Ember.Route.extend({
                                 parameterName: "tags"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
                                 parameterName: "source"
                             },
                             {
@@ -543,6 +544,7 @@ export default Ember.Route.extend({
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 3,
+                        indexVersion: 3,
                         facetDash: "resultsList",
                         height: 115,
                         post_body: {},
@@ -562,7 +564,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "source"
                             }
                         ],
@@ -601,7 +603,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "source"
                             },
                             {
@@ -637,6 +639,7 @@ export default Ember.Route.extend({
                         name: 'Top Contributors',
                         width: 3,
                         hideSHAREButton: true,
+                        indexVersion: 3,
                         facetDash: "resultsList",
                         dataType: 'contributors',
                         facetDashParameter: "scholar",
@@ -645,7 +648,7 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "contributors", "terms", "field"],
                                 parameterName: "contributors_id_field",
-                                defaultValue: "lists.contributors.id.raw",
+                                defaultValue: "lists.contributors.id.exact",
                             },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
@@ -663,7 +666,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                             }
                         ],
                     },
@@ -1045,6 +1048,7 @@ export default Ember.Route.extend({
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
+                        indexVersion: 3,
                         width: 4,
                         post_body: {},
                         postBodyParams: [
@@ -1059,11 +1063,11 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
                             },
                             {
                                 parameterName: "contributor",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.exact"],
                             }
                         ],
                     },
@@ -1411,6 +1415,7 @@ export default Ember.Route.extend({
                         widgetType: 'list-widget',
                         name: 'Top Tags',
                         width: 12,
+                        indexVersion: 3,
                         hideViewAll: true,
                         post_body: {
                             "aggregations": {
@@ -1434,7 +1439,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"]
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             },
                             {
                                 parameterName: "query",
@@ -1447,11 +1452,11 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
                             },
                             {
                                 parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.exact"],
                             }
                         ],
                         facetDash: "scholar"
@@ -1634,7 +1639,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "source"
                             }
                         ],

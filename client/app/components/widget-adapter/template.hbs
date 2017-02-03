@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    {{component widgetType data=data widgetSettings=item.widgetSettings chartType=chartType aggregations=aggregations name=item.name item=item width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal total=total transitionToFacet=(action 'transitionToFacet')}}
+    {{component widgetType parameters=parameters data=data widgetSettings=item.widgetSettings chartType=chartType aggregations=aggregations name=item.name item=item width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal total=total transitionToFacet=(action 'transitionToFacet')}}
 
     {{yield}}
 </div>

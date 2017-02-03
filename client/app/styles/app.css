@@ -53,10 +53,10 @@
     opacity: 0.8;
 }
 .dashboard {
-    background: url("/images/ucsd_background.gif");
+    background: url("/images/ucsd-geisel-bg-light.png");
     padding-bottom: 80px;
     padding-top: 70px;
-    background-size: cover;
+    background-size: 1000px 1000px;
     background-position: center;
 
 }

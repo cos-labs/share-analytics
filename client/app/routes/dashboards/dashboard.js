@@ -178,7 +178,9 @@ export default Ember.Route.extend({
         scholar: {refreshModel: true},
         all: {refreshModel: true},
         contributors: {refreshModel: true},
-        special_filter: {refresh_model: true}
+        special_filter: {refresh_model: true},
+        publishers: {refresh_model: true},
+
     },
     query: 'UC',
     gte: "1996-01-01",
@@ -544,6 +546,10 @@ export default Ember.Route.extend({
                                 parameterName: "source"
                             },
                             {
+                                parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
+                            },
+                            {
                                 parameterName: "agent_id",
                                 parameterPath: ["query", "bool", "filter", 2, "term", "contributors._id"],
                             }
@@ -591,7 +597,7 @@ export default Ember.Route.extend({
                         width: 3,
                         mappingType: "OBJECT_TO_ARRAY",
                         facetDash: "resultsList",
-                        facetDashParameter: "id",
+                        facetDashParameter: "publishers",
                         hideViewAll: !transition.queryParams.all,
                         widgetSettings : {
                             viewAllRoute: 'providers'

@@ -50,7 +50,7 @@
     "ember-export-application-global": "^1.0.5",
     "ember-font-awesome": "2.1.1",
     "ember-load-initializers": "^0.5.1",
-    "ember-osf": "git+https://github.com/CenterForOpenScience/ember-osf.git#355e9f77a4c77d53171a2d49de8843adf4cac1f6",
+    "ember-osf": "git+https://github.com/CenterForOpenScience/ember-osf.git#9674055b1b7ef3c70f9ef3f183139699dfe5af25",
     "ember-resolver": "^2.0.3",
     "ember-select-2": "1.3.0",
     "ember-toastr": "1.4.1",

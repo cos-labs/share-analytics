@@ -21,6 +21,15 @@ const ucsd_query = [
     {"match_phrase": {"publishers": "University of California San Diego"}},
     {"match_phrase": {"publishers": "Univ of california san diego"}},
     {"match_phrase": {"publishers": "University of CA San Diego"}},
+    {"match_phrase": {"affiliations": "UCSD"}},
+    {"match_phrase": {"affiliations": "UC San Diego"}},
+    {"match_phrase": {"affiliations": "UC San Diego Library"}},
+    {"match_phrase": {"affiliations": "UC San Diego Library Digital Collections"}},
+    {"match_phrase": {"affiliations": "Scripps Institution of Oceanography"}},
+    {"match_phrase": {"affiliations": "Scripps Institute of Oceanography"}},
+    {"match_phrase": {"affiliations": "University of California San Diego"}},
+    {"match_phrase": {"affiliations": "Univ of california san diego"}},
+    {"match_phrase": {"affiliations": "University of CA San Diego"}},
     {"match_phrase": {"funders": "UCSD"}},
     {"match_phrase": {"funders": "UC San Diego"}},
     {"match_phrase": {"funders": "UC San Diego Library"}},
@@ -51,7 +60,7 @@ const ucsd_query = [
     {"match_phrase": {"tags": "ucsd"}},
     {"match_phrase": {"tags": "cdl.ucsd"}},
     {"match_phrase": {"tags": "Scripps institution of oceanography"}},
-    {"match_phrase": {"affiliations": "University of California San Diego"}}
+    {"term": {"source": "UC San Diego Library"}}
 ];
 
 const tag_blacklist = [
@@ -169,7 +178,9 @@ export default Ember.Route.extend({
         scholar: {refreshModel: true},
         all: {refreshModel: true},
         contributors: {refreshModel: true},
-        special_filter: {refresh_model: true}
+        special_filter: {refresh_model: true},
+        publishers: {refresh_model: true},
+
     },
     query: 'UC',
     gte: "1996-01-01",
@@ -535,6 +546,10 @@ export default Ember.Route.extend({
                                 parameterName: "source"
                             },
                             {
+                                parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
+                            },
+                            {
                                 parameterName: "agent_id",
                                 parameterPath: ["query", "bool", "filter", 2, "term", "contributors._id"],
                             }
@@ -582,7 +597,7 @@ export default Ember.Route.extend({
                         width: 3,
                         mappingType: "OBJECT_TO_ARRAY",
                         facetDash: "resultsList",
-                        facetDashParameter: "id",
+                        facetDashParameter: "publishers",
                         hideViewAll: !transition.queryParams.all,
                         widgetSettings : {
                             viewAllRoute: 'providers'

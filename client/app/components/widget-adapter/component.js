@@ -556,6 +556,7 @@ export default Ember.Component.extend({
 
         transitionToFacet: function(dashboardName, newQueryParams) {
             let self = this;
+            debugger;
             let queryParams = Object.keys(newQueryParams).reduce((acc, cur, idx, arr) => {
                 acc[cur] = newQueryParams[cur];
                 return acc;

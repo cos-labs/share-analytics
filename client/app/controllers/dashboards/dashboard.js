@@ -2,14 +2,23 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    queryParams: ['id', 'scholar', 'query', 'q', 'institution', 'tag', 'topic'],
+    queryParams: [
+        {'id': {scope: "controller"}},
+        {'scholar': {scope: "controller"}},
+        {'query': {scope: "controller"}},
+        {'q': {scope: "controller"}},
+        {'institution': {scope: "controller"}},
+        {'tag': {scope: "controller"}},
+        {'tags': {scope: "controller"}},
+        {'topic': {scope: "controller"}}
+    ],
 
     updateParams: Ember.observer('queryParams', function() {
-        this.set("parameters", Ember.computed.apply(this, this.get('queryParams').concat(() => {
-            return this.get('queryParams').map((param) => {
-                return this.get(param);
-            })
-        })));
+        //this.set("parameters", Ember.computed.apply(this, this.get('queryParams').concat(() => {
+        //    return this.get('queryParams').map((param) => {
+        //        return this.get(param);
+        //    })
+        //})));
     }),
 
     wall: false,

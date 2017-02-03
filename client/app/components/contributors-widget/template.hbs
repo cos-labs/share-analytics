@@ -9,9 +9,11 @@
                     </td>
                     {{#unless item.hideSHAREButton}}
                     <td style="width: 100px;">
-                        <button class="btn" style='font-size: 11px; padding-bottom: 5px;' {{action "transitionToSHARE" datum.id}}>
-                            View on SHARE&nbsp;&nbsp;<img src="/images/share-logo-small.png" style="height:12px; vertical-align: baseline; margin-bottom: -2px;  ">
-                        </button>
+                        <a href="http://share.osf.io/agent/{{datum.id}}" style="z-index:99">
+                            <button class="btn" style='font-size: 11px; padding-bottom: 5px;'>
+                                View on SHARE&nbsp;&nbsp;<img src="/images/share-logo-small.png" class="share-small" style="height:12px; vertical-align: baseline; margin-bottom: -2px;  ">
+                            </button>
+                        </a>
                     </td>
                     {{/unless}}
         </tr>
@@ -19,6 +21,6 @@
 </table>
 {{#unless item.hideViewAll}}
     <div class="text-right m-t-md">
-        <button class="btn btn-link text-bigger" {{action 'transitionToViewAll' item}}>View all</button>
+        <button class="btn btn-link text-bigger" {{action 'transitionToViewAll' item}}>View more</button>
     </div>
 {{/unless}}

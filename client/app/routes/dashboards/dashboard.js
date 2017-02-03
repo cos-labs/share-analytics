@@ -1382,7 +1382,7 @@ export default Ember.Route.extend({
                             "aggregations": {
                                 "listWidgetData": {
                                     "terms": {
-                                        "field": 'contributors.raw',
+                                        "field": 'contributors.exact',
                                         "size": 100
                                     }
                                 }
@@ -1392,7 +1392,7 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "contributors", "terms", "field"],
                                 parameterName: "contributors_id_field",
-                                defaultValue: "lists.contributors.id.raw"
+                                defaultValue: "lists.contributors.id.exact"
                             },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
@@ -1410,7 +1410,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"]
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             }
                         ]
                     }

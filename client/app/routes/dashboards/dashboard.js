@@ -21,6 +21,15 @@ const ucsd_query = [
     {"match_phrase": {"publishers": "University of California San Diego"}},
     {"match_phrase": {"publishers": "Univ of california san diego"}},
     {"match_phrase": {"publishers": "University of CA San Diego"}},
+    //{"match_phrase": {"affilliations": "UCSD"}},
+    {"match_phrase": {"affilliations": "UC San Diego"}},
+    //{"match_phrase": {"affilliations": "UC San Diego Library"}},
+    //{"match_phrase": {"affilliations": "UC San Diego Library Digital Collections"}},
+    //{"match_phrase": {"affilliations": "Scripps Institution of Oceanography"}},
+    //{"match_phrase": {"affilliations": "Scripps Institute of Oceanography"}},
+    //{"match_phrase": {"affilliations": "University of California San Diego"}},
+    //{"match_phrase": {"affilliations": "Univ of california san diego"}},
+    //{"match_phrase": {"affilliations": "University of CA San Diego"}},
     {"match_phrase": {"funders": "UCSD"}},
     {"match_phrase": {"funders": "UC San Diego"}},
     {"match_phrase": {"funders": "UC San Diego Library"}},
@@ -51,6 +60,7 @@ const ucsd_query = [
     {"match_phrase": {"tags": "ucsd"}},
     {"match_phrase": {"tags": "cdl.ucsd"}},
     {"match_phrase": {"tags": "Scripps institution of oceanography"}},
+    //{"term": {"source": "UC San Diego Library"}}
 ]
 
 const tag_blacklist = [

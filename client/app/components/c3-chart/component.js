@@ -180,8 +180,12 @@ export default Ember.Component.extend({
                         }, false);
                     },
                     value: function (value, percent, id) {
-                        var units = self.get('name') === 'Awards' ? 'dollars' : 'records';
-                        return Math.floor(percent*100) + "% (" + value + " " + units; // This isn't perfect, but it's at least more verbose than before
+                        var percentage = Math.floor(percent*100);
+                        if (self.get('name') === 'Awards') {
+                            var formatted = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            return percentage + "% ($" + formatted + ")";
+                        }
+                        return percentage + "% (" + value + " records)"; // This isn't perfect, but it's at least more verbose than before
                     }
                 }
             };

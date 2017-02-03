@@ -725,7 +725,6 @@ export default Ember.Route.extend({
                         name: 'Total Results',
                         width: 4,
                         facetDash: "resultsList",
-                        indexVersion: 3,
                         height: 115,
                         post_body: {},
                         postBodyParams: [
@@ -766,7 +765,6 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
-                        indexVersion: 3,
                         width: 6,
                         mappingType: "OBJECT_TO_ARRAY",
                         facetDash: "agentDetail",
@@ -813,20 +811,19 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "publishers", "terms", "field"],
                                 parameterName: "publisher_field",
-                                defaultValue: "lists.publishers.id.exact",
+                                defaultValue: "lists.publishers.id.exact"
                             },
                             {
                                 parameterPath: ["aggregations", "publishers", "terms", "size"],
                                 parameterName: "publisher_size",
-                                defaultValue: 200,
-                            },
-                        ],
+                                defaultValue: 200
+                            }
+                        ]
                     },
                     {
                         widgetType: "stacked-bars",
                         name: "Types",
                         width: 12,
-                        indexVersion: 3,
                         post_body: {},
                         postBodyParams: [
                             {
@@ -850,8 +847,8 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "stackedData", "terms", "field"],
                                 parameterName: "type_field",
-                                defaultValue: "types",
-                            },
+                                defaultValue: "type"
+                            }
                         ]
                     },
                     {
@@ -860,7 +857,6 @@ export default Ember.Route.extend({
                         name: 'Top Contributors',
                         width: 12,
                         facetDash: "agentDetail",
-                        indexVersion: 3,
                         dataType: 'contributors',
                         facetDashParameter: "id",
                         post_body : {},
@@ -868,7 +864,7 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "contributors", "terms", "field"],
                                 parameterName: "contributors_id_field",
-                                defaultValue: "lists.contributors.id.exact",
+                                defaultValue: "lists.contributors.id.exact"
                             },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
@@ -886,16 +882,15 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             }
-                        ],
+                        ]
                     },
                     {
                             chartType: 'donut',
                             widgetType: 'c3-chart',
                             name: 'Awards',
                             width: 6,
-                            indexVersion: 3,
                             mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
                             post_body: {
                                 "aggregations": {
@@ -955,7 +950,6 @@ export default Ember.Route.extend({
                         facetDash: "resultsList",
                         facetDashParameter: "tags",
                         width: 6,
-                        indexVersion: 3,
                         dataType: 'tags',
                         post_body : {
                             from: 0,
@@ -980,7 +974,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             },
                             {
                                 parameterName: "query",
@@ -992,7 +986,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must_not", 0, "terms", "tags"],
                                 defaultValue: tag_blacklist
                             }
-                        ],
+                        ]
                     },
                     {
                         chartType: 'recentlyAdded',
@@ -1000,7 +994,6 @@ export default Ember.Route.extend({
                         name: 'Recently Added',
                         facetDash: "objectDetail",
                         facetDashParameter: "id",
-                        indexVersion: 3,
                         hideViewAll: true,
                         width: 12,
                         post_body : {
@@ -1665,7 +1658,6 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
-                        indexVersion: "3",
                         width: 6,
                         mappingType: "OBJECT_TO_ARRAY",
                         facetDash: "agentDetail",
@@ -1691,7 +1683,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "source"
                             },
                             {
@@ -1712,14 +1704,14 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "publishers", "terms", "field"],
                                 parameterName: "publisher_field",
-                                defaultValue: "lists.publishers.id.exact",
+                                defaultValue: "lists.publishers.id.exact"
                             },
                             {
                                 parameterPath: ["aggregations", "publishers", "terms", "size"],
                                 parameterName: "publisher_size",
-                                defaultValue: 200,
-                            },
-                        ],
+                                defaultValue: 200
+                            }
+                        ]
                     },
                     {
                             chartType: 'donut',
@@ -1790,7 +1782,7 @@ export default Ember.Route.extend({
                                 defaultValue: 1
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "source"
                             },
                             {
@@ -1805,8 +1797,8 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "stackedData", "terms", "field"],
                                 parameterName: "type_field",
-                                defaultValue: "type.raw",
-                            },
+                                defaultValue: "type"
+                            }
                         ]
                     },
                     {
@@ -1822,7 +1814,7 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "contributors", "terms", "field"],
                                 parameterName: "contributors_id_field",
-                                defaultValue: "lists.contributors.id.raw",
+                                defaultValue: "lists.contributors.id.exact"
                             },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
@@ -1840,9 +1832,9 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             }
-                        ],
+                        ]
                     },
                     {
                         chartType: 'tagsList',
@@ -1875,7 +1867,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             },
                             {
                                 parameterName: "query",
@@ -1887,7 +1879,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must_not", 0, "terms", "tags"],
                                 defaultValue: tag_blacklist
                             }
-                        ],
+                        ]
                     },
                     {
                         chartType: 'recentlyAdded',
@@ -1912,7 +1904,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "source",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             },
                             {
                                 parameterName: "recently_added_sort",
@@ -1924,7 +1916,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
                             }
-                        ],
+                        ]
                     }
                 ]
             }

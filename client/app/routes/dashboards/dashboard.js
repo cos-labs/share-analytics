@@ -1048,7 +1048,7 @@ export default Ember.Route.extend({
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
-                        indexVersion: 3
+                        indexVersion: 3,
                         width: 4,
                         post_body: {},
                         postBodyParams: [

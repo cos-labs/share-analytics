@@ -1722,7 +1722,7 @@ export default Ember.Route.extend({
                                 "aggregations": {
                                     "funders": {
                                         "terms": {
-                                            "field": "funders.raw"
+                                            "field": "lists.funders.name.exact"
                                         },
                                         "aggs": {
                                             "awards": {
@@ -1748,14 +1748,8 @@ export default Ember.Route.extend({
                                     defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                                 },
                                 {
-                                    parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                    parameterName: "query",
-                                    defaultValue: "affiliations: \"University of California San Diego\""
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "filter", 0, "terms", "sources.raw"],
-                                    parameterName: "sources",
-                                    defaultValue: ["NIH Research Portal Online Reporting Tools", "NSF Awards"]
+                                    parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                    parameterName: "source"
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],

@@ -838,7 +838,7 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "stackedData", "terms", "field"],
                                 parameterName: "type_field",
-                                defaultValue: "types"
+                                defaultValue: "type"
                             }
                         ]
                     },
@@ -1788,7 +1788,7 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "stackedData", "terms", "field"],
                                 parameterName: "type_field",
-                                defaultValue: "types"
+                                defaultValue: "type"
                             }
                         ]
                     },

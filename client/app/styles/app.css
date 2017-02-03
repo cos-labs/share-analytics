@@ -2,6 +2,9 @@
 
 /*Packery grid styling*/
 
+body {
+}
+
 .ucsd_header {
     position: fixed;
     overflow: hidden;
@@ -53,12 +56,22 @@
     opacity: 0.8;
 }
 .dashboard {
-    background: url("/images/ucsd-geisel-bg-light.png");
     padding-bottom: 80px;
     padding-top: 70px;
-    background-size: 58%;
-    background-position: center -10px;
+    background: url("/images/ucsd-geisel-bg-light.png");
+    background-position: left -150% top -10px;
+    background-size: 75%;
+}
 
+.dashboard:after {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+    overflow: hidden;
 }
 
 .wrapper h2 {

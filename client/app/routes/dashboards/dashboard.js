@@ -960,7 +960,7 @@ export default Ember.Route.extend({
                             aggregations: {
                                 listWidgetData : {
                                     terms : {
-                                        field: 'tags',
+                                        field: 'tags.exact',
                                         size: 10
                                     }
                                 }
@@ -1422,7 +1422,7 @@ export default Ember.Route.extend({
                             "aggregations": {
                                 "listWidgetData" : {
                                     "terms": {
-                                        "field": 'tags',
+                                        "field": 'tags.exact',
                                         "size": 100
                                     }
                                 }
@@ -1854,7 +1854,7 @@ export default Ember.Route.extend({
                             aggregations: {
                                 listWidgetData : {
                                     terms : {
-                                        field: 'tags',
+                                        field: 'tags.exact',
                                         size: 10
                                     }
                                 }

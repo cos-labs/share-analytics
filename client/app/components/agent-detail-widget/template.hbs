@@ -1,24 +1,28 @@
 <div class="object-detail">
     <h1 style="padding: 180px 50px 110px 50px; text-align: center; margin: 0; background-color: #eee; overflow: hidden; position: relative; border-radius: 2px; border-bottom: 1px solid rgba(0,0,0,0.2); margin-bottom: 50px;">
-        {{data._source.name}}<br>
-        {{#each data._source.types as |type|}}
+        {{agentData._source.name}}<br>
+        {{#each agentData._source.types as |type|}}
             <span style="display: inline-block; background-color: #bbb; color: #fff; padding: 10px 30px; font-size: 17px; border-radius: 2px; font-weight: 600; margin-top: 30px;">{{type}}</span>
         {{/each}}
     </h1>
-    <div><h5>Description</h5>{{data._source.description}}</div>
+    <div><h5>Description</h5>{{agentData._source.description}}</div>
     <div><h5>Identifiers</h5><ul>
-    {{#each data._source.identifiers as |identifier|}}
+    {{#each agentData._source.identifiers as |identifier|}}
         <li>{{identifier}}</li>
     {{/each}}
     </ul></div>
     <div><h5>Sources</h5><ul>
-    {{#each data._source.sources as |source|}}
+    {{#each agentData._source.sources as |source|}}
         <li>{{source}}</li>
     {{/each}}
     </ul></div>
 
-    <h4 style="font-weight: 600; margin-top: 50px;">Raw JSON</h4>
-    <pre style="margin-bottom: 20px;">
-{{dataAsString}}
-    </pre>
+    {{#if showJSON}}
+        <h4 {{action toggleProperty 'showJSON'}} style="font-weight: 600; margin-top: 50px; cursor: pointer;">Raw JSON</h4>
+        <pre style="margin-bottom: 20px;">
+            {{dataAsString}}
+        </pre>
+    {{else}}
+        <h4 {{action toggleProperty 'showJSON'}} style="font-weight: 600; margin-top: 50px; cursor: pointer;">View Raw JSON</h4>
+    {{/if}}
 </div>

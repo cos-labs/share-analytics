@@ -4,18 +4,14 @@ import ENV from 'analytics-dashboard/config/environment';
 
 export default Ember.Component.extend({
 
-    data: [],
-    dataAsString: "",
-
-    init(){
-        this._super(...arguments);
-        this.processData(this.get("data.hits.hits"));
-    },
-
-    processData: function(data) {
-        this.set("data", data[0]);
-        this.set("dataAsString", JSON.stringify(data[0],  null, '    '));
-    },
+    agentData: Ember.computed(function() {
+        return this.get('data.hits.hits')[0];
+    }),
+    dataAsString: Ember.computed(function() {
+        var data = this.get('data.hits.hits')[0];
+        return JSON.stringify(data, null, '    ');
+    }),
+    showJSON: false,
 
     actions: {
 

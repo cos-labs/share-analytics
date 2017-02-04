@@ -169,18 +169,16 @@ const tag_blacklist = [
 
 export default Ember.Route.extend({
 
-
     queryParams: {
         query: {refreshModel: true},
         tags: {refreshModel: true},
-        source: {refreshModel: true},
+        sources: {refreshModel: true},
         id: {refreshModel: true},
         scholar: {refreshModel: true},
         all: {refreshModel: true},
         contributors: {refreshModel: true},
         special_filter: {refresh_model: true},
-        publishers: {refresh_model: true},
-
+        publishers: {refresh_model: true}
     },
     query: 'UC',
     gte: "1996-01-01",
@@ -543,7 +541,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
-                                parameterName: "source"
+                                parameterName: "sources"
                             },
                             {
                                 parameterName: "publishers",
@@ -581,7 +579,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                parameterName: "source"
+                                parameterName: "sources"
                             }
                         ],
                         widgetSettings : {
@@ -620,7 +618,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                parameterName: "source"
+                                parameterName: "sources"
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
@@ -681,7 +679,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterName: "source",
+                                parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                             }
                         ],
@@ -750,7 +748,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                parameterName: "source"
+                                parameterName: "sources"
                             }
                         ],
                         widgetSettings : {
@@ -797,7 +795,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                parameterName: "source"
+                                parameterName: "sources"
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
@@ -839,7 +837,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                parameterName: "source"
+                                parameterName: "sources"
                             },
                             {
                                 parameterName: "query",
@@ -887,7 +885,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterName: "source",
+                                parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             }
                         ]
@@ -929,7 +927,7 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                    parameterName: "source"
+                                    parameterName: "sources"
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
@@ -979,7 +977,7 @@ export default Ember.Route.extend({
                                 defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
-                                parameterName: "source",
+                                parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             },
                             {
@@ -1016,7 +1014,7 @@ export default Ember.Route.extend({
                                 defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
-                                parameterName: "source",
+                                parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             },
                             {
@@ -1402,7 +1400,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterName: "source",
+                                parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             }
                         ]
@@ -1441,7 +1439,7 @@ export default Ember.Route.extend({
                                 defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
-                                parameterName: "source",
+                                parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             },
                             {
@@ -1497,7 +1495,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources.raw"],
-                                parameterName: "source"
+                                parameterName: "sources"
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
@@ -1643,7 +1641,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                parameterName: "source"
+                                parameterName: "sources"
                             }
                         ],
                         widgetSettings : {
@@ -1690,7 +1688,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                parameterName: "source"
+                                parameterName: "sources"
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
@@ -1756,7 +1754,7 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                    parameterName: "source"
+                                    parameterName: "sources"
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
@@ -1789,7 +1787,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                parameterName: "source"
+                                parameterName: "sources"
                             },
                             {
                                 parameterName: "query",
@@ -1837,7 +1835,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterName: "source",
+                                parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             }
                         ]
@@ -1872,7 +1870,7 @@ export default Ember.Route.extend({
                                 defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
-                                parameterName: "source",
+                                parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             },
                             {
@@ -1909,7 +1907,7 @@ export default Ember.Route.extend({
                                 defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
                             },
                             {
-                                parameterName: "source",
+                                parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             },
                             {

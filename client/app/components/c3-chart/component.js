@@ -27,7 +27,13 @@ const NIH_LABELS = {
   'national institute of neurological disorders and stroke': 'NINDS',
   'national institute of nursing research': 'NINR',
   'national library of medicine': 'NLM',
-  'office of the director': 'OD'
+  'office of the director': 'OD',
+  'national science foundation': 'NSF',
+  'u.s. department of energy': 'U.S. DOE',
+  'rolling deck to repository (r2r) program': 'R2R Program',
+  'pangaea - data publisher for earth & environmental science': 'PANGAEA',
+  'escholarship, university of california': 'eScholarship, UC',
+  'international studies perspectives 2015. doi: 10.1111/insp.12104': 'Intl. Studies Perspectives'
 };
 
 function log10ToLinear(log_num) {
@@ -336,19 +342,13 @@ export default Ember.Component.extend({
                 }
                 d3.select(this.parentNode).append('text')
                     .text(self.data.reduce(function(acc, cur, idx, arr) {
-                        var string;
                         if (cur._source.id === d.data.id) {
-                            if (self.get('name') === 'Awards') {
-                               string = getLabel(cur._source.id);
-                            } else if (cur._source.name) {
-                                string = cur._source.name
-                            } else {
-                                string = cur._source.id;
+                            var string = cur._source.name ? cur._source.name : cur._source.id;
+                            var label = getLabel(string);
+                            if (label.length > 28) {
+                                return label.substring(0,25) + "...";
                             }
-                            if (string.length > 38) {
-                                return string.substring(0,25) + "...";
-                            }
-                            return string;
+                            return label;
                         }
                         return acc;
                     }, false))

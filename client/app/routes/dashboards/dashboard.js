@@ -1412,7 +1412,7 @@ export default Ember.Route.extend({
                 wrapperClass: 'index-page',
                 widgets: [
                     {
-                        chartType: 'topContributors',
+                        chartType: 'tagsList',
                         widgetType: 'list-widget',
                         name: 'Top Tags',
                         width: 12,
@@ -1460,8 +1460,9 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 2, "term", "contributors.exact"],
                             }
                         ],
-                        facetDash: "scholar"
-                    },
+                        facetDash: "resultsList",
+                        facetDashParameter: "tags"
+                    }
                 ]
             },
             providers: {

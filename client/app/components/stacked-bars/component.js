@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 const ucsdVariations = 'UCSD%20OR%20"UC%20San%20Diego"%20OR%20"UC%20San%20Diego%20Library"%20OR%20"UC%20San%20Diego%20Library%20Digital%20Collections"%20OR%20"Scripps%20Institution%20of%20Oceanography"%20OR%20"Scripps%20Institute%20of%20Oceanography"%20OR%20"University%20of%20California%20San%20Diego"%20OR%20"Univ%20of%20california%20san%20diego"%20OR%20"University%20of%20CA%20San%20Diego"';
-const ucsdLuceneQuery = 'contributors:(' + ucsdVariations + ')%20OR%20publishers:(' + ucsdVariations + ')%20OR%20funders:(' + ucsdVariations + ')%20OR%20title:(' + ucsdVariations + ')%20OR%20hosts:(' + ucsdVariations + ')%20OR%20tags:(ucsd%20OR%20"cdl.ucsd"%20OR%20"scripps%20institution%20of%20oceanography")%20OR%20affiliations:(' + ucsdVariations + ')';
+const ucsdLuceneQuery = 'q=contributors:(' + ucsdVariations + ')%20OR%20publishers:(' + ucsdVariations + ')%20OR%20funders:(' + ucsdVariations + ')%20OR%20title:(' + ucsdVariations + ')%20OR%20hosts:(' + ucsdVariations + ')%20OR%20tags:(ucsd%20OR%20"cdl.ucsd"%20OR%20"scripps%20institution%20of%20oceanography")%20OR%20affiliations:(' + ucsdVariations + ')';
 const minLabelWidth = 90;
 
 function get_search_query(params) {
@@ -42,7 +42,7 @@ export default Ember.Component.extend({
                 label: item.key,
                 percentage: percentage,
                 background: this.get('pattern')[index] || '#666666',
-                url: "https://share.osf.io/discover?q=" + query + "&type=" + item.key
+                url: "https://share.osf.io/discover?" + query + "&type=" + item.key
             };
         });
         this.set('data', data);

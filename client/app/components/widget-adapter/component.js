@@ -451,9 +451,13 @@ export default Ember.Component.extend({
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(this.get('item').post_body)
+            data: JSON.stringify(this.get('item').post_body, function(key, value) {
+                if (Array.isArray(value)) {
+                    return value.filter(Object);
+                }
+                return value;
+            })
         });
-
         this.set('data', data);
         this.set('aggregations', data.aggregations);
         this.set('total', data.hits.total);
@@ -556,7 +560,6 @@ export default Ember.Component.extend({
 
         transitionToFacet: function(dashboardName, newQueryParams) {
             let self = this;
-            debugger;
             let queryParams = Object.keys(newQueryParams).reduce((acc, cur, idx, arr) => {
                 acc[cur] = newQueryParams[cur];
                 return acc;

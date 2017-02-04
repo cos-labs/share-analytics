@@ -178,8 +178,8 @@ export default Ember.Route.extend({
         scholar: {refreshModel: true},
         all: {refreshModel: true},
         contributors: {refreshModel: true},
-        special_filter: {refresh_model: true},
-        publishers: {refresh_model: true},
+        special_filter: {refreshModel: true},
+        publishers: {refreshModel: true},
 
     },
     query: 'UC',
@@ -551,7 +551,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "agent_id",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors._id"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "contributors._id"],
                             }
                         ]
                     },
@@ -582,6 +582,10 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "source"
+                            },
+                            {
+                                parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
                             }
                         ],
                         widgetSettings : {
@@ -638,6 +642,10 @@ export default Ember.Route.extend({
                                 defaultValue: "yyyy-MM-dd||yyyy"
                             },
                             {
+                                parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
+                            },
+                            {
                                 parameterPath: ["aggregations", "publishers", "terms", "field"],
                                 parameterName: "publisher_field",
                                 defaultValue: "lists.publishers.id.exact",
@@ -679,6 +687,10 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 parameterName: "query",
                                 defaultValue: "*"
+                            },
+                            {
+                                parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
                             },
                             {
                                 parameterName: "source",
@@ -1932,7 +1944,6 @@ export default Ember.Route.extend({
         let widgets = dashboard.widgets;
         let array_keys = new Set(["filter", "must", "must_not"]);
         dashboard.widgets = widgets.map((widget) => {
-
             if (widget.postBodyParams) {
                 widget.postBodyParams.forEach((param) => {
 
@@ -1942,9 +1953,8 @@ export default Ember.Route.extend({
                     } else if ("defaultValue" in param) {
                         parameter_value = param.defaultValue;
                     } else {
-                        return; // The parameter must have a value.
+                        return;
                     }
-
                     let path_parts = param.parameterPath.slice(0, -1)
                     let parameter_key = param.parameterPath[param.parameterPath.length-1];
                     let nested_object = path_parts.reduce((nested, pathPart) => {

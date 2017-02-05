@@ -18,6 +18,7 @@ export default Ember.Component.extend({
         if(settings){
             this.set('settings', settings);
         }
+        this.set("query", this.get("parameters").query);
     },
 
     actions: {

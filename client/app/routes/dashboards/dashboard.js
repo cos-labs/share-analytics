@@ -520,7 +520,14 @@ export default Ember.Route.extend({
                 widgets: [
                     {
                         widgetType: "query-widget",
-                        background_color: "000000",
+                        background_color: "rgba(0,0,0,0.3)",
+                        name: "",
+                        width: 12,
+                        facetDash: "resultsList",
+                    },
+                    {
+                        widgetType: "filter-plaques",
+                        background_color: "rgba(0,0,0,0)",
                         name: "",
                         width: 12,
                         facetDash: "resultsList",

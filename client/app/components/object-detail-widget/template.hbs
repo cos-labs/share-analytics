@@ -5,13 +5,13 @@
     </h1>
     <div><h5>Description</h5>{{objectData._source.description}}</div>
     <div><h5>Contributors</h5><ul>
-        {{#each objectData._source.contributors as |contributor|}}
-            <li>{{contributor}}</li>
+        {{#each objectData._source.lists.contributors as |contributor|}}
+            <li><a {{action "transitionToFacet" "agentDetail" "id" contributor.id}}>{{contributor.name}}</a></li>
         {{/each}}
     </ul></div>
     <div><h5>Tags</h5>
         {{#each objectData._source.tags as |tag|}}
-            <span {{action "transitionToFacet" "resultsList" "tags" tag on="click"}} style="display: inline-block; font-size: 12px; background-color: #7ec4dd; color: #fff; padding: 2px 5px 2px 5px ; border: 1px solid color: #6ebfd5; border-radius: 3px; margin: 3px;">{{tag}}</span>
+            <span {{action "transitionToFacet" "resultsList" "tags" tag true on="click"}} style="cursor: pointer; display: inline-block; font-size: 12px; background-color: #7ec4dd; color: #fff; padding: 2px 5px 2px 5px ; border: 1px solid color: #6ebfd5; border-radius: 3px; margin: 3px;">{{tag}}</span>
         {{/each}}
     </div>
     <div><h5>Publishers</h5><ul>
@@ -38,9 +38,7 @@
 
     {{#if showJSON}}
         <h4 {{action toggleProperty 'showJSON'}} style="font-weight: 600; margin-top: 50px; cursor: pointer;">Raw JSON</h4>
-        <pre style="margin-bottom: 20px;">
-            {{dataAsString}}
-        </pre>
+        <pre style="margin-bottom: 20px;">{{dataAsString}}</pre>
     {{else}}
         <h4 {{action toggleProperty 'showJSON'}} style="font-weight: 600; margin-top: 50px; cursor: pointer;">View Raw JSON</h4>
     {{/if}}

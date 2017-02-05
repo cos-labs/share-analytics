@@ -1507,7 +1507,6 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Data providers',
                         width: 12,
-                        indexVersion: "2",
                         facetDash: "agentDetail",
                         facetDashParameter: "id",
                         hideViewAll: true,

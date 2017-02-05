@@ -404,6 +404,10 @@ export default Ember.Component.extend({
             if(override){
                 facetDash = override;
             }
+            if (id === null) {
+                this.attrs.transitionToFacet(facetDash, queryParams);
+                return;
+            }
             if (facetDash === "url" && item.url) {
                 window.location.href = item.url;
                 return;

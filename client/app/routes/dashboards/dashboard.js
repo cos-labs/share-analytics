@@ -1889,6 +1889,7 @@ export default Ember.Route.extend({
                                 listWidgetData : {
                                     terms : {
                                         field: 'tags.exact',
+                                        exclude: tag_blacklist,
                                         size: 10
                                     }
                                 }
@@ -1912,11 +1913,6 @@ export default Ember.Route.extend({
                                 parameterName: "query",
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
-                            },
-                            {
-                                parameterName: "tag_blacklist",
-                                parameterPath: ["query", "bool", "must_not", 0, "terms", "tags"],
-                                defaultValue: tag_blacklist
                             }
                         ]
                     },

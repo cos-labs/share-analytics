@@ -64,6 +64,18 @@ const ucsd_query = [
 ];
 
 const tag_blacklist = [
+    "address",
+    "process",
+    "improved",
+    "base",
+    "goals",
+    "testing",
+    "development",
+    "research",
+    "event",
+    "role",
+    "novel",
+    "work",
     "text",
     "cdl",
     "cdl.ucsd",
@@ -985,6 +997,7 @@ export default Ember.Route.extend({
                                 listWidgetData : {
                                     terms : {
                                         field: 'tags.exact',
+                                        exclude: tag_blacklist,
                                         size: 10
                                     }
                                 }
@@ -1009,11 +1022,6 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
                             },
-                            {
-                                parameterName: "tag_blacklist",
-                                parameterPath: ["query", "bool", "must_not", 0, "terms", "tags"],
-                                defaultValue: tag_blacklist
-                            }
                         ]
                     },
                     {
@@ -1447,7 +1455,8 @@ export default Ember.Route.extend({
                                 "listWidgetData" : {
                                     "terms": {
                                         "field": 'tags.exact',
-                                        "size": 100
+                                        "size": 100,
+                                        exclude: tag_blacklist,
                                     }
                                 }
                             }

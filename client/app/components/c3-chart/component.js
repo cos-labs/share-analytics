@@ -81,6 +81,9 @@ export default Ember.Component.extend({
         if (this.get('name') === "Awards") {
             this.processData(this.get('aggregations.funders.buckets'));
         }
+        if (this.get('name') === "Awards Over Time") {
+            this.processData(this.get('aggregations.awards_over_time.buckets'));
+        }
     },
 
     processData: async function(data) {
@@ -102,7 +105,7 @@ export default Ember.Component.extend({
                 )
             );
         }
-        if (this.get('name') === "Awards") {
+        if (this.get('name') === "Awards" || this.get('name') === 'Awards Over Time') {
             data =  data.map(function(datum) {
                 datum._source = {
                     id: datum.key,
@@ -126,11 +129,8 @@ export default Ember.Component.extend({
     }),
 
     updateChart: async function() {
-
         var self = this;
-
         let chart_type = this.get('chartType');
-
         let chart_options = {
             bindto: this.$(this.element).find('.renderChart')[0],
             data: {
@@ -149,7 +149,7 @@ export default Ember.Component.extend({
             },
         };
 
-        if (chart_type == 'donut') {
+        if (chart_type === 'donut') {
             var title = '';
 
             var _data = this.get('data');
@@ -274,19 +274,27 @@ export default Ember.Component.extend({
             chart_options['point'] = {show: false};
 
         } else if (chart_type === 'timeseries') {
-
-
-            let x_axis = this.get('data.aggregations.all_over_time.buckets').map((datum) => { return datum.key_as_string; });
-            var columns = this.get('data.aggregations.sorted_by_type.buckets').map((bucket) => {
-                return [bucket.key].concat(bucket['type_over_time'].buckets.reduce((ret, bucket) => {
-                    ret[x_axis.indexOf(bucket.key_as_string)] = linearToLog10(bucket.doc_count);
-                    return ret;
-                }, (new Array(x_axis.length)).fill(0)));
-            });
-            columns.unshift(['x'].concat(x_axis));
-            columns.unshift(['All Events'].concat(this.get('data.aggregations.all_over_time.buckets').map((bucket) => {
+            if (this.get('name') === 'Awards Over Time') {
+                let x_axis = this.get('data').map((datum) => datum.key_as_string);
+                var columns = [];
+                columns.unshift(['x'].concat(x_axis));
+                columns.unshift(['Awards'].concat(this.get('data').map((bucket) => {
+                    return bucket.doc_count;
+                })));
+            } else {
+                let x_axis = this.get('data.aggregations.all_over_time.buckets').map((datum) => { return datum.key_as_string; });
+                var columns = this.get('data.aggregations.sorted_by_type.buckets').map((bucket) => {
+                  return [bucket.key].concat(bucket['type_over_time'].buckets.reduce((ret, bucket) => {
+                      ret[x_axis.indexOf(bucket.key_as_string)] = linearToLog10(bucket.doc_count);
+                      return ret;
+                  }, (new Array(x_axis.length)).fill(0)));
+                });
+                columns.unshift(['x'].concat(x_axis));
+                columns.unshift(['All Events'].concat(this.get('data.aggregations.all_over_time.buckets').map((bucket) => {
                 return linearToLog10(bucket.doc_count);
             })));
+
+            }
             let data_x = 'x';
             chart_options['axis'] = {
                 x: {
@@ -302,9 +310,11 @@ export default Ember.Component.extend({
                 y: {
                     min: 1,
                     tick: {
-                        format: log10ToLinear
+                        culling: {
+                            max: 10
+                        }
                     },
-                    label: 'Number of Items (Log Scale)'
+                    label: 'Number of Items'
                 }
             };
             let data_types = columns.reduce((r, c, i, a) => {

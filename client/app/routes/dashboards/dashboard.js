@@ -1625,7 +1625,65 @@ export default Ember.Route.extend({
                                 }
                             ],
                             facetDash: "awards"
-                        }
+                        },
+                        {
+                            chartType: 'timeseries',
+                            widgetType: 'c3-chart',
+                            name: 'Awards Over Time',
+                            width: 12,
+                            facetDash: "awards",
+                            post_body: {
+                                "aggregations": {
+                                    "awards_over_time": {
+                                        "date_histogram": {
+                                            "field": "lists.funders.awards.date",
+                                            "interval": "1M",
+                                            "format": "yyyy-MM-dd"
+                                        },
+                                        "aggregations": {
+                                            "awards": {
+                                                "sum": {
+                                                    "script": {
+                                                        "lang": "expression",
+                                                        "inline": "doc['lists.funders.awards.amount'].sum()"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            postBodyParams: [
+                                {
+                                    parameterPath: ["query", "bool", "minimum_should_match"],
+                                    parameterName: "shouldMatch",
+                                    defaultValue: 1
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "should"],
+                                    defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                    parameterName: "sources"
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                    parameterName: "min_date",
+                                    defaultValue: gte
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                    parameterName: "max_date",
+                                    defaultValue: lte
+                                },
+                                {
+                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
+                                    parameterName: "date_range_format",
+                                    defaultValue: "yyyy-MM-dd||yyyy"
+                                }
+                            ]
+                    }
                 ]
             },
             institution2: {

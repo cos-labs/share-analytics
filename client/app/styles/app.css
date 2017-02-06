@@ -477,6 +477,15 @@ nav.navbar {
     padding: 0;
 }
 
+
+.available-dashes > a {
+    text-decoration: none;
+}
+
+.available-dashes > a:hover {
+    text-decoration: none;
+}
+
 .filter-plaques .filter-plaque {
 
     margin-right: 15px;

@@ -1,10 +1,10 @@
 <div class="widget-body clearfix">
     <div class="renderChart"></div>
     {{#if widgetSettings.viewAllRoute}}
-        <div class="text-right m-t-md">
-            {{#unless item.hideViewAll}}
+        {{#unless item.hideViewAll}}
+            <div class="text-right m-t-md">
                 <button class="btn btn-link text-bigger" {{action 'transitionToFacet' null 'providers'}}>View all</button>
-            {{/unless}}
-        </div>
+            </div>
+        {{/unless}}
     {{/if}}
 </div>

@@ -6,7 +6,7 @@
     <div><h5>Description</h5>{{objectData._source.description}}</div>
     <div><h5>Contributors</h5><ul>
         {{#each objectData._source.lists.contributors as |contributor|}}
-            <li><a {{action "transitionToFacet" "agentDetail" "id" contributor.id}}>{{contributor.name}}</a></li>
+            <li><a style="cursor: pointer;" {{action "transitionToFacet" "agentDetail" "id" contributor.id}}>{{contributor.name}}</a></li>
         {{/each}}
     </ul></div>
     <div><h5>Tags</h5>

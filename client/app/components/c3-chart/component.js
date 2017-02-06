@@ -401,6 +401,7 @@ export default Ember.Component.extend({
             }, false);
             var facet = this.get("item.facetDashParameter");
             var facetDash = this.get("item.facetDash");
+            debugger;
             if(override){
                 facetDash = override;
             }

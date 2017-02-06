@@ -84,7 +84,7 @@ export default Ember.Component.extend({
     },
 
     processData: async function(data) {
-        if (this.get('name') === 'Data Providers') {
+        if (this.get('name') === 'Data Providers' || this.get('name') === 'Awards') {
             this.set("data",
                 await Ember.RSVP.Promise.all(
                     data.map(async function(datum, index, array) {
@@ -92,27 +92,14 @@ export default Ember.Component.extend({
                             url: ENV.apiUrl + '/search/agents/' + datum.key,
                             crossDomain: true,
                             type: 'GET',
-                            contentType: 'application/json',
+                            contentType: 'application/json'
                         });
                         data[index]._source = agent_info._source;
-                        data[index].doc_count = data[index].doc_count;
-                        data[index].key = data[index].key;
                         return data[index];
                     })
                 )
             );
         }
-        if (this.get('name') === "Awards") {
-            data =  data.map(function(datum) {
-                datum._source = {
-                    id: datum.key,
-                    name: datum.key
-                };
-                return datum;
-            });
-            this.set('data', await data);
-        }
-
     },
 
     sizeChanged: Ember.observer('resizedSignal', function() {

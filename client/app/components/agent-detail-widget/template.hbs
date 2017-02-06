@@ -5,18 +5,29 @@
             <span style="display: inline-block; background-color: #bbb; color: #fff; padding: 10px 30px; font-size: 17px; border-radius: 2px; font-weight: 600; margin-top: 30px;">{{type}}</span>
         {{/each}}
     </h1>
-    <div><h3>Description</h3>{{agentData._source.description}}</div>
-    <div><h3>Identifiers</h3><ul>
-    {{#each agentData._source.identifiers as |identifier|}}
-        <li>{{identifier}}</li>
-    {{/each}}
-    </ul></div>
-    <div><h3>Sources</h3><ul>
-    {{#each agentData._source.sources as |source|}}
-        <li>{{source}}</li>
-    {{/each}}
-    </ul></div>
-
+    {{#if agentData._source.description}}
+        <div><h3>Description</h3>{{agentData._source.description}}</div>
+    {{/if}}
+    {{#if agentData._source.identifiers}}
+        <div>
+            <h3>Identifiers</h3>
+            <ul>
+                {{#each agentData._source.identifiers as |identifier|}}
+                    <li>{{identifier}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    {{/if}}
+    {{#if agentData._source.sources}}
+        <div>
+            <h3>Sources</h3>
+            <ul>
+                {{#each agentData._source.sources as |source|}}
+                    <li>{{source}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    {{/if}}
     {{#if showJSON}}
         <h4 {{action toggleProperty 'showJSON'}} style="font-weight: 600; margin-top: 50px; cursor: pointer;">Hide Raw Data&nbsp;&nbsp;&nbsp;&nbsp;{{fa-icon "chevron-up"}}</h4>
         <pre style="margin-bottom: 20px;">{{dataAsString}}</pre>

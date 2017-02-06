@@ -973,13 +973,15 @@ export default Ember.Route.extend({
                             chartType: 'donut',
                             widgetType: 'c3-chart',
                             name: 'Awards',
+                            facetDash: "agentDetail",
+                            facetDashParameter: "id",
                             width: 6,
                             mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
                             post_body: {
                                 "aggregations": {
                                     "funders": {
                                         "terms": {
-                                            "field": "lists.funders.name.exact"
+                                            "field": "lists.funders.id.exact"
                                         },
                                         "aggs": {
                                             "awards": {
@@ -1023,8 +1025,7 @@ export default Ember.Route.extend({
                                     parameterName: "date_range_format",
                                     defaultValue: "yyyy-MM-dd||yyyy"
                                 }
-                            ],
-                            facetDash: "awards"
+                            ]
                         },
                     {
                         chartType: 'tagsList',
@@ -1604,13 +1605,15 @@ export default Ember.Route.extend({
                             chartType: 'donut',
                             widgetType: 'c3-chart',
                             name: 'Awards',
+                            facetDash: "agentDetail",
+                            facetDashParameter: "id",
                             width: 6,
                             mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
                             post_body: {
                                 "aggregations": {
                                     "funders": {
                                         "terms": {
-                                            "field": "lists.funders.name.exact"
+                                            "field": "lists.funders.id.exact"
                                         },
                                         "aggs": {
                                             "awards": {
@@ -1654,8 +1657,7 @@ export default Ember.Route.extend({
                                     parameterName: "date_range_format",
                                     defaultValue: "yyyy-MM-dd||yyyy"
                                 }
-                            ],
-                            facetDash: "awards"
+                            ]
                         }
                 ]
             },
@@ -1727,10 +1729,10 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
-                        width: 6,
-                        mappingType: "OBJECT_TO_ARRAY",
                         facetDash: "agentDetail",
                         facetDashParameter: "id",
+                        width: 6,
+                        mappingType: "OBJECT_TO_ARRAY",
                         hideViewAll: !transition.queryParams.all,
                         widgetSettings : {
                             viewAllRoute: 'providers'
@@ -1792,7 +1794,7 @@ export default Ember.Route.extend({
                                 "aggregations": {
                                     "funders": {
                                         "terms": {
-                                            "field": "lists.funders.name.exact"
+                                            "field": "lists.funders.id.exact"
                                         },
                                         "aggs": {
                                             "awards": {

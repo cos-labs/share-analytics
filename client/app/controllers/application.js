@@ -17,7 +17,15 @@ export default Ember.Controller.extend(OsfAgnosticAuthControllerMixin,{
             this.get('toast').error('Login failed');
         },
         transitionToHome(){
-            this.transitionToRoute('dashboards.dashboard', 'institution');
+            this.transitionToRoute('dashboards.dashboard', 'institution', {
+                queryParams: {
+                    query: undefined,
+                    tags: undefined,
+                    publishers: undefined,
+                    contributors: undefined,
+                    id: undefined
+                }
+            });
         }
     }
 });

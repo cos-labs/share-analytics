@@ -209,6 +209,20 @@ export default Ember.Route.extend({
         }
     }),
 
+    resetController: function(controller, isExiting, transition) {
+        this._super.apply(this, arguments);
+
+        if (isExiting) {
+            controller.set("all", undefined);
+            controller.set("sources", undefined);
+            controller.set("query", undefined);
+            controller.set("id", undefined);
+            controller.set("contributors", undefined);
+            controller.set("publishers", undefined);
+            controller.set("tags", undefined);
+            controller.set("query", undefined);
+        }
+    },
     model: function(params, transition, queryParams) {
         let query = this.get('query');
         let gte = this.get('gte');

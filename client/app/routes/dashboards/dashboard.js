@@ -740,8 +740,18 @@ export default Ember.Route.extend({
                         widgetSettings : {
                             institution_id: 'ucsd'
                         },
-                        content: "<h4><b>What is this?</b></h4><p>The Research Data Catalog pulls information about data created by members of the UC San Diego research community from the SHARE database.</p><h4><b>Where does the data come from?</b></h4><p>SHARE is a higher education initiative whose mission is to maximize research impact by making a comprehensive inventory of research widely discoverable, accessible, and reusable. To fulfill this mission SHARE is creating an openly available data set about research activities across their life cycle.</p><p>The SHARE infrastructure was developed by the Association of Research Libraries in partnership with the Center for Open Science. SHARE is funded by the Institute of Museum and Library Services and the Alfred P. Sloan Foundation. The SHARE initiative was founded in 2013 by ARL, the Association of American Universities (AAU), and the Association of Public and Land-grant Universities (APLU).</p><p>The Research Data Catalog is a joint development effort between the SHARE team and the UC San Diego Library. The Library team includes members of the Research Data Curation, Metadata Services and Information Technology Programs.</p><h4><b>How do I get my data listed?</b></h4><p>SHARE harvests from {X number of} sources from around the world. Publishing data in any of these services will have it harvested. NOTE HOWEVER that for your data to be represented in the Research Data Catalog, it must be clearly identified as coming from UC San Diego. How this is done will vary by source. For help, please contact the UC San Diego Library.</p><p>In addition to these sources, the UC San Diego Library can manually enter information into the SHARE catalog. Contact them to begin the process. The Library also hosts data data via its Data Collections website, which also publishes to the SHARE catalog. Contact them for more information.</p><h4><b>I see an error in the representation of my data! How do I correct it?</b></h4><p>Because SHARE harvests from more than X number of international services, there will be different answers to this question. Contact the UC San Diego Library for help.</p>"
-                    },
+                        content: "<h4><b>What is this?</b></h4>" +
+                        "<p>The Research Data Catalog pulls information about data created by members of the UC San Diego research community from the SHARE database.</p>" +
+                        "<h4><b>Where does the information come from?</b></h4>" +
+                        "<p>SHARE is an <a href='http://www.arl.org/'>Association of Research Libraries (ARL)</a> and <a href='http://cos.io/'>Center for Open Science</a> initiative whose mission is to maximize research impact by making a comprehensive inventory of research widely accessible, discoverable, and reusable. To fulfill this mission SHARE is building a free, open, data set about research and scholarly activities across the scholarly life cycle. This includes registrations, data sets, preprints, and publications.</p>" +
+                        "<p>SHARE is funded by the <a href='http://www.imls.gov/'> Institute of Museum and Library Services</a> and the <a href='http://www.sloan.org/'>Alfred P. Sloan Foundation</a>. The SHARE initiative was founded in 2013 by <a href='http://www.arl.org/'>ARL</a>, the <a href='http://www.aau.edu/'>Association of American Universities (AAU)</a>, and the <a href='http://www.aplu.org/'>Association of Public and Land-grant Universities (APLU)</a>.</p>" +
+                        "<p>The Research Data Catalog is a joint development effort between the SHARE team and the UC San Diego Library. The Library team includes members of the Research Data Curation, Metadata Services and Information Technology Programs.</p>" +
+                        "<h4><b>How do I get my data listed?</b></h4>" +
+                        "<p>SHARE harvests metadata about research output from <a href='https://share.osf.io/sources'>146 sources</a> around the world. If your work has been indexed by any of these sources, its metadata has been or can be harvested by SHARE. For your data to be represented in the Research Data Catalog, it must be clearly identified as coming from UC San Diego. How this is done will vary by source. For help, please contact the <a href='mailto:research-data-curation@ucsd.edu'>Research Data Curation Program (RDCP) at the UC San Diego Library</a>.</p>" +
+                        "<p>In addition to these sources, the UC San Diego Library can manually enter information into the SHARE catalog. The Library also hosts one of the many sources harvested by SHARE via its Digital Collections website. <a href='mailto:research-data-curation@ucsd.edu'>Contact RDCP</a> for more information on entering information about your published data into SHARE or depositing your data into the Digital Collections. </p>" +
+                        "<h4><b>I see an error in the representation of my data! How do I correct it? How do I add more or better metadata for my research in the catalog?</b></h4>" +
+                        "<p>Because SHARE harvests from many sources, there will be different answers to this question. While we can update the information in SHARE, we would ideally also correct the original source. <a href='mailto:research-data-curation@ucsd.edu'>Contact RDCP</a> for help.</p>"
+                    }
                 ]
             },
             institution: {
@@ -755,7 +765,7 @@ export default Ember.Route.extend({
                         widgetSettings : {
                             institution_id: 'ucsd'
                         },
-                        content: "Data from the UC San Diego research community in the SHARE catalog.",
+                        content: "Data and research output shared by the UC San Diego research community and indexed by SHARE.",
                         showButton: true,
                     },
                     {
@@ -1634,7 +1644,7 @@ export default Ember.Route.extend({
                         widgetSettings : {
                             institution_id: 'ucsd'
                         },
-                        content: "Data from the UC San Diego research community in the SHARE catalog.",
+                        content: "Data and research output shared by the UC San Diego research community and indexed by SHARE.",
                         showButton: true,
                     },
                     {

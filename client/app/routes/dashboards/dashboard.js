@@ -1410,20 +1410,15 @@ export default Ember.Route.extend({
                         hideViewAll: true,
                         post_body : {
                             "aggregations": {
-                                "listWidgetData": {
+                                "contributors": {
                                     "terms": {
-                                        "field": 'contributors.exact',
+                                        "field": 'lists.contributors.id.exact',
                                         "size": 100
                                     }
                                 }
                             }
                         },
                         postBodyParams: [
-                            {
-                                parameterPath: ["aggregations", "contributors", "terms", "field"],
-                                parameterName: "contributors_id_field",
-                                defaultValue: "lists.contributors.id.exact"
-                            },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
                                 parameterName: "shouldMatch",

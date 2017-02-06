@@ -9,8 +9,9 @@ export default Ember.Component.extend({
     init(){
 
         this._super(...arguments);
+        var data = [];
         if (this.get('chartType') === 'recentlyAdded') {
-            var data = this.get('data.hits.hits').map(function(hits, index) {
+            data = this.get('data.hits.hits').map(function(hits, index) {
                 return {
                     number: index + 1,
                     name: hits._source.title,
@@ -65,9 +66,8 @@ export default Ember.Component.extend({
                 url: ENV.apiUrl + '/search/agents/' + item.key,
                 crossDomain: true,
                 type: 'GET',
-                contentType: 'application/json',
+                contentType: 'application/json'
             });
-            let data = this.get('data');
             data[index] = datum._source;
             data[index].number = item.doc_count;
             this.set("data", Array.prototype.slice.call(data));

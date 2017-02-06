@@ -579,7 +579,6 @@ export default Ember.Route.extend({
                         width: 3,
                         indexVersion: 3,
                         facetDash: "resultsList",
-                        height: 115,
                         post_body: {},
                         postBodyParams: [
                             {
@@ -615,7 +614,8 @@ export default Ember.Route.extend({
                         ],
                         widgetSettings : {
                             fontSize: 2,
-                            fontColor: '#F44336'
+                            fontColor: '#F44336',
+                            minHeight: 115
                         }
                     },
                     {
@@ -794,7 +794,6 @@ export default Ember.Route.extend({
                         name: 'Total Results',
                         width: 4,
                         facetDash: "resultsList",
-                        height: 115,
                         post_body: {},
                         postBodyParams: [
                             {
@@ -818,7 +817,8 @@ export default Ember.Route.extend({
                         ],
                         widgetSettings : {
                             fontSize: 2,
-                            fontColor: '#F44336'
+                            fontColor: '#F44336',
+                            minHeight: 115
                         }
                     },
                     {
@@ -1675,7 +1675,6 @@ export default Ember.Route.extend({
                         name: 'Total Results',
                         width: 4,
                         facetDash: "resultsList",
-                        height: 115,
                         post_body: {},
                         postBodyParams: [
                             {
@@ -1699,7 +1698,8 @@ export default Ember.Route.extend({
                         ],
                         widgetSettings : {
                             fontSize: 2,
-                            fontColor: '#F44336'
+                            fontColor: '#F44336',
+                            minHeight: 115
                         }
                     },
                     {

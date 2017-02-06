@@ -477,6 +477,7 @@ nav.navbar {
 .filter-plaques .filter-plaque {
 
     margin-right: 15px; 
+    margin-bottom: 12px;
     background-color: #552266;
     padding: 9px 13px;
     border-radius: 2px;

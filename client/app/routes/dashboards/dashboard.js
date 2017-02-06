@@ -567,8 +567,8 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
                             },
                             {
-                                parameterName: "agent_id",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "contributors._id"],
+                                parameterName: "contributors",
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
                             }
                         ]
                     },
@@ -607,6 +607,10 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
                                 parameterName: "publishers",
+                            },
+                            {
+                                parameterName: "contributors",
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
                             }
                         ],
                         widgetSettings : {
@@ -671,6 +675,10 @@ export default Ember.Route.extend({
                                 parameterName: "publishers",
                             },
                             {
+                                parameterName: "contributors",
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                            },
+                            {
                                 parameterPath: ["aggregations", "publishers", "terms", "field"],
                                 parameterName: "publisher_field",
                                 defaultValue: "lists.publishers.id.exact",
@@ -691,7 +699,7 @@ export default Ember.Route.extend({
                         indexVersion: 3,
                         facetDash: "resultsList",
                         dataType: 'contributors',
-                        facetDashParameter: "scholar",
+                        facetDashParameter: "contributors",
                         post_body : {},
                         postBodyParams: [
                             {
@@ -714,16 +722,20 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"],
+                                parameterName: "sources",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"],
                                 parameterName: "tags"
                             },
                             {
                                 parameterName: "publishers",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "lists.publishers.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
                             },
                             {
-                                parameterName: "sources",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                parameterName: "contributors",
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
                             }
                         ],
                     },

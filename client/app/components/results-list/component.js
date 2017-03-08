@@ -17,6 +17,9 @@ export default Ember.Component.extend({
             var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             options.timeZone = 'UTC';
             options.timeZoneName = 'short'
+            if (datum._source.description) {
+                datum["description_truncated"] = datum._source.description.substring(0,200)+"..."
+            }
             if (datum._source.date) {
                 datum["_source"]["date"] = (new Date(datum["_source"]["date"])).toLocaleDateString('en-US', options);
             }

@@ -7,7 +7,7 @@ module.exports = function(defaults) {
 
   var app = new EmberApp(defaults, {
     fingerprint: {
-        prepend: "/share-analytics"
+        prepend: "/share-analytics/"
     },
     babel: {
       includePolyfill: true

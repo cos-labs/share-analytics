@@ -72,8 +72,8 @@ module.exports = function(environment) {
 
 
     if (environment === 'production') {
-    ENV.locationType = 'hash';
-    ENV.rootURL = '/analytics-dashboard/';
+        ENV.locationType = 'hash';
+        ENV.rootURL = '/share-analytics/client/';
 
 
         ENV.baseURL = "share-analytics";

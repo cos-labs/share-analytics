@@ -76,7 +76,6 @@ module.exports = function(environment) {
         ENV.rootURL = '/share-analytics/';
 
 
-        ENV.baseURL = "share-analytics";
         ENV.locationType = "hash";
 
 //        ENV.apiBaseUrl = 'https://share.osf.io';

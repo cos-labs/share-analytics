@@ -58,7 +58,7 @@ body {
 .dashboard {
     padding-bottom: 80px;
     padding-top: 70px;
-    background: url("/images/ucsd-geisel-bg-light.png");
+    background: url("images/ucsd-geisel-bg-light.png");
     background-position: left -150% top -10px;
     background-size: 75%;
 }

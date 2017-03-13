@@ -89,7 +89,7 @@ export default Ember.Component.extend({
                     queryParams[facet] = id;
                 }
                 if (facetDash === "resultsList") {
-                    queryParams["contributors"] = id;
+                    queryParams[facet] = id;
                 }
                 this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
             }

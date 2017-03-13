@@ -191,7 +191,8 @@ export default Ember.Route.extend({
         contributors: {refreshModel: true},
         special_filter: {refreshModel: true},
         publishers: {refreshModel: true},
-        type: {refreshModel: true}
+        type: {refreshModel: true},
+        funders: {refreshModel: true}
     },
     query: 'UC',
     gte: "1996-01-01",
@@ -222,6 +223,7 @@ export default Ember.Route.extend({
             controller.set("tags", undefined);
             controller.set("query", undefined);
             controller.set("type", undefined);
+            controller.set("funders", undefined);
         }
     },
     model: function(params, transition, queryParams) {
@@ -588,6 +590,10 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "type",
                                 parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             }
                         ]
                     },
@@ -633,6 +639,10 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "type",
                                 parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             }
                         ],
                         widgetSettings : {
@@ -706,6 +716,10 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 4, "term", "type"]
                             },
                             {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
                                 parameterPath: ["aggregations", "publishers", "terms", "field"],
                                 parameterName: "publisher_field",
                                 defaultValue: "lists.publishers.id.exact",
@@ -767,6 +781,10 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "type",
                                 parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             }
                         ],
                     },
@@ -867,8 +885,8 @@ export default Ember.Route.extend({
                         name: 'Data Providers',
                         width: 6,
                         mappingType: "OBJECT_TO_ARRAY",
-                        facetDash: "agentDetail",
-                        facetDashParameter: "id",
+                        facetDash: "resultsList",
+                        facetDashParameter: "publishers",
                         hideViewAll: !transition.queryParams.all,
                         widgetSettings : {
                             viewAllRoute: 'providers'
@@ -958,9 +976,9 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 12,
-                        facetDash: "agentDetail",
+                        facetDash: "resultsList",
+                        facetDashParameter: "contributors",
                         dataType: 'contributors',
-                        facetDashParameter: "id",
                         post_body : {},
                         postBodyParams: [
                             {
@@ -992,8 +1010,8 @@ export default Ember.Route.extend({
                             chartType: 'donut',
                             widgetType: 'c3-chart',
                             name: 'Awards',
-                            facetDash: "agentDetail",
-                            facetDashParameter: "id",
+                            facetDash: "resultsList",
+                            facetDashParameter: "funders",
                             width: 6,
                             mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
                             post_body: {
@@ -1460,9 +1478,9 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 12,
-                        facetDash: "agentDetail",
+                        facetDash: "resultsList",
+                        facetDashParameter: "contributors",
                         dataType: 'contributors',
-                        facetDashParameter: "id",
                         hideViewAll: true,
                         post_body : {
                             "aggregations": {
@@ -1565,8 +1583,8 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Data providers',
                         width: 12,
-                        facetDash: "agentDetail",
-                        facetDashParameter: "id",
+                        facetDash: "resultsList",
+                        facetDashParameter: "publishers",
                         hideViewAll: true,
                         post_body: {},
                         postBodyParams: [
@@ -1748,8 +1766,8 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
-                        facetDash: "agentDetail",
-                        facetDashParameter: "id",
+                        facetDash: "resultsList",
+                        facetDashParameter: "publishers",
                         width: 6,
                         mappingType: "OBJECT_TO_ARRAY",
                         hideViewAll: !transition.queryParams.all,
@@ -1896,9 +1914,9 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 6,
-                        facetDash: "agentDetail",
+                        facetDash: "resultsList",
+                        facetDashParameter: "contributors",
                         dataType: 'contributors',
-                        facetDashParameter: "id",
                         post_body : {},
                         postBodyParams: [
                             {

@@ -191,6 +191,7 @@ export default Ember.Route.extend({
         contributors: {refreshModel: true},
         special_filter: {refreshModel: true},
         publishers: {refreshModel: true},
+        type: {refreshModel: true}
     },
     query: 'UC',
     gte: "1996-01-01",
@@ -221,6 +222,7 @@ export default Ember.Route.extend({
             controller.set("publishers", undefined);
             controller.set("tags", undefined);
             controller.set("query", undefined);
+            controller.set("type", undefined);
         }
     },
     model: function(params, transition, queryParams) {
@@ -583,6 +585,10 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "contributors",
                                 parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                            },
+                            {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 4, "term", "type"]
                             }
                         ]
                     },
@@ -624,6 +630,10 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "contributors",
                                 parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                            },
+                            {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 4, "term", "type"]
                             }
                         ],
                         widgetSettings : {
@@ -693,6 +703,10 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
                             },
                             {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
                                 parameterPath: ["aggregations", "publishers", "terms", "field"],
                                 parameterName: "publisher_field",
                                 defaultValue: "lists.publishers.id.exact",
@@ -750,6 +764,10 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "contributors",
                                 parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                            },
+                            {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 4, "term", "type"]
                             }
                         ],
                     },
@@ -907,6 +925,8 @@ export default Ember.Route.extend({
                         widgetType: "stacked-bars",
                         name: "Types",
                         width: 12,
+                        facetDash: "resultsList",
+                        facetDashParameter: "type",
                         post_body: {},
                         postBodyParams: [
                             {

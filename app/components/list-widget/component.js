@@ -1,25 +1,8 @@
 import Ember from 'ember';
 
-const ucsdVariations = 'UCSD%20OR%20"UC%20San%20Diego"%20OR%20"UC%20San%20Diego%20Library"%20OR%20"UC%20San%20Diego%20Library%20Digital%20Collections"%20OR%20"Scripps%20Institution%20of%20Oceanography"%20OR%20"Scripps%20Institute%20of%20Oceanography"%20OR%20"University%20of%20California%20San%20Diego"%20OR%20"Univ%20of%20california%20san%20diego"%20OR%20"University%20of%20CA%20San%20Diego"';
-const ucsdLuceneQuery = 'q=contributors:(' + ucsdVariations + ')%20OR%20publishers:(' + ucsdVariations + ')%20OR%20funders:(' + ucsdVariations + ')%20OR%20title:(' + ucsdVariations + ')%20OR%20hosts:(' + ucsdVariations + ')%20OR%20tags:(ucsd%20OR%20"cdl.ucsd"%20OR%20"scripps%20institution%20of%20oceanography")%20OR%20affiliations:(' + ucsdVariations + ')';
-
-
-function get_search_query(params) {
-    var query = '';
-    if (params['all'] === 'ucsd') {
-        return ucsdLuceneQuery;
-    } else {
-        for (var param in params) {
-            if (params.hasOwnProperty(param)) {
-                query += param + '=' + encodeURIComponent(params[param]);
-            }
-        }
-        return query;
-    }
-}
 
 const tag_blacklist = [
-    
+
     "base",
     "dissertation",
     "ucsd dissertations",
@@ -135,7 +118,6 @@ export default Ember.Component.extend({
                 return {
                     number: index + 1,
                     name: hits._source.title,
-                    url: 'https://share.osf.io/article/' + hits._source.id,
                     id: hits._source.id
                 }
             });
@@ -145,31 +127,26 @@ export default Ember.Component.extend({
               {
                 number: 1,
                 name: 'CAVEcam Virtual Reality Photography Collection',
-                url: 'https://share.osf.io/creativework/46002-874-0B4',
                 id: '46002-874-0B4'
               },
               {
                 number: 2,
                 name: 'Data from: Carbonic Anhydrases, EPF2 and a Novel Protease Mediate CO2 Control of Stomatal Development',
-                url: 'https://share.osf.io/dataset/4619D-B54-28E',
                 id: '4619D-B54-28E'
               },
               {
                 number: 3,
                 name: 'Heavy Metals in the Ocean Insect, Halobates',
-                url: 'https://share.osf.io/creativework/4612B-AF0-7FB',
                 id: '4612B-AF0-7FB'
               },
               {
                 number: 4,
                 name: 'Keith Rayner Eye Movements in Reading Data Collection',
-                url: 'https://share.osf.io/creativework/4601B-68A-696',
                 id: '4601B-68A-696'
               },
               {
                 number: 5,
                 name: 'Stack Gas and Plume Aerosol Measurements from Renewable Diesel and Ultra Low Sulfur Diesel in At-Sea Operation of Research Vessel Robert Gordon Sproul',
-                url: 'https://share.osf.io/dataset/4607A-27C-FB9',
                 id: '4607A-27C-FB9'
               }
             ];
@@ -181,18 +158,10 @@ export default Ember.Component.extend({
     },
     processData (data) {
         this.set('data', data.map((raw_datum) => {
-            let processed_datum = {
+            return {
                 number: raw_datum.doc_count,
                 name: raw_datum.key
             };
-            var query = get_search_query(this.get('parameters'));
-            if (this.get("chartType") === "tagsList") {
-                processed_datum["url"] = "https://share.osf.io/discover?" + query + "&tags=" + raw_datum["key"];
-            }
-            if (this.get("chartType") === "topContributors") {
-                processed_datum["url"] = "https://share.osf.io/discover?" + query + "&publisher=" + raw_datum["key"];
-            }
-            return processed_datum;
         }).filter((datum) => {
             if (this.get("chartType") === "tagsList") {
                 if (tag_blacklist.indexOf(datum.name) >= 0) {

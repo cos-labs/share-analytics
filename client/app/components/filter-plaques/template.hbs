@@ -1,5 +1,0 @@
-<div class="widget-body clearfix filter-plaques-container">
-    {{#each filters as |filter|}}
-        <div class="filter-plaque"><span style="font-weight: 600; text-transform: capitalize;">{{filter.key}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>{{filter.value}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="cursor: pointer;" {{action "removeFilter" filter}}>{{fa-icon "close"}}</span></div>
-    {{/each}}
-</div>

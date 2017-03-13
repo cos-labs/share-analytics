@@ -18,8 +18,10 @@ body {
     z-index: 10000;
 }
 .navbar-brand {
-    font-size: 23px;
+    font-size: 28px;
     cursor: pointer;
+    font-family: "Open Sans Condensed", Helvetica, Arial, sans-serif !important;
+    color: #069;
 }
 .navbar-brand:hover {
     opacity: 0.8;

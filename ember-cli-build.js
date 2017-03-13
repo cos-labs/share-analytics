@@ -6,9 +6,11 @@ var path = require('path');
 module.exports = function(defaults) {
 
   var app = new EmberApp(defaults, {
-    fingerprint: {
-        //prepend: "/share-analytics/"
-    },
+    fingerprint: (function() {
+        return EmberApp.env==="production" ? {
+            prepend: "/share-analytics/"
+        } : {};
+    })(),
     babel: {
       includePolyfill: true
     }

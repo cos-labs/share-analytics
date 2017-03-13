@@ -41,8 +41,7 @@ export default Ember.Component.extend({
                 number: item.doc_count,
                 label: item.key,
                 percentage: percentage,
-                background: this.get('pattern')[index] || '#666666',
-                url: "https://share.osf.io/discover?" + query + "&type=" + item.key
+                background: this.get('pattern')[index] || '#666666'
             };
         });
         this.set('data', data);
@@ -105,15 +104,24 @@ export default Ember.Component.extend({
         component.$('.stack').click(function(event){
             let index = component.$(event.target).attr('data-index');
             let item = component.get('data')[index];
-            if (item.url) {
-                window.location.href = item.url;
-                return;
-            }
+            component.send('transitionToFacet', item);
         })
     },
     init() {
         this._super(...arguments);
         this.setData();
+    },
+    actions: {
+        transitionToFacet(item) {
+              let queryParams = {};
+              var facet = this.get("item.facetDashParameter");
+              if (facet) {
+                  queryParams[facet] = item.label;
+                  this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
+              } else if (item.url) {
+                window.location.href = item.url;
+              }
+          }
     }
 
 });

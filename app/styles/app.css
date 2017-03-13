@@ -20,6 +20,7 @@ body {
 .navbar-brand {
     font-size: 28px;
     cursor: pointer;
+    padding-left: 0;
     font-family: "Open Sans Condensed", Helvetica, Arial, sans-serif !important;
     color: #069;
 }
@@ -74,6 +75,10 @@ body {
     width: 100%;
     z-index: -1;
     overflow: hidden;
+}
+
+.dashboard > .container {
+    padding: 0;
 }
 
 .wrapper h2 {

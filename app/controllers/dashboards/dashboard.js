@@ -11,6 +11,8 @@ export default Ember.Controller.extend({
         {'tag': {scope: "controller"}},
         {'tags': {scope: "controller"}},
         {'topic': {scope: "controller"}},
+        {'all': {scope: "controller"}},
+        {'sources': {scope: "controller"}},
         {'publishers': {scope: "controller"}},
         {'type': {scope: "controller"}}
     ],

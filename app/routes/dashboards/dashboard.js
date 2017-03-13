@@ -1826,6 +1826,8 @@ export default Ember.Route.extend({
                             widgetType: 'c3-chart',
                             name: 'Awards',
                             width: 6,
+                            facetDash: "resultsList",
+                            facetDashParameter: "funders",
                             mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
                             post_body: {
                                 "aggregations": {
@@ -1875,13 +1877,14 @@ export default Ember.Route.extend({
                                     parameterName: "date_range_format",
                                     defaultValue: "yyyy-MM-dd||yyyy"
                                 }
-                            ],
-                            facetDash: "awards"
+                            ]
                         },
                     {
                         widgetType: "stacked-bars",
                         name: "Types",
                         width: 12,
+                        facetDash: "resultsList",
+                        facetDashParameter: "type",
                         post_body: {},
                         postBodyParams: [
                             {

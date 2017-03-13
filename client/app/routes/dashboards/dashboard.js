@@ -959,9 +959,9 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 12,
-                        facetDash: "agentDetail",
+                        facetDash: "resultsList",
+                        facetDashParameter: "contributors",
                         dataType: 'contributors',
-                        facetDashParameter: "id",
                         post_body : {},
                         postBodyParams: [
                             {
@@ -1461,9 +1461,9 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 12,
-                        facetDash: "agentDetail",
+                        facetDash: "resultsList",
+                        facetDashParameter: "contributors",
                         dataType: 'contributors',
-                        facetDashParameter: "id",
                         hideViewAll: true,
                         post_body : {
                             "aggregations": {
@@ -1897,9 +1897,9 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 6,
-                        facetDash: "agentDetail",
+                        facetDash: "resultsList",
+                        facetDashParameter: "contributors",
                         dataType: 'contributors',
-                        facetDashParameter: "id",
                         post_body : {},
                         postBodyParams: [
                             {

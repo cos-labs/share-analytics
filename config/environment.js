@@ -67,13 +67,10 @@ module.exports = function(environment) {
 //        // ENV.APP.rootElement = '#ember-staging';
 //    }
 //
-    ENV.locationType = 'hash';
-    ENV.rootURL = '/analytics-dashboard/';
-
 
     if (environment === 'production') {
         ENV.locationType = 'hash';
-        ENV.rootURL = '/share-analytics/client/';
+        ENV.rootURL = '/share-analytics/';
 
 
         ENV.baseURL = "share-analytics";

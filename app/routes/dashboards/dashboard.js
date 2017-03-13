@@ -734,7 +734,7 @@ export default Ember.Route.extend({
                     {
                         chartType: 'topContributors',
                         widgetType: 'contributors-widget',
-                        name: 'Top Contributors',
+                        name: 'Contributors',
                         width: 3,
                         hideSHAREButton: true,
                         indexVersion: 3,

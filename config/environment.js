@@ -67,7 +67,17 @@ module.exports = function(environment) {
 //        // ENV.APP.rootElement = '#ember-staging';
 //    }
 //
-//    if (environment === 'production') {
+    //ENV.locationType = 'hash';
+    //ENV.rootURL = '/analytics-dashboard/';
+
+
+    if (environment === 'production') {
+        ENV.locationType = 'hash';
+        ENV.rootURL = '/share-analytics/';
+
+
+        ENV.locationType = "hash";
+
 //        ENV.apiBaseUrl = 'https://share.osf.io';
 //        ENV.apiUrl = 'https://share.osf.io/api/v2';
 //        ENV.metricsAdapters = [{
@@ -82,7 +92,7 @@ module.exports = function(environment) {
 //        // keep test console output quieter
 //        ENV.APP.LOG_ACTIVE_GENERATION = false;
 //        ENV.APP.LOG_VIEW_LOOKUPS = false;
-//    }
+    }
 
     return ENV;
 };

@@ -11,7 +11,8 @@ export default Ember.Controller.extend({
         {'tag': {scope: "controller"}},
         {'tags': {scope: "controller"}},
         {'topic': {scope: "controller"}},
-        {'publishers': {scope: "controller"}}
+        {'publishers': {scope: "controller"}},
+        {'type': {scope: "controller"}}
     ],
 
     updateParams: Ember.observer('queryParams', function() {

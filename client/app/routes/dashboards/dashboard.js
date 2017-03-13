@@ -868,8 +868,8 @@ export default Ember.Route.extend({
                         name: 'Data Providers',
                         width: 6,
                         mappingType: "OBJECT_TO_ARRAY",
-                        facetDash: "agentDetail",
-                        facetDashParameter: "id",
+                        facetDash: "resultsList",
+                        facetDashParameter: "publishers",
                         hideViewAll: !transition.queryParams.all,
                         widgetSettings : {
                             viewAllRoute: 'providers'
@@ -1566,8 +1566,8 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Data providers',
                         width: 12,
-                        facetDash: "agentDetail",
-                        facetDashParameter: "id",
+                        facetDash: "resultsList",
+                        facetDashParameter: "publishers",
                         hideViewAll: true,
                         post_body: {},
                         postBodyParams: [
@@ -1749,8 +1749,8 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
-                        facetDash: "agentDetail",
-                        facetDashParameter: "id",
+                        facetDash: "resultsList",
+                        facetDashParameter: "publishers",
                         width: 6,
                         mappingType: "OBJECT_TO_ARRAY",
                         hideViewAll: !transition.queryParams.all,

@@ -191,7 +191,8 @@ export default Ember.Route.extend({
         contributors: {refreshModel: true},
         special_filter: {refreshModel: true},
         publishers: {refreshModel: true},
-        type: {refreshModel: true}
+        type: {refreshModel: true},
+        funders: {refreshModel: true}
     },
     query: 'UC',
     gte: "1996-01-01",
@@ -223,6 +224,7 @@ export default Ember.Route.extend({
             controller.set("tags", undefined);
             controller.set("query", undefined);
             controller.set("type", undefined);
+            controller.set("funders", undefined);
         }
     },
     model: function(params, transition, queryParams) {
@@ -589,6 +591,10 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "type",
                                 parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             }
                         ]
                     },
@@ -634,6 +640,10 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "type",
                                 parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             }
                         ],
                         widgetSettings : {
@@ -707,6 +717,10 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 4, "term", "type"]
                             },
                             {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
                                 parameterPath: ["aggregations", "publishers", "terms", "field"],
                                 parameterName: "publisher_field",
                                 defaultValue: "lists.publishers.id.exact",
@@ -768,6 +782,10 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "type",
                                 parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             }
                         ],
                     },
@@ -993,8 +1011,8 @@ export default Ember.Route.extend({
                             chartType: 'donut',
                             widgetType: 'c3-chart',
                             name: 'Awards',
-                            facetDash: "agentDetail",
-                            facetDashParameter: "id",
+                            facetDash: "resultsList",
+                            facetDashParameter: "funders",
                             width: 6,
                             mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
                             post_body: {

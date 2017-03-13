@@ -7,6 +7,7 @@ module.exports = function(defaults) {
 
   var app = new EmberApp(defaults, {
     fingerprint: (function() {
+        console.log(EmberApp.env);
         return EmberApp.env==="production" ? {
             prepend: "/share-analytics/"
         } : {};

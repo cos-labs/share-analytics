@@ -38,8 +38,8 @@ module.exports = function(environment) {
     };
     //this needs to go in an actual env at some point
     ENV.csrfCookie = 'csrftoken';
-    ENV.apiBaseUrl = 'https://share.osf.io';
-    ENV.apiUrl = 'https://share.osf.io/api/v2';
+    ENV.apiBaseUrl = 'https://staging-share.osf.io';
+    ENV.apiUrl = 'https://staging-share.osf.io/api/v2';
 
     if (environment === 'development') {
         ENV['ember-cli-mirage'] = {
@@ -67,8 +67,8 @@ module.exports = function(environment) {
 //        // ENV.APP.rootElement = '#ember-staging';
 //    }
 //
-    ENV.locationType = 'hash';
-    ENV.rootURL = '/analytics-dashboard/';
+    //ENV.locationType = 'hash';
+    //ENV.rootURL = '/analytics-dashboard/';
 
 
     if (environment === 'production') {

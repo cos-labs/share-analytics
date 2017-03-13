@@ -484,6 +484,9 @@ nav.navbar {
     padding: 0;
 }
 
+.available-dashes {
+    margin: 30px 15px;
+}
 
 .available-dashes > a {
     text-decoration: none;

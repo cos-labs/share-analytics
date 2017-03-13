@@ -13,7 +13,8 @@ export default Ember.Controller.extend({
         {'topic': {scope: "controller"}},
         {'all': {scope: "controller"}},
         {'sources': {scope: "controller"}},
-        {'publishers': {scope: "controller"}}
+        {'publishers': {scope: "controller"}},
+        {'type': {scope: "controller"}}
     ],
 
     updateParams: Ember.observer('queryParams', function() {

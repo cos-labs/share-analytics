@@ -1,0 +1,695 @@
+@import "components/about-text-widget.css";
+
+/*Packery grid styling*/
+
+body {
+}
+
+.ucsd_header {
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+    padding: 8px 0;
+    background-color:#fff;
+    border-bottom: 3px solid #FFCD00;
+    -webkit-box-shadow: 0 0 50px 10px rgba(0,0,0,.4);
+    box-shadow: 0 0 50px 10px rgba(0,0,0,.4);
+    z-index: 10000;
+}
+.navbar-brand {
+    font-size: 23px;
+    cursor: pointer;
+}
+.navbar-brand:hover {
+    opacity: 0.8;
+}
+/* light blue 006A96 */
+.ucsd_header img {
+    height: 30px;
+    width: 150px;
+    margin-top: 12px;
+}
+
+.object-detail {
+    margin: 0;
+    padding: 0 10px;
+}
+
+.object-detail > div {
+    margin-top: 10px;
+    margin-bottom: 8px
+}
+
+.object-detail > div > span.label {
+    font-weight: 600;
+}
+
+.object-detail h5 {
+    margin-top: 30px;
+}
+
+.is-link {
+    cursor: pointer;
+}
+.is-link:hover {
+    opacity: 0.8;
+}
+.dashboard {
+    padding-bottom: 80px;
+    padding-top: 70px;
+    background: url("/images/ucsd-geisel-bg-light.png");
+    background-position: left -150% top -10px;
+    background-size: 75%;
+}
+
+.dashboard:after {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.wrapper h2 {
+    color: #fff;
+}
+/* light grey 747678 */
+.related_services {
+    background-color:#00668d;
+    border-top: 3px solid #FFCD00;
+    -webkit-box-shadow: 0px 0px 100px 15px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:    0px 0px 100px 15px rgba(0, 0, 0, 0.5);
+    box-shadow:         0px 0px 100px 15px rgba(0, 0, 0, 0.5);
+}
+
+.container.copyright {
+    width: 100%;
+    text-align: center;
+    background-color: rgb(0, 198, 215);
+    color: rgba(250, 250,250,0.7);
+    padding: 15px;
+    font-weight: 500 !important;
+    -webkit-box-shadow: inset 0px 3px 20px -3px rgba(0,0,0,0.3);
+    -moz-box-shadow: inset 0px 3px 20px -3px rgba(0,0,0,0.3);
+    box-shadow: inset 0px 3px 20px 3px -rgba(0,0,0,0.3)
+}
+
+.widgetpicker {
+    overflow: hidden;
+}
+footer.footer {
+    margin: 0;
+}
+.container.copyright a {
+    color: #fff;
+    font-weight: 800;
+}
+/* Single-width element */
+.grid-item {
+    float: left;
+    width: 30%; /* This will need to adjust most likely in order to work with BS? Or maybe we won't need BS? */
+    background: #e6e5e4;
+    border: 2px solid #b6b5b4;
+    overflow: hidden;
+}
+button.edit-title {
+    background-color: rgba(0,0,0,0);
+    border: none;
+    line-height: 1.0;
+    font-size: 18px;
+    margin: 5px;
+    border-radius: 3px;
+    padding: 5px;
+    vertical-align: top;
+    display: inline-block;
+}
+button.edit-title:hover {
+    background-color: rgba(0,0,0,0.2);
+    border: none;
+    line-height: 1.0;
+    font-size: 18px;
+
+}
+nav.navbar {
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.2);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.2);
+}
+
+/* Double-wide element */
+.grid-item--width2 {
+    width: 60%;
+}
+
+/* "Large" element */
+/* "Large" can be defined however you want */
+.grid-item--large {
+    width: 66%;
+    height: 120px;
+}
+
+/* Dragging styling */
+.grid-item.is-dragging,
+/* Packery adds class while transitioning to drop position */
+.grid-item.is-positioning-post-drag {
+  background: #C90;
+
+  z-index: 2; /* keep dragged item on top */
+}
+
+/* Placeholder styling */
+.packery-drop-placeholder {
+  outline: 3px dashed #444;
+  outline-offset: -6px;
+  /* transition position changing */
+  -webkit-transition: -webkit-transform 0.2s;
+          transition: transform 0.2s;
+}
+
+.configmenu {
+    display: none;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.widgetpicker {
+    display: none;
+}
+
+.picking > .widgetpicker {
+    display: block;
+}
+
+.picking > .configmenu {
+    display: none;
+}
+
+.picking > .chart {
+    display: none;
+}
+
+.configuring > .widget > .configmenu {
+    display: block;
+}
+
+.configuring > .widget > .chart {
+    display: none;
+}
+
+.configuring > .widget > .widgetpicker {
+    display: none;
+}
+
+
+.configureButton {
+    display: none;
+    float: right;
+    line-height: 10px;
+    position: relative;
+    z-index: 1000;
+}
+
+.widgetButtons {
+    z-index: 1000;
+    position: relative;
+    min-height: 5px;
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+.widget .configureButton {
+    display: block;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    padding: 5px;
+    color: #888;
+}
+.widget .configureButton:hover {
+    color: #666;
+}
+
+.widget {
+    background-color: #f8f4f9;
+    margin-top: 20px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    padding: 5px;
+    min-height: 60px;
+}
+.widget-body {
+    padding: 0 10px;
+}
+.widget-number {
+    font-weight: bold;
+    color: #F44336;
+    float: right;
+    margin-top: -5px;
+}
+.widget-number.size-1 {
+    font-size: 32px;
+    line-height: 32px;
+}
+.widget-number.size-2 {
+    font-size: 48px;
+    line-height: 48px;
+}
+.widget-number.size-3 {
+    font-size: 64px;
+    line-height: 64px;
+}
+.chart svg {
+    width: 100%;
+    min-height: 100%;
+}
+.chart {
+    width: 100%;
+}
+
+.free-wall {
+    margin-bottom: 40px;
+}
+.cell {
+    cursor: move;
+}
+.cell .cover {
+    padding: 15px;
+}
+.handle {
+    border: 1px dotted orange;
+    padding: 4px
+}
+.add-widget-button {
+    margin: 40px auto;
+    position: relative;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 24px;
+    border-radius: 80px;
+    border: solid rgba(0,0,0,0.3) 1px;
+    background-color: #e5e5e5;
+    color: rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    outline: none;
+}
+
+.add-widget-button:hover {
+    top: -1px;
+    -webkit-box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+    box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+}
+
+.restore-widget-button {
+    margin: 40px auto;
+    position: relative;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 24px;
+    border-radius: 80px;
+    border: solid rgba(0,0,0,0.3) 1px;
+    background-color: #e5e5e5;
+    color: rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    outline: none;
+}
+
+.restore-widget-button:hover {
+    top: -1px;
+    -webkit-box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+    box-shadow: 0px 15px 30px -1px rgba(0,0,0,0.2);
+}
+
+.centered {
+    text-align: center;
+}
+
+.width-1 {
+    width: 1px
+}
+
+.width-2 {
+}
+
+.width-3 {
+    width: 450px;
+}
+
+.width-4 {
+    width: 600px;
+}
+
+.width-5 {
+    width: 750px;
+}
+
+.width-6 {
+    width: 900px;
+}
+
+.width-7 {
+    width: 1050px;
+}
+
+.height-1 {
+    height: 150px;
+}
+
+.height-2 {
+}
+
+.height-3 {
+    height: 450px;
+}
+
+.height-4 {
+    height: 600px;
+}
+
+.height-5 {
+    height: 750px;
+}
+
+.height-6 {
+    height: 900px;
+}
+
+.height-7 {
+    height: 1050px;
+}
+
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+}
+
+@-webkit-keyframes spinner {
+    to {-webkit-transform: rotate(360deg);}
+}
+
+.spinner {
+    margin-top: 30px;
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.spinner:before {
+    content: 'Loading…';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin-top: -10px;
+    margin-left: -16px;
+}
+
+.spinner:not(:required):before {
+    content: '';
+    border-radius: 50%;
+    border: 4px solid rgba(0, 0, 0, .3);
+    border-top-color: rgba(0, 0, 0, .6);
+    animation: spinner .6s linear infinite;
+    -webkit-animation: spinner .6s linear infinite;
+}
+
+.contributors-widget {
+    padding-bottom: 20px;
+}
+.list-widget {
+    padding-bottom: 20px;
+}
+.list-widget-item {
+    padding: 4px 10px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 2px;
+}
+.list-widget-item{
+    cursor: pointer;
+}
+.list-widget-item:hover {
+    background: #e3ecf3;
+}
+.list-widget .item-number {
+    font-size: 18px;
+    color: #F44336;
+    word-break: normal;
+}
+.list-widget .item-name {
+    font-size: 16px;
+    color: #2a7ec1;
+}
+.list-widget-item > td{
+    padding: 10px;
+}
+.query-widget {
+    color: #fff;
+    background-color: rgba(0,0,0,0.65);
+    padding-bottom: 20px;
+}
+
+.filter-plaques {
+    color: #fff;
+    background-color: rgba(0,0,0,0);
+    padding-bottom: 20px;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    padding: 0;
+    min-height: 0;
+    margin: 0;
+}
+
+.filter-plaques-container {
+    padding: 0;
+}
+
+
+.available-dashes > a {
+    text-decoration: none;
+}
+
+.available-dashes > a:hover {
+    text-decoration: none;
+}
+
+.filter-plaques .filter-plaque {
+
+    margin-right: 15px;
+    margin-bottom: 12px;
+    background-color: #552266;
+    padding: 9px 13px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 2px;
+    float: left;
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+
+}
+
+.query-widget .search-box {
+    display: block;
+    font-size: 20px;
+    color: #000;
+    border-radius: 2px;
+    border: none;
+}
+
+.query-widget .form-group {
+    margin: 20px auto;
+    width: 700px;
+    max-width: 100%;
+}
+.query-widget .form-group .input-group input.form-control {
+    height: 40px;
+
+}
+.query-widget .form-group .input-group input.form-control,
+.query-widget .form-group .input-group .input-group-btn button  {
+    font-size: 20px !important;
+    line-height: 20px;
+    padding: 12px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+
+}
+.query-widget .form-group .input-group .input-group-btn button  {
+    background-color: #FFCD00;
+    border: 1px solid #ffcd00;
+    border-left: 1px solid #ccc;
+}
+
+.related-services-button {
+    background-color: #ffcd00;
+    border: 1px solid rgba(0,0,0,0.2);
+    color: #333;
+    margin: 20px auto;
+    margin-bottom: 50px;
+    display: block;
+    padding: 10px 10px 10px 10px;
+    -webkit-box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
+    box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
+    border-radius: 2px;
+
+}
+
+
+.service-box img {
+    display: block;
+    width: 100%;
+    border-radius: 2px;
+    margin-bottom: 40px;
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+
+}
+
+#devmode {
+    border-top-right-radius: 5px;
+    border-top: 1px solid rgba(250,250,250,0.7);
+    border-right: 1px solid rgba(250,250,250,0.7);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 3px;
+}
+
+.list-page {
+    width: 100%;
+    height: 600px;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+}
+
+.index-page .widget {
+    border-radius: 0;
+    padding:20px;
+}
+
+.index-page .widgetButtons {
+    margin-bottom: 20px;
+}
+
+.index-page h4 {
+    font-size: 22px;
+}
+.widget-stackedBar {
+    height: 50px;
+    margin: 10px 5px;
+}
+.widget-stackedBar .stack {
+    float: left;
+    min-height: 65px;
+    font-size: 13px;
+    padding-top:15px;
+    padding-bottom: 1px;
+    color: #ffffff;
+    overflow: hidden;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.widget-stackedBar .stack:hover {
+    opacity: 0.7;
+}
+.widget-body.text-widget {
+    padding: 20px
+}
+.widget-body.text-widget.summary {
+    padding: 10px;
+}
+.widget-body.text-widget.summary  div{
+    font-size: 15px;
+    line-height: 30px;
+    margin: 0;
+}
+
+.share-small {
+    height: 12px;
+    width: 25px;
+}
+/**
+ * Tooltip Styles from : https://chrisbracco.com/a-simple-css-tooltip/
+
+ */
+
+/* Add this attribute to the element that needs a tooltip */
+[data-tooltip] {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* Hide the tooltip content by default */
+[data-tooltip]:before,
+[data-tooltip]:after {
+  visibility: hidden;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Position tooltip above the element */
+[data-tooltip]:before {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  margin-bottom: 5px;
+  margin-left: -80px;
+  padding: 7px;
+  width: 160px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #000;
+  background-color: hsla(0, 0%, 20%, 0.9);
+  color: #fff;
+  content: attr(data-tooltip);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* Triangle hack to make tooltip look like a speech bubble */
+[data-tooltip]:after {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  margin-left: -5px;
+  width: 0;
+  border-top: 5px solid #000;
+  border-top: 5px solid hsla(0, 0%, 20%, 0.9);
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  content: " ";
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Show tooltip content on hover */
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  visibility: visible;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+
+/* End Tooltip Styles */

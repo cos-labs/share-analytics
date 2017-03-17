@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import ENV from 'analytics-dashboard/config/environment';
-
+import stringify from 'npm:json-stable-stringify';
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
 
@@ -451,7 +451,7 @@ export default Ember.Component.extend({
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(this.get('item').post_body, function(key, value) {
+            data: stringify(this.get('item').post_body, function(key, value) {
                 if (Array.isArray(value)) {
                     return value.filter(Object);
                 }

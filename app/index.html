@@ -9,6 +9,18 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700" rel="stylesheet">
    {{content-for "head"}}
+    <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+    <link rel="stylesheet" href="{{rootURL}}assets/analytics-dashboard.css">
+
+    {{content-for "head-footer"}}
+  </head>
+  <body>
+    {{content-for "body"}}
+
+    <script src="{{rootURL}}assets/vendor.js"></script>
+    <script src="{{rootURL}}assets/analytics-dashboard.js"></script>
+
+    {{content-for "body-footer"}}
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
 
     <script>
@@ -23,17 +35,5 @@
             "HTML-CSS": { availableFonts: ["TeX"] }
         });
 </script>
-    <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
-    <link rel="stylesheet" href="{{rootURL}}assets/analytics-dashboard.css">
-
-    {{content-for "head-footer"}}
-  </head>
-  <body>
-    {{content-for "body"}}
-
-    <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/analytics-dashboard.js"></script>
-
-    {{content-for "body-footer"}}
   </body>
 </html>

@@ -451,11 +451,13 @@ export default Ember.Component.extend({
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
-            data: stringify(this.get('item').post_body, function(key, value) {
-                if (Array.isArray(value)) {
-                    return value.filter(Object);
+            data: stringify(this.get('item').post_body, {
+                replacer: function(key, value) {
+                    if (Array.isArray(value)) {
+                        return value.filter(Object);
+                    }
+                    return value;
                 }
-                return value;
             })
         });
         this.set('data', data);

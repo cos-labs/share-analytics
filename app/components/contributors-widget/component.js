@@ -60,18 +60,15 @@ export default Ember.Component.extend({
 
     },
 
-    processData: function(data) {
-        data.forEach(async (item, index) => {
-            let datum = await Ember.$.ajax({
-                url: ENV.apiUrl + '/search/agents/' + item.key,
-                crossDomain: true,
-                type: 'GET',
-                contentType: 'application/json'
-            });
-            data[index] = datum._source;
-            data[index].number = item.doc_count;
-            this.set("data", Array.prototype.slice.call(data));
+    processData: async function(data) {
+        let agent_details = await Ember.$.ajax({
+            url: 'https://dev-labs.cos.io/bulk_get_agents',
+            crossDomain: true,
+            data: JSON.stringify(data),
+            type: 'POST',
+            contentType: 'application/json'
         });
+        this.set("data", JSON.parse(agent_details));
     },
 
     actions: {

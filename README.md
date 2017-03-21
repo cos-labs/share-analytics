@@ -1,3 +1,4 @@
+
 # SHARE Analytics Dashboard
 
 As a primary driver of research, proper understanding of projects and investigations is crucial to focus resources, determine new opportunities, and align new projects with the needs of the scientific community.

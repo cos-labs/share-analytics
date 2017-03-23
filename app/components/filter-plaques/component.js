@@ -21,6 +21,11 @@ export default Ember.Component.extend({
                 "key": key,
                 "value": parameters[key]
             }
+        }).filter((item) => {
+            if (item.key == "page") {
+                return false;
+            }
+            return true;
         }));
         if (settings) {
             this.set('settings', settings);

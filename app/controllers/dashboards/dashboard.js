@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
         {'publishers': {scope: "controller"}},
         {'type': {scope: "controller"}},
         {'funders': {scope: "controller"}},
-        {'contributors': {scope: "controller"}}
+        {'contributors': {scope: "controller"}},
     ],
 
     updateParams: Ember.observer('queryParams', function() {

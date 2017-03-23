@@ -57,9 +57,34 @@ export default Ember.Component.extend({
 
         transitionToSHARETag(tag_name) {
             this.transitionToURL("https://share.osf.io", {tags: tag_name})
+        },
+
+        pageback() {
+            let queryParams = {};
+            let page = Number(this.parameters["page"]);
+            if (!page) {
+                page = 0;
+            }
+            page = page-10;
+            if (page < 0) {
+                page = 0;
+            }
+            queryParams["page"] = page
+            this.attrs.transitionToFacet("resultsList", queryParams);
+        },
+        pagenext() {
+            let queryParams = {};
+            let page = Number(this.parameters["page"]);
+            if (!page) {
+                page = 0;
+            }
+            page = page+10;
+            if (page < 0) {
+                page = 0;
+            }
+            queryParams["page"] = page
+            this.attrs.transitionToFacet("resultsList", queryParams);
         }
-
-
 
     }
 

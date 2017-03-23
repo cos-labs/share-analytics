@@ -192,7 +192,8 @@ export default Ember.Route.extend({
         special_filter: {refreshModel: true},
         publishers: {refreshModel: true},
         type: {refreshModel: true},
-        funders: {refreshModel: true}
+        funders: {refreshModel: true},
+        page: {refreshModel: true}
     },
     query: 'UC',
     gte: "1996-01-01",
@@ -224,6 +225,7 @@ export default Ember.Route.extend({
             controller.set("query", undefined);
             controller.set("type", undefined);
             controller.set("funders", undefined);
+            controller.set("page", undefined);
         }
     },
     model: function(params, transition, queryParams) {
@@ -594,6 +596,10 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "funders",
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
+                                parameterName: "page",
+                                parameterPath: ["from"]
                             }
                         ]
                     },
@@ -786,8 +792,8 @@ export default Ember.Route.extend({
                                 parameterName: "funders",
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             }
-                        ],
-                    },
+                        ]
+                    }
                 ]
             },
             aboutDash: {

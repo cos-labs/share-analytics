@@ -347,7 +347,6 @@ const agg_types = [ // agg_types is this array literal, reduced by the following
 export default Ember.Component.extend({
 
     // widgetType: 'wild-card',
-    // chartType: 'donut-chart',
     aggregations: false,
     docs: false,
 

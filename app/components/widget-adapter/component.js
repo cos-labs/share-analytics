@@ -346,13 +346,12 @@ const agg_types = [ // agg_types is this array literal, reduced by the following
 
 export default Ember.Component.extend({
 
-    // widgetType: 'wild-card',
     aggregations: false,
     docs: false,
 
     classNameBindings: ['configuring', 'picking', 'width', 'height'],
 
-    widgetType: 'wild-card',
+    widgetType: null,
     name: 'tobeDetermined',
     jsEngine: 'c3',
     widthSetting: 2,

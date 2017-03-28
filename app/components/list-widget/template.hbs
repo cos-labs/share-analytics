@@ -1,8 +1,8 @@
 <table style="width: 100%;"class="list-widget widget-body">
-    {{#each data as |item|}}
+    {{#each data as |listItem|}}
         <tr href="#" class="list-widget-item">
-                <td class="item-number" {{action "transitionToFacet" item}}>{{item.number}}</td>
-                <td class="item-name" {{action "transitionToFacet" item}}>{{item.name}}</td>
+                <td class="item-number" {{action "transitionToFacet" listItem}}>{{listItem.number}}</td>
+                <td class="item-name" {{action "transitionToFacet" listItem}}>{{listItem.name}}</td>
         </tr>
     {{/each}}
 </table>

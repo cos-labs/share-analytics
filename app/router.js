@@ -7,10 +7,16 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-    this.route('dashboards', function() {
-        this.route('dashboard', {path: ':dashboard'});
+    this.route('dashboards', {
+        path: ""
+    }, function() {
+        this.route('dashboard', {
+            path: ':dashboard'
+        });
     });
-    this.route('info', {path: 'info/:institution_id'});
+    this.route('info', {
+        path: 'info/:institution_id'
+    });
 });
 
 export default Router;

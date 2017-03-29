@@ -229,7 +229,7 @@ export default Ember.Route.extend({
         }
     },
     model: function(params, transition, queryParams) {
-        let query = this.get('query');
+ /*       let query = this.get('query');
         let gte = this.get('gte');
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
@@ -2034,65 +2034,23 @@ export default Ember.Route.extend({
                 ]
             }
         };
+        */
 
-        let dashboard = dashboards[params.dashboard];
-        let widgets = dashboard.widgets;
-        let array_keys = new Set(["filter", "must", "must_not"]);
-        dashboard.widgets = widgets.map((widget) => {
-            if (widget.postBodyParams) {
-                widget.postBodyParams.forEach((param) => {
-
-                    let parameter_value;
-                    if (param.parameterName in transition.queryParams) {
-                        parameter_value = transition.queryParams[param.parameterName];
-                    } else if ("defaultValue" in param) {
-                        parameter_value = param.defaultValue;
-                    } else {
-                        return;
-                    }
-                    let path_parts = param.parameterPath.slice(0, -1)
-                    let parameter_key = param.parameterPath[param.parameterPath.length-1];
-                    let nested_object = path_parts.reduce((nested, pathPart) => {
-                        if (!nested[pathPart]) {
-                            if (array_keys.has(pathPart)) {
-                                nested[pathPart] = [];
-                            } else {
-                                nested[pathPart] = {};
-                            }
-                        }
-                        return nested[pathPart];
-                    }, widget.post_body) // Uses the actual object; changes made on nested change the original.
-
-                    nested_object[parameter_key] = parameter_value;
-
-                });
-            }
-
-            return widget;
-
-        });
-
-        return {
-            dashboard: dashboard,
+        return Ember.RSVP.hash({
+            dashboard: this.store.findRecord("dashboard", 1),
             parameters: transition.queryParams
-        };
+        });
 
     },
 
     setupController: function(controller, model) {
-
         this._super(controller, model);
-
-        if (controller.get('query') === undefined) { // This will change depending on what default will be in the storage backend.
-            controller.set('query', model.dashboard.query);
-        }
-
+        controller.set("dashboard", model.dashboard);
+        model.dashboard.get("widgets").then((widgets)=>{
+            controller.set("widgets", widgets);
+        })
         controller.set('parameters', model.parameters)
-
-        controller.set('institutionName', "eScholarship @ University of California");
-        // controller.set('dashboardName', model.dashboard.dashboardName);
         controller.set('wrapperClass', model.dashboard.wrapperClass);
-        controller.set('widgets', model.dashboard.widgets);
     }
 
 });

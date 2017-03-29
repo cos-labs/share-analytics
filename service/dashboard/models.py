@@ -8,6 +8,10 @@ from django.contrib.auth.models import User
 
 class Dashboard(Model):
 
+    id = CharField(
+        max_length=64,
+        primary_key=True
+    )
     name = CharField(
         max_length=64,
         default='Unnamed Dashboard'
@@ -22,7 +26,11 @@ class Dashboard(Model):
     )
     widgets = ManyToManyField(
         'widget.Widget',
-        related_name='containing_dashboards'
+        related_name='containing_dashboards',
+        through='widget.WidgetConfig'
     )
+
+    def __str__(self):
+        return self.name
 
 

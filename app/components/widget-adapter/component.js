@@ -362,7 +362,6 @@ export default Ember.Component.extend({
       return this.get('item').height;
     }),
     width: Ember.computed('widthSetting', function() {
-
         let new_setting = this.get('widthSetting');
         let current_setting = this.get('currentWidth');
 
@@ -374,7 +373,6 @@ export default Ember.Component.extend({
         }
 
         this.set('currentWidth', new_setting)
-
         return "col-md-" + new_setting;
 
     }),
@@ -408,8 +406,10 @@ export default Ember.Component.extend({
     picking: false,
 
     init() {
+
+        debugger;
         this._super(...arguments);
-        this.set('widthSetting', this.get('item').width);
+        this.set("widthSetting", this.get("item.width"));
         Promise.resolve(this.fetchWidgetData()).then(() =>{
             return this.applyGraphSetting();
         });
@@ -419,21 +419,49 @@ export default Ember.Component.extend({
         this.sendAction('refreshWall');
         this.set('computedHeight',  this.$().height());
         this.set('computedWidth', this.$().width());
-
-  //
-  //  Use a closure to hide the local variables from the
-  //  global namespace
-  //
-
-
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-
     },
 
     fetchWidgetData: async function() {
-        if(this.get('item').post_body === null){
-            return;
+
+        const widget = this.get("item");
+        if (!widget) { return; }
+        const widget_query = widget.get("query");
+        if (!widget_query) { return; }
+
+        const array_keys = new Set(["filter", "must", "must_not"]);
+        const parameters = this.get("parameters");
+        if (typeof widget_query === "array") {
+            widget_query.forEach((param) => {
+
+                let parameter_value;
+                if (param.parameterName in parameters) {
+                    parameter_value = parameters[param.parameterName];
+                } else if ("defaultValue" in param) {
+                    parameter_value = param.defaultValue;
+                } else {
+                    return;
+                }
+                let path_parts = param.parameterPath.slice(0, -1)
+                let parameter_key = param.parameterPath[param.parameterPath.length-1];
+                let nested_object = path_parts.reduce((nested, pathPart) => {
+                    if (!nested[pathPart]) {
+                        if (array_keys.has(pathPart)) {
+                            nested[pathPart] = [];
+                        } else {
+                            nested[pathPart] = {};
+                        }
+                    }
+                    return nested[pathPart];
+                }, widget.post_body) // Uses the actual object; changes made on nested change the original.
+
+                nested_object[parameter_key] = parameter_value;
+
+            });
         }
+
+
+
         let query = this.get('query');
         let gte = this.get('gte');
         let lte = this.get('lte');
@@ -467,6 +495,7 @@ export default Ember.Component.extend({
         if(item.chartType === 'relatedResearchers') {
             this.set('total', data.aggregations.relatedContributors.value);
         }
+        return widget;
 
         /*this.set('docs', data.hits.hits.map((hit) => {
             let source = Ember.Object.create(hit._source);
@@ -484,7 +513,7 @@ export default Ember.Component.extend({
 
     applyGraphSetting: function(){
 
-        this.set('chartType', this.get('item').chartType);
+        this.set('chartType', this.get('item.charttype'));
 
         //this.set('widthSetting', this.get('item').width);
         //this.set('heightSetting', this.get('item').height);
@@ -498,8 +527,9 @@ export default Ember.Component.extend({
         //    height: height*150,
         //});
         //this.set('chartType', this.get('item').settings.chart_type);
-        this.set('widgetType', this.get('item').widgetType);
+        this.set('widgetType', this.get('item.widgettype'));
         //this.sendAction('refreshWall');
+        debugger;
 
     },
 

@@ -534,7 +534,7 @@ export default Ember.Route.extend({
                     },
                 ]
             },
-            resultsList: {
+            search: {
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
                     {
@@ -542,14 +542,14 @@ export default Ember.Route.extend({
                         background_color: "rgba(0,0,0,0.3)",
                         name: "",
                         width: 12,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                     },
                     {
                         widgetType: "filter-plaques",
                         background_color: "rgba(0,0,0,0)",
                         name: "",
                         width: 12,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                     },
                     {
                         widgetType: "results-list",
@@ -557,7 +557,7 @@ export default Ember.Route.extend({
                         width: 9,
                         post_body: {},
                         indexVersion: 3,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         postBodyParams: [
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -571,7 +571,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
@@ -609,7 +609,7 @@ export default Ember.Route.extend({
                         name: 'Total Results',
                         width: 3,
                         indexVersion: 3,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         post_body: {},
                         postBodyParams: [
                             {
@@ -619,7 +619,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
@@ -664,7 +664,7 @@ export default Ember.Route.extend({
                         indexVersion: 3,
                         width: 3,
                         mappingType: "OBJECT_TO_ARRAY",
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         facetDashParameter: "publishers",
                         hideViewAll: !transition.queryParams.all,
                         widgetSettings : {
@@ -699,7 +699,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
@@ -744,7 +744,7 @@ export default Ember.Route.extend({
                         width: 3,
                         hideSHAREButton: true,
                         indexVersion: 3,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         dataType: 'contributors',
                         facetDashParameter: "contributors",
                         post_body : {},
@@ -761,7 +761,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -821,7 +821,7 @@ export default Ember.Route.extend({
                     }
                 ]
             },
-            institution: {
+            "ucsd": {
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
                     {
@@ -841,14 +841,14 @@ export default Ember.Route.extend({
                         name: "",
                         width: 8,
                         facetDashParameter: "query",
-                        facetDash: "resultsList"
+                        facetDash: "search"
                     },
                     {
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 4,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         post_body: {},
                         postBodyParams: [
                             {
@@ -858,7 +858,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -891,7 +891,7 @@ export default Ember.Route.extend({
                         name: 'Data Providers',
                         width: 6,
                         mappingType: "OBJECT_TO_ARRAY",
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         facetDashParameter: "publishers",
                         hideViewAll: !transition.queryParams.all,
                         widgetSettings : {
@@ -906,7 +906,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -948,7 +948,7 @@ export default Ember.Route.extend({
                         widgetType: "stacked-bars",
                         name: "Types",
                         width: 12,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         facetDashParameter: "type",
                         post_body: {},
                         postBodyParams: [
@@ -968,7 +968,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["aggregations", "stackedData", "terms", "field"],
@@ -982,7 +982,7 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 12,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         facetDashParameter: "contributors",
                         dataType: 'contributors',
                         post_body : {},
@@ -999,7 +999,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -1016,7 +1016,7 @@ export default Ember.Route.extend({
                             chartType: 'donut',
                             widgetType: 'c3-chart',
                             name: 'Awards',
-                            facetDash: "resultsList",
+                            facetDash: "search",
                             facetDashParameter: "funders",
                             width: 6,
                             mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
@@ -1047,7 +1047,7 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "should"],
-                                    defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                    defaultValue: ucsd_query
                                 },
                                 {
                                     parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
@@ -1074,7 +1074,7 @@ export default Ember.Route.extend({
                         chartType: 'tagsList',
                         widgetType: 'list-widget',
                         name: 'Top Tags',
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         facetDashParameter: "tags",
                         width: 6,
                         dataType: 'tags',
@@ -1098,7 +1098,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterName: "sources",
@@ -1130,7 +1130,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterName: "sources",
@@ -1484,7 +1484,7 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 12,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         facetDashParameter: "contributors",
                         dataType: 'contributors',
                         hideViewAll: true,
@@ -1506,7 +1506,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -1551,7 +1551,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterName: "sources",
@@ -1575,7 +1575,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 2, "term", "contributors.exact"],
                             }
                         ],
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         facetDashParameter: "tags"
                     }
                 ]
@@ -1589,7 +1589,7 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Data providers',
                         width: 12,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         facetDashParameter: "publishers",
                         hideViewAll: true,
                         post_body: {},
@@ -1601,7 +1601,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -1679,7 +1679,7 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "should"],
-                                    defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                    defaultValue: ucsd_query
                                 },
                                 {
                                     parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
@@ -1704,7 +1704,7 @@ export default Ember.Route.extend({
                         }
                 ]
             },
-            institution2: {
+            "ucsd-alt": {
                 dasboardName: 'Institution Overview Dashboard',
                 widgets: [
                     {
@@ -1724,14 +1724,14 @@ export default Ember.Route.extend({
                         name: "",
                         width: 8,
                         facetDashParameter: "query",
-                        facetDash: "resultsList"
+                        facetDash: "search"
                     },
                     {
                         chartType: 'totalResults',
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 4,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         post_body: {},
                         postBodyParams: [
                             {
@@ -1741,7 +1741,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -1772,7 +1772,7 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         facetDashParameter: "publishers",
                         width: 6,
                         mappingType: "OBJECT_TO_ARRAY",
@@ -1789,7 +1789,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -1832,7 +1832,7 @@ export default Ember.Route.extend({
                             widgetType: 'c3-chart',
                             name: 'Awards',
                             width: 6,
-                            facetDash: "resultsList",
+                            facetDash: "search",
                             facetDashParameter: "funders",
                             mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
                             post_body: {
@@ -1862,7 +1862,7 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "should"],
-                                    defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                    defaultValue: ucsd_query
                                 },
                                 {
                                     parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
@@ -1889,7 +1889,7 @@ export default Ember.Route.extend({
                         widgetType: "stacked-bars",
                         name: "Types",
                         width: 12,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         facetDashParameter: "type",
                         post_body: {},
                         postBodyParams: [
@@ -1909,7 +1909,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["aggregations", "stackedData", "terms", "field"],
@@ -1923,7 +1923,7 @@ export default Ember.Route.extend({
                         widgetType: 'contributors-widget',
                         name: 'Top Contributors',
                         width: 6,
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         facetDashParameter: "contributors",
                         dataType: 'contributors',
                         post_body : {},
@@ -1940,7 +1940,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
@@ -1957,7 +1957,7 @@ export default Ember.Route.extend({
                         chartType: 'tagsList',
                         widgetType: 'list-widget',
                         name: 'Top Tags',
-                        facetDash: "resultsList",
+                        facetDash: "search",
                         facetDashParameter: "tags",
                         width: 6,
                         dataType: 'tags',
@@ -1981,7 +1981,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterName: "sources",
@@ -2013,7 +2013,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterName: "sources",

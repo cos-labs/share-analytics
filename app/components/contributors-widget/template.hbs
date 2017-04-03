@@ -10,8 +10,6 @@
                 </td>
             </tr>
         {{/each}}
-    {{else}}
-        <tr class="text-center">No contributors</tr>
     {{/if}}
 </table>
 {{#if data.length}}
@@ -20,4 +18,6 @@
             <button class="btn btn-link text-bigger" {{action 'transitionToViewAll' item}}>View more</button>
         </div>
     {{/unless}}
+{{else}}
+    <p class="text-center">No contributors</p>
 {{/if}}

@@ -433,6 +433,10 @@ nav.navbar {
     -webkit-animation: spinner .6s linear infinite;
 }
 
+.c3-chart {
+  padding-bottom:20px;
+}
+
 .contributors-widget {
     padding-bottom: 20px;
 }

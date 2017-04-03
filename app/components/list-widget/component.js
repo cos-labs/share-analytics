@@ -188,7 +188,7 @@ export default Ember.Component.extend({
             }
         },
         transitionToViewAll(item) {
-            this.attrs.transitionToFacet(item.dataType, item);
+            this.attrs.transitionToFacet(item.dataType, {});
         }
     }
 });

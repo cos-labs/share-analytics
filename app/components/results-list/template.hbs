@@ -29,14 +29,15 @@
                 </div>
             </div>
         </div>
-        {{else}}
-        <h3 style="text-align: center;">
+    {{else}}
+        <h3 class="text-center p-t-md">
             No results found.
         </h3>
     {{/each}}
-    <div style="text-align: center; padding: 30px;">
-        <button class="btn btn-primary" {{action "pageback"}}>{{fa-icon "chevron-left"}}</button>
-        <button class="btn btn-primary" {{action "pagenext"}}>{{fa-icon "chevron-right"}}</button>
-    </div>  
-
+    {{#if data.length}}
+        <div style="text-align: center; padding: 30px;">
+            <button class="btn btn-primary" {{action "pageback"}}>{{fa-icon "chevron-left"}}</button>
+            <button class="btn btn-primary" {{action "pagenext"}}>{{fa-icon "chevron-right"}}</button>
+        </div>
+    {{/if}}
 </div>

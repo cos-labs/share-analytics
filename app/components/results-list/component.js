@@ -12,10 +12,6 @@ export default Ember.Component.extend({
         this.set('data', data);
     },
 
-    //haspublisher: Ember.computed('item', function() {
-    //    return (this.get('item._source.publishers'))
-    //}),
-
     processData (data) {
         return data.map((datum) => {
             var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };

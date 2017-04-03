@@ -601,7 +601,10 @@ export default Ember.Route.extend({
                                 parameterName: "page",
                                 parameterPath: ["from"]
                             }
-                        ]
+                        ],
+                        widgetSettings : {
+                            minHeight: 115
+                        }
                     },
                     {
                         chartType: 'totalResults',

@@ -1,7 +1,9 @@
 <div class="object-detail">
     <h1 style="padding: 120px 50px 80px 50px; text-align: center; margin: 0; background-color: #eee; overflow: hidden; position: relative; border-radius: 2px; border-bottom: 1px solid rgba(0,0,0,0.2); margin-bottom: 50px;">
         {{{objectData._source.title}}}<br>
-        <span style="display: inline-block; background-color: #bbb; color: #fff; padding: 10px 30px; font-size: 17px; border-radius: 2px; font-weight: 600; margin-top: 30px;">{{objectData._source.type}}</span>
+        {{#if dataUrl}}
+        <a class="btn btn-md" href="{{dataUrl}}" style="display: inline-block; background-color: #bbb; color: #fff; padding: 10px 30px; font-size: 17px; border-radius: 2px; font-weight: 600; margin-top: 30px;">Access Data</a>
+        {{/if}}
     </h1>
     {{#if objectData._source.description}}
         <div><h3>Description</h3>{{objectData._source.description}}</div>
@@ -45,6 +47,9 @@
             </ul>
         </div>
     {{/if}}
+
+    <h3>Source Type</h3>
+    <ul><li>{{objectData._source.type}}</li></ul>
 
     {{#if objectData._source.sources}}
         <div>

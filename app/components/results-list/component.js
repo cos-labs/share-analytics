@@ -70,7 +70,7 @@ export default Ember.Component.extend({
                 page = 0;
             }
             queryParams["page"] = page
-            this.attrs.transitionToFacet("resultsList", queryParams);
+            this.attrs.transitionToFacet("search", queryParams);
         },
         pagenext() {
             let queryParams = {};
@@ -83,7 +83,7 @@ export default Ember.Component.extend({
                 page = 0;
             }
             queryParams["page"] = page
-            this.attrs.transitionToFacet("resultsList", queryParams);
+            this.attrs.transitionToFacet("search", queryParams);
         }
 
     }

@@ -37,13 +37,13 @@ export default Ember.Component.extend({
         removeFilter(filter) {
             let queryParams = {};
             queryParams[filter.key] = undefined;
-            this.attrs.transitionToFacet("resultsList", queryParams);
+            this.attrs.transitionToFacet("search", queryParams);
         },
 
         transitionToFacet(parameter, parameterValue) {
             let queryParams = {};
             queryParams[parameter] = parameterValue;
-            this.attrs.transitionToFacet("resultsList", queryParams);
+            this.attrs.transitionToFacet("search", queryParams);
         }
 
     }

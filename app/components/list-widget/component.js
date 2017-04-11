@@ -1,114 +1,6 @@
 import Ember from 'ember';
 
 
-const tag_blacklist = [
-
-    "base",
-    "dissertation",
-    "ucsd dissertations",
-    "text",
-    "cdl",
-    "cdl.ucsd",
-    "dataset",
-    "text/tab-separated-values",
-    "natl_1981_an_37n",
-    "58 geosciences",
-    "natl_1981_an_26n",
-    "date/time",
-    "54 environmental sciences",
-    "36 materials science",
-    "59 basic biological sciences",
-    "unknown",
-    "preprint",
-    "2011)",
-    "extracted from the 2-minute gridded global relief data (etopo2)",
-    "extracted from the world ocean atlas 2005",
-    "fugacity of carbon dioxide (water) at sea surface temperature (wet air)",
-    "recomputed after socat (pfeil et al",
-    "xco2 (water) at sea surface temperature (dry air)",
-    "100036",
-    "extracted from the ncep/ncar 40-year reanalysis project",
-    "extracted from globalview-co2",
-    "document",
-    "indianocean_1976_an_18s",
-    "75 condensed matter physics",
-    "37 inorganic",
-    "book",
-    "29442",
-    "71 classical and quantum mechanics",
-    "information",
-    "project",
-    "data",
-    "application/pdf",
-    "description",
-    "materials",
-    "size",
-    "99 general and miscellaneous//mathematics",
-    "and information science",
-    "& refractories-- physical properties",
-    "1 ancillary/documentation file",
-    "1 data file",
-    "62 radiology and nuclear medicine",
-    "article",
-    "208 data points",
-    "58125",
-    "70 plasma physics and fusion technology",
-    "ands",
-    "centre72",
-    "ascii: ascii text (text/plain)",
-    "72 physics of elementary particles and fields",
-    "getinfo",
-    "multipart/mixed",
-    "s",
-    "u",
-    "comment",
-    "42 engineering",
-    "ca",
-    "ct",
-    "fl",
-    "ga",
-    "md",
-    "nc",
-    "nj",
-    "va",
-    "& thermal phenomena-- (-1987)",
-    "(unk)",
-    "al",
-    "hi",
-    "ma",
-    "ns",
-    "ny",
-    "or",
-    "ri",
-    "sc",
-    "073",
-    "63 radiation",
-    "656102 -- solid state physics-- superconductivity-- acoustic",
-    "and other environ. pollutant effects on living orgs. and biol. mat.",
-    "de",
-    "nitrat",
-    "nitrit",
-    "surface waters 580500* -- oceanography-- (1980-1989)",
-    "036",
-    "46211",
-    "58302",
-    "lternet",
-    "& refractories-- structure & phase studies",
-    "006",
-    "076",
-    "093",
-    "46215",
-    "46231",
-    "580000 -- geosciences",
-    "cfc-11",
-    "cfc-12",
-    "datavers",
-    "ms",
-    "transition element compounds 360204* -- ceramics",
-    "uniform resource locator/link to image",
-    "vertebrates 550201* -- biochemistry-- tracer techniques"
-];
-
 export default Ember.Component.extend({
     data : [],
     init(){
@@ -153,8 +45,7 @@ export default Ember.Component.extend({
             this.set('data', data);
         } else if (this.get('chartType') === 'topContributors') {
             this.fetchAgentDetails(this.get('aggregations.listWidgetData.buckets'));
-        }
-        else {
+        } else {
             this.processData(this.get('aggregations.listWidgetData.buckets'));
         }
     },
@@ -164,13 +55,6 @@ export default Ember.Component.extend({
                 number: raw_datum.doc_count,
                 name: raw_datum.key
             };
-        }).filter((datum) => {
-            if (this.get("chartType") === "tagsList") {
-                if (tag_blacklist.indexOf(datum.name) >= 0) {
-                    //return false;
-                }
-            }
-            return true;
         }));
     },
 
@@ -190,9 +74,6 @@ export default Ember.Component.extend({
             let queryParams = {};
             var facet = this.get("item.facetDashParameter");
             let facetDash = this.get("item.facetDash");
-            if (facetDash === "url" && item.url) {
-                return;
-            }
             if (facet) {
                 queryParams[facet] = item.name;
                 if (facetDash === "objectDetail" || facetDash === "agentDetail" || facet === 'contributors' || facet === 'publishers') {

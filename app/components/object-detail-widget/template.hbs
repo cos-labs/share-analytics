@@ -8,7 +8,7 @@
     {{/if}}
     <div><h3>Contributors</h3><ul>
         {{#each objectData._source.lists.contributors as |contributor|}}
-            <li><a style="cursor: pointer;" {{action "transitionToFacet" "resultsList" "contributors" contributor.id}}>{{contributor.name}}</a></li>
+            <li><a style="cursor: pointer;" {{action "transitionToFacet" "search" "contributors" contributor.id}}>{{contributor.name}}</a></li>
         {{/each}}
     </ul></div>
     {{#if objectData._source.tags}}

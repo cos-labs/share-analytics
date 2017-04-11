@@ -742,7 +742,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'topContributors',
-                        widgetType: 'contributors-widget',
+                        widgetType: 'list-widget',
                         name: 'Contributors',
                         width: 3,
                         hideSHAREButton: true,
@@ -753,7 +753,7 @@ export default Ember.Route.extend({
                         post_body : {},
                         postBodyParams: [
                             {
-                                parameterPath: ["aggregations", "contributors", "terms", "field"],
+                                parameterPath: ["aggregations", "listWidgetData", "terms", "field"],
                                 parameterName: "contributors_id_field",
                                 defaultValue: "lists.contributors.id.exact",
                             },
@@ -982,7 +982,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'topContributors',
-                        widgetType: 'contributors-widget',
+                        widgetType: 'list-widget',
                         name: 'Top Contributors',
                         width: 12,
                         facetDash: "resultsList",
@@ -991,7 +991,7 @@ export default Ember.Route.extend({
                         post_body : {},
                         postBodyParams: [
                             {
-                                parameterPath: ["aggregations", "contributors", "terms", "field"],
+                                parameterPath: ["aggregations", "listWidgetData", "terms", "field"],
                                 parameterName: "contributors_id_field",
                                 defaultValue: "lists.contributors.id.exact"
                             },
@@ -1484,7 +1484,7 @@ export default Ember.Route.extend({
                 widgets: [
                     {
                         chartType: 'topContributors',
-                        widgetType: 'contributors-widget',
+                        widgetType: 'list-widget',
                         name: 'Top Contributors',
                         width: 12,
                         facetDash: "resultsList",
@@ -1493,7 +1493,7 @@ export default Ember.Route.extend({
                         hideViewAll: true,
                         post_body : {
                             "aggregations": {
-                                "contributors": {
+                                "listWidgetData": {
                                     "terms": {
                                         "field": 'lists.contributors.id.exact',
                                         "size": 100
@@ -1589,7 +1589,7 @@ export default Ember.Route.extend({
                 widgets: [
                     {
                         chartType: 'topContributors',
-                        widgetType: 'contributors-widget',
+                        widgetType: 'list-widget',
                         name: 'Data providers',
                         width: 12,
                         facetDash: "resultsList",
@@ -1631,12 +1631,12 @@ export default Ember.Route.extend({
                                 defaultValue: "yyyy-MM-dd||yyyy"
                             },
                             {
-                                parameterPath: ["aggregations", "publishers", "terms", "field"],
+                                parameterPath: ["aggregations", "listWidgetData", "terms", "field"],
                                 parameterName: "publisher_field",
                                 defaultValue: "lists.publishers.id.exact",
                             },
                             {
-                                parameterPath: ["aggregations", "publishers", "terms", "size"],
+                                parameterPath: ["aggregations", "listWidgetData", "terms", "size"],
                                 parameterName: "publisher_size",
                                 defaultValue: 200,
                             },
@@ -1923,7 +1923,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'topContributors',
-                        widgetType: 'contributors-widget',
+                        widgetType: 'list-widget',
                         name: 'Top Contributors',
                         width: 6,
                         facetDash: "resultsList",
@@ -1932,7 +1932,7 @@ export default Ember.Route.extend({
                         post_body : {},
                         postBodyParams: [
                             {
-                                parameterPath: ["aggregations", "contributors", "terms", "field"],
+                                parameterPath: ["aggregations", "listWidgetData", "terms", "field"],
                                 parameterName: "contributors_id_field",
                                 defaultValue: "lists.contributors.id.exact"
                             },

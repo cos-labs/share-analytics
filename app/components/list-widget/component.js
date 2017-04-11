@@ -107,7 +107,7 @@ const tag_blacklist = [
     "transition element compounds 360204* -- ceramics",
     "uniform resource locator/link to image",
     "vertebrates 550201* -- biochemistry-- tracer techniques"
-]
+];
 
 export default Ember.Component.extend({
     data : [],
@@ -151,6 +151,8 @@ export default Ember.Component.extend({
               }
             ];
             this.set('data', data);
+        } else if (this.get('chartType') === 'topContributors') {
+            this.fetchAgentDetails(this.get('aggregations.listWidgetData.buckets'));
         }
         else {
             this.processData(this.get('aggregations.listWidgetData.buckets'));
@@ -171,6 +173,18 @@ export default Ember.Component.extend({
             return true;
         }));
     },
+
+    fetchAgentDetails: async function(data) {
+        let agent_details = await Ember.$.ajax({
+            url: 'https://dev-labs.cos.io/bulk_get_agents',
+            crossDomain: true,
+            data: JSON.stringify(data),
+            type: 'POST',
+            contentType: 'application/json'
+        });
+        this.set("data", JSON.parse(agent_details));
+    },
+
     actions: {
         transitionToFacet(item) { //Two different items here; one refers to the widget; one refers to the datum.
             let queryParams = {};
@@ -181,7 +195,7 @@ export default Ember.Component.extend({
             }
             if (facet) {
                 queryParams[facet] = item.name;
-                if (facetDash === "objectDetail") {
+                if (facetDash === "objectDetail" || facetDash === "agentDetail" || facet === 'contributors' || facet === 'publishers') {
                     queryParams[facet] = item.id;
                 }
                 this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);

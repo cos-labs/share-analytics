@@ -2091,7 +2091,6 @@ export default Ember.Route.extend({
         controller.set('parameters', model.parameters)
 
         controller.set('institutionName', "eScholarship @ University of California");
-        // controller.set('dashboardName', model.dashboard.dashboardName);
         controller.set('wrapperClass', model.dashboard.wrapperClass);
         controller.set('widgets', model.dashboard.widgets);
     }

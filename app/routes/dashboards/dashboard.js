@@ -805,9 +805,6 @@ export default Ember.Route.extend({
                         name: "",
                         width: 12,
                         facetDash: "aboutDash",
-                        widgetSettings : {
-                            institution_id: 'ucsd'
-                        },
                         content: "<h4><b>What is TritonSHARE?</b></h4>" +
                         "<p>TritonSHARE is a catalog that pulls information about data created by members of the UC San Diego research community from the SHARE database.</p>" +
                         "<h4><b>What is SHARE?</b></h4>" +
@@ -830,9 +827,6 @@ export default Ember.Route.extend({
                         name: "",
                         width: 12,
                         facetDash: "aboutDash",
-                        widgetSettings : {
-                            institution_id: 'ucsd'
-                        },
                         content: "Data and research output shared by the UC San Diego research community and indexed by SHARE.",
                         showButton: true,
                     },
@@ -1713,9 +1707,6 @@ export default Ember.Route.extend({
                         name: "",
                         width: 12,
                         facetDash: "aboutDash",
-                        widgetSettings : {
-                            institution_id: 'ucsd'
-                        },
                         content: "Data and research output shared by the UC San Diego research community and indexed by SHARE.",
                         showButton: true,
                     },

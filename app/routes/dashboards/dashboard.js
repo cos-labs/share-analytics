@@ -1,7 +1,5 @@
 import Ember from 'ember';
-/* global Freewall */
-//import 'bower_components/freewall/freewall';
-//
+
 const ucsd_query = [
     {"match_phrase": {"contributors": "UCSD"}},
     {"match_phrase": {"contributors": "UC San Diego"}},

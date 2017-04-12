@@ -2,8 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
-    total: 'hello',
-
     settings : {
         fontSize: 3,
         fontColor: '#F44336',

@@ -1,7 +1,5 @@
 import Ember from 'ember';
-/* global Freewall */
-//import 'bower_components/freewall/freewall';
-//
+
 const ucsd_query = [
     {"match_phrase": {"contributors": "UCSD"}},
     {"match_phrase": {"contributors": "UC San Diego"}},
@@ -2093,7 +2091,6 @@ export default Ember.Route.extend({
         controller.set('parameters', model.parameters)
 
         controller.set('institutionName', "eScholarship @ University of California");
-        // controller.set('dashboardName', model.dashboard.dashboardName);
         controller.set('wrapperClass', model.dashboard.wrapperClass);
         controller.set('widgets', model.dashboard.widgets);
     }

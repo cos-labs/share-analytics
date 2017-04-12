@@ -544,7 +544,6 @@ export default Ember.Route.extend({
                     },
                     {
                         widgetType: "filter-plaques",
-                        background_color: "rgba(0,0,0,0)",
                         name: "",
                         width: 12,
                         facetDash: "search",

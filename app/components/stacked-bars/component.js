@@ -1,22 +1,7 @@
 import Ember from 'ember';
 
-const ucsdVariations = 'UCSD%20OR%20"UC%20San%20Diego"%20OR%20"UC%20San%20Diego%20Library"%20OR%20"UC%20San%20Diego%20Library%20Digital%20Collections"%20OR%20"Scripps%20Institution%20of%20Oceanography"%20OR%20"Scripps%20Institute%20of%20Oceanography"%20OR%20"University%20of%20California%20San%20Diego"%20OR%20"Univ%20of%20california%20san%20diego"%20OR%20"University%20of%20CA%20San%20Diego"';
-const ucsdLuceneQuery = 'q=contributors:(' + ucsdVariations + ')%20OR%20publishers:(' + ucsdVariations + ')%20OR%20funders:(' + ucsdVariations + ')%20OR%20title:(' + ucsdVariations + ')%20OR%20hosts:(' + ucsdVariations + ')%20OR%20tags:(ucsd%20OR%20"cdl.ucsd"%20OR%20"scripps%20institution%20of%20oceanography")%20OR%20affiliations:(' + ucsdVariations + ')';
 const minLabelWidth = 90;
 
-function get_search_query(params) {
-    var query = '';
-    if (params['all'] === 'ucsd') {
-        return ucsdLuceneQuery;
-    } else {
-        for (var param in params) {
-            if (params.hasOwnProperty(param)) {
-                query += param + '=' + encodeURIComponent(params[param]);
-            }
-        }
-        return query;
-    }
-}
 
 export default Ember.Component.extend({
     chartSelector: '.widget-stackedBar',
@@ -33,8 +18,6 @@ export default Ember.Component.extend({
         // Turn numbers into percentages and save to width
         let items = this.get('data.aggregations.stackedData.buckets');
         let total = this.calculateTotal(items);
-        var query = get_search_query(this.get('parameters'));
-
         let data = items.map((item, index) => {
             let percentage = (item.doc_count*100/total).toFixed(2);
             return {

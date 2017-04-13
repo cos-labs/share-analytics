@@ -405,7 +405,6 @@ export default Ember.Component.extend({
 
     init() {
 
-        debugger;
         this._super(...arguments);
         this.set("widthSetting", this.get("item.width"));
         Promise.resolve(this.fetchWidgetData()).then(() =>{

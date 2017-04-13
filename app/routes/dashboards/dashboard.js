@@ -1,7 +1,5 @@
 import Ember from 'ember';
-/* global Freewall */
-//import 'bower_components/freewall/freewall';
-//
+
 const ucsd_query = [
     {"match_phrase": {"contributors": "UCSD"}},
     {"match_phrase": {"contributors": "UC San Diego"}},
@@ -546,7 +544,6 @@ export default Ember.Route.extend({
                     },
                     {
                         widgetType: "filter-plaques",
-                        background_color: "rgba(0,0,0,0)",
                         name: "",
                         width: 12,
                         facetDash: "search",
@@ -742,7 +739,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'topContributors',
-                        widgetType: 'contributors-widget',
+                        widgetType: 'list-widget',
                         name: 'Contributors',
                         width: 3,
                         hideSHAREButton: true,
@@ -753,7 +750,7 @@ export default Ember.Route.extend({
                         post_body : {},
                         postBodyParams: [
                             {
-                                parameterPath: ["aggregations", "contributors", "terms", "field"],
+                                parameterPath: ["aggregations", "listWidgetData", "terms", "field"],
                                 parameterName: "contributors_id_field",
                                 defaultValue: "lists.contributors.id.exact",
                             },
@@ -807,19 +804,16 @@ export default Ember.Route.extend({
                         name: "",
                         width: 12,
                         facetDash: "aboutDash",
-                        widgetSettings : {
-                            institution_id: 'ucsd'
-                        },
-                        content: "<h4><b>What is this?</b></h4>" +
-                        "<p>The Research Data Catalog pulls information about data created by members of the UC San Diego research community from the SHARE database.</p>" +
+                        content: "<h4><b>What is TritonSHARE?</b></h4>" +
+                        "<p>TritonSHARE is a catalog that pulls information about data created by members of the UC San Diego research community from the SHARE database.</p>" +
                         "<h4><b>What is SHARE?</b></h4>" +
-                        "<p>SHARE is an <a href='http://www.arl.org/'>Association of Research Libraries (ARL)</a> and <a href='http://cos.io/'>Center for Open Science</a> initiative whose mission is to maximize research impact by making research widely accessible, discoverable, and reusable. To fulfill this mission SHARE is building a free, open, data set about research and scholarly activities across the scholarly life cycle. This include registrations, data sets, preprints, and publications.</p>" +
+                        "<p>SHARE is an <a href='http://www.arl.org/'>Association of Research Libraries (ARL)</a> and <a href='http://cos.io/'>Center for Open Science</a> initiative whose mission is to maximize research impact by making research output widely accessible, discoverable, and reusable. To fulfill this mission SHARE is building a free, open, data set about research and scholarly activities across the scholarly life cycle. This include registrations, data sets, preprints, and publications.</p>" +
                         "<p>SHARE is funded by the <a href='http://www.imls.gov/'> Institute of Museum and Library Services</a> and the <a href='http://www.sloan.org/'>Alfred P. Sloan Foundation</a>. The SHARE initiative was founded in 2013 by <a href='http://www.arl.org/'>ARL</a>, the <a href='http://www.aau.edu/'>Association of American Universities (AAU)</a>, and the <a href='http://www.aplu.org/'>Association of Public and Land-grant Universities (APLU)</a>.</p>" +
-                        "<p>The Research Data Catalog is a joint development effort between the SHARE team and the UC San Diego Library. The Library team includes members of the Research Data Curation, Metadata Services and Information Technology Programs.</p>" +
-                        "<h4><b>How do I get my data listed in the Catalog?</b></h4>" +
-                        "<p>SHARE harvests metadata about research output from <a href='https://share.osf.io/sources'>146 sources</a> around the world. If your work has been indexed by any of these sources, its metadata has been or can be harvested by SHARE. For your data to be represented in the Research Data Catalog, it must be clearly identified as coming from UC San Diego. How this is done will vary by source. For help, please contact the <a href='mailto:research-data-curation@ucsd.edu'>Research Data Curation Program (RDCP) at the UC San Diego Library</a>.</p>" +
-                        "<p>In addition to these sources, the UC San Diego Library can manually enter information into the SHARE catalog. The Library also hosts one of the many sources harvested by SHARE via its Digital Collections website. <a href='mailto:research-data-curation@ucsd.edu'>Contact RDCP</a> for more information on entering information about your published data into SHARE or depositing your data into the Digital Collections. </p>" +
-                        "<h4><b>I see an error in the representation of my data! How do I correct it? How do I add more or better metadata for my research in the catalog?</b></h4>" +
+                        "<p>TritonSHARE is a joint development effort between the SHARE team and the UC San Diego Library. The Library team includes members of the Research Data Curation, Metadata Services and Information Technology Programs.</p>" +
+                        "<h4><b>How do I get my data listed in the catalog?</b></h4>" +
+                        "<p>SHARE harvests metadata about research output from <a href='https://share.osf.io/sources'>146 sources</a> around the world. If your work has been indexed by any of these sources, its metadata has been or can be harvested by SHARE. For your data to be represented in TritonSHARE, however, it must be clearly identified as coming from UC San Diego. How this is done will vary by source. For help, please contact the <a href='mailto:research-data-curation@ucsd.edu'>Research Data Curation Program (RDCP) at the UC San Diego Library</a>.</p>" +
+                        "<p>In addition to these sources, the Library can manually enter information you provide about your research data into the SHARE catalog. The Library also hosts a data repository, the UC San Diego Library Digital Collections, one of the many sources harvested by SHARE. <a href='mailto:research-data-curation@ucsd.edu'>Contact RDCP</a> for more information on entering information about your published data into SHARE or depositing your data into the Digital Collections. </p>" +
+                        "<h4><b>I see an error in the representation of my data! How do I correct it? How do I add more or better metadata for my research into the catalog?</b></h4>" +
                         "<p>Because SHARE harvests from many sources, there will be different answers to this question. While we can update the information in SHARE, we would ideally also correct the original source. <a href='mailto:research-data-curation@ucsd.edu'>Contact RDCP</a> for help.</p>"
                     }
                 ]
@@ -832,9 +826,6 @@ export default Ember.Route.extend({
                         name: "",
                         width: 12,
                         facetDash: "aboutDash",
-                        widgetSettings : {
-                            institution_id: 'ucsd'
-                        },
                         content: "Data and research output shared by the UC San Diego research community and indexed by SHARE.",
                         showButton: true,
                     },
@@ -982,7 +973,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'topContributors',
-                        widgetType: 'contributors-widget',
+                        widgetType: 'list-widget',
                         name: 'Top Contributors',
                         width: 12,
                         facetDash: "search",
@@ -991,7 +982,7 @@ export default Ember.Route.extend({
                         post_body : {},
                         postBodyParams: [
                             {
-                                parameterPath: ["aggregations", "contributors", "terms", "field"],
+                                parameterPath: ["aggregations", "listWidgetData", "terms", "field"],
                                 parameterName: "contributors_id_field",
                                 defaultValue: "lists.contributors.id.exact"
                             },
@@ -1484,7 +1475,7 @@ export default Ember.Route.extend({
                 widgets: [
                     {
                         chartType: 'topContributors',
-                        widgetType: 'contributors-widget',
+                        widgetType: 'list-widget',
                         name: 'Top Contributors',
                         width: 12,
                         facetDash: "search",
@@ -1493,7 +1484,7 @@ export default Ember.Route.extend({
                         hideViewAll: true,
                         post_body : {
                             "aggregations": {
-                                "contributors": {
+                                "listWidgetData": {
                                     "terms": {
                                         "field": 'lists.contributors.id.exact',
                                         "size": 100
@@ -1589,7 +1580,7 @@ export default Ember.Route.extend({
                 widgets: [
                     {
                         chartType: 'topContributors',
-                        widgetType: 'contributors-widget',
+                        widgetType: 'list-widget',
                         name: 'Data providers',
                         width: 12,
                         facetDash: "search",
@@ -1631,12 +1622,12 @@ export default Ember.Route.extend({
                                 defaultValue: "yyyy-MM-dd||yyyy"
                             },
                             {
-                                parameterPath: ["aggregations", "publishers", "terms", "field"],
+                                parameterPath: ["aggregations", "listWidgetData", "terms", "field"],
                                 parameterName: "publisher_field",
                                 defaultValue: "lists.publishers.id.exact",
                             },
                             {
-                                parameterPath: ["aggregations", "publishers", "terms", "size"],
+                                parameterPath: ["aggregations", "listWidgetData", "terms", "size"],
                                 parameterName: "publisher_size",
                                 defaultValue: 200,
                             },
@@ -1715,9 +1706,6 @@ export default Ember.Route.extend({
                         name: "",
                         width: 12,
                         facetDash: "aboutDash",
-                        widgetSettings : {
-                            institution_id: 'ucsd'
-                        },
                         content: "Data and research output shared by the UC San Diego research community and indexed by SHARE.",
                         showButton: true,
                     },
@@ -1923,7 +1911,7 @@ export default Ember.Route.extend({
                     },
                     {
                         chartType: 'topContributors',
-                        widgetType: 'contributors-widget',
+                        widgetType: 'list-widget',
                         name: 'Top Contributors',
                         width: 6,
                         facetDash: "search",
@@ -1932,7 +1920,7 @@ export default Ember.Route.extend({
                         post_body : {},
                         postBodyParams: [
                             {
-                                parameterPath: ["aggregations", "contributors", "terms", "field"],
+                                parameterPath: ["aggregations", "listWidgetData", "terms", "field"],
                                 parameterName: "contributors_id_field",
                                 defaultValue: "lists.contributors.id.exact"
                             },
@@ -2093,7 +2081,6 @@ export default Ember.Route.extend({
         controller.set('parameters', model.parameters)
 
         controller.set('institutionName', "eScholarship @ University of California");
-        // controller.set('dashboardName', model.dashboard.dashboardName);
         controller.set('wrapperClass', model.dashboard.wrapperClass);
         controller.set('widgets', model.dashboard.widgets);
     }

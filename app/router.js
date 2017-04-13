@@ -14,9 +14,6 @@ Router.map(function() {
             path: ':dashboard'
         });
     });
-    this.route('info', {
-        path: 'info/:institution_id'
-    });
 });
 
 export default Router;

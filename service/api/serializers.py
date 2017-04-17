@@ -2,10 +2,8 @@ from rest_framework_json_api.serializers import ModelSerializer
 from rest_framework_json_api.relations import ResourceRelatedField
 from rest_framework.serializers import CharField
 
-from widget.models import Widget
-from widget.models import WidgetConfig
-from dashboard.models import Dashboard
-from django.contrib.auth.models import User, Group
+from api.models import Widget, WidgetConfig, Dashboard
+from django.contrib.auth.models import User
 
 
 class WidgetSerializer(ModelSerializer):
@@ -21,7 +19,7 @@ class WidgetSerializer(ModelSerializer):
 
     settings = ResourceRelatedField(
         queryset = WidgetConfig.objects.all(),
-        
+
     )
 
     class Meta:
@@ -49,8 +47,14 @@ class DashboardSerializer(ModelSerializer):
 
     widgets = ResourceRelatedField(
         many=True,
-        queryset=Widget.objects.all()
+        queryset=Widget.objects,
+        related_link_url_kwarg='widget_pk'
     )
+
+    def save(self):
+        if not self.validated_data['name']:
+            self.validated_data['name'] = self.validated_data['id']
+        super().__save__()
 
     class Meta:
         model = Dashboard
@@ -58,7 +62,7 @@ class DashboardSerializer(ModelSerializer):
             'id',
             'name',
             'owner',
-            'widgets'
+            'widgets',
         )
 
     class JSONAPIMeta:

@@ -42,9 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'guardian',
     'corsheaders',
-    'api',
-    'dashboard',
-    'widget',
+    'api'
 ]
 
 MIDDLEWARE_CLASSES = [

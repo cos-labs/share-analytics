@@ -1,16 +1,34 @@
-from django.db.models import Model
-from django.db.models import IntegerField
-from django.db.models import ForeignKey
-from django.db.models import CharField
-from django.db.models import ManyToManyField
-from django.db.models import BooleanField
-from django.db.models import TextField
-from django.contrib.postgres.fields import ArrayField
-from django.contrib.postgres.fields import JSONField
-from django.db.models import PROTECT
-from django.db.models import CASCADE
-
+from django.db.models import Model, ForeignKey, ManyToManyField, IntegerField, CharField, CASCADE, BooleanField, TextField
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import JSONField, ArrayField
+
+
+class Dashboard(Model):
+
+    id = CharField(
+        max_length=64,
+        primary_key=True
+    )
+    name = CharField(
+        max_length=64,
+        default='Unnamed Dashboard'
+    )
+    owner = ForeignKey(
+        User,
+        on_delete=CASCADE
+    )
+    settings = JSONField(
+        null=True,
+        blank=True
+    )
+    widgets = ManyToManyField(
+        'Widget',
+        related_name='containing_dashboards',
+        through='WidgetConfig'
+    )
+
+    def __str__(self):
+        return self.name
 
 
 class Parameter(Model):
@@ -22,14 +40,16 @@ class Parameter(Model):
     def __str__(self):
         return self.name
 
+
 class WidgetConfig(Model):
 
-    dashboard = ForeignKey("dashboard.Dashboard")
-    widget = ForeignKey("widget.Widget")
+    dashboard = ForeignKey("Dashboard")
+    widget = ForeignKey("Widget")
     position = IntegerField()
 
     def __str__(self):
         return "Config for {} on {}".format(self.widget.name, self.dashboard.name)
+
 
 class Widget(Model):
 
@@ -43,7 +63,7 @@ class Widget(Model):
     )
     author = TextField(max_length=20, null=True)
     widgettype = CharField(max_length=64, null=True, blank=True)
-    facetdash = ForeignKey("dashboard.Dashboard", null=True, blank=True)
+    facetdash = ForeignKey("Dashboard", null=True, blank=True)
     parameters = ManyToManyField("Parameter")
     width = IntegerField(default=2)
     height = IntegerField(default=2)
@@ -57,3 +77,4 @@ class Widget(Model):
 
     def save(self, *args, **kwargs):
         super(Widget, self).save(*args, **kwargs)
+

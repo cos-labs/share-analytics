@@ -793,6 +793,45 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             }
                         ]
+                    },
+                    {
+                        // New types widget is here
+                        chartType: 'topContributors',
+                        widgetType: 'list-widget',
+                        name: 'Types',
+                        width: 3,
+                        hideSHAREButton: true,
+                        //indexVersion: 3,
+                        facetDash: "resultsList",
+                        //dataType: 'type',
+                        facetDashParameter: "type",
+                        hideViewAll: true,
+                        post_body : {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                parameterName: "sources"
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterPath: ["aggregations", "listWidgetData", "terms", "field"],
+                                parameterName: "type_field",
+                                defaultValue: "type"
+                            }
+                        ]
                     }
                 ]
             },

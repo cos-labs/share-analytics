@@ -832,7 +832,7 @@ export default Ember.Route.extend({
                             }
                         ],
                         widgetSettings: {
-                            mode: 'dropdown'
+                            mode: 'search'
                         }
                     },
                     {

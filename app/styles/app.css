@@ -634,6 +634,20 @@ nav.navbar {
     height: 12px;
     width: 25px;
 }
+
+.dropdown-search {
+    background: #fff;
+    border: 1px solid #ccc;
+}
+.dropdown-search-item {
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+.dropdown-search-item:hover {
+    background-color: #f8f8f8;
+}
+
+
 /**
  * Tooltip Styles from : https://chrisbracco.com/a-simple-css-tooltip/
 

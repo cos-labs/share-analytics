@@ -1,10 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-    data: [],
     dropList: Ember.A(),
     firstRow: 'Select type', // Text for visible first row on dropdown,
     mode: 'dropdown', // Can be dropdown or search
+    filteredList: [],
+    filterText: '',
     init(){
         this._super(...arguments);
         // check settings to see what the mode is
@@ -16,9 +17,12 @@ export default Ember.Component.extend({
 
     },
     processData (data) {
-        this.get('dropList').addObject(this.get('firstRow'));
+        if(this.get('mode') === 'dropdown'){
+            this.get('dropList').addObject(this.get('firstRow'));
+        }
         data.forEach(item => {
             this.get('dropList').addObject(item.key);
+            this.get('filteredList').addObject(item.key);
         });
     },
     filter () {
@@ -35,8 +39,15 @@ export default Ember.Component.extend({
         },
         applyType (value) {
             if(value !== this.get('firstRow')){
-                this.send('transitionToFacet', value);                
+                this.send('transitionToFacet', value);
             }
+        },
+        filterVisible(){
+            console.log()
+            let filtered = this.get('dropList').filter((val)=>{
+                return val.includes(this.get('filterText').toLowerCase());
+            });
+            this.set('filteredList', filtered);
         }
     }
 

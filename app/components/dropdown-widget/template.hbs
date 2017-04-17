@@ -1,11 +1,20 @@
 {{#if (eq mode 'dropdown')}}
-    <select class="form-control" onchange={{action "applyType" value="target.value"}}>
-        {{#each dropList key="@identity" as |type|}}
-            <option value={{type}} selected={{if (eq selectedType type) true}}>{{type}}</option>
-        {{/each}}
-    </select>
+    <div class="p-md">
+        <select class="form-control" onchange={{action "applyType" value="target.value"}}>
+            {{#each dropList key="@identity" as |type|}}
+                <option value={{type}} selected={{if (eq selectedType type) true}}>{{type}}</option>
+            {{/each}}
+        </select>
+    </div>
 {{/if}}
 
 {{#if (eq mode 'search')}}
-    {{input placeholder=search key-press="updateFirstName"}}
+<div class="dropdown-search">
+    {{input value=filterText placeholder=search key-up="filterVisible"}}
+    {{#each filteredList as |item|}}
+        <div class="dropdown-search-item p-xs">
+            <span {{action "applyType" item}}>{{item}}</span>
+        </div>
+    {{/each}}
+</div>
 {{/if}}

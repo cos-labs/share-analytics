@@ -47,14 +47,9 @@ class DashboardSerializer(ModelSerializer):
 
     widgets = ResourceRelatedField(
         many=True,
-        queryset=Widget.objects,
+        queryset=Widget.objects.all(),
         related_link_url_kwarg='widget_pk'
     )
-
-    def save(self):
-        if not self.validated_data['name']:
-            self.validated_data['name'] = self.validated_data['id']
-        super().__save__()
 
     class Meta:
         model = Dashboard
@@ -62,7 +57,7 @@ class DashboardSerializer(ModelSerializer):
             'id',
             'name',
             'owner',
-            'widgets',
+            'widgets'
         )
 
     class JSONAPIMeta:

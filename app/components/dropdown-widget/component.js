@@ -6,6 +6,7 @@ export default Ember.Component.extend({
     mode: 'dropdown', // Can be dropdown or search
     filteredList: [],
     filterText: '',
+    showList: false,
     init(){
         this._super(...arguments);
         // check settings to see what the mode is
@@ -48,6 +49,12 @@ export default Ember.Component.extend({
                 return val.includes(this.get('filterText').toLowerCase());
             });
             this.set('filteredList', filtered);
+        },
+        showList(){
+            this.set('showList', true);
+        },
+        hideList(){
+            this.set('showList', false);
         }
     }
 

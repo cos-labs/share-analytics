@@ -638,10 +638,13 @@ nav.navbar {
 .dropdown-search {
     background: #fff;
     border: 1px solid #ccc;
+    box-shadow: 0px 5px 6px 1px #ccc;
 }
 .dropdown-search-item {
     border-bottom: 1px solid #eee;
     cursor: pointer;
+    padding: 5px 10px;
+    font-size: 16px;
 }
 .dropdown-search-item:hover {
     background-color: #f8f8f8;

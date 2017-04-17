@@ -47,7 +47,7 @@ class DashboardSerializer(ModelSerializer):
 
     widgets = ResourceRelatedField(
         many=True,
-        queryset=Widget.objects.all(),
+        read_only=True,
         related_link_url_kwarg='widget_pk'
     )
 

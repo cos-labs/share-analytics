@@ -1,6 +1,4 @@
-import DS from 'ember-data';
+import ApplicationAdapter from './application';
 
-export default DS.RESTAdapter.extend({
-  host: 'http://localhost:8000',
-  namespace: 'api'
+export default ApplicationAdapter.extend({
 });

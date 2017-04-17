@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 
 const tag_blacklist = [
-
     "base",
     "dissertation",
     "ucsd dissertations",

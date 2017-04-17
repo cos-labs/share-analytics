@@ -1,0 +1,11 @@
+{{#if (eq mode 'dropdown')}}
+    <select class="form-control" onchange={{action "applyType" value="target.value"}}>
+        {{#each dropList key="@identity" as |type|}}
+            <option value={{type}} selected={{if (eq selectedType type) true}}>{{type}}</option>
+        {{/each}}
+    </select>
+{{/if}}
+
+{{#if (eq mode 'search')}}
+    {{input placeholder=search key-press="updateFirstName"}}
+{{/if}}

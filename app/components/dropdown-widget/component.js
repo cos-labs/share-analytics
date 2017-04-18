@@ -22,8 +22,10 @@ export default Ember.Component.extend({
             this.get('dropList').addObject(this.get('firstRow'));
         }
         data.forEach(item => {
-            this.get('dropList').addObject(item.key);
-            this.get('filteredList').addObject(item.key);
+            if(item.doc_count > 0){
+                this.get('dropList').addObject(item.key);
+                this.get('filteredList').addObject(item.key);
+            }
         });
     },
     filter () {

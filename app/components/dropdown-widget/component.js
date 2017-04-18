@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-    dropList: Ember.A(),
+    dropList: null,
     firstRow: 'Select type', // Text for visible first row on dropdown,
     mode: 'dropdown', // Can be dropdown or search
-    filteredList: [],
+    filteredList: null,
     filterText: '',
     showList: false,
     init(){
@@ -14,8 +14,9 @@ export default Ember.Component.extend({
         if (settings && settings.mode){
             this.set('mode', settings.mode);
         }
+        this.set('dropList', Ember.A());
+        this.set('filteredList', Ember.A());
         this.processData(this.get('aggregations.dropdownList.buckets'));
-
     },
     processData (data) {
         if(this.get('mode') === 'dropdown'){
@@ -27,9 +28,6 @@ export default Ember.Component.extend({
                 this.get('filteredList').addObject(item.key);
             }
         });
-    },
-    filter () {
-
     },
     actions: {
         transitionToFacet(value) { //Two different items here; one refers to the widget; one refers to the datum.
@@ -46,7 +44,6 @@ export default Ember.Component.extend({
             }
         },
         filterVisible(){
-            console.log()
             let filtered = this.get('dropList').filter((val)=>{
                 return val.includes(this.get('filterText').toLowerCase());
             });

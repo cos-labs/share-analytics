@@ -795,7 +795,7 @@ export default Ember.Route.extend({
                         ]
                     },
                     {
-                        // New types widget is here
+                        // Type dropdown
                         widgetType: 'dropdown-widget',
                         name: 'Types',
                         width: 3,
@@ -829,6 +829,60 @@ export default Ember.Route.extend({
                         ],
                         widgetSettings: {
                             mode: 'dropdown'
+                        }
+                    },
+                    {
+                        // Tag select
+                        widgetType: 'dropdown-widget',
+                        name: 'Tags',
+                        width: 3,
+                        facetDash: "resultsList",
+                        facetDashParameter: "tags",
+                        post_body: {
+                            "aggregations": {
+                                "dropdownList" : {
+                                    "terms": {
+                                        "field": 'tags.exact',
+                                        "size": 100,
+                                        exclude: tag_blacklist,
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterName: "sources",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
+                            },
+                            {
+                                parameterName: "scholar",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.exact"],
+                            }
+                        ],
+                        widgetSettings: {
+                            mode: 'search'
                         }
                     }
                 ]

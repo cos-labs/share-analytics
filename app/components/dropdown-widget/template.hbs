@@ -10,15 +10,15 @@
 
 {{#if (eq mode 'search')}}
 <div class="p-md">
-    {{input class="form-control" value=filterText placeholder=search key-up="filterVisible" focus-in="showList"}}
+    {{input class="form-control" value=filterText placeholder="Type to filter" key-up="filterVisible" focus-in="showList"}}
     {{#if showList}}
-    <div class="dropdown-search">
-        {{#each filteredList as |item|}}
-            <div class="dropdown-search-item" {{action "applyType" item}}>
-                {{item}}
-            </div>
-        {{/each}}
-    </div>
+        <div class="dropdown-search">
+            {{#each filteredList as |item|}}
+                <div class="dropdown-search-item" {{action "applyType" item}}>
+                    {{item}}
+                </div>
+            {{/each}}
+        </div>
     {{/if}}
 </div>
 {{/if}}

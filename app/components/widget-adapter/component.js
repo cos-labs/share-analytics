@@ -509,7 +509,7 @@ export default Ember.Component.extend({
 
     applyGraphSetting: function(){
         this.set('chartType', this.get('item.charttype'));
-        this.set('widgetType', this.get('item.widgettype'));
+        this.set('widgetType', this.get('item.widgetType'));
     },
 
     configureQuery: function() {

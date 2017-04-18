@@ -2,7 +2,7 @@ from rest_framework_json_api.serializers import ModelSerializer
 from rest_framework_json_api.relations import ResourceRelatedField
 from rest_framework.serializers import CharField, JSONField
 
-from api.models import Widget, WidgetConfig, Dashboard
+from api.models import Widget, WidgetConfig, Dashboard, Parameter
 from django.contrib.auth.models import User
 
 
@@ -10,6 +10,7 @@ class WidgetSerializer(ModelSerializer):
 
     name = CharField(required=False)
     display_name = CharField(required=False)
+    parameters = ResourceRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Widget
@@ -23,6 +24,7 @@ class WidgetSerializer(ModelSerializer):
             'facet_dash_parameter',
             'width',
             'context',
+            'parameters'
         )
 
     class JSONAPIMeta:
@@ -37,7 +39,7 @@ class DashboardSerializer(ModelSerializer):
         related_link_url_kwarg='widget_pk'
     )
 
-    settings = JSONField(required=False)
+    settings = JSONField(required=False, allow_null=True)
 
     class Meta:
         model = Dashboard
@@ -64,3 +66,17 @@ class UserSerializer(ModelSerializer):
 
     class JSONAPIMeta:
         resource_name = 'users'
+
+
+class ParameterSerializer(ModelSerializer):
+
+    class Meta:
+        model = Parameter
+        fields = (
+            'name',
+            'path',
+            'default_value'
+        )
+
+    class JSONAPIMeta:
+        resource_name = 'parameters'

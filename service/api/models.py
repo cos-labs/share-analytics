@@ -1,4 +1,4 @@
-from django.db.models import Model, ForeignKey, ManyToManyField, IntegerField, CharField, CASCADE
+from django.db.models import Model, ForeignKey, ManyToManyField, IntegerField, CharField, CASCADE, TextField
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField, ArrayField
 
@@ -37,9 +37,9 @@ class Widget(Model):
 
 class Parameter(Model):
 
-    querystring_key = CharField(max_length=64)
+    name = CharField(max_length=64)
     path = ArrayField(CharField(max_length=64))
-    default_value = CharField(max_length=64)
+    default_value = TextField()
 
     def __str__(self):
         return self.name

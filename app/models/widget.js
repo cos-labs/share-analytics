@@ -9,7 +9,7 @@ export default DS.Model.extend({
     facetDash: DS.belongsTo('dashboard'),
     facetDashParameter: DS.attr('string'),
     //owner: attr('string'),
-    //parameters: DS.hasMany('parameter'),
+    parameters: DS.hasMany('parameter'),
     context: DS.attr('raw'),
     dashboard: DS.hasMany('dashboard')
 });

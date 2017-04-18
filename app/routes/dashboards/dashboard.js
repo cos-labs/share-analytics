@@ -884,6 +884,60 @@ export default Ember.Route.extend({
                         widgetSettings: {
                             mode: 'search'
                         }
+                    },
+                    ,
+                    {
+                        // Tag select
+                        widgetType: 'dropdown-widget',
+                        name: 'Funders',
+                        width: 3,
+                        facetDash: "resultsList",
+                        facetDashParameter: "funders",
+                        post_body: {
+                            "aggregations": {
+                                "dropdownList" : {
+                                    "terms": {
+                                        "field": 'funders.exact',
+                                        "size": 100
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                            },
+                            {
+                                parameterName: "sources",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "topic",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            },
+                            {
+                                parameterName: "institution",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
+                            },
+                            {
+                                parameterName: "scholar",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.exact"],
+                            }
+                        ],
+                        widgetSettings: {
+                            mode: 'search'
+                        }
                     }
                 ]
             },

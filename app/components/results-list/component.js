@@ -50,11 +50,11 @@ export default Ember.Component.extend({
             let queryParams = {};
             let page = Number(this.parameters["page"]);
             if (!page) {
-                page = 0;
+                page = 1;
             }
-            page = page-10;
-            if (page < 0) {
-                page = 0;
+            page = page-1;
+            if (page < 1) {
+                page = 1;
             }
             queryParams["page"] = page
             this.attrs.transitionToFacet("search", queryParams);
@@ -63,11 +63,11 @@ export default Ember.Component.extend({
             let queryParams = {};
             let page = Number(this.parameters["page"]);
             if (!page) {
-                page = 0;
+                page = 1;
             }
-            page = page+10;
-            if (page < 0) {
-                page = 0;
+            page = page+1;
+            if (page < 1) {
+                page = 1;
             }
             queryParams["page"] = page
             this.attrs.transitionToFacet("search", queryParams);

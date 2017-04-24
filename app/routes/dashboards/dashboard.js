@@ -193,6 +193,8 @@ export default Ember.Route.extend({
         publishers: {refreshModel: true},
         type: {refreshModel: true},
         funders: {refreshModel: true},
+        start: {refreshModel:true},
+        end: {refreshModel:true},
         page: {refreshModel: true}
     },
     query: 'UC',
@@ -225,6 +227,8 @@ export default Ember.Route.extend({
             controller.set("query", undefined);
             controller.set("type", undefined);
             controller.set("funders", undefined);
+            controller.set("start", undefined);
+            controller.set("end", undefined);
             controller.set("page", undefined);
         }
     },
@@ -598,6 +602,16 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             },
                             {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "min_date",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
+                            },
+                            {
                                 parameterName: "page",
                                 parameterPath: ["from"]
                             }
@@ -684,7 +698,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "max_date",
+                                parameterName: "end",
                                 defaultValue: lte
                             },
                             {
@@ -885,9 +899,8 @@ export default Ember.Route.extend({
                             mode: 'search'
                         }
                     },
-                    ,
                     {
-                        // Tag select
+                        // Funder select
                         widgetType: 'dropdown-widget',
                         name: 'Funders',
                         width: 3,
@@ -938,6 +951,15 @@ export default Ember.Route.extend({
                         widgetSettings: {
                             mode: 'search'
                         }
+                    },
+                    {
+                        // Daterange select
+                        widgetType: 'search-facet-daterange',
+                        name: 'Dates',
+                        width: 3,
+                        facetDash: "resultsList",
+                        facetDashParameter: "",
+                        post_body: {}
                     }
                 ]
             },
@@ -1064,12 +1086,12 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
+                                parameterName: "start",
                                 defaultValue: gte
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "max_date",
+                                parameterName: "end",
                                 defaultValue: lte
                             },
                             {
@@ -1200,12 +1222,12 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                    parameterName: "min_date",
+                                    parameterName: "start",
                                     defaultValue: gte
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                    parameterName: "max_date",
+                                    parameterName: "end",
                                     defaultValue: lte
                                 },
                                 {
@@ -1759,12 +1781,12 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
+                                parameterName: "start",
                                 defaultValue: gte
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "max_date",
+                                parameterName: "end",
                                 defaultValue: lte
                             },
                             {
@@ -1832,12 +1854,12 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                    parameterName: "min_date",
+                                    parameterName: "start",
                                     defaultValue: gte
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                    parameterName: "max_date",
+                                    parameterName: "end",
                                     defaultValue: lte
                                 },
                                 {
@@ -1947,12 +1969,12 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
+                                parameterName: "start",
                                 defaultValue: gte
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "max_date",
+                                parameterName: "end",
                                 defaultValue: lte
                             },
                             {
@@ -2015,12 +2037,12 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                    parameterName: "min_date",
+                                    parameterName: "start",
                                     defaultValue: gte
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                    parameterName: "max_date",
+                                    parameterName: "end",
                                     defaultValue: lte
                                 },
                                 {

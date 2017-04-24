@@ -722,3 +722,15 @@ nav.navbar {
 }
 
 /* End Tooltip Styles */
+
+/* ResultsList */
+.date-range {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background: #ffffff;
+    cursor: pointer;
+}
+.facet-tag {
+    padding: 5px;
+    margin-bottom: 5px;
+}

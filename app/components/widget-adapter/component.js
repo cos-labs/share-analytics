@@ -564,7 +564,6 @@ export default Ember.Component.extend({
                 acc[cur] = newQueryParams[cur];
                 return acc;
             }, this.get("parameters"));
-            debugger;
             this.get('router').transitionTo('dashboards.dashboard', dashboardName, {
                 queryParams: queryParams
             }).then(function(route) {

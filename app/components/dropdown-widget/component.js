@@ -7,6 +7,8 @@ export default Ember.Component.extend({
     filteredList: null,
     filterText: '',
     showList: false,
+    selectedType: null, // If mode of widget is dropdown, this will be set to item listed in query parameters
+    enteredItem: null, // If mode of widget is search, this will be set to the term in query parameters
     init(){
         this._super(...arguments);
         // check settings to see what the mode is
@@ -17,7 +19,19 @@ export default Ember.Component.extend({
         this.set('dropList', Ember.A());
         this.set('filteredList', Ember.A());
         this.processData(this.get('aggregations.dropdownList.buckets'));
-    },
+        // Show the selected parameter
+        let queryParams = this.get('parameters');
+        var facet = this.get("item.facetDashParameter");
+        if(queryParams[facet]){
+            if(facet === 'type'){
+                this.set('selectedType', queryParams[facet]);
+            } else {
+                this.set('enteredItem', queryParams[facet]);
+            }
+
+        }
+
+},
     processData (data) {
         if(this.get('mode') === 'dropdown'){
             this.get('dropList').addObject(this.get('firstRow'));

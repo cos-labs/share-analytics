@@ -5,14 +5,15 @@ import moment from 'moment';
 const DATE_FORMAT = 'YYYY-MM-DD';
 
 export default Ember.Component.extend({
-    min_date: null,
-    max_date: null,
     state: {
-        start: '1996-01-01',
-        end: (new Date()).toISOString().split('T')[0]
+        start: null,
+        end: null
     },
     init() {
         this._super(...arguments);
+        let queryParams = this.get('parameters');
+        this.set('state.start', queryParams.start || '1996-01-01')
+        this.set('state.end', queryParams.end || (new Date()).toISOString().split('T')[0])
     },
 
     didInsertElement() {

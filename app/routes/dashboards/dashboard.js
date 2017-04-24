@@ -663,7 +663,17 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "funders",
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
-                            }
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "min_date",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
+                            },
                         ],
                         widgetSettings : {
                             fontSize: 2,

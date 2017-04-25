@@ -30,8 +30,28 @@ export default Ember.Component.extend({
             }
 
         }
+    },
+    outsideClick(event){
+        let $element = this.$();
+        let $target = $(event.target);
 
-},
+        if (!$target.closest($element).length) {
+            this.set('showList', false);
+        }
+    },
+    didInsertElement() {
+        if(this.get('mode') === 'dropwdown' ){
+            return;
+        }
+        let clickHandler = this.get('outsideClick').bind(this);
+        Ember.$(document).on('click', clickHandler);
+    },
+    willDestroyElement(){
+        if(this.get('mode') === 'dropwdown' ){
+            return;
+        }
+        Ember.$(document).off('click', this.get('outsideClick').bind(this));
+    },
     processData (data) {
         if(this.get('mode') === 'dropdown'){
             this.get('dropList').addObject(this.get('firstRow'));

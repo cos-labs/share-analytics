@@ -12,10 +12,9 @@ export default Ember.Component.extend({
     init() {
         this._super(...arguments);
         let queryParams = this.get('parameters');
-        this.set('state.start', queryParams.start || '1996-01-01')
-        this.set('state.end', queryParams.end || (new Date()).toISOString().split('T')[0])
+        this.set('state.start', queryParams.start || '1996-01-01');
+        this.set('state.end', queryParams.end || (new Date()).toISOString().split('T')[0]);
     },
-
     didInsertElement() {
         this._super(...arguments);
 
@@ -50,7 +49,6 @@ export default Ember.Component.extend({
         Ember.run.scheduleOnce('actions', this, function() {
             this.filterUpdated();
         });
-
     },
 
     statePrevious: [],

@@ -1469,109 +1469,42 @@ export default Ember.Route.extend({
                     }
                 ]
             },
-            contributors: {
-                dashboardName: 'Top Contributors',
-                wrapperClass: 'index-page',
+            plotly: {
+                dasboardName: 'PlotlyTesting',
                 widgets: [
-                    {
-                        chartType: 'topContributors',
-                        widgetType: 'contributors-widget',
-                        name: 'Top Contributors',
-                        width: 12,
-                        facetDash: "resultsList",
-                        facetDashParameter: "contributors",
-                        dataType: 'contributors',
-                        hideViewAll: true,
-                        post_body : {
-                            "aggregations": {
-                                "contributors": {
-                                    "terms": {
-                                        "field": 'lists.contributors.id.exact',
-                                        "size": 100
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterPath: ["query", "bool", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
-                            },
-                            {
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                parameterName: "query",
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "sources",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
-                            }
-                        ]
-                    }
-                ]
-            },
-            tags: {
-                dashboardName: 'Top Tags',
-                wrapperClass: 'index-page',
-                widgets: [
-                    {
-                        chartType: 'tagsList',
-                        widgetType: 'list-widget',
-                        name: 'Top Tags',
-                        width: 12,
-                        indexVersion: 3,
-                        hideViewAll: true,
+                  {
+                        chartType: 'donut',
+                        widgetType: 'plotly-chart',
+                        name: 'Events by Source',
+                        width: 6,
                         post_body: {
-                            "aggregations": {
-                                "listWidgetData" : {
-                                    "terms": {
-                                        "field": 'tags.exact',
-                                        "size": 100,
-                                        exclude: tag_blacklist,
+                            query: {
+                                bool: { must: [{
+                                        query_string: {query: query}
+                                    },{
+                                        range: { date: {
+                                                   gte: gte,
+                                                   lte: lte,
+                                                   format: "yyyy-MM-dd||yyyy"
+                                                   }
+                                        }
                                     }
-                                }
+                                ]}
+                            },
+                            from: 0,
+                            aggregations: {
+                                sources: {
+                                    terms: {
+                                         field: 'sources.raw',
+                                         size: 200
+                                    }
+                                },
                             }
                         },
                         postBodyParams: [
-                            {
-                                parameterPath: ["query", "bool", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
-                            },
-                            {
-                                parameterName: "sources",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
-                            },
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.exact"],
-                            }
                         ],
-                        facetDash: "resultsList",
-                        facetDashParameter: "tags"
-                    }
+                        facetDash: "institution",
+                      }
                 ]
             },
             providers: {

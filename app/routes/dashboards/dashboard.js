@@ -2035,7 +2035,7 @@ export default Ember.Route.extend({
 
                     let parameter_value;
                     if (param.parameterName in transition.queryParams) {
-                        if (param.parameterName == "page") {
+                        if (param.parameterName === "page") {
                             parameter_value = (Number(transition.queryParams[param.parameterName])*10)-10;
                         } else {
                             parameter_value = transition.queryParams[param.parameterName];

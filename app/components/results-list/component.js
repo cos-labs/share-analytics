@@ -47,30 +47,18 @@ export default Ember.Component.extend({
         },
 
         pageback() {
-            let queryParams = {};
             let page = Number(this.parameters["page"]);
-            if (!page) {
+            if (!page || --page < 1) {
                 page = 1;
             }
-            page = page-1;
-            if (page < 1) {
-                page = 1;
-            }
-            queryParams["page"] = page
-            this.attrs.transitionToFacet("search", queryParams);
+            this.attrs.transitionToFacet("search", {page: page})
         },
         pagenext() {
-            let queryParams = {};
             let page = Number(this.parameters["page"]);
-            if (!page) {
+            if (!page || ++page < 1) {
                 page = 1;
             }
-            page = page+1;
-            if (page < 1) {
-                page = 1;
-            }
-            queryParams["page"] = page
-            this.attrs.transitionToFacet("search", queryParams);
+            this.attrs.transitionToFacet("search", {page: page})
         }
 
     }

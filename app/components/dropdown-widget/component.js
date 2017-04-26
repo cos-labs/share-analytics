@@ -47,10 +47,11 @@ export default Ember.Component.extend({
         Ember.$(document).on('click', clickHandler);
     },
     willDestroyElement(){
-        if(this.get('mode') === 'dropwdown' ){
-            return;
-        }
-        Ember.$(document).off('click', this.get('outsideClick').bind(this));
+        // if(this.get('mode') === 'dropwdown' ){
+        //     return;
+        // }
+        // let clickHandler = this.get('outsideClick').bind(this);
+        // Ember.$(document).off('click', clickHandler);
     },
     processData (data) {
         if(this.get('mode') === 'dropdown'){
@@ -71,6 +72,11 @@ export default Ember.Component.extend({
                 queryParams[facet] = value;
                 this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
             }
+        },
+        removeFilter(key) {
+            let queryParams = {};
+            queryParams[key] = undefined;
+            this.attrs.transitionToFacet("resultsList", queryParams);
         },
         applyType (value) {
             if(value !== this.get('firstRow')){

@@ -11,7 +11,9 @@
 {{#if (eq mode 'search')}}
 <div class="p-md">
     {{#if enteredItem}}
-        <div class="facet-tag">Current selection: <b>{{enteredItem}}</b></div>
+        <div class="facet-tag">Current selection:
+            <div><b>{{enteredItem}}</b> <span class="pointer" {{action "removeFilter" item.facetDashParameter}}>{{fa-icon "close"}} </span> </div>
+        </div>
     {{/if}}
     {{input class="form-control" value=filterText placeholder="Type to filter" key-up="filterVisible" focus-in="showList"}}
     {{#if showList}}

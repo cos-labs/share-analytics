@@ -15,9 +15,11 @@
                 </div>--}}
                 <div style="max-width: 700px; color: #888; padding-top: 10px; padding-bottom: 10px;">{{item.description_truncated}}</div>
                 <div class="item-number" style="color: #aaa; float: left; clear: both; font-size: 13px;">
-                    Provided by: {{#each item._source.publishers as |publisher|}}
-                        <span>{{publisher}}</span>
-                    {{/each}}
+                    {{#if item._source.publishers}}
+                        Provided by: {{#each item._source.publishers as |publisher|}}
+                            <span>{{publisher}}</span>
+                        {{/each}}
+                    {{/if}}
                 </div>
                 <div class="item-name" style="cursor: pointer; margin-bottom: 10px; float: right; color: #aaa: padding: 3px 5px 3px 5px;" {{action "transitionToFacet" "objectDetail" "id" item._source.id}}>Details&nbsp;&nbsp;<i class="fa fa-angle-right"></i></div>
             </div>
@@ -29,14 +31,15 @@
                 </div>
             </div>
         </div>
-        {{else}}
-        <h3 style="text-align: center;">
+    {{else}}
+        <h3 class="text-center p-t-md">
             No results found.
         </h3>
     {{/each}}
-    <div style="text-align: center; padding: 30px;">
-        <button class="btn btn-primary" {{action "pageback"}}>{{fa-icon "chevron-left"}}</button>
-        <button class="btn btn-primary" {{action "pagenext"}}>{{fa-icon "chevron-right"}}</button>
-    </div>  
-
+    {{#if data.length}}
+        <div style="text-align: center; padding: 30px;">
+            <button class="btn btn-primary" {{action "pageback"}}>{{fa-icon "chevron-left"}}</button>
+            <button class="btn btn-primary" {{action "pagenext"}}>{{fa-icon "chevron-right"}}</button>
+        </div>
+    {{/if}}
 </div>

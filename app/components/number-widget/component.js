@@ -2,14 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
-    total: 'hello',
+    total: null,
 
     settings : {
         fontSize: 3,
         fontColor: '#F44336',
         pre:'',
-        post: '',
-        value: 0
+        post: ''
     },
 
     init () {
@@ -22,10 +21,7 @@ export default Ember.Component.extend({
 
     didReceiveAttrs() {
         this._super(...arguments);
-        var unformatted = this.total
-        if (!unformatted) {
-            unformatted = this.settings.value
-        }
+        var unformatted = this.total || 0;
         this.set('total', unformatted.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     },
 

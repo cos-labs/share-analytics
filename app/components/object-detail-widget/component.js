@@ -15,6 +15,22 @@ export default Ember.Component.extend({
         return JSON.stringify(data, null, '    ');
     }),
 
+    dataUrl: Ember.computed(function() {
+        // Use the doi url to link to the resource, otherwise use the first http url
+        var data = this.get('objectData');
+        var identifiers = data._source.identifiers;
+        var httpUrl = null;
+        for (var id of identifiers) {
+            if (id.includes('doi')) {
+                return id;
+            }
+            else if (!httpUrl && id.includes('http')) {
+                httpUrl = id;
+            }
+        }
+        return httpUrl;
+    }),
+
     init(){
         this._super(...arguments);
         let data = this.processData(this.get('data'));

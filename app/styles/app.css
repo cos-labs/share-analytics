@@ -1,7 +1,7 @@
-
 .pointer {
     cursor: pointer;
 }
+
 .ucsd_header {
     position: fixed;
     overflow: hidden;
@@ -275,7 +275,7 @@ nav.navbar {
     width: 100%;
 }
 
-.free-wall {
+.widget-container {
     margin-bottom: 40px;
 }
 .cell {
@@ -428,6 +428,10 @@ nav.navbar {
     border-top-color: rgba(0, 0, 0, .6);
     animation: spinner .6s linear infinite;
     -webkit-animation: spinner .6s linear infinite;
+}
+
+.c3-chart {
+  padding-bottom:20px;
 }
 
 .contributors-widget {
@@ -607,7 +611,6 @@ nav.navbar {
     padding-top:15px;
     padding-bottom: 1px;
     color: #ffffff;
-    overflow: hidden;
     text-align: center;
     cursor: pointer;
     margin-bottom: 10px;
@@ -720,7 +723,7 @@ nav.navbar {
 
 /* End Tooltip Styles */
 
-/* ResultsList */
+/* Search */
 .date-range {
     border: 1px solid #ccc;
     padding: 10px;

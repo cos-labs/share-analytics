@@ -1753,24 +1753,6 @@ ember-cli-lodash-subset@^1.0.11, ember-cli-lodash-subset@^1.0.7:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/ember-cli-lodash-subset/-/ember-cli-lodash-subset-1.0.12.tgz#af2e77eba5dcb0d77f3308d3a6fd7d3450f6e537"
 
-ember-cli-mirage@0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/ember-cli-mirage/-/ember-cli-mirage-0.2.3.tgz#8a07f7682686bcb81d1dbc3d276e69a1b51d4c72"
-  dependencies:
-    broccoli-funnel "^1.0.2"
-    broccoli-merge-trees "^1.1.0"
-    broccoli-unwatched-tree "^0.1.1"
-    chalk "^1.1.1"
-    ember-cli-babel "^5.1.5"
-    ember-cli-node-assets "^0.1.4"
-    ember-inflector "^1.9.2"
-    ember-lodash "0.0.9"
-    exists-sync "0.0.3"
-    fake-xml-http-request "^1.4.0"
-    faker "3.0.1"
-    pretender "^1.4.1"
-    route-recognizer "^0.1.11"
-
 ember-cli-moment-shim@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-moment-shim/-/ember-cli-moment-shim-1.1.0.tgz#eb1a9cbd0739cf78ad9a0271bfb5962adf6f41b1"

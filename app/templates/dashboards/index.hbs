@@ -1,25 +1,29 @@
 <div class='widget available-dashes' style="padding: 15px;">
+       <h1>Welcome to TRITONSHARE</h1>
+        This project is a collaboration between UC San Diego, SHARE, and the Ceter for Open Science. Be aware that this application is a protoype and is subject to change.
+
+
 <h3>Available Dashboards</h3>
 
 <br>
 
 <h4>Primary View</h4>
-{{#link-to "dashboards.dashboard" "institution" (query-params sources="UC San Diego Library")}}
+{{#link-to "dashboards.dashboard" "ucsd" (query-params sources="UC San Diego Library")}}
     <button class="btn btn-primary">Curated Data</button>
 {{/link-to}}
 <br><br>
-{{#link-to "dashboards.dashboard" "institution" (query-params all="UC San Diego")}}
-    <button class="btn btn-primary">Query 1 Data</button>
+{{#link-to "dashboards.dashboard" "ucsd"}}
+    <button class="btn btn-primary">All UC San Diego Data</button>
 {{/link-to}}
 <br>
 <br>
 <h4>Alternate View</h4>
-{{#link-to "dashboards.dashboard" "institution2" (query-params sources="UC San Diego Library")}}
+{{#link-to "dashboards.dashboard" "ucsd-alt"}}
     <button class="btn btn-primary">Curated Data</button>
 {{/link-to}}
 <br>
 <br>
-{{#link-to "dashboards.dashboard" "institution2" (query-params all="UC San Diego")}}
-    <button class="btn btn-primary">Query 1 Data</button>
+{{#link-to "dashboards.dashboard" "ucsd-alt"}}
+    <button class="btn btn-primary">All UC San Diego Data</button>
 {{/link-to}}
 </div>

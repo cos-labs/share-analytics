@@ -76,7 +76,7 @@ export default Ember.Component.extend({
         removeFilter(key) {
             let queryParams = {};
             queryParams[key] = undefined;
-            this.attrs.transitionToFacet("resultsList", queryParams);
+            this.attrs.transitionToFacet("search", queryParams);
         },
         applyType (value) {
             if(value !== this.get('firstRow')){

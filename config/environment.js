@@ -42,9 +42,6 @@ module.exports = function(environment) {
     ENV.apiUrl = 'https://dev-labs.cos.io/api/v2';
 
     if (environment === 'development') {
-        ENV['ember-cli-mirage'] = {
-            enabled: false
-        };
         ENV.APP.LOG_RESOLVER = false;
         ENV.APP.LOG_ACTIVE_GENERATION = false;
         ENV.APP.LOG_TRANSITIONS = false;

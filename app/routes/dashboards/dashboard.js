@@ -600,7 +600,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
+                                parameterName: "start",
                                 defaultValue: gte
                             },
                             {
@@ -666,7 +666,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
+                                parameterName: "start",
                                 defaultValue: gte
                             },
                             {
@@ -703,7 +703,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
+                                parameterName: "start",
                                 defaultValue: gte
                             },
                             {

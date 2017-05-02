@@ -40,14 +40,14 @@ export default Ember.Component.extend({
         }
     },
     didInsertElement() {
-        if(this.get('mode') === 'dropwdown' ){
+        if(this.get('mode') === 'dropdown' ){
             return;
         }
         let clickHandler = this.get('outsideClick').bind(this);
         Ember.$(document).on('click', clickHandler);
     },
     willDestroyElement(){
-        if(this.get('mode') === 'dropwdown' ){
+        if(this.get('mode') === 'dropdown' ){
             return;
         }
         let clickHandler = this.get('outsideClick').bind(this);

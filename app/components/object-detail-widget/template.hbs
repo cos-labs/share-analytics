@@ -41,7 +41,12 @@
         <div>
             <h3>Identifiers</h3>
             <ul>
-                {{#each objectData._source.identifiers as |identifier|}}
+                {{#each identifiers.links as |identifier|}}
+                    <li>
+                        <a href="{{identifier}}">{{identifier}}</a>
+                    </li>
+                {{/each}}
+                {{#each identifiers.other as |identifier|}}
                     <li>{{identifier}}</li>
                 {{/each}}
             </ul>

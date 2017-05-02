@@ -893,16 +893,12 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterName: "topic",
+                                parameterName: "tags",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
                             },
                             {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.exact"],
+                                parameterName: "contributors",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.contributors.id.exact"],
                             }
                         ],
                         widgetSettings: {
@@ -946,16 +942,12 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterName: "topic",
+                                parameterName: "tags",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
                             },
                             {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.exact"],
+                                parameterName: "contributors",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.contributors.id.exact"],
                             }
                         ],
                         widgetSettings: {

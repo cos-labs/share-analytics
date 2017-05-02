@@ -78,7 +78,7 @@ export default Ember.Component.extend({
             queryParams[key] = undefined;
             this.attrs.transitionToFacet("search", queryParams);
         },
-        applyType (value) {
+        applySelection (value) {
             if(value !== this.get('firstRow')){
                 this.send('transitionToFacet', value);
             }

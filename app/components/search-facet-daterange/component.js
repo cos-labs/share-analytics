@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import moment from 'moment';
-//import { dateRangeFilter } from 'ember-share/utils/elastic-query';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 

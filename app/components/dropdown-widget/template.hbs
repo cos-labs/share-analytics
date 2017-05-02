@@ -1,6 +1,6 @@
 {{#if (eq mode 'dropdown')}}
     <div class="p-md">
-        <select class="form-control" onchange={{action "applyType" value="target.value"}}>
+        <select class="form-control" onchange={{action "applySelection" value="target.value"}}>
             {{#each dropList key="@identity" as |type|}}
                 <option value={{type}} selected={{if (eq selectedType type) true}}>{{type}}</option>
             {{/each}}
@@ -19,7 +19,7 @@
     {{#if showList}}
         <div class="dropdown-search">
             {{#each filteredList as |item|}}
-                <div class="dropdown-search-item" {{action "applyType" item}}>
+                <div class="dropdown-search-item" {{action "applySelection" item}}>
                     {{item}}
                 </div>
             {{/each}}

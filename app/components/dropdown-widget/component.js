@@ -47,11 +47,11 @@ export default Ember.Component.extend({
         Ember.$(document).on('click', clickHandler);
     },
     willDestroyElement(){
-        // if(this.get('mode') === 'dropwdown' ){
-        //     return;
-        // }
-        // let clickHandler = this.get('outsideClick').bind(this);
-        // Ember.$(document).off('click', clickHandler);
+        if(this.get('mode') === 'dropwdown' ){
+            return;
+        }
+        let clickHandler = this.get('outsideClick').bind(this);
+        Ember.$(document).off('click', clickHandler);
     },
     processData (data) {
         if(this.get('mode') === 'dropdown'){

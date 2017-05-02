@@ -1,3 +1,5 @@
+@import "pod-styles.css";
+
 .pointer {
     cursor: pointer;
 }
@@ -635,24 +637,6 @@ nav.navbar {
     width: 25px;
 }
 
-.dropdown-search {
-    background: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 5px 6px 1px #ccc;
-    height: 200px;
-    overflow: auto;
-}
-.dropdown-search-item {
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-    padding: 5px 10px;
-    font-size: 16px;
-}
-.dropdown-search-item:hover {
-    background-color: #f8f8f8;
-}
-
-
 /**
  * Tooltip Styles from : https://chrisbracco.com/a-simple-css-tooltip/
 
@@ -722,21 +706,3 @@ nav.navbar {
 }
 
 /* End Tooltip Styles */
-
-/* Search */
-.date-range {
-    border: 1px solid #ccc;
-    padding: 10px;
-    background: #ffffff;
-    cursor: pointer;
-}
-.facet-tag {
-    padding: 5px;
-    margin-bottom: 5px;
-}
-.facet-tag span {
-    background-color: #526;
-    padding: 2px 5px 3px 5px;
-    border-radius: 10px;
-    color: #fff;
-}

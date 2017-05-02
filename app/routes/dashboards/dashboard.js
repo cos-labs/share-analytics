@@ -881,7 +881,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterName: "sources",
@@ -934,7 +934,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterName: "sources",

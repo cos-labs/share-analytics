@@ -91,9 +91,6 @@ export default Ember.Component.extend({
         },
         showList(){
             this.set('showList', true);
-        },
-        hideList(){
-            this.set('showList', false);
         }
     }
 

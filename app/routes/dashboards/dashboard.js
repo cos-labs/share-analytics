@@ -596,7 +596,8 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "page",
-                                parameterPath: ["from"]
+                                parameterPath: ["from"],
+                                defaultValue: 1
                             }
                         ],
                         widgetSettings : {

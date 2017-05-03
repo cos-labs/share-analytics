@@ -32,10 +32,11 @@ export default Ember.Component.extend({
         }
     },
     outsideClick(event){
+        if(!this.get('showList')){ return;}
         let $element = this.$();
         let $target = $(event.target);
 
-        if (!$target.closest($element).length) {
+        if ($element && $target && !$target.closest($element).length) {
             this.set('showList', false);
         }
     },

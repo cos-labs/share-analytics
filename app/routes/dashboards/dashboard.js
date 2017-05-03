@@ -843,7 +843,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "should"],
-                                defaultValue: (()=>{ return transition.queryParams.all ? ucsd_query : undefined; })()
+                                defaultValue: ucsd_query
                             },
                             {
                                 parameterPath: ["aggregations", "dropdownList", "terms", "field"],

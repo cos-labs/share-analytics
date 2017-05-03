@@ -579,16 +579,20 @@ export default Ember.Route.extend({
                                 parameterName: "sources"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags.exact"],
-                                parameterName: "tags"
+                                parameterName: "page",
+                                parameterPath: ["from"]
+                            },
+                            {
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             },
                             {
                                 parameterName: "publishers",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
                             },
                             {
                                 parameterName: "type",
@@ -607,10 +611,6 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
                                 parameterName: "end",
                                 defaultValue: lte
-                            },
-                            {
-                                parameterName: "page",
-                                parameterPath: ["from"]
                             }
                         ],
                         widgetSettings : {
@@ -645,16 +645,16 @@ export default Ember.Route.extend({
                                 parameterName: "sources"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags.exact"],
-                                parameterName: "tags"
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
                                 parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
                             },
                             {
                                 parameterName: "type",
@@ -673,7 +673,7 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
                                 parameterName: "end",
                                 defaultValue: lte
-                            },
+                            }
                         ],
                         widgetSettings : {
                             fontSize: 2,
@@ -702,16 +702,6 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "start",
-                                defaultValue: gte
-                            },
-                            {
-                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "end",
-                                defaultValue: lte
-                            },
-                            {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
                                 parameterName: "date_range_format",
                                 defaultValue: "yyyy-MM-dd||yyyy"
@@ -730,16 +720,26 @@ export default Ember.Route.extend({
                                 parameterName: "sources"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags.exact"],
-                                parameterName: "tags"
+                                parameterPath: ["aggregations", "publishers", "terms", "field"],
+                                parameterName: "publisher_field",
+                                defaultValue: "lists.publishers.id.exact",
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
+                                parameterPath: ["aggregations", "publishers", "terms", "size"],
+                                parameterName: "publisher_size",
+                                defaultValue: 200,
+                            },
+                            {
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                            },
+                            {
                                 parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
                             },
                             {
                                 parameterName: "type",
@@ -750,15 +750,15 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             },
                             {
-                                parameterPath: ["aggregations", "publishers", "terms", "field"],
-                                parameterName: "publisher_field",
-                                defaultValue: "lists.publishers.id.exact",
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
                             },
                             {
-                                parameterPath: ["aggregations", "publishers", "terms", "size"],
-                                parameterName: "publisher_size",
-                                defaultValue: 200,
-                            },
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
+                            }
                         ],
                     },
                     {
@@ -797,16 +797,16 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"],
-                                parameterName: "tags"
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             },
                             {
                                 parameterName: "publishers",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
                             },
                             {
                                 parameterName: "type",
@@ -815,6 +815,16 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "funders",
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
                             }
                         ]
                     },
@@ -892,13 +902,43 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
                             },
+                            // {
+                            //     parameterName: "tags",
+                            //     parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            // },
+                            // {
+                            //     parameterName: "contributors",
+                            //     parameterPath: ["query", "bool", "filter", 2, "term", "lists.contributors.id.exact"],
+                            // },
                             {
                                 parameterName: "tags",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                            },
+                            {
+                                parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
+                            },
+                            {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
                             }
                         ],
                         widgetSettings: {
@@ -941,13 +981,43 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
                             },
+                            // {
+                            //     parameterName: "tags",
+                            //     parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                            // },
+                            // {
+                            //     parameterName: "contributors",
+                            //     parameterPath: ["query", "bool", "filter", 2, "term", "lists.contributors.id.exact"],
+                            // },
                             {
                                 parameterName: "tags",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                            },
+                            {
+                                parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
+                            },
+                            {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
                             }
                         ],
                         widgetSettings: {

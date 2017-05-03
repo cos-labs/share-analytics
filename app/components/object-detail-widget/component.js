@@ -20,21 +20,12 @@ export default Ember.Component.extend({
         return JSON.stringify(data, null, '    ');
     }),
 
-    identifiers: Ember.computed('objectData._source.identifiers', function() {
+    identifierURLs: Ember.computed('objectData._source.identifiers', function() {
         var data = this.get('objectData');
         var identifiers = data._source.identifiers;
-        var linkIds = identifiers.filter(function(id) {
+        return identifiers.filter(function(id) {
             return isHTTPURL(id);
         });
-        var otherIds = identifiers.filter(function(id) {
-            return !isHTTPURL(id);
-        });
-
-        return {
-            links: linkIds,
-            other: otherIds
-        }
-
     }),
 
     dataUrl: Ember.computed(function() {

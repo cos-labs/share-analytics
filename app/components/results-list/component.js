@@ -48,14 +48,14 @@ export default Ember.Component.extend({
 
         pageback() {
             let page = Number(this.parameters["page"]);
-            if (!page || --page < 1) {
+            if (!page || --page < 1) { // decrements and modifies page var before the comparison
                 page = 1;
             }
             this.attrs.transitionToFacet("search", {page: page})
         },
         pagenext() {
             let page = Number(this.parameters["page"]);
-            if (!page || ++page < 1) {
+            if (!page || ++page < 1) { // increments and modifies page var before the comparison
                 page = 1;
             }
             this.attrs.transitionToFacet("search", {page: page})

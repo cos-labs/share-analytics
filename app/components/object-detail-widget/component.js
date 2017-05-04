@@ -1,6 +1,11 @@
 import Ember from 'ember';
 import ENV from 'analytics-dashboard/config/environment';
+import isUrl from 'npm:is-url';
 
+var isHTTPURL = function(value) {
+    var httpURL = /^https?/;
+    return httpURL.test(value.trim()) && isUrl(value);
+};
 
 export default Ember.Component.extend({
 
@@ -13,6 +18,12 @@ export default Ember.Component.extend({
     dataAsString: Ember.computed(function() {
         var data = this.get('data');
         return JSON.stringify(data, null, '    ');
+    }),
+
+    identifierURLs: Ember.computed('objectData._source.identifiers', function() {
+        return this.get('objectData')._source.identifiers.filter(function(id) {
+            return isHTTPURL(id);
+        });
     }),
 
     dataUrl: Ember.computed(function() {

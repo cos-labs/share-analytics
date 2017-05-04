@@ -37,12 +37,14 @@
     <div>Date Updated: {{objectData._source.date_updated}}</div>
     <div>Language: {{objectData._source.language}}</div>
 
-    {{#if objectData._source.identifiers}}
+    {{#if identifierURLs}}
         <div>
             <h3>Identifiers</h3>
             <ul>
-                {{#each objectData._source.identifiers as |identifier|}}
-                    <li>{{identifier}}</li>
+                {{#each identifierURLs as |identifier|}}
+                    <li>
+                        <a href="{{identifier}}">{{identifier}}</a>
+                    </li>
                 {{/each}}
             </ul>
         </div>

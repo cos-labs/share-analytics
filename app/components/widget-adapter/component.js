@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import ENV from 'analytics-dashboard/config/environment';
-
+import stringify from 'npm:json-stable-stringify';
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
 
@@ -346,14 +346,12 @@ const agg_types = [ // agg_types is this array literal, reduced by the following
 
 export default Ember.Component.extend({
 
-    // widgetType: 'wild-card',
-    // chartType: 'donut-chart',
     aggregations: false,
     docs: false,
 
     classNameBindings: ['configuring', 'picking', 'width', 'height'],
 
-    widgetType: 'wild-card',
+    widgetType: null,
     name: 'tobeDetermined',
     jsEngine: 'c3',
     widthSetting: 2,
@@ -416,7 +414,6 @@ export default Ember.Component.extend({
     },
 
     didRender() {
-        this.sendAction('refreshWall');
         this.set('computedHeight',  this.$().height());
         this.set('computedWidth', this.$().width());
 
@@ -451,11 +448,13 @@ export default Ember.Component.extend({
             crossDomain: true,
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(this.get('item').post_body, function(key, value) {
-                if (Array.isArray(value)) {
-                    return value.filter(Object);
+            data: stringify(this.get('item').post_body, {
+                replacer: function(key, value) {
+                    if (Array.isArray(value)) {
+                        return value.filter(Object);
+                    }
+                    return value;
                 }
-                return value;
             })
         });
         this.set('data', data);
@@ -481,24 +480,8 @@ export default Ember.Component.extend({
     },
 
     applyGraphSetting: function(){
-
         this.set('chartType', this.get('item').chartType);
-
-        //this.set('widthSetting', this.get('item').width);
-        //this.set('heightSetting', this.get('item').height);
-        //this.set('name', this.get('item').name);
-        //let width = this.get('widthSetting');
-        //let height = this.get('heightSetting');
-        //let wall = this.get('wall');
-        //wall.fixSize({
-        //    block: this.$(),
-        //    width: width*150,
-        //    height: height*150,
-        //});
-        //this.set('chartType', this.get('item').settings.chart_type);
         this.set('widgetType', this.get('item').widgetType);
-        //this.sendAction('refreshWall');
-
     },
 
     configureQuery: function() {
@@ -542,17 +525,7 @@ export default Ember.Component.extend({
         },
         configChanged: function() {
             this.set('configuring', !this.get('configuring'));
-            let width = this.get('widthSetting');
-            let height = this.get('heightSetting');
             let name = this.get('name');
-            let wall = this.get('wall');
-            wall.fixSize({
-                block: this.element,
-                width: width*150,
-                height: height*150,
-            });
-            wall.fitWidth();
-            this.sendAction('refreshWall');
             if (this.get('resizedSignal') == true) return;
             this.set('resizedSignal', true);
             this.set('configuring', false);

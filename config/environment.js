@@ -38,13 +38,10 @@ module.exports = function(environment) {
     };
     //this needs to go in an actual env at some point
     ENV.csrfCookie = 'csrftoken';
-    ENV.apiBaseUrl = 'https://share.osf.io';
-    ENV.apiUrl = 'https://share.osf.io/api/v2';
+    ENV.apiBaseUrl = 'https://dev-labs.cos.io';
+    ENV.apiUrl = 'https://dev-labs.cos.io/api/v2';
 
     if (environment === 'development') {
-        ENV['ember-cli-mirage'] = {
-            enabled: false
-        };
         ENV.APP.LOG_RESOLVER = false;
         ENV.APP.LOG_ACTIVE_GENERATION = false;
         ENV.APP.LOG_TRANSITIONS = false;

@@ -83,22 +83,17 @@ export default Ember.Component.extend({
         }
     },
 
+
     processData: async function(data) {
         if (this.get('name') === 'Data Providers' || this.get('name') === 'Awards') {
-            this.set("data",
-                await Ember.RSVP.Promise.all(
-                    data.map(async function(datum, index, array) {
-                        let agent_info = await Ember.$.ajax({
-                            url: ENV.apiUrl + '/search/agents/' + datum.key,
-                            crossDomain: true,
-                            type: 'GET',
-                            contentType: 'application/json'
-                        });
-                        data[index]._source = agent_info._source;
-                        return data[index];
-                    })
-                )
-            );
+            let agent_details = await Ember.$.ajax({
+                url: 'https://dev-labs.cos.io/bulk_get_agents',
+                crossDomain: true,
+                data: JSON.stringify(data),
+                type: 'POST',
+                contentType: 'application/json'
+            });
+            this.set("data", JSON.parse(agent_details));
         }
     },
 
@@ -142,32 +137,28 @@ export default Ember.Component.extend({
             var _data = this.get('data');
 
             if (this.get('data').length === 0 && this.get('name') === 'Data Providers') {
-                var key = 'UC San Diego Library';
                 var data = [{
-                   'key': '64201-BDE-4D4',
-                   'doc_count': 55,
-                   '_source': {
-                      'id': '64201-BDE-4D4',
-                      'name': key
-                   }
+                   'id': '64201-BDE-4D4',
+                   'name': 'UC San Diego',
+                   'number': 58
                 }];
                 this.set('data', data);
             }
 
             if (this.get('item.mappingType') === 'OBJECT_TO_ARRAY') {
-                var columns = this.get('data').map(({ key, doc_count }) => [key, doc_count]);
+                var columns = this.get('data').map(({ id, number }) => [id, number]);
             }
 
             if (this.get('item.mappingType') === 'OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY') {
-                var columns = this.get('data').map(({ key, doc_count, awards }) => [key, awards.value]);
+                var columns = this.get('data').map(({ id, number, awards }) => [id, awards.value]);
             }
 
             chart_options['tooltip'] = {
                 format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
                     name: function (id, percentage) {
                         return self.data.reduce(function(acc, cur, idx, arr) {
-                            if (cur._source.id === id) {
-                                return cur._source.name;
+                            if (cur.id === id) {
+                                return cur.name;
                             }
                             return acc;
                         }, false);
@@ -329,8 +320,8 @@ export default Ember.Component.extend({
                 }
                 d3.select(this.parentNode).append('text')
                     .text(self.data.reduce(function(acc, cur, idx, arr) {
-                        if (cur._source.id === d.data.id) {
-                            var string = cur._source.name ? cur._source.name : cur._source.id;
+                        if (cur.id === d.data.id) {
+                            var string = cur.name ? cur.name : cur.id;
                             var label = getLabel(string);
                             if (label.length > 28) {
                                 return label.substring(0,25) + "...";
@@ -381,7 +372,7 @@ export default Ember.Component.extend({
             let queryParams = {};
             let data = this.get('data');
             let item = data.reduce((acc, cur, idx, arr) => {
-                if (cur._source.id === id) {
+                if (cur.id === id) {
                     return cur;
                 }
                 return acc;
@@ -401,8 +392,8 @@ export default Ember.Component.extend({
             }
             if (facet) {
                 queryParams[facet] = item.name;
-                if (item._source.types.indexOf("agent") > -1) {
-                    queryParams[facet] = item._source.id;
+                if (item.types.indexOf("agent") > -1) {
+                    queryParams[facet] = item.id;
                 }
                 this.attrs.transitionToFacet(facetDash, queryParams);
             }

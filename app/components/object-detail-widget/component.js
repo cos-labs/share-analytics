@@ -1,6 +1,11 @@
 import Ember from 'ember';
 import ENV from 'analytics-dashboard/config/environment';
+import isUrl from 'npm:is-url';
 
+var isHTTPURL = function(value) {
+    var httpURL = /^https?/;
+    return httpURL.test(value.trim()) && isUrl(value);
+};
 
 export default Ember.Component.extend({
 
@@ -13,6 +18,36 @@ export default Ember.Component.extend({
     dataAsString: Ember.computed(function() {
         var data = this.get('data');
         return JSON.stringify(data, null, '    ');
+    }),
+
+    identifierURLs: Ember.computed('objectData._source.identifiers', function() {
+        return this.get('objectData')._source.identifiers.filter(function(id) {
+            return isHTTPURL(id);
+        });
+    }),
+
+    dataUrl: Ember.computed(function() {
+        // Use the doi url to link to the resource, otherwise use the first http url
+        var data = this.get('objectData');
+        var identifiers = data._source.identifiers;
+        var httpUrl = null;
+        for (var id of identifiers) {
+            if (id.includes('doi')) {
+                return id;
+            }
+            else if (!httpUrl && id.includes('http')) {
+                httpUrl = id;
+            }
+        }
+        return httpUrl;
+    }),
+
+    funders: Ember.computed('objectData._source.lists.funders', function() {
+        this.get('objectData')._source.lists.funders.map((funder) => {
+            let total = funder.awards.reduce((total, award) => total + award.amount)
+            let formattedTotal = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return {name: funder.name, awardTotal: formattedTotal}
+        })
     }),
 
     init(){

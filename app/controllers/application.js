@@ -1,21 +1,21 @@
 import Ember from 'ember';
 
-import OsfAgnosticAuthControllerMixin from 'ember-osf/mixins/osf-agnostic-auth-controller';
+//import OsfAgnosticAuthControllerMixin from 'ember-osf/mixins/osf-agnostic-auth-controller';
 
-import {
-    getAuthUrl
-} from 'ember-osf/utils/auth';
+//import {
+//    getAuthUrl
+//} from 'ember-osf/utils/auth';
 
-export default Ember.Controller.extend(OsfAgnosticAuthControllerMixin,{
+export default Ember.Controller.extend({//OsfAgnosticAuthControllerMixin,{
     toast: Ember.inject.service(),
-    authUrl: getAuthUrl(),
+    //authUrl: getAuthUrl(),
     actions: {
-        loginSuccess() {
+        //loginSuccess() {
            // this.transitionToRoute('researcher.grant');
-        },
-        loginFail(/* err */) {
-            this.get('toast').error('Login failed');
-        },
+        //},
+        //loginFail(/* err */) {
+        //    this.get('toast').error('Login failed');
+        //},
         transitionToHome(){
             this.transitionToRoute('dashboards');
         }

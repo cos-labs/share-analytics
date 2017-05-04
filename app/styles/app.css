@@ -1,5 +1,3 @@
-@import "components/about-text-widget.css";
-
 /*Packery grid styling*/
 
 body {
@@ -20,6 +18,7 @@ body {
 .navbar-brand {
     font-size: 28px;
     cursor: pointer;
+    padding-left: 0;
     font-family: "Open Sans Condensed", Helvetica, Arial, sans-serif !important;
     color: #069;
 }
@@ -74,6 +73,10 @@ body {
     width: 100%;
     z-index: -1;
     overflow: hidden;
+}
+
+.dashboard > .container {
+    padding: 0;
 }
 
 .wrapper h2 {
@@ -273,7 +276,7 @@ nav.navbar {
     width: 100%;
 }
 
-.free-wall {
+.widget-container {
     margin-bottom: 40px;
 }
 .cell {
@@ -428,6 +431,10 @@ nav.navbar {
     -webkit-animation: spinner .6s linear infinite;
 }
 
+.c3-chart {
+  padding-bottom:20px;
+}
+
 .contributors-widget {
     padding-bottom: 20px;
 }
@@ -479,6 +486,9 @@ nav.navbar {
     padding: 0;
 }
 
+.available-dashes {
+    margin: 30px 15px;
+}
 
 .available-dashes > a {
     text-decoration: none;
@@ -602,7 +612,6 @@ nav.navbar {
     padding-top:15px;
     padding-bottom: 1px;
     color: #ffffff;
-    overflow: hidden;
     text-align: center;
     cursor: pointer;
     margin-bottom: 10px;

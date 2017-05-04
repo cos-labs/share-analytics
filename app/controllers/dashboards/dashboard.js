@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
         {'publishers': {scope: "controller"}},
         {'type': {scope: "controller"}},
         {'funders': {scope: "controller"}},
-        {'contributors': {scope: "controller"}}
+        {'contributors': {scope: "controller"}},
     ],
 
     updateParams: Ember.observer('queryParams', function() {
@@ -26,8 +26,6 @@ export default Ember.Controller.extend({
         //    })
         //})));
     }),
-
-    wall: false,
 
     currentUser: Ember.inject.service(),
 
@@ -39,30 +37,6 @@ export default Ember.Controller.extend({
     storedDashboards: [],
 
     configureQuery: function()  {
-    }.on('init'),
-
-    createWall: function() {
-        Ember.run.schedule('afterRender', this, () => {
-           // var wall =  new Freewall('#freewall');
-           // wall.reset({
-           //     draggable: true,
-           //     selector: '.widget',
-           //     animate: true,
-           //     cellW: 150,
-           //     cellH: 150,
-           //     fixSize: 0,
-           //     cacheSize: true,
-           //     onResize: function() {
-           //         wall.refresh();
-           //     },
-           //     onBlockMove: function() {
-           //         console.log(this);
-           //     }
-           // });
-           // wall.fitWidth();
-           // Ember.$(window).trigger('resize');
-           // controller.set('wall', wall);
-        });
     }.on('init'),
 
     init() {
@@ -98,12 +72,6 @@ export default Ember.Controller.extend({
 
         addChart: function(widget) {
             this.set('widgets', this.get('widgets').concat({isPlaceholder: true}));
-        },
-
-        refreshWall: function() {
-            console.log('refreshing wall');
-            let wall = this.get('wall');
-            wall && wall.refresh();
         },
 
         dashboardSaveWidget: function(widget) {

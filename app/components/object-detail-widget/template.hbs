@@ -44,12 +44,12 @@
         </div>
     {{/if}}
 
-    {{#if objectData._source.funders}}
+    {{#if funders}}
         <div>
             <h3>Funders</h3>
             <ul>
-                {{#each objectData._source.funders as |funder|}}
-                  <li>{{funder}}</li>
+                {{#each funders as |funder|}}
+                  <li>{{funder.name}}: ${{funder.awardTotal}}</li>
                 {{/each}}
             </ul>
         </div>

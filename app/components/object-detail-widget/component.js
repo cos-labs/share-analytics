@@ -21,9 +21,7 @@ export default Ember.Component.extend({
     }),
 
     identifierURLs: Ember.computed('objectData._source.identifiers', function() {
-        var data = this.get('objectData');
-        var identifiers = data._source.identifiers;
-        return identifiers.filter(function(id) {
+        return this.get('objectData')._source.identifiers.filter(function(id) {
             return isHTTPURL(id);
         });
     }),

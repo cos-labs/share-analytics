@@ -1,0 +1,16 @@
+.date-range {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background: #ffffff;
+    cursor: pointer;
+}
+.facet-tag {
+    padding: 5px;
+    margin-bottom: 5px;
+}
+.facet-tag span {
+    background-color: #526;
+    padding: 2px 5px 3px 5px;
+    border-radius: 10px;
+    color: #fff;
+}

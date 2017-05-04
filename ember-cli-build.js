@@ -30,11 +30,15 @@ module.exports = function(defaults) {
   app.import('bower_components/d3/d3.js');
   app.import('bower_components/c3/c3.js');
   app.import('bower_components/packery/dist/packery.pkgd.min.js');
-  app.import('bower_components/draggabilly/dist/draggabilly.pkgd.min.js')
+  app.import('bower_components/draggabilly/dist/draggabilly.pkgd.min.js');
+  app.import('bower_components/bootstrap-daterangepicker/daterangepicker.js');
+
+
   // Import component styles from addon
   app.import(path.join(app.bowerDirectory, 'osf-style/vendor/prism/prism.css'));
   app.import(path.join(app.bowerDirectory, 'osf-style/page.css'));
   app.import(path.join(app.bowerDirectory, 'osf-style/css/base.css'));
+  app.import(path.join(app.bowerDirectory, 'bootstrap-daterangepicker/daterangepicker.css'));
 
   app.import(path.join(app.bowerDirectory, 'osf-style/img/cos-white2.png'), {
   	destDir: 'img'

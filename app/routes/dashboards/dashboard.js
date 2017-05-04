@@ -199,7 +199,6 @@ export default Ember.Route.extend({
     },
     gte: "1996-01-01",        // Set default begin date
     lte: (new Date()).toISOString().split('T')[0], // Set default end date
-     // TODO move tsinterval to utility
     tsInterval: Ember.computed('gte','lte', tsInterval),
 
     /* Resets query parameters to undefined when leaving dashboard route*/
@@ -223,18 +222,34 @@ export default Ember.Route.extend({
         let gte = this.get('gte');
         let lte = this.get('lte');
         let dashboards = {
+          /* Each top level object is a dashboard view (i.e. a page with widgets) See first object for comments on properties */
             objectDetail: {
                 dashboardName: 'Object Detail Dashboard',
+                /* Each widget goes through widget-adapter that uses the settings and parameters */
                 widgets: [
                     {
-                        widgetType: "object-detail-widget",
+                        widgetType: "object-detail-widget",       // Corresponds to the Ember component name
                         background_color: "000000",
-                        name: "",
-                        width: 12,
-                        post_body: {},
-                        postBodyParams: [ // Params overrides post_body if there are same parameter paths
+                        name: "",       // Showing a name displays widget title, empty name omits title
+                        width: 12,       // Widgets are floated left and width is defined in grid columns 0-12
+                        post_body: {},       // Raw elastic query to be sent with the request for SHARE
+                        postBodyParams: [       // List of parameters to add to post_body. Params overrides post_body if there are same parameter paths
                             {
-                                parameterName: "id",
+                                parameterName: "id",       // the name of the url parameter, the value of this parameter will be used as value of the parameterpath below
+                                /*  parameterPath: Path of the parameter object. Converts to:
+                                *   "query": {
+                                *       "bool" : {
+                                *           "must" : [
+                                *               0 : {
+                                *                   "term": {
+                                *                       "_id": // value given for the "id" parameter
+                                *                   }
+                                *               }
+                                *           ]
+                                *       }
+                                *    }
+                                *
+                                * */
                                 parameterPath: ["query", "bool", "must", 0, "term", "_id"],
                             }
                         ]

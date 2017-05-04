@@ -575,7 +575,7 @@ export default Ember.Route.extend({
                                 defaultValue: ucsd_query
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "sources"
                             },
                             {
@@ -641,7 +641,7 @@ export default Ember.Route.extend({
                                 defaultValue: 1
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "sources"
                             },
                             {

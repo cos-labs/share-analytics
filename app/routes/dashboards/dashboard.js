@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import tsInterval from '../../utils/tsinterval';
 
 /* Gets all (as close to all) share records that are published by UCSD. Used with query.bool.should*/
 const ucsd_query = [
@@ -196,22 +197,10 @@ export default Ember.Route.extend({
       end: {refreshModel:true},
       page: {refreshModel: true}
     },
-    gte: "1996-01-01",
-    lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
+    gte: "1996-01-01",        // Set default begin date
+    lte: (new Date()).toISOString().split('T')[0], // Set default end date
      // TODO move tsinterval to utility
-    tsInterval: Ember.computed('gte','lte', function() { // Initialize the "bucket size" for our timeseries aggregations
-          let d1 = new Date(this.get('gte'));
-          let d2 = new Date(this.get('lte'));
-          if((d2 - d1) >= 31622400000) { // If our dates are more than a year apart
-             return 'month'; // We want to increment our TS data by months
-          }
-          if((7948800000 <= (d2 - d1)) && ((d2 - d1) < 31622400000)) { // If our dates are less than a year apart but more than three months apart
-              return 'week'; // We want to increment our TS data by weeks
-          }
-          if((d2 - d1) < 7948800000) { // If our data are less than three months apart
-              return 'day'; // We want to increment our TS data by days
-          }
-      }),
+    tsInterval: Ember.computed('gte','lte', tsInterval),
 
     /* Resets query parameters to undefined when leaving dashboard route*/
     resetController: function(controller, isExiting, transition) {

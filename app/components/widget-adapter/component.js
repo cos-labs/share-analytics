@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import ENV from 'analytics-dashboard/config/environment';
 import stringify from 'npm:json-stable-stringify';
+import tsInterval from '../../utils/tsinterval';
+
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
 
@@ -388,19 +390,8 @@ export default Ember.Component.extend({
     gte: "1996-01-01",
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
 
-    tsInterval: Ember.computed('gte','lte', function() { // Initialize the "bucket size" for our timeseries aggregations
-        let d1 = new Date(this.get('gte'));
-        let d2 = new Date(this.get('lte'));
-        if((d2 - d1) >= 31622400000) { // If our dates are more than a year apart
-           return 'month'; // We want to increment our TS data by months
-        }
-        if((7948800000 <= (d2 - d1)) && ((d2 - d1) < 31622400000)) { // If our dates are less than a year apart but more than three months apart
-            return 'week'; // We want to increment our TS data by weeks
-        }
-        if((d2 - d1) < 7948800000) { // If our data are less than three months apart
-            return 'day'; // We want to increment our TS data by days
-        }
-    }),
+  tsInterval: Ember.computed('gte','lte', tsInterval),
+
 
     configuring: false,
     picking: false,

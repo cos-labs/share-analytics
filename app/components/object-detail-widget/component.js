@@ -32,14 +32,9 @@ export default Ember.Component.extend({
     }),
 
     funders: Ember.computed('objectData._source.lists.funders', function() {
-        var data = this.get('objectData');
-        var funders = data._source.lists.funders;
-        return funders.map((funder) => {
-            var total = 0;
-            for (var award of funder.awards) {
-                total += award.amount;
-            }
-            var formattedTotal = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        this.get('objectData')._source.lists.funders.map((funder) => {
+            let total = funder.awards.reduce((total, award) => total + award.amount)
+            let formattedTotal = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             return {name: funder.name, awardTotal: formattedTotal}
         })
     }),

@@ -55,9 +55,6 @@ export default Ember.Component.extend({
         Ember.$(document).off('click', clickHandler);
     },
     processData (data) {
-        if(this.get('mode') === 'dropdown'){
-            this.get('dropList').addObject(this.get('firstRow'));
-        }
         data.forEach(item => {
             if(item.doc_count > 0){
                 this.get('dropList').addObject(item.key);
@@ -80,9 +77,7 @@ export default Ember.Component.extend({
             this.attrs.transitionToFacet("search", queryParams);
         },
         applySelection (value) {
-            if(value !== this.get('firstRow')){
-                this.send('transitionToFacet', value);
-            }
+            this.send('transitionToFacet', value);
         },
         filterVisible(){
             let filtered = this.get('dropList').filter((val)=>{

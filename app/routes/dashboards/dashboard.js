@@ -902,14 +902,6 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
                             },
-                            // {
-                            //     parameterName: "tags",
-                            //     parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            // },
-                            // {
-                            //     parameterName: "contributors",
-                            //     parameterPath: ["query", "bool", "filter", 2, "term", "lists.contributors.id.exact"],
-                            // },
                             {
                                 parameterName: "tags",
                                 parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
@@ -981,14 +973,6 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
                             },
-                            // {
-                            //     parameterName: "tags",
-                            //     parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            // },
-                            // {
-                            //     parameterName: "contributors",
-                            //     parameterPath: ["query", "bool", "filter", 2, "term", "lists.contributors.id.exact"],
-                            // },
                             {
                                 parameterName: "tags",
                                 parameterPath: ["query", "bool", "filter", 1, "term", "tags"]

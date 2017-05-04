@@ -30,12 +30,15 @@
             </ul>
         </div>
     {{/if}}
-    <div>Date: {{objectData._source.date}}</div>
-    <div>Date Created: {{objectData._source.date_created}}</div>
-    <div>Date Modified: {{objectData._source.date_modified}}</div>
-    <div>Date Published: {{objectData._source.date_published}}</div>
-    <div>Date Updated: {{objectData._source.date_updated}}</div>
-    <div>Language: {{objectData._source.language}}</div>
+
+    {{#if objectData._source.language}}
+        <div>
+            <h3>Language</h3>
+            <ul>
+                <li>{{objectData._source.language}}</li>
+            </ul>
+        </div>
+    {{/if}}
 
     {{#if objectData._source.identifiers}}
         <div>
@@ -61,6 +64,17 @@
             </ul>
         </div>
     {{/if}}
+
+    <div>
+        <h3>Dates</h3>
+        <ul>
+            <li>Date: {{objectData._source.date}}</li>
+            <li>Date Created: {{objectData._source.date_created}}</li>
+            <li>Date Modified: {{objectData._source.date_modified}}</li>
+            <li>Date Published: {{objectData._source.date_published}}</li>
+            <li>Date Updated: {{objectData._source.date_updated}}</li>
+        </ul>
+    </div>
 
     {{#if showJSON}}
         <h4 {{action toggleProperty 'showJSON'}} style="font-weight: 600; margin-top: 50px; cursor: pointer;">Hide Raw Data&nbsp;&nbsp;&nbsp;&nbsp;{{fa-icon "chevron-up"}}</h4>

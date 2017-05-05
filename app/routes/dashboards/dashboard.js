@@ -215,6 +215,8 @@ export default Ember.Route.extend({
             controller.set("query", undefined);
             controller.set("type", undefined);
             controller.set("funders", undefined);
+            controller.set("start", undefined);
+            controller.set("end", undefined);
             controller.set("page", undefined);
         }
     },
@@ -314,20 +316,24 @@ export default Ember.Route.extend({
                                 defaultValue: ucsd_query
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "sources"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags.exact"],
-                                parameterName: "tags"
+                                parameterName: "page",
+                                parameterPath: ["from"]
+                            },
+                            {
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             },
                             {
                                 parameterName: "publishers",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
                             },
                             {
                                 parameterName: "type",
@@ -338,8 +344,14 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             },
                             {
-                                parameterName: "page",
-                                parameterPath: ["from"]
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
                             }
                         ],
                         widgetSettings : {
@@ -370,20 +382,20 @@ export default Ember.Route.extend({
                                 defaultValue: 1
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "sources"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags.exact"],
-                                parameterName: "tags"
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
                                 parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
                             },
                             {
                                 parameterName: "type",
@@ -392,6 +404,16 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "funders",
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
                             }
                         ],
                         widgetSettings : {
@@ -421,16 +443,6 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
-                                defaultValue: gte
-                            },
-                            {
-                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "max_date",
-                                defaultValue: lte
-                            },
-                            {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
                                 parameterName: "date_range_format",
                                 defaultValue: "yyyy-MM-dd||yyyy"
@@ -449,16 +461,26 @@ export default Ember.Route.extend({
                                 parameterName: "sources"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags.exact"],
-                                parameterName: "tags"
+                                parameterPath: ["aggregations", "publishers", "terms", "field"],
+                                parameterName: "publisher_field",
+                                defaultValue: "lists.publishers.id.exact",
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
+                                parameterPath: ["aggregations", "publishers", "terms", "size"],
+                                parameterName: "publisher_size",
+                                defaultValue: 200,
+                            },
+                            {
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                            },
+                            {
                                 parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
                             },
                             {
                                 parameterName: "type",
@@ -469,15 +491,15 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             },
                             {
-                                parameterPath: ["aggregations", "publishers", "terms", "field"],
-                                parameterName: "publisher_field",
-                                defaultValue: "lists.publishers.id.exact",
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
                             },
                             {
-                                parameterPath: ["aggregations", "publishers", "terms", "size"],
-                                parameterName: "publisher_size",
-                                defaultValue: 200,
-                            },
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
+                            }
                         ],
                     },
                     {
@@ -516,16 +538,16 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"],
-                                parameterName: "tags"
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             },
                             {
                                 parameterName: "publishers",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
                             },
                             {
                                 parameterName: "type",
@@ -534,8 +556,207 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "funders",
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
                             }
                         ]
+                    },
+                    {
+                        // Type dropdown
+                        widgetType: 'dropdown-widget',
+                        name: 'Types',
+                        width: 3,
+                        facetDash: "search",
+                        facetDashParameter: "type",
+                        post_body : {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                parameterName: "sources"
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: ucsd_query
+                            },
+                            {
+                                parameterPath: ["aggregations", "dropdownList", "terms", "field"],
+                                parameterName: "type_field",
+                                defaultValue: "type"
+                            }
+                        ],
+                        widgetSettings: {
+                            mode: 'dropdown'
+                        }
+                    },
+                    {
+                        // Tag select
+                        widgetType: 'dropdown-widget',
+                        name: 'Tags',
+                        width: 3,
+                        facetDash: "search",
+                        facetDashParameter: "tags",
+                        post_body: {
+                            "aggregations": {
+                                "dropdownList" : {
+                                    "terms": {
+                                        "field": 'tags.exact',
+                                        "size": 100,
+                                        exclude: tag_blacklist,
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: ucsd_query
+                            },
+                            {
+                                parameterName: "sources",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                            },
+                            {
+                                parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
+                            },
+                            {
+                                parameterName: "contributors",
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
+                            },
+                            {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
+                            }
+                        ],
+                        widgetSettings: {
+                            mode: 'search'
+                        }
+                    },
+                    {
+                        // Funder select
+                        widgetType: 'dropdown-widget',
+                        name: 'Funders',
+                        width: 3,
+                        facetDash: "search",
+                        facetDashParameter: "funders",
+                        post_body: {
+                            "aggregations": {
+                                "dropdownList" : {
+                                    "terms": {
+                                        "field": 'funders.exact',
+                                        "size": 100
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: ucsd_query
+                            },
+                            {
+                                parameterName: "sources",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                            },
+                            {
+                                parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
+                            },
+                            {
+                                parameterName: "contributors",
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
+                            },
+                            {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
+                            }
+                        ],
+                        widgetSettings: {
+                            mode: 'search'
+                        }
+                    },
+                    {
+                        // Daterange select
+                        widgetType: 'search-facet-daterange',
+                        name: 'Dates',
+                        width: 3,
+                        facetDash: "search",
+                        facetDashParameter: "",
+                        post_body: {}
                     }
                 ]
             },
@@ -656,12 +877,12 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
+                                parameterName: "start",
                                 defaultValue: gte
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "max_date",
+                                parameterName: "end",
                                 defaultValue: lte
                             },
                             {
@@ -792,12 +1013,12 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                    parameterName: "min_date",
+                                    parameterName: "start",
                                     defaultValue: gte
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                    parameterName: "max_date",
+                                    parameterName: "end",
                                     defaultValue: lte
                                 },
                                 {
@@ -1026,12 +1247,12 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
+                                parameterName: "start",
                                 defaultValue: gte
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "max_date",
+                                parameterName: "end",
                                 defaultValue: lte
                             },
                             {
@@ -1099,12 +1320,12 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                    parameterName: "min_date",
+                                    parameterName: "start",
                                     defaultValue: gte
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                    parameterName: "max_date",
+                                    parameterName: "end",
                                     defaultValue: lte
                                 },
                                 {
@@ -1211,12 +1432,12 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
+                                parameterName: "start",
                                 defaultValue: gte
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "max_date",
+                                parameterName: "end",
                                 defaultValue: lte
                             },
                             {
@@ -1279,12 +1500,12 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                    parameterName: "min_date",
+                                    parameterName: "start",
                                     defaultValue: gte
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                    parameterName: "max_date",
+                                    parameterName: "end",
                                     defaultValue: lte
                                 },
                                 {

@@ -8,6 +8,7 @@ router = routers.SimpleRouter()
 router.register(r'widgets', views.WidgetViewSet)
 router.register(r'dashboards', views.DashboardViewSet)
 router.register(r'users', views.UserViewSet)
+router.register(r'parameters', views.ParameterViewSet)
 
 urlpatterns = format_suffix_patterns([
     url(r'^$', views.api_root),

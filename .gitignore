@@ -34,6 +34,7 @@ testem.log
 .DS_Store
 .csv
 .env
+.python_version
 .idea
 .idea/
 .local_settings.pyc

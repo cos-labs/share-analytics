@@ -1,27 +1,30 @@
 from rest_framework_json_api.serializers import ModelSerializer
 from rest_framework_json_api.relations import ResourceRelatedField
-from widget.models import Widget
-from dashboard.models import Dashboard
-from django.contrib.auth.models import User, Group
+from rest_framework.serializers import CharField, JSONField
+
+from api.models import Widget, WidgetConfig, Dashboard, Parameter
+from django.contrib.auth.models import User
 
 
 class WidgetSerializer(ModelSerializer):
 
-    # author = ResourceRelatedField(
-    #     queryset=User.objects,
-    #     related_link_url_kwarg='user_pk'
-    # )
+    name = CharField(required=False)
+    display_name = CharField(required=False)
+    parameters = ResourceRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Widget
         fields = (
             'id',
+            'display_name',
             'name',
-            'author',
+            'owner',
+            'widget_type',
+            'facet_dash',
+            'facet_dash_parameter',
             'width',
-            'height',
-            'query',
-            'settings',
+            'context',
+            'parameters'
         )
 
     class JSONAPIMeta:
@@ -32,9 +35,11 @@ class DashboardSerializer(ModelSerializer):
 
     widgets = ResourceRelatedField(
         many=True,
-        queryset=Widget.objects,
+        read_only=True,
         related_link_url_kwarg='widget_pk'
     )
+
+    settings = JSONField(required=False, allow_null=True)
 
     class Meta:
         model = Dashboard
@@ -42,7 +47,8 @@ class DashboardSerializer(ModelSerializer):
             'id',
             'name',
             'owner',
-            'widgets'
+            'widgets',
+            'settings'
         )
 
     class JSONAPIMeta:
@@ -60,3 +66,17 @@ class UserSerializer(ModelSerializer):
 
     class JSONAPIMeta:
         resource_name = 'users'
+
+
+class ParameterSerializer(ModelSerializer):
+
+    class Meta:
+        model = Parameter
+        fields = (
+            'name',
+            'path',
+            'default_value'
+        )
+
+    class JSONAPIMeta:
+        resource_name = 'parameters'

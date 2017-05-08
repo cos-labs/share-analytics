@@ -1,6 +1,9 @@
-export default function dateInterval() {
-  let d1 = new Date(this.get('gte'));
-  let d2 = new Date(this.get('lte'));
+/*
+  Returns a suitable date interval in string for charting depending on how big the date range is
+ */
+export default function dateInterval(d1, d2) {
+  // let d1 = new Date(this.get('gte'));
+  // let d2 = new Date(this.get('lte'));
   if((d2 - d1) >= 31622400000) { // If our dates are more than a year apart
     return 'month'; // We want to increment our TS data by months
   }

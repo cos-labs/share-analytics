@@ -390,8 +390,11 @@ export default Ember.Component.extend({
     gte: "1996-01-01",
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
 
-  tsInterval: Ember.computed('gte','lte', tsInterval),
-
+    tsInterval: Ember.computed('gte','lte', function(){
+      let d1 = new Date(this.get('gte'));
+      let d2 = new Date(this.get('lte'));
+      return tsInterval(d1, d2);
+    }),
 
     configuring: false,
     picking: false,

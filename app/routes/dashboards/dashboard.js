@@ -199,7 +199,11 @@ export default Ember.Route.extend({
     },
     gte: "1996-01-01",        // Set default begin date
     lte: (new Date()).toISOString().split('T')[0], // Set default end date
-    tsInterval: Ember.computed('gte','lte', tsInterval),
+    tsInterval: Ember.computed('gte','lte', function(){
+      let d1 = new Date(this.get('gte'));
+      let d2 = new Date(this.get('lte'));
+      return tsInterval(d1, d2);
+    }),
 
     /* Resets query parameters to undefined when leaving dashboard route*/
     resetController: function(controller, isExiting, transition) {

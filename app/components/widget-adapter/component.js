@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ENV from 'analytics-dashboard/config/environment';
 import stringify from 'npm:json-stable-stringify';
-import tsInterval from '../../utils/tsinterval';
+import tsInterval from '../../utils/date-interval';
 
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn

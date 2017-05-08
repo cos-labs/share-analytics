@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import tsInterval from '../../utils/tsinterval';
+import tsInterval from '../../utils/date-interval';
 
 /* Gets all (as close to all) share records that are published by UCSD. Used with query.bool.should*/
 const ucsd_query = [

@@ -57,8 +57,14 @@ export default Ember.Component.extend({
     processData (data) {
         data.forEach(item => {
             if(item.doc_count > 0){
-                this.get('dropList').addObject(item.key);
-                this.get('filteredList').addObject(item.key);
+                let obj = {
+                  key: item.key
+                };
+                if(item.name){
+                  obj.name = item.name.buckets[0].key;
+                }
+                this.get('dropList').addObject(obj);
+                this.get('filteredList').addObject(obj);
             }
         });
     },

@@ -38,11 +38,11 @@ export default Ember.Component.extend({
       this.set('filters', filters);
     },
 
-    fetchAgentDetails: async function(data) {
+    fetchAgentDetails: async function(agentList) {
         let agent_details = await Ember.$.ajax({
             url: 'https://dev-labs.cos.io/bulk_get_agents',
             crossDomain: true,
-            data: JSON.stringify(data),
+            data: JSON.stringify(agentList),
             type: 'POST',
             contentType: 'application/json'
         });

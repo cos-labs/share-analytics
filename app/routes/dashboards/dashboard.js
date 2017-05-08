@@ -246,7 +246,7 @@ export default Ember.Route.extend({
                                 *   "query": {
                                 *       "bool" : {
                                 *           "must" : [
-                                *               0 : {
+                                *               {   // 0 in this example is for the index of the preceding item
                                 *                   "term": {
                                 *                       "_id": // value given for the "id" parameter
                                 *                   }

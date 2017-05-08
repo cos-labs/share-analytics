@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ENV from 'analytics-dashboard/config/environment';
 import stringify from 'npm:json-stable-stringify';
-import tsInterval from '../../utils/date-interval';
+import dateInterval from '../../utils/date-interval';
 
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
@@ -393,7 +393,7 @@ export default Ember.Component.extend({
     tsInterval: Ember.computed('gte','lte', function(){
       let d1 = new Date(this.get('gte'));
       let d2 = new Date(this.get('lte'));
-      return tsInterval(d1, d2);
+      return dateInterval(d1, d2);
     }),
 
     configuring: false,

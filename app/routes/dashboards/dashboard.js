@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import tsInterval from '../../utils/date-interval';
+import dateInterval from '../../utils/date-interval';
 
 /* Gets all (as close to all) share records that are published by UCSD. Used with query.bool.should*/
 const ucsd_query = [
@@ -202,7 +202,7 @@ export default Ember.Route.extend({
     tsInterval: Ember.computed('gte','lte', function(){
       let d1 = new Date(this.get('gte'));
       let d2 = new Date(this.get('lte'));
-      return tsInterval(d1, d2);
+      return dateInterval(d1, d2);
     }),
 
     /* Resets query parameters to undefined when leaving dashboard route*/

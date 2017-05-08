@@ -7,13 +7,13 @@ export default Ember.Component.extend({
     init () {
       this._super(...arguments);
       let parameters = this.get('parameters');
-      var filters = Object.keys(parameters).map((key) => {
+      var filters = Object.keys(parameters).filter((key) => {
+        return key !== "page";
+      }).map((key) => {
         return {
           "key": key,
           "value": parameters[key]
         }
-      }).filter((item) => {
-        return item.key !== "page";
       });
 
       // Find and format all query params that use ids for the value

@@ -7,13 +7,13 @@ export default Ember.Component.extend({
     init () {
       this._super(...arguments);
       let parameters = this.get('parameters');
-      var filters = Object.keys(parameters).map((key) => {
+      var filters = Object.keys(parameters).filter((key) => {
+        return key !== "page";
+      }).map((key) => {
         return {
           "key": key,
           "value": parameters[key]
         }
-      }).filter((item) => {
-        return item.key !== "page";
       });
 
       // Find and format all query params that use ids for the value
@@ -41,11 +41,11 @@ export default Ember.Component.extend({
         });
       }},
 
-    fetchAgentDetails: async function(data) {
+    fetchAgentDetails: async function(agentList) {
         let agent_details = await Ember.$.ajax({
             url: 'https://dev-labs.cos.io/bulk_get_agents',
             crossDomain: true,
-            data: JSON.stringify(data),
+            data: JSON.stringify(agentList),
             type: 'POST',
             contentType: 'application/json'
         });

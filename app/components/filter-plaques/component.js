@@ -26,17 +26,20 @@ export default Ember.Component.extend({
       // Fetch display names
       if (ids.length !== 0) {
         this.fetchAgentDetails(ids).then((data) => {
-          for (var i = 0; i < data.length; i++) {
-            for (var filter = 0; filter < filters.length; filter++) {
-              if (filters[filter].value === data[i].id) {
-                  Ember.set(filters[filter], 'value', data[i].name);
-              }
-            }
+          if (filters) {
+            var displayFilters = filters.map((filter) => {
+              var value = filter.value;
+              data.forEach((agentData) => {
+                if (value === agentData.id) {
+                  value = agentData.name;
+                }
+              });
+              return {key: filter.key, value: value};
+            });
+            this.set('filters', displayFilters);
           }
         });
-      }
-      this.set('filters', filters);
-    },
+      }},
 
     fetchAgentDetails: async function(data) {
         let agent_details = await Ember.$.ajax({

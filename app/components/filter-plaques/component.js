@@ -20,7 +20,7 @@ export default Ember.Component.extend({
       var ids = filters.filter((item) => {
           return ID_FILTERS.indexOf(item.key) !== -1;
       }).map((param) => {
-          return {key: param.value, doc_count: 0}
+          return {key: param.value}
       });
 
       // Fetch display names

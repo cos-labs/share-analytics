@@ -26,7 +26,6 @@ export default Ember.Component.extend({
       // Fetch display names
       if (ids.length > 0) {
         this.fetchAgentDetails(ids).then((data) => {
-          if (filters) {
             var displayFilters = filters.map((filter) => {
               var value = filter.value;
               data.forEach((agentData) => {
@@ -37,7 +36,6 @@ export default Ember.Component.extend({
               return {key: filter.key, value: value};
             });
             this.set('filters', displayFilters);
-          }
         });
       }},
 

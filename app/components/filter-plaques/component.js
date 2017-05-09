@@ -24,7 +24,7 @@ export default Ember.Component.extend({
       });
 
       // Fetch display names
-      if (ids.length !== 0) {
+      if (ids.length > 0) {
         this.fetchAgentDetails(ids).then((data) => {
           if (filters) {
             var displayFilters = filters.map((filter) => {

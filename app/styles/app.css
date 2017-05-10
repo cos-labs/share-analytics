@@ -637,6 +637,11 @@ nav.navbar {
     width: 25px;
 }
 
+/* override osf-style ball-dark spinner color */
+.ball-dark > div {
+  background-color: #dbe2ef;
+}
+
 /**
  * Tooltip Styles from : https://chrisbracco.com/a-simple-css-tooltip/
 

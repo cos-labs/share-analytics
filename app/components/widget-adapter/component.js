@@ -350,6 +350,12 @@ export default Ember.Component.extend({
 
     aggregations: false,
     docs: false,
+    loadingData: Ember.computed('data', function(){
+        if(this.get('data')){
+          return false;
+        }
+        return true;
+    }),
 
     classNameBindings: ['configuring', 'picking', 'width', 'height'],
 

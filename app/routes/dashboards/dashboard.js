@@ -368,7 +368,7 @@ export default Ember.Route.extend({
                         name: 'Total Results',
                         width: 3,
                         indexVersion: 3,
-                        facetDash: "search",
+                        facetDash: null,
                         post_body: {},
                         postBodyParams: [
                             {
@@ -423,7 +423,8 @@ export default Ember.Route.extend({
                         widgetSettings : {
                             fontSize: 2,
                             fontColor: '#F44336',
-                            minHeight: 115
+                            minHeight: 115,
+                            noLink: true
                         }
                     },
                     {

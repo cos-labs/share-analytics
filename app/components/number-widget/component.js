@@ -7,6 +7,7 @@ export default Ember.Component.extend({
     settings : {
         fontSize: 3,
         fontColor: '#F44336',
+        noLink: false,
         pre:'',
         post: ''
     },
@@ -28,6 +29,9 @@ export default Ember.Component.extend({
     actions: {
 
         transitionToFacet() { //Two different items here; one refers to the widget; one refers to the datum.
+            if(this.get('settings.noLink')){
+              return;
+            }
             let queryParams = {};
             var facet = this.get("item.facetDashParameter");
             let facetDash = this.get("item.facetDash");

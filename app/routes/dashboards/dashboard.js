@@ -1347,7 +1347,10 @@ export default Ember.Route.extend({
                                     parameterName: "date_range_format",
                                     defaultValue: "yyyy-MM-dd||yyyy"
                                 }
-                            ]
+                            ],
+                            widgetSettings: {
+                              helpText: 'Click on a section to view associated records'
+                            }
                         }
                 ]
             },
@@ -1527,7 +1530,10 @@ export default Ember.Route.extend({
                                     parameterName: "date_range_format",
                                     defaultValue: "yyyy-MM-dd||yyyy"
                                 }
-                            ]
+                            ],
+                            widgetSettings: {
+                              helpText: 'Click on a section to view associated records'
+                            }
                         },
                     {
                         widgetType: "stacked-bars",

@@ -1,4 +1,10 @@
 <div class="widget-body clearfix">
+  {{#if widgetSettings.helpText}}
+    <div class="text-muted text-smaller">
+      <i>({{widgetSettings.helpText}})</i>
+    </div>
+  {{/if}}
+
     <div class="renderChart"></div>
     {{#if data.length}}
         {{#if widgetSettings.viewAllRoute}}

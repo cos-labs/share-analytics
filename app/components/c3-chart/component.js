@@ -168,7 +168,6 @@ export default Ember.Component.extend({
                         var percentage = Math.floor(percent*100);
                         if (self.get('name') === 'Awards') {
                             let roundedValue = currencyRounder(value);
-                            console.log(roundedValue);
                             return percentage + "% ($" + roundedValue + ")";
 
                         }

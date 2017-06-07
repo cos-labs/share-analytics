@@ -15,14 +15,6 @@ The SHARE Analytics Dashboard is a flexible extensible framework tightly integra
 > 
 > To sign up for updates about when new versions are released follow this repository and new fixes, features and releases will be emailed right to your inbox.
 
-### Adding a Widget
-Pressing the Plus button at the bottom of the dashboard will append a new widget onto the dashboard.
-
-### Removing a Widget
-pressing the X button in the top right hand corner of a particular widget will remove that widget from the dashboard.
-
-### Configuring a Widget
-pressing the cogs button immediately to the left of the X button in the top right hand corner of a particular widget will hide the chart momentarily, and instead display a list of options that are configurable for the chart.
 
 #### Chart Engine
 Change which charting library to use to render the chart. Choose from:
@@ -61,6 +53,7 @@ You will need the following things properly installed on your computer.
 * [Bower](http://bower.io/)
 * [Ember CLI](http://ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
+* [Yarn](https://yarnpkg.com/lang/en/docs/install/)
 
 ### Installation
 
@@ -68,13 +61,8 @@ You will need the following things properly installed on your computer.
 * change into the new directory
 * `npm install`
 * `bower install`
+* `yarn install --lockfile`
 * set up your config/local.yml (If this file does not exist, you may need to `ember g`)
-
-* createa new virtualenv
-* `pip install -r requirements.txt`
-* Set up postgres
-* create a backend/settings/local.py and configure django to connect to your database in it.
-* ./manage.py migrate
 
 ### Running / Development
 

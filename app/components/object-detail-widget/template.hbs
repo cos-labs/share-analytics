@@ -49,7 +49,11 @@
             <h3>Funders</h3>
             <ul>
                 {{#each funders as |funder|}}
-                  <li>{{funder.name}}: ${{funder.awardTotal}}</li>
+                  <li>{{funder.name}}
+                    {{#if funder.awardTotal}}
+                      : {{funder.currency}}{{funder.awardTotal}}
+                    {{/if}}
+                  </li>
                 {{/each}}
             </ul>
         </div>

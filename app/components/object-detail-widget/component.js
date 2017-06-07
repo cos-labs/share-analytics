@@ -70,14 +70,15 @@ export default Ember.Component.extend({
 
     funders: Ember.computed('objectData._source.lists.funders', function() {
         var funders = this.get('objectData')._source.lists.funders;
+        let currency = '$';
         if (funders) {
             return funders.map((funder) => {
                 let total = funder.awards.reduce((total, award) => {
                     return total + award.amount;
                 }, 0);
-                let formattedTotal = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                return {name: funder.name, awardTotal: formattedTotal}
-            })
+                let formattedTotal = total > 0 ? total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : null;
+                return {name: funder.name, awardTotal: formattedTotal, currency: currency};
+            });
         }
     }),
 

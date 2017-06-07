@@ -1,21 +1,19 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-
     total: null,
-
     settings : {
         fontSize: 3,
         fontColor: '#F44336',
+        isLink: true,
         pre:'',
         post: ''
     },
-
     init () {
         this._super(...arguments);
         let settings = this.get('widgetSettings');
-        if(settings){
-            this.set('settings', settings);
+        if (settings){
+            this.set('settings', Ember.assign(this.get('settings'), settings));
         }
     },
 
@@ -28,6 +26,9 @@ export default Ember.Component.extend({
     actions: {
 
         transitionToFacet() { //Two different items here; one refers to the widget; one refers to the datum.
+            if(!this.get('settings.isLink')){
+              return;
+            }
             let queryParams = {};
             var facet = this.get("item.facetDashParameter");
             let facetDash = this.get("item.facetDash");

@@ -1,6 +1,8 @@
 
 # SHARE Analytics Dashboard
 
+[![Gitter](https://badges.gitter.im/cos-labs/share-analytics.svg)](https://gitter.im/cos-labs/share-analytics?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 As a primary driver of research, proper understanding of projects and investigations is crucial to focus resources, determine new opportunities, and align new projects with the needs of the scientific community.
 
 By visualising everything from trends in topics and authorship to seeing where on the Earth contributions come from, the SHARE Analytics Dashboard provides powerful insight to instituitions about the publications, projects, data and preprints that their research team produces.

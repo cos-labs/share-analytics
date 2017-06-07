@@ -1,0 +1,42 @@
+{{#if (eq mode 'dropdown')}}
+    <div class="p-md">
+      {{#if selectedType}}
+        <div class="facet-tag">Current selection:
+          <div><b>{{selectedType}}</b> <span class="pointer" {{action "removeFilter" item.facetDashParameter}}>{{fa-icon "close"}} </span> </div>
+        </div>
+      {{/if}}
+
+        <select class="form-control" onchange={{action "applySelection" value="target.value"}}>
+            {{#unless selectedType}}
+                <option value="" selected=selected>Select Type</option>
+            {{/unless}}
+            {{#each dropList as |type|}}
+                <option value={{type.key}} selected={{if (eq selectedType type.key) true}}>{{type.key}}</option>
+            {{/each}}
+        </select>
+    </div>
+{{/if}}
+
+{{#if (eq mode 'search')}}
+  <div class="p-md">
+      {{#if enteredItem}}
+          <div class="facet-tag">Current selection:
+              <div><b>{{enteredItem}}</b> <span class="pointer" {{action "removeFilter" item.facetDashParameter}}>{{fa-icon "close"}} </span> </div>
+          </div>
+      {{/if}}
+      {{input class="form-control" value=filterText placeholder="Type to filter" key-up="filterVisible" focus-in="showList"}}
+      {{#if showList}}
+          <div class="dropdown-search">
+              {{#each filteredList as |item|}}
+                  <div class="dropdown-search-item" {{action "applySelection" item.key}}>
+                      {{#if item.name}}
+                        {{item.name}}
+                      {{else}}
+                        {{item.key}}
+                      {{/if}}
+                  </div>
+              {{/each}}
+          </div>
+      {{/if}}
+  </div>
+{{/if}}

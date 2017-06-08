@@ -10,6 +10,14 @@ export default Ember.Component.extend({
         let data = this.processData(this.get('data.hits.hits'));
         this.set('data', data);
     },
+    didRender() {
+        this._super(...arguments); 
+        if(this.get('data').length < 10){
+            $('#pagenextbtn').attr('disabled','disabled');
+        }else if(Number(this.parameters["page"]) == 0) {
+            $('#pagebackbtn').attr('disabled','disabled');
+        }
+    },
 
     processData (data) {
         return data.map((datum) => {

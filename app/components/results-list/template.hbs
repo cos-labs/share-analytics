@@ -38,8 +38,8 @@
     {{/each}}
     {{#if data.length}}
         <div style="text-align: center; padding: 30px;">
-            <button class="btn btn-primary" {{action "pageback"}}>{{fa-icon "chevron-left"}}</button>
-            <button class="btn btn-primary" {{action "pagenext"}}>{{fa-icon "chevron-right"}}</button>
+            <button class="btn btn-primary" id="pagebackbtn" {{action "pageback"}}>{{fa-icon "chevron-left"}}</button>
+            <button class="btn btn-primary" id="pagenextbtn" {{action "pagenext"}}>{{fa-icon "chevron-right"}}</button>
         </div>
     {{/if}}
 </div>

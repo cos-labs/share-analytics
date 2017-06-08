@@ -4,18 +4,18 @@ import Ember from 'ember';
 export default Ember.Component.extend({
 
     data : [],
+    pagebackbtn : null,
+    pagenextbtn : null,
 
     init(){
         this._super(...arguments);
         let data = this.processData(this.get('data.hits.hits'));
         this.set('data', data);
-    },
-    didRender() {
-        this._super(...arguments); 
+       
         if(this.get('data').length < 10){
-            $('#pagenextbtn').attr('disabled','disabled');
+             this.set('pagenextbtn', 'disable');
         }else if(Number(this.parameters["page"]) == 0) {
-            $('#pagebackbtn').attr('disabled','disabled');
+            this.set('pagebackbtn', 'disable');
         }
     },
 

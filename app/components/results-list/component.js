@@ -10,15 +10,22 @@ export default Ember.Component.extend({
     init(){
         this._super(...arguments);
         let data = this.processData(this.get('data.hits.hits'));
-        this.set('data', data);
-       
-        if(this.get('data').length < 10){
-             this.set('pagenextbtn', 'disable');
-        }else if(Number(this.parameters["page"]) == 0) {
-            this.set('pagebackbtn', 'disable');
+        this.set('data', data); 
+    }, 
+    pagebackbtn: Ember.computed('data',  function() {
+        if(Number(this.parameters["page"]) == 0) {
+            return 'disable';
+        }else{
+            return null;
         }
-    },
-
+     }),
+     pagenextbtn: Ember.computed('data',  function() {
+        if(this.get('data').length < 10){
+            return 'disable';
+        }else{
+            return null;
+        }
+     }),
     processData (data) {
         return data.map((datum) => {
             var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };

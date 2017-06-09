@@ -1,6 +1,7 @@
-/*Packery grid styling*/
+@import "pod-styles.css";
 
-body {
+.pointer {
+    cursor: pointer;
 }
 
 .ucsd_header {
@@ -635,6 +636,12 @@ nav.navbar {
     height: 12px;
     width: 25px;
 }
+
+/* override osf-style ball-dark spinner color */
+.ball-dark > div {
+  background-color: #dbe2ef;
+}
+
 /**
  * Tooltip Styles from : https://chrisbracco.com/a-simple-css-tooltip/
 

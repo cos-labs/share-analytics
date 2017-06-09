@@ -1,3 +1,5 @@
 <div class="widget-body clearfix">
-    <div class="widget-number size-{{settings.fontSize}} is-link" style="color:{{settings.fontColor}};"><span {{action "transitionToFacet"}}>{{settings.pre}}{{total}}{{settings.post}}</span></div>
+    <div class="widget-number size-{{settings.fontSize}} {{if settings.isLink 'is-link'}}" style="color:{{settings.fontColor}};">
+        <span {{action "transitionToFacet"}}>{{settings.pre}}{{total}}{{settings.post}}</span>
+    </div>
 </div>

@@ -1,215 +1,211 @@
 import Ember from 'ember';
+import dateInterval from '../../utils/date-interval';
 
+/* Gets all (as close to all) share records that are published by UCSD. Used with query.bool.should*/
 const ucsd_query = [
-    {"match_phrase": {"contributors": "UCSD"}},
-    {"match_phrase": {"contributors": "UC San Diego"}},
-    {"match_phrase": {"contributors": "UC San Diego Library"}},
-    {"match_phrase": {"contributors": "UC San Diego Library Digital Collections"}},
-    {"match_phrase": {"contributors": "Scripps Institution of Oceanography"}},
-    {"match_phrase": {"contributors": "Scripps Institute of Oceanography"}},
-    {"match_phrase": {"contributors": "University of California San Diego"}},
-    {"match_phrase": {"contributors": "Univ of california san diego"}},
-    {"match_phrase": {"contributors": "University of CA San Diego"}},
-    {"match_phrase": {"publishers": "UCSD"}},
-    {"match_phrase": {"publishers": "UC San Diego"}},
-    {"match_phrase": {"publishers": "UC San Diego Library"}},
-    {"match_phrase": {"publishers": "UC San Diego Library Digital Collections"}},
-    {"match_phrase": {"publishers": "Scripps Institution of Oceanography"}},
-    {"match_phrase": {"publishers": "Scripps Institute of Oceanography"}},
-    {"match_phrase": {"publishers": "University of California San Diego"}},
-    {"match_phrase": {"publishers": "Univ of california san diego"}},
-    {"match_phrase": {"publishers": "University of CA San Diego"}},
-    {"match_phrase": {"affiliations": "UCSD"}},
-    {"match_phrase": {"affiliations": "UC San Diego"}},
-    {"match_phrase": {"affiliations": "UC San Diego Library"}},
-    {"match_phrase": {"affiliations": "UC San Diego Library Digital Collections"}},
-    {"match_phrase": {"affiliations": "Scripps Institution of Oceanography"}},
-    {"match_phrase": {"affiliations": "Scripps Institute of Oceanography"}},
-    {"match_phrase": {"affiliations": "University of California San Diego"}},
-    {"match_phrase": {"affiliations": "Univ of california san diego"}},
-    {"match_phrase": {"affiliations": "University of CA San Diego"}},
-    {"match_phrase": {"funders": "UCSD"}},
-    {"match_phrase": {"funders": "UC San Diego"}},
-    {"match_phrase": {"funders": "UC San Diego Library"}},
-    {"match_phrase": {"funders": "UC San Diego Library Digital Collections"}},
-    {"match_phrase": {"funders": "Scripps Institution of Oceanography"}},
-    {"match_phrase": {"funders": "Scripps Institute of Oceanography"}},
-    {"match_phrase": {"funders": "University of California San Diego"}},
-    {"match_phrase": {"funders": "Univ of california san diego"}},
-    {"match_phrase": {"funders": "University of CA San Diego"}},
-    {"match_phrase": {"title": "UCSD"}},
-    {"match_phrase": {"title": "UC San Diego"}},
-    {"match_phrase": {"title": "UC San Diego Library"}},
-    {"match_phrase": {"title": "UC San Diego Library Digital Collections"}},
-    {"match_phrase": {"title": "Scripps Institution of Oceanography"}},
-    {"match_phrase": {"title": "Scripps Institute of Oceanography"}},
-    {"match_phrase": {"title": "University of California San Diego"}},
-    {"match_phrase": {"title": "Univ of california san diego"}},
-    {"match_phrase": {"title": "University of CA San Diego"}},
-    {"match_phrase": {"hosts": "UCSD"}},
-    {"match_phrase": {"hosts": "UC San Diego"}},
-    {"match_phrase": {"hosts": "UC San Diego Library"}},
-    {"match_phrase": {"hosts": "UC San Diego Library Digital Collections"}},
-    {"match_phrase": {"hosts": "Scripps Institution of Oceanography"}},
-    {"match_phrase": {"hosts": "Scripps Institute of Oceanography"}},
-    {"match_phrase": {"hosts": "University of California San Diego"}},
-    {"match_phrase": {"hosts": "Univ of california san diego"}},
-    {"match_phrase": {"hosts": "University of CA San Diego"}},
-    {"match_phrase": {"tags": "ucsd"}},
-    {"match_phrase": {"tags": "cdl.ucsd"}},
-    {"match_phrase": {"tags": "Scripps institution of oceanography"}},
-    {"term": {"source": "UC San Diego Library"}}
+  {"match_phrase": {"contributors": "UCSD"}},
+  {"match_phrase": {"contributors": "UC San Diego"}},
+  {"match_phrase": {"contributors": "UC San Diego Library"}},
+  {"match_phrase": {"contributors": "UC San Diego Library Digital Collections"}},
+  {"match_phrase": {"contributors": "Scripps Institution of Oceanography"}},
+  {"match_phrase": {"contributors": "Scripps Institute of Oceanography"}},
+  {"match_phrase": {"contributors": "University of California San Diego"}},
+  {"match_phrase": {"contributors": "Univ of california san diego"}},
+  {"match_phrase": {"contributors": "University of CA San Diego"}},
+  {"match_phrase": {"publishers": "UCSD"}},
+  {"match_phrase": {"publishers": "UC San Diego"}},
+  {"match_phrase": {"publishers": "UC San Diego Library"}},
+  {"match_phrase": {"publishers": "UC San Diego Library Digital Collections"}},
+  {"match_phrase": {"publishers": "Scripps Institution of Oceanography"}},
+  {"match_phrase": {"publishers": "Scripps Institute of Oceanography"}},
+  {"match_phrase": {"publishers": "University of California San Diego"}},
+  {"match_phrase": {"publishers": "Univ of california san diego"}},
+  {"match_phrase": {"publishers": "University of CA San Diego"}},
+  {"match_phrase": {"affiliations": "UCSD"}},
+  {"match_phrase": {"affiliations": "UC San Diego"}},
+  {"match_phrase": {"affiliations": "UC San Diego Library"}},
+  {"match_phrase": {"affiliations": "UC San Diego Library Digital Collections"}},
+  {"match_phrase": {"affiliations": "Scripps Institution of Oceanography"}},
+  {"match_phrase": {"affiliations": "Scripps Institute of Oceanography"}},
+  {"match_phrase": {"affiliations": "University of California San Diego"}},
+  {"match_phrase": {"affiliations": "Univ of california san diego"}},
+  {"match_phrase": {"affiliations": "University of CA San Diego"}},
+  {"match_phrase": {"funders": "UCSD"}},
+  {"match_phrase": {"funders": "UC San Diego"}},
+  {"match_phrase": {"funders": "UC San Diego Library"}},
+  {"match_phrase": {"funders": "UC San Diego Library Digital Collections"}},
+  {"match_phrase": {"funders": "Scripps Institution of Oceanography"}},
+  {"match_phrase": {"funders": "Scripps Institute of Oceanography"}},
+  {"match_phrase": {"funders": "University of California San Diego"}},
+  {"match_phrase": {"funders": "Univ of california san diego"}},
+  {"match_phrase": {"funders": "University of CA San Diego"}},
+  {"match_phrase": {"title": "UCSD"}},
+  {"match_phrase": {"title": "UC San Diego"}},
+  {"match_phrase": {"title": "UC San Diego Library"}},
+  {"match_phrase": {"title": "UC San Diego Library Digital Collections"}},
+  {"match_phrase": {"title": "Scripps Institution of Oceanography"}},
+  {"match_phrase": {"title": "Scripps Institute of Oceanography"}},
+  {"match_phrase": {"title": "University of California San Diego"}},
+  {"match_phrase": {"title": "Univ of california san diego"}},
+  {"match_phrase": {"title": "University of CA San Diego"}},
+  {"match_phrase": {"hosts": "UCSD"}},
+  {"match_phrase": {"hosts": "UC San Diego"}},
+  {"match_phrase": {"hosts": "UC San Diego Library"}},
+  {"match_phrase": {"hosts": "UC San Diego Library Digital Collections"}},
+  {"match_phrase": {"hosts": "Scripps Institution of Oceanography"}},
+  {"match_phrase": {"hosts": "Scripps Institute of Oceanography"}},
+  {"match_phrase": {"hosts": "University of California San Diego"}},
+  {"match_phrase": {"hosts": "Univ of california san diego"}},
+  {"match_phrase": {"hosts": "University of CA San Diego"}},
+  {"match_phrase": {"tags": "ucsd"}},
+  {"match_phrase": {"tags": "cdl.ucsd"}},
+  {"match_phrase": {"tags": "Scripps institution of oceanography"}},
+  {"term": {"source": "UC San Diego Library"}}
 ];
 
+/* Tags to be ommited from the search results. Goes into tags aggregation query under 'exclude' */
 const tag_blacklist = [
-    "address",
-    "process",
-    "improved",
-    "base",
-    "goals",
-    "testing",
-    "development",
-    "research",
-    "event",
-    "role",
-    "novel",
-    "work",
-    "text",
-    "cdl",
-    "cdl.ucsd",
-    "dataset",
-    "text/tab-separated-values",
-    "natl_1981_an_37n",
-    "58 geosciences",
-    "natl_1981_an_26n",
-    "date/time",
-    "54 environmental sciences",
-    "36 materials science",
-    "59 basic biological sciences",
-    "unknown",
-    "preprint",
-    "2011)",
-    "extracted from the 2-minute gridded global relief data (etopo2)",
-    "extracted from the world ocean atlas 2005",
-    "fugacity of carbon dioxide (water) at sea surface temperature (wet air)",
-    "recomputed after socat (pfeil et al",
-    "xco2 (water) at sea surface temperature (dry air)",
-    "100036",
-    "extracted from the ncep/ncar 40-year reanalysis project",
-    "extracted from globalview-co2",
-    "document",
-    "indianocean_1976_an_18s",
-    "75 condensed matter physics",
-    "37 inorganic",
-    "book",
-    "29442",
-    "71 classical and quantum mechanics",
-    "information",
-    "project",
-    "data",
-    "application/pdf",
-    "description",
-    "materials",
-    "size",
-    "99 general and miscellaneous//mathematics",
-    "and information science",
-    "& refractories-- physical properties",
-    "1 ancillary/documentation file",
-    "1 data file",
-    "62 radiology and nuclear medicine",
-    "article",
-    "208 data points",
-    "58125",
-    "70 plasma physics and fusion technology",
-    "ands",
-    "centre72",
-    "ascii: ascii text (text/plain)",
-    "72 physics of elementary particles and fields",
-    "getinfo",
-    "multipart/mixed",
-    "s",
-    "u",
-    "comment",
-    "42 engineering",
-    "ca",
-    "ct",
-    "fl",
-    "ga",
-    "md",
-    "nc",
-    "nj",
-    "va",
-    "& thermal phenomena-- (-1987)",
-    "(unk)",
-    "al",
-    "hi",
-    "ma",
-    "ns",
-    "ny",
-    "or",
-    "ri",
-    "sc",
-    "073",
-    "63 radiation",
-    "656102 -- solid state physics-- superconductivity-- acoustic",
-    "and other environ. pollutant effects on living orgs. and biol. mat.",
-    "de",
-    "nitrat",
-    "nitrit",
-    "surface waters 580500* -- oceanography-- (1980-1989)",
-    "036",
-    "46211",
-    "58302",
-    "lternet",
-    "& refractories-- structure & phase studies",
-    "006",
-    "076",
-    "093",
-    "46215",
-    "46231",
-    "580000 -- geosciences",
-    "cfc-11",
-    "cfc-12",
-    "datavers",
-    "ms",
-    "transition element compounds 360204* -- ceramics",
-    "uniform resource locator/link to image",
-    "vertebrates 550201* -- biochemistry-- tracer techniques"
+  "address",
+  "process",
+  "improved",
+  "base",
+  "goals",
+  "testing",
+  "development",
+  "research",
+  "event",
+  "role",
+  "novel",
+  "work",
+  "text",
+  "cdl",
+  "cdl.ucsd",
+  "dataset",
+  "text/tab-separated-values",
+  "natl_1981_an_37n",
+  "58 geosciences",
+  "natl_1981_an_26n",
+  "date/time",
+  "54 environmental sciences",
+  "36 materials science",
+  "59 basic biological sciences",
+  "unknown",
+  "preprint",
+  "2011)",
+  "extracted from the 2-minute gridded global relief data (etopo2)",
+  "extracted from the world ocean atlas 2005",
+  "fugacity of carbon dioxide (water) at sea surface temperature (wet air)",
+  "recomputed after socat (pfeil et al",
+  "xco2 (water) at sea surface temperature (dry air)",
+  "100036",
+  "extracted from the ncep/ncar 40-year reanalysis project",
+  "extracted from globalview-co2",
+  "document",
+  "indianocean_1976_an_18s",
+  "75 condensed matter physics",
+  "37 inorganic",
+  "book",
+  "29442",
+  "71 classical and quantum mechanics",
+  "information",
+  "project",
+  "data",
+  "application/pdf",
+  "description",
+  "materials",
+  "size",
+  "99 general and miscellaneous//mathematics",
+  "and information science",
+  "& refractories-- physical properties",
+  "1 ancillary/documentation file",
+  "1 data file",
+  "62 radiology and nuclear medicine",
+  "article",
+  "208 data points",
+  "58125",
+  "70 plasma physics and fusion technology",
+  "ands",
+  "centre72",
+  "ascii: ascii text (text/plain)",
+  "72 physics of elementary particles and fields",
+  "getinfo",
+  "multipart/mixed",
+  "s",
+  "u",
+  "comment",
+  "42 engineering",
+  "ca",
+  "ct",
+  "fl",
+  "ga",
+  "md",
+  "nc",
+  "nj",
+  "va",
+  "& thermal phenomena-- (-1987)",
+  "(unk)",
+  "al",
+  "hi",
+  "ma",
+  "ns",
+  "ny",
+  "or",
+  "ri",
+  "sc",
+  "073",
+  "63 radiation",
+  "656102 -- solid state physics-- superconductivity-- acoustic",
+  "and other environ. pollutant effects on living orgs. and biol. mat.",
+  "de",
+  "nitrat",
+  "nitrit",
+  "surface waters 580500* -- oceanography-- (1980-1989)",
+  "036",
+  "46211",
+  "58302",
+  "lternet",
+  "& refractories-- structure & phase studies",
+  "006",
+  "076",
+  "093",
+  "46215",
+  "46231",
+  "580000 -- geosciences",
+  "cfc-11",
+  "cfc-12",
+  "datavers",
+  "ms",
+  "transition element compounds 360204* -- ceramics",
+  "uniform resource locator/link to image",
+  "vertebrates 550201* -- biochemistry-- tracer techniques"
 ]
 
 export default Ember.Route.extend({
 
-    queryParams: {
-        query: {refreshModel: true},
-        tags: {refreshModel: true},
-        sources: {refreshModel: true},
-        id: {refreshModel: true},
-        scholar: {refreshModel: true},
-        all: {refreshModel: true},
-        contributors: {refreshModel: true},
-        special_filter: {refreshModel: true},
-        publishers: {refreshModel: true},
-        type: {refreshModel: true},
-        funders: {refreshModel: true},
-        page: {refreshModel: true}
+    queryParams: {    //Ember queryParams, if any of the listed parameters change the page will refresh.
+      query: {refreshModel: true},
+      tags: {refreshModel: true},
+      sources: {refreshModel: true},
+      id: {refreshModel: true},
+      scholar: {refreshModel: true},
+      all: {refreshModel: true},
+      contributors: {refreshModel: true},
+      publishers: {refreshModel: true},
+      type: {refreshModel: true},
+      funders: {refreshModel: true},
+      start: {refreshModel:true},
+      end: {refreshModel:true},
+      page: {refreshModel: true}
     },
-    query: 'UC',
-    gte: "1996-01-01",
-    lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
-    tsInterval: Ember.computed('gte','lte', function() { // Initialize the "bucket size" for our timeseries aggregations
-        let d1 = new Date(this.get('gte'));
-        let d2 = new Date(this.get('lte'));
-        if((d2 - d1) >= 31622400000) { // If our dates are more than a year apart
-           return 'month'; // We want to increment our TS data by months
-        }
-        if((7948800000 <= (d2 - d1)) && ((d2 - d1) < 31622400000)) { // If our dates are less than a year apart but more than three months apart
-            return 'week'; // We want to increment our TS data by weeks
-        }
-        if((d2 - d1) < 7948800000) { // If our data are less than three months apart
-            return 'day'; // We want to increment our TS data by days
-        }
+    gte: "1996-01-01",        // Set default begin date
+    lte: (new Date()).toISOString().split('T')[0], // Set default end date
+    tsInterval: Ember.computed('gte','lte', function(){
+      let d1 = new Date(this.get('gte'));
+      let d2 = new Date(this.get('lte'));
+      return dateInterval(d1, d2);
     }),
 
+    /* Resets query parameters to undefined when leaving dashboard route*/
     resetController: function(controller, isExiting, transition) {
         this._super.apply(this, arguments);
 
@@ -223,290 +219,43 @@ export default Ember.Route.extend({
             controller.set("query", undefined);
             controller.set("type", undefined);
             controller.set("funders", undefined);
+            controller.set("start", undefined);
+            controller.set("end", undefined);
             controller.set("page", undefined);
         }
     },
     model: function(params, transition, queryParams) {
-        let query = this.get('query');
         let gte = this.get('gte');
         let lte = this.get('lte');
-        let interval = this.get('tsInterval');
         let dashboards = {
-            scholar: {
-
-                dashboardName: 'Scholar Dashboard',
-                parameters: [
-                    "scholar",
-                    "institution"
-                ],
-                widgets: [
-                    {
-                        widgetType: "query-widget",
-                        background_color: "000000",
-                        name: "Search",
-                        width: 12,
-                    },
-                    {
-                        chartType: 'totalResults',
-                        widgetType: 'number-widget',
-                        name: 'Total Results',
-                        width: 4,
-                        post_body: {},
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 0,  "term", "contributors.raw"]
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
-                            },
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            },
-                        ]
-                    },
-                    {
-                        chartType: 'totalPublications',
-                        widgetType: 'number-widget',
-                        name: 'Total Papers',
-                        width: 4,
-                        post_body: {},
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
-                            },
-                            {
-                                parameterName: "type",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "types.raw"],
-                                defaultValue: "publication"
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2,  "term", "contributors.raw"]
-                            },
-                        ]
-                    },
-                    {
-                        chartType: 'relatedResearchers',
-                        widgetType: 'number-widget',
-                        name: 'Total Collaborators',
-                        width: 4,
-                        post_body: {
-                            query: {
-                                bool: {
-                                    filter: [{
-                                        term: {
-                                            "lists.contributors.name.raw": null
-                                        }
-                                    }]
-                                }
-                            },
-                            aggregations: {
-                                relatedContributors: {
-                                    "cardinality": {
-                                        "field": "lists.contributors.id"
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "lists.contributors.name.raw"]
-                            }
-                        ]
-                    },
-                    {
-                        chartType: 'timeseries',
-                        widgetType: 'c3-chart',
-                        name: 'Date Histogram',
-                        width: 12,
-                        post_body: {
-                            "aggregations": {
-                                "sorted_by_type": {
-                                    "terms": {
-                                        "field": "type"
-                                    },
-                                    "aggregations": {
-                                        "type_over_time": {
-                                            "date_histogram": {
-                                                "field": "date_updated",
-                                                "interval": "1M",
-                                                "format": "yyyy-MM-dd"
-                                            }
-                                        }
-                                    }
-                                },
-                                "all_over_time": {
-                                    "date_histogram": {
-                                        "field": "date_updated",
-                                        "interval": "1M",
-                                        "format": "yyyy-MM-dd"
-                                    }
-                                }
-                            }
-                        },
-                        facetDash: "shareresults",
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lt"],
-                                parameterName: "tillDate",
-                                defaultValue: "now/d"
-                            },
-                            {
-                                parameterPath: ["query", "bool", "must", 1, "range", "date", "gte"],
-                                parameterName: "fromDate",
-                                defaultValue: "now-10y/d"
-                            },
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
-                            }
-                        ]
-                    },
-                    {
-                        chartType: 'topContributors',
-                        widgetType: 'list-widget',
-                        name: 'Top Contributors',
-                        facetDash: "scholar",
-                        width: 4,
-                        dataType: 'contributors',
-                        post_body: {
-                            "query": {
-                                "bool": {
-                                    "must": {
-                                        "query_string": {"query": ""}
-                                    },
-                                    "filter": [{
-                                        "term": {
-                                            "sources.raw": "eScholarship @ University of California"
-                                        }
-                                    }]
-                                }
-                            },
-                            from: 0,
-                            aggregations: {
-                                listWidgetData : {
-                                    terms : {
-                                        field: 'contributors.raw',
-                                        size: 10
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"]
-                            },
-                            {
-                                parameterName: "id",
-                                parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
-                            }
-                        ]
-                    },
-                    {
-                        chartType: 'donut',
-                        widgetType: 'c3-chart',
-                        name: 'Publishers',
-                        width: 4,
-                        post_body : {
-                            aggregations: {
-                                publishers : {
-                                    terms : {
-                                        field: 'publishers.raw'
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", "term", "lists.contributors.name.raw"]
-                            }
-                        ],
-                        facetDash: "scholar"
-                    },
-                    {
-                        chartType: 'topContributors',
-                        widgetType: 'list-widget',
-                        name: 'Top Tags',
-                        width: 4,
-                        dataType: 'tags',
-                        post_body: {
-                            "aggregations": {
-                                "listWidgetData" : {
-                                    "terms": {
-                                        "field": 'tags',
-                                        "size": 10
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
-                            }
-                        ],
-                        facetDash: "scholar"
-                    },
-                ]
-            },
+          /* Each top level object is a dashboard view (i.e. a page with widgets) See first object for comments on properties */
             objectDetail: {
-                dasboardName: 'Object Detail Dashboard',
+                dashboardName: 'Object Detail Dashboard',
+                /* Each widget goes through widget-adapter that uses the settings and parameters */
                 widgets: [
                     {
-                        widgetType: "object-detail-widget",
+                        widgetType: "object-detail-widget",       // Corresponds to the Ember component name
                         background_color: "000000",
-                        name: "",
-                        width: 12,
-                        post_body: {},
-                        postBodyParams: [
+                        name: "",       // Showing a name displays widget title, empty name omits title
+                        width: 12,       // Widgets are floated left and width is defined in grid columns 0-12
+                        post_body: {},       // Raw elastic query to be sent with the request for SHARE
+                        postBodyParams: [       // List of parameters to add to post_body. Params overrides post_body if there are same parameter paths
                             {
-                                parameterName: "id",
+                                parameterName: "id",       // the name of the url parameter, the value of this parameter will be used as value of the parameterpath below
+                                /*  parameterPath: Path of the parameter object. Converts to:
+                                *   "query": {
+                                *       "bool" : {
+                                *           "must" : [
+                                *               {   // 0 in this example is for the index of the preceding item
+                                *                   "term": {
+                                *                       "_id": // value given for the "id" parameter
+                                *                   }
+                                *               }
+                                *           ]
+                                *       }
+                                *    }
+                                *
+                                * */
                                 parameterPath: ["query", "bool", "must", 0, "term", "_id"],
                             }
                         ]
@@ -514,7 +263,7 @@ export default Ember.Route.extend({
                 ]
             },
             agentDetail: {
-                dasboardName: 'Agent Detail Dashboard',
+                dashboardName: 'Agent Detail Dashboard',
                 widgets: [
                     {
                         widgetType: "agent-detail-widget",
@@ -571,20 +320,24 @@ export default Ember.Route.extend({
                                 defaultValue: ucsd_query
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "sources"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags.exact"],
-                                parameterName: "tags"
+                                parameterName: "page",
+                                parameterPath: ["from"]
+                            },
+                            {
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             },
                             {
                                 parameterName: "publishers",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
                             },
                             {
                                 parameterName: "type",
@@ -593,11 +346,18 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "funders",
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
-                            },
-                            {
+                            }, {
                                 parameterName: "page",
                                 parameterPath: ["from"],
                                 defaultValue: 1
+                            }, {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            }, {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
                             }
                         ],
                         widgetSettings : {
@@ -610,7 +370,7 @@ export default Ember.Route.extend({
                         name: 'Total Results',
                         width: 3,
                         indexVersion: 3,
-                        facetDash: "search",
+                        facetDash: null,
                         post_body: {},
                         postBodyParams: [
                             {
@@ -628,20 +388,20 @@ export default Ember.Route.extend({
                                 defaultValue: 1
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "sources"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags.exact"],
-                                parameterName: "tags"
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
                                 parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
                             },
                             {
                                 parameterName: "type",
@@ -650,12 +410,23 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "funders",
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
                             }
                         ],
                         widgetSettings : {
                             fontSize: 2,
                             fontColor: '#F44336',
-                            minHeight: 115
+                            minHeight: 115,
+                            isLink: false
                         }
                     },
                     {
@@ -679,16 +450,6 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
-                                defaultValue: gte
-                            },
-                            {
-                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "max_date",
-                                defaultValue: lte
-                            },
-                            {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
                                 parameterName: "date_range_format",
                                 defaultValue: "yyyy-MM-dd||yyyy"
@@ -707,16 +468,26 @@ export default Ember.Route.extend({
                                 parameterName: "sources"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags.exact"],
-                                parameterName: "tags"
+                                parameterPath: ["aggregations", "publishers", "terms", "field"],
+                                parameterName: "publisher_field",
+                                defaultValue: "lists.publishers.id.exact",
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
+                                parameterPath: ["aggregations", "publishers", "terms", "size"],
+                                parameterName: "publisher_size",
+                                defaultValue: 200,
+                            },
+                            {
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                            },
+                            {
                                 parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
                             },
                             {
                                 parameterName: "type",
@@ -727,15 +498,15 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
                             },
                             {
-                                parameterPath: ["aggregations", "publishers", "terms", "field"],
-                                parameterName: "publisher_field",
-                                defaultValue: "lists.publishers.id.exact",
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
                             },
                             {
-                                parameterPath: ["aggregations", "publishers", "terms", "size"],
-                                parameterName: "publisher_size",
-                                defaultValue: 200,
-                            },
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
+                            }
                         ],
                     },
                     {
@@ -774,16 +545,16 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"],
-                                parameterName: "tags"
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
                             },
                             {
                                 parameterName: "publishers",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
                             },
                             {
                                 parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"],
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
                             },
                             {
                                 parameterName: "type",
@@ -792,8 +563,214 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "funders",
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
                             }
                         ]
+                    },
+                    {
+                        // Type dropdown
+                        widgetType: 'dropdown-widget',
+                        name: 'Types',
+                        width: 3,
+                        facetDash: "search",
+                        facetDashParameter: "type",
+                        post_body : {},
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                parameterName: "sources"
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: ucsd_query
+                            },
+                            {
+                                parameterPath: ["aggregations", "dropdownList", "terms", "field"],
+                                parameterName: "type_field",
+                                defaultValue: "type"
+                            }
+                        ],
+                        widgetSettings: {
+                            mode: 'dropdown'
+                        }
+                    },
+                    {
+                        // Tag select
+                        widgetType: 'dropdown-widget',
+                        name: 'Tags',
+                        width: 3,
+                        facetDash: "search",
+                        facetDashParameter: "tags",
+                        post_body: {
+                            "aggregations": {
+                                "dropdownList" : {
+                                    "terms": {
+                                        "field": 'tags.exact',
+                                        "size": 100,
+                                        exclude: tag_blacklist,
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: ucsd_query
+                            },
+                            {
+                                parameterName: "sources",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                            },
+                            {
+                                parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
+                            },
+                            {
+                                parameterName: "contributors",
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
+                            },
+                            {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
+                            }
+                        ],
+                        widgetSettings: {
+                            mode: 'search'
+                        }
+                    },
+                    {
+                        // Funder select
+                        widgetType: 'dropdown-widget',
+                        name: 'Funders',
+                        width: 3,
+                        facetDash: "search",
+                        facetDashParameter: "funders",
+                        post_body: {
+                            "aggregations": {
+                                "dropdownList" : {
+                                    "terms": {
+                                        "field": "lists.funders.id.exact",
+                                        "size": 100
+                                    },
+                                    "aggs" : {
+                                        "name": {
+                                            "terms": {
+                                                "field": "lists.funders.name.exact"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        postBodyParams: [
+                            {
+                                parameterPath: ["query", "bool", "minimum_should_match"],
+                                parameterName: "shouldMatch",
+                                defaultValue: 1
+                            },
+                            {
+                                parameterPath: ["query", "bool", "should"],
+                                defaultValue: ucsd_query
+                            },
+                            {
+                                parameterName: "sources",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
+                            },
+                            {
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
+                            },
+                            {
+                                parameterName: "tags",
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                            },
+                            {
+                                parameterName: "publishers",
+                                parameterPath: ["query", "bool", "filter", 2, "term", "lists.publishers.id.exact"]
+                            },
+                            {
+                                parameterName: "contributors",
+                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.contributors.id.exact"]
+                            },
+                            {
+                                parameterName: "type",
+                                parameterPath: ["query", "bool", "filter", 4, "term", "type"]
+                            },
+                            {
+                                parameterName: "funders",
+                                parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                                parameterName: "start",
+                                defaultValue: gte
+                            },
+                            {
+                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                parameterName: "end",
+                                defaultValue: lte
+                            }
+                        ],
+                        widgetSettings: {
+                            mode: 'search'
+                        }
+                    },
+                    {
+                        // Daterange select
+                        widgetType: 'search-facet-daterange',
+                        name: 'Dates',
+                        width: 3,
+                        facetDash: "search",
+                        facetDashParameter: "",
+                        post_body: {}
                     }
                 ]
             },
@@ -914,12 +891,12 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
+                                parameterName: "start",
                                 defaultValue: gte
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "max_date",
+                                parameterName: "end",
                                 defaultValue: lte
                             },
                             {
@@ -1050,12 +1027,12 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                    parameterName: "min_date",
+                                    parameterName: "start",
                                     defaultValue: gte
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                    parameterName: "max_date",
+                                    parameterName: "end",
                                     defaultValue: lte
                                 },
                                 {
@@ -1140,331 +1117,6 @@ export default Ember.Route.extend({
                                 parameterName: "query",
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 defaultValue: "*"
-                            }
-                        ]
-                    }
-                ]
-            },
-            topic: {
-                parameters: [
-                    "scholar",
-                    "institution",
-                    "topic"
-                ],
-                dashboardName: 'Institution Subject Area Dashboard',
-                widgets: [
-                    {
-                        widgetType: "query-widget",
-                        background_color: "000000",
-                        name: "Search",
-                        width: 12,
-                    },
-                    {
-                        chartType: 'totalResults',
-                        widgetType: 'number-widget',
-                        name: 'Total Results',
-                        indexVersion: 3,
-                        width: 4,
-                        post_body: {},
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
-                            },
-                            {
-                                parameterName: "contributor",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.exact"],
-                            }
-                        ],
-                    },
-                    {
-                        chartType: 'totalPublications',
-                        widgetType: 'number-widget',
-                        name: 'Total Publications',
-                        width: 4,
-                        post_body: {},
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "type",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "types.raw"],
-                                defaultValue: "publication"
-                            },
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "sources.raw"],
-                            },
-                            {
-                                parameterName: "contributor",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "contributors.raw"],
-                            },
-                        ],
-                    },
-                    {
-                        chartType: 'relatedResearchers',
-                        widgetType: 'number-widget',
-                        name: 'Related Researchers',
-                        width: 4,
-                        post_body: {
-                            "aggregations": {
-                                "relatedContributors" : {
-                                    "cardinality": {
-                                        "field": "lists.contributors.id"
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
-                            }
-                        ]
-                    },
-                    {
-                        chartType: 'relevanceHistogram',
-                        widgetType: 'c3-chart',
-                        name:'Relevance Histogram',
-                        width: 12,
-                        facetDash: "arttype",
-                        post_body: {},
-                        postBodyParams: [
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "must", 0,  "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                                                        {
-                                parameterName: "institution",
-                                parameterPath: ["aggregations", "filtered_score", "filters", "filters", "institution", "term", "sources.raw"]
-                            },
-                            {
-                                parameterName: "scoring",
-                                parameterPath: ["aggregations", "filtered_score", "aggregations", "score"],
-                                defaultValue: {
-                                    histogram: {
-                                        interval: 1,
-                                        script: {
-                                            lang: "expression",
-                                            inline: "_score * 10"
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                parameterName: "scoring",
-                                parameterPath: ["aggregations", "all_score"],
-                                defaultValue: {
-                                    histogram: {
-                                        interval: 1,
-                                        script: {
-                                            lang: "expression",
-                                            inline: "_score * 10"
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
-                            }
-                        ]
-                    },
-                    {
-                        chartType: 'topContributors',
-                        widgetType: 'list-widget',
-                        name: 'Top Contributors',
-                        width: 4,
-                        dataType: 'contributors',
-                        post_body : {
-                            "aggregations": {
-                                "listWidgetData": {
-                                    "terms": {
-                                        "field": 'contributors.raw',
-                                        "size": 10
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
-                            }
-                        ],
-                        facetDash: "scholar"
-                    },
-                    {
-                        chartType: 'donut',
-                        widgetType: 'c3-chart',
-                        name: 'Events by Source',
-                        width: 4,
-                        post_body: {
-                            query: {
-                                bool: { must: [{
-                                        query_string: {query: query}
-                                    },{
-                                        range: { date: {
-                                                   gte: gte,
-                                                   lte: lte,
-                                                   format: "yyyy-MM-dd||yyyy"
-                                                   }
-                                        }
-                                    }
-                                ]}
-                            },
-                            from: 0,
-                            aggregations: {
-                                sources: {
-                                    terms: {
-                                         field: 'sources.raw',
-                                         size: 200
-                                    }
-                                },
-                            }
-                        },
-                        postBodyParams: [
-                        ],
-                        facetDash: "institution",
-                    },
-                    {
-                        chartType: 'topContributors',
-                        widgetType: 'list-widget',
-                        name: 'Top Tags',
-                        width: 4,
-                        dataType: 'tags',
-                        post_body: {
-                            "aggregations": {
-                                "listWidgetData" : {
-                                    "terms": {
-                                        "field": 'tags',
-                                        "size": 10
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
-                            }
-                        ],
-                        facetDash: "scholar"
-                    },
-                    {
-                        chartType: 'timeseries',
-                        widgetType: 'c3-chart',
-                        name: 'Date Histogram',
-                        width: 12,
-                        post_body: {
-                            "aggregations": {
-                                "sorted_by_type": {
-                                    "terms": {
-                                        "field": "type"
-                                    },
-                                    "aggregations": {
-                                        "type_over_time": {
-                                            "date_histogram": {
-                                                "field": "date_updated",
-                                                "interval": "1M",
-                                                "format": "yyyy-MM-dd"
-                                            }
-                                        }
-                                    }
-                                },
-                                "all_over_time": {
-                                    "date_histogram": {
-                                        "field": "date_updated",
-                                        "interval": "1M",
-                                        "format": "yyyy-MM-dd"
-                                    }
-                                }
-                            }
-                        },
-                        facetDash: "shareresults",
-                        postBodyParams: [
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterPath: ["query", "bool", "must", 1, "range", "date", "lt"],
-                                parameterName: "tillDate",
-                                defaultValue: "now/d"
-                            },
-                            {
-                                parameterPath: ["query", "bool", "must", 1, "range", "date", "gte"],
-                                parameterName: "fromDate",
-                                defaultValue: "now-10y/d"
-                            },
-                            {
-                                parameterName: "topic",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "tags"]
-                            },
-                            {
-                                parameterName: "institution",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.raw"],
-                            },
-                            {
-                                parameterName: "scholar",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "contributors.raw"],
                             }
                         ]
                     }
@@ -1609,12 +1261,12 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
+                                parameterName: "start",
                                 defaultValue: gte
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "max_date",
+                                parameterName: "end",
                                 defaultValue: lte
                             },
                             {
@@ -1682,12 +1334,12 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                    parameterName: "min_date",
+                                    parameterName: "start",
                                     defaultValue: gte
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                    parameterName: "max_date",
+                                    parameterName: "end",
                                     defaultValue: lte
                                 },
                                 {
@@ -1794,12 +1446,12 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                parameterName: "min_date",
+                                parameterName: "start",
                                 defaultValue: gte
                             },
                             {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                parameterName: "max_date",
+                                parameterName: "end",
                                 defaultValue: lte
                             },
                             {
@@ -1862,12 +1514,12 @@ export default Ember.Route.extend({
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                    parameterName: "min_date",
+                                    parameterName: "start",
                                     defaultValue: gte
                                 },
                                 {
                                     parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                    parameterName: "max_date",
+                                    parameterName: "end",
                                     defaultValue: lte
                                 },
                                 {

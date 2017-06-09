@@ -52,5 +52,8 @@
 
     {{component widgetType parameters=parameters data=data widgetSettings=item.widgetSettings chartType=chartType aggregations=aggregations name=item.name item=item width=widthSetting height=heightSetting interval=tsInterval resizedSignal=resizedSignal total=total transitionToFacet=(action 'transitionToFacet')}}
 
+    {{#if loadingData}}
+       <div class="ball-pulse ball-dark text-center p-lg"><div></div><div></div><div></div></div>
+    {{/if}}
     {{yield}}
 </div>

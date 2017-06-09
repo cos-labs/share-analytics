@@ -66,7 +66,9 @@ module.exports = function(environment) {
 //
     //ENV.locationType = 'hash';
     //ENV.rootURL = '/analytics-dashboard/';
-
+    ENV['ember-component-css'] = {
+      namespacing: false
+    }
 
     if (environment === 'production') {
         ENV.locationType = 'hash';

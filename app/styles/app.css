@@ -637,6 +637,27 @@ nav.navbar {
     width: 25px;
 }
 
+
+
+/*JSON pretty print*/
+   
+pre {
+   background-color: ghostwhite;
+   border: 1px solid silver;
+   padding: 10px 20px;
+   margin: 20px; 
+   }
+.json-key {
+   color: brown;
+   }
+.json-value {
+   color: navy;
+   }
+.json-string {
+   color: olive;
+   }
+
+
 /* override osf-style ball-dark spinner color */
 .ball-dark > div {
   background-color: #dbe2ef;

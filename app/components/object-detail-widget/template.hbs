@@ -5,21 +5,10 @@
         <a class="btn btn-md" href="{{dataUrl}}" style="display: inline-block; background-color: #bbb; color: #fff; padding: 10px 30px; font-size: 17px; border-radius: 2px; font-weight: 600; margin-top: 30px;">Access Data</a>
         {{/if}}
     </h1>
-    {{#if objectData._source.description}}
-        <div><h3>Description</h3>{{objectData._source.description}}</div>
-    {{/if}}
-    <div><h3>Contributors</h3><ul>
-        {{#each objectData._source.lists.contributors as |contributor|}}
-            <li><a style="cursor: pointer;" {{action "transitionToFacet" "search" "contributors" contributor.id}}>{{contributor.name}}</a></li>
-        {{/each}}
-    </ul></div>
-    {{#if objectData._source.tags}}
-        <div><h3>Tags</h3>
-            {{#each objectData._source.tags as |tag|}}
-                <span {{action "transitionToFacet" "search" "tags" tag true on="click"}} style="cursor: pointer; display: inline-block; font-size: 12px; background-color: #7ec4dd; color: #fff; padding: 2px 5px 2px 5px ; border: 1px solid color: #6ebfd5; border-radius: 3px; margin: 3px;">{{tag}}</span>
-            {{/each}}
-        </div>
-    {{/if}}
+
+    <h3>Resource Type</h3>
+    <ul><li>{{objectData._source.type}}</li></ul>
+
     {{#if objectData._source.publishers}}
         <div>
             <h3>Data Providers</h3>
@@ -30,26 +19,62 @@
             </ul>
         </div>
     {{/if}}
-    <div>Date: {{objectData._source.date}}</div>
-    <div>Date Created: {{objectData._source.date_created}}</div>
-    <div>Date Modified: {{objectData._source.date_modified}}</div>
-    <div>Date Published: {{objectData._source.date_published}}</div>
-    <div>Date Updated: {{objectData._source.date_updated}}</div>
-    <div>Language: {{objectData._source.language}}</div>
 
-    {{#if objectData._source.identifiers}}
+    {{#if objectData._source.description}}
+        <div><h3>Description</h3>{{objectData._source.description}}</div>
+    {{/if}}
+
+    <div>
+        <h3>Contributors</h3>
+        <ul>
+            {{#each objectData._source.lists.contributors as |contributor|}}
+                <li><a style="cursor: pointer;" {{action "transitionToFacet" "search" "contributors" contributor.id}}>{{contributor.name}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+
+    {{#if objectData._source.affiliations}}
         <div>
-            <h3>Identifiers</h3>
+            <h3>Affiliations</h3>
             <ul>
-                {{#each objectData._source.identifiers as |identifier|}}
-                    <li>{{identifier}}</li>
+                {{#each objectData._source.affiliations as |affiliation|}}
+                  <li>{{affiliation}}</li>
                 {{/each}}
             </ul>
         </div>
     {{/if}}
 
-    <h3>Source Type</h3>
-    <ul><li>{{objectData._source.type}}</li></ul>
+    {{#if funders}}
+        <div>
+            <h3>Funders</h3>
+            <ul>
+                {{#each funders as |funder|}}
+                  <li>{{funder.name}}: ${{funder.awardTotal}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    {{/if}}
+
+    {{#if objectData._source.tags}}
+        <div><h3>Tags</h3>
+            {{#each objectData._source.tags as |tag|}}
+                <span {{action "transitionToFacet" "search" "tags" tag true on="click"}} style="cursor: pointer; display: inline-block; font-size: 12px; background-color: #7ec4dd; color: #fff; padding: 2px 5px 2px 5px ; border: 1px solid color: #6ebfd5; border-radius: 3px; margin: 3px;">{{tag}}</span>
+            {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if identifierURLs}}
+        <div>
+            <h3>Identifiers</h3>
+            <ul>
+                {{#each identifierURLs as |identifier|}}
+                    <li>
+                        <a href="{{identifier}}">{{identifier}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    {{/if}}
 
     {{#if objectData._source.sources}}
         <div>
@@ -61,6 +86,17 @@
             </ul>
         </div>
     {{/if}}
+
+    <div>
+        <h3>Dates</h3>
+        <ul>
+            <li>Date: {{objectData._source.date}}</li>
+            <li>Date Created: {{objectData._source.date_created}}</li>
+            <li>Date Modified: {{objectData._source.date_modified}}</li>
+            <li>Date Published: {{objectData._source.date_published}}</li>
+            <li>Date Updated: {{objectData._source.date_updated}}</li>
+        </ul>
+    </div>
 
     {{#if showJSON}}
         <h4 {{action toggleProperty 'showJSON'}} style="font-weight: 600; margin-top: 50px; cursor: pointer;">Hide Raw Data&nbsp;&nbsp;&nbsp;&nbsp;{{fa-icon "chevron-up"}}</h4>

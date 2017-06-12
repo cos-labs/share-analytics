@@ -637,6 +637,10 @@ nav.navbar {
     width: 25px;
 }
 
+.bold{
+    font-weight: bold;
+}
+
 /* override osf-style ball-dark spinner color */
 .ball-dark > div {
   background-color: #dbe2ef;

@@ -28,9 +28,8 @@ export default Ember.Component.extend({
      }),
     processData (data) {
         return data.map((datum) => {
-            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            var options = {year: 'numeric', month: 'long', day: 'numeric' };
             options.timeZone = 'UTC';
-            options.timeZoneName = 'short'
             if (datum._source.description) {
                 datum["description_truncated"] = datum._source.description.substring(0,200)+"..."
             }

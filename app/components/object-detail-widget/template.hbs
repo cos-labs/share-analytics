@@ -95,13 +95,13 @@
         <h3>Dates</h3>
         <ul>
             {{#if objectData._source.date_published}}
-                <li><span class='bold'>First published by Source:</span> {{objectData._source.date_published}}</li>
+                <li><strong>First published by Source:</strong> {{objectData._source.date_published}}</li>
              {{/if}}
              {{#if objectData._source.date_updated}}
-                <li><span class='bold'>Last updated by Source:</span> {{objectData._source.date_updated}}</li>
+                <li><strong>Last updated by Source:</strong> {{objectData._source.date_updated}}</li>
              {{/if}}
              {{#if objectData._source.date_modified}}
-                <li><span class='bold'>Last harvested by SHARE:</span> {{objectData._source.date_modified}}</li>
+                <li><strong>Last harvested by SHARE:</strong> {{objectData._source.date_modified}}</li>
             {{/if}}
 
         </ul>

@@ -1007,70 +1007,12 @@ export default Ember.Route.extend({
                         ]
                     },
                     {
-                            chartType: 'donut',
-                            widgetType: 'c3-chart',
-                            name: 'Awards',
-                            facetDash: "search",
-                            facetDashParameter: "funders",
-                            width: 6,
-                            mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
-                            post_body: {
-                                "aggregations": {
-                                    "funders": {
-                                        "terms": {
-                                            "field": "lists.funders.id.exact"
-                                        },
-                                        "aggs": {
-                                            "awards": {
-                                                "sum": {
-                                                    "script": {
-                                                        "lang": "expression",
-                                                        "inline": "doc['lists.funders.awards.amount'].sum()"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            postBodyParams: [
-                                {
-                                    parameterPath: ["query", "bool", "minimum_should_match"],
-                                    parameterName: "shouldMatch",
-                                    defaultValue: 1
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "should"],
-                                    defaultValue: ucsd_query
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                    parameterName: "sources"
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                    parameterName: "min_date",
-                                    defaultValue: gte
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                    parameterName: "max_date",
-                                    defaultValue: lte
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
-                                    parameterName: "date_range_format",
-                                    defaultValue: "yyyy-MM-dd||yyyy"
-                                }
-                            ]
-                        },
-                    {
                         chartType: 'tagsList',
                         widgetType: 'list-widget',
                         name: 'Top Tags',
                         facetDash: "search",
                         facetDashParameter: "tags",
-                        width: 6,
+                        width: 12,
                         dataType: 'tags',
                         post_body : {
                             from: 0,
@@ -1765,7 +1707,7 @@ export default Ember.Route.extend({
                         name: 'Data Providers',
                         facetDash: "search",
                         facetDashParameter: "publishers",
-                        width: 6,
+                        width: 12,
                         mappingType: "OBJECT_TO_ARRAY",
                         hideViewAll: !transition.queryParams.all,
                         widgetSettings : {
@@ -1818,64 +1760,6 @@ export default Ember.Route.extend({
                             }
                         ]
                     },
-                    {
-                            chartType: 'donut',
-                            widgetType: 'c3-chart',
-                            name: 'Awards',
-                            width: 6,
-                            facetDash: "search",
-                            facetDashParameter: "funders",
-                            mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
-                            post_body: {
-                                "aggregations": {
-                                    "funders": {
-                                        "terms": {
-                                            "field": "lists.funders.id.exact"
-                                        },
-                                        "aggs": {
-                                            "awards": {
-                                                "sum": {
-                                                    "script": {
-                                                        "lang": "expression",
-                                                        "inline": "doc['lists.funders.awards.amount'].sum()"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            postBodyParams: [
-                                {
-                                    parameterPath: ["query", "bool", "minimum_should_match"],
-                                    parameterName: "shouldMatch",
-                                    defaultValue: 1
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "should"],
-                                    defaultValue: ucsd_query
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                    parameterName: "sources"
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                    parameterName: "min_date",
-                                    defaultValue: gte
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                    parameterName: "max_date",
-                                    defaultValue: lte
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
-                                    parameterName: "date_range_format",
-                                    defaultValue: "yyyy-MM-dd||yyyy"
-                                }
-                            ]
-                        },
                     {
                         widgetType: "stacked-bars",
                         name: "Types",

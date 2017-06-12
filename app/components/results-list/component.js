@@ -4,13 +4,28 @@ import Ember from 'ember';
 export default Ember.Component.extend({
 
     data : [],
+    pagebackbtn : null,
+    pagenextbtn : null,
 
     init(){
         this._super(...arguments);
         let data = this.processData(this.get('data.hits.hits'));
-        this.set('data', data);
-    },
-
+        this.set('data', data); 
+    }, 
+    pagebackbtn: Ember.computed('page',  function() {
+        if(Number(this.parameters["page"]) == 0) {
+            return 'disable';
+        }else{
+            return null;
+        }
+     }),
+     pagenextbtn: Ember.computed('data',  function() {
+        if(this.get('data').length < 10){
+            return 'disable';
+        }else{
+            return null;
+        }
+     }),
     processData (data) {
         return data.map((datum) => {
             var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };

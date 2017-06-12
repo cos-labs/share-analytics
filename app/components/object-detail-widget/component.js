@@ -17,7 +17,33 @@ export default Ember.Component.extend({
 
     dataAsString: Ember.computed(function() {
         var data = this.get('data');
-        return JSON.stringify(data, null, '    ');
+
+        if (!library)
+           var library = {};
+
+        library.json = {
+           replacer: function(match, pIndent, pKey, pVal, pEnd) {
+              var key = '<span class=json-key>';
+              var val = '<span class=json-value>';
+              var str = '<span class=json-string>';
+              var r = pIndent || '';
+              if (pKey)
+                 r = r + key + pKey.replace(/[": ]/g, '') + '</span>: ';
+              if (pVal)
+                 r = r + (pVal[0] == '"' ? str : val) + pVal + '</span>';
+              return r + (pEnd || '');
+              },
+           prettyPrint: function(obj) {
+              var jsonLine = /^( *)("[\w]+": )?("[^"]*"|[\w.+-]*)?([,[{])?$/mg;
+              return JSON.stringify(obj, null, 3)
+                 .replace(/&/g, '&amp;').replace(/\\"/g, '&quot;')
+                 .replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                 .replace(jsonLine, library.json.replacer);
+              }
+           };
+
+        return library.json.prettyPrint(data);
+        //return JSON.stringify(data, null, '    ');
     }),
 
     identifierURLs: Ember.computed('objectData._source.identifiers', function() {

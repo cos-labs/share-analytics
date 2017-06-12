@@ -90,22 +90,15 @@ export default Ember.Component.extend({
 
     processData (data) {
             let datum = data.hits.hits[0];
-            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            var options = {year: 'numeric', month: 'long', day: 'numeric' };
             options.timeZone = 'UTC';
-            options.timeZoneName = 'short'
-            if (datum._source.date) {
-                datum["_source"]["date"] = (new Date(datum["_source"]["date"])).toLocaleDateString('en-US', options);
-            }
-            if (datum._source.date_created) {
-                datum["_source"]["date_created"] = (new Date(datum["_source"]["date_created"])).toLocaleDateString('en-US', options)
-            }
-            if (datum._source.date_modified) {
+            if (datum._source.date_modified) {//keep
                 datum["_source"]["date_modified"] = (new Date(datum["_source"]["date_modified"])).toLocaleDateString('en-US', options)
             }
-            if (datum._source.date_published) {
+            if (datum._source.date_published) {//keep
                 datum["_source"]["date_published"] = (new Date(datum["_source"]["date_published"])).toLocaleDateString('en-US', options)
             }
-            if (datum._source.date_updated) {
+            if (datum._source.date_updated) {//keep
                 datum["_source"]["date_updated"] = (new Date(datum["_source"]["date_updated"])).toLocaleDateString('en-US', options)
             }
             return datum;

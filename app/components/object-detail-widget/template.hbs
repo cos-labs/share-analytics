@@ -49,7 +49,11 @@
             <h3>Funders</h3>
             <ul>
                 {{#each funders as |funder|}}
-                  <li>{{funder.name}}: ${{funder.awardTotal}}</li>
+                  <li>{{funder.name}}
+                    {{#if funder.awardTotal}}
+                      : {{funder.currency}}{{funder.awardTotal}}
+                    {{/if}}
+                  </li>
                 {{/each}}
             </ul>
         </div>
@@ -105,7 +109,7 @@
 
     {{#if showJSON}}
         <h4 {{action toggleProperty 'showJSON'}} style="font-weight: 600; margin-top: 50px; cursor: pointer;">Hide Raw Data&nbsp;&nbsp;&nbsp;&nbsp;{{fa-icon "chevron-up"}}</h4>
-        <pre style="margin-bottom: 20px;">{{dataAsString}}</pre>
+        <pre style="margin-bottom: 20px;">{{{dataAsString}}}</pre>
     {{else}}
         <h4 {{action toggleProperty 'showJSON'}} style="font-weight: 600; margin-top: 50px; cursor: pointer;">View Raw Data&nbsp;&nbsp;&nbsp;&nbsp;{{fa-icon "chevron-down"}}</h4>
     {{/if}}

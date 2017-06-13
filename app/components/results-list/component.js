@@ -13,11 +13,12 @@ export default Ember.Component.extend({
         this.set('data', data); 
     }, 
     pagebackbtn: Ember.computed('page',  function() {
-        if(Number(this.parameters["page"]) == 0) {
-            return 'disable';
-        }else{
-            return null;
-        }
+          let page = Number(this.parameters['page']);
+          if (page == 0 || !page) {
+              return 'disable';
+          } else {
+              return null;
+          }
      }),
      pagenextbtn: Ember.computed('data',  function() {
         if(this.get('data').length < 10){
@@ -31,7 +32,7 @@ export default Ember.Component.extend({
             var options = {year: 'numeric', month: 'long', day: 'numeric' };
             options.timeZone = 'UTC';
             if (datum._source.description) {
-                datum["description_truncated"] = datum._source.description.substring(0,200)+"..."
+                datum['description_truncated'] = datum._source.description.substring(0,200)+'...'
             }
             if (datum._source.date) {
                 datum["_source"]["date"] = (new Date(datum["_source"]["date"])).toLocaleDateString('en-US', options);

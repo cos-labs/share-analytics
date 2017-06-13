@@ -13,11 +13,12 @@ export default Ember.Component.extend({
         this.set('data', data); 
     }, 
     pagebackbtn: Ember.computed('page',  function() {
-        if(Number(this.parameters["page"]) == 0) {
-            return 'disable';
-        }else{
-            return null;
-        }
+          let page = Number(this.parameters["page"]);
+          if (page == 0 || !page) {
+              return 'disable';
+          } else {
+              return null;
+          }
      }),
      pagenextbtn: Ember.computed('data',  function() {
         if(this.get('data').length < 10){

@@ -182,7 +182,14 @@ const tag_blacklist = [
 
 /* ucsd keywords to be  ommited from the contributor results. Goes into ucsd aggregation query under 'exclude' */
 const ucsd_blacklist = [
-
+  "64201-BDE-4D4", //"University of California, San Diego"
+  "641C6-0E9-04C",//"University of California [San Diego] (UC San Diego)",
+  "640E7-1AA-07C",//"University of California San Diego",
+  "6412C-4A8-62C", //"University of California: San Diego",
+  //"California Univ., San Diego",
+  //"University of California at San Diego",
+  "640B7-236-74F",//"Univ. of California",
+  "64020-818-87A"//"University of California"
 ]
 
 export default Ember.Route.extend({
@@ -960,13 +967,18 @@ export default Ember.Route.extend({
                         facetDash: "search",
                         facetDashParameter: "contributors",
                         dataType: 'contributors',
-                        post_body : {},
+                        post_body : {
+                            "aggregations": {
+                                "listWidgetData": {
+                                    "terms": {
+                                        "exclude": ucsd_blacklist,
+                                        "field": 'lists.contributors.id.exact',
+                                        "size": 9,
+                                    }
+                                }
+                            }
+                        },
                         postBodyParams: [
-                            {
-                                parameterPath: ["aggregations", "listWidgetData", "terms", "field"],
-                                parameterName: "contributors_id_field",
-                                defaultValue: "lists.contributors.id.exact"
-                            },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
                                 parameterName: "shouldMatch",
@@ -1145,14 +1157,15 @@ export default Ember.Route.extend({
                             "aggregations": {
                                 "listWidgetData": {
                                     "terms": {
+                                        "exclude": ucsd_blacklist,
                                         "field": 'lists.contributors.id.exact',
-                                        "size": 100
+                                        "size": 100,
                                     }
                                 }
                             }
                         },
                         postBodyParams: [
-                            {
+                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
                                 parameterName: "shouldMatch",
                                 defaultValue: 1
@@ -1170,6 +1183,7 @@ export default Ember.Route.extend({
                                 parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             }
+                        
                         ]
                     }
                 ]
@@ -1582,13 +1596,18 @@ export default Ember.Route.extend({
                         facetDash: "search",
                         facetDashParameter: "contributors",
                         dataType: 'contributors',
-                        post_body : {},
+                        post_body : {
+                            "aggregations": {
+                                "listWidgetData": {
+                                    "terms": {
+                                        "exclude": ucsd_blacklist,
+                                        "field": 'lists.contributors.id.exact',
+                                        "size": 9,
+                                    }
+                                }
+                            }
+                        },
                         postBodyParams: [
-                            {
-                                parameterPath: ["aggregations", "listWidgetData", "terms", "field"],
-                                parameterName: "contributors_id_field",
-                                defaultValue: "lists.contributors.id.exact"
-                            },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
                                 parameterName: "shouldMatch",

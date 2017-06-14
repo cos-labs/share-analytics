@@ -180,6 +180,11 @@ const tag_blacklist = [
   "vertebrates 550201* -- biochemistry-- tracer techniques"
 ]
 
+/* ucsd keywords to be  ommited from the contributor results. Goes into ucsd aggregation query under 'exclude' */
+const ucsd_blacklist = [
+
+]
+
 export default Ember.Route.extend({
 
     queryParams: {    //Ember queryParams, if any of the listed parameters change the page will refresh.

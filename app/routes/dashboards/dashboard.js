@@ -973,7 +973,7 @@ export default Ember.Route.extend({
                                     "terms": {
                                         "exclude": ucsd_blacklist,
                                         "field": 'lists.contributors.id.exact',
-                                        "size": 9,
+                                        "size": 9
                                     }
                                 }
                             }
@@ -1159,13 +1159,13 @@ export default Ember.Route.extend({
                                     "terms": {
                                         "exclude": ucsd_blacklist,
                                         "field": 'lists.contributors.id.exact',
-                                        "size": 100,
+                                        "size": 100
                                     }
                                 }
                             }
                         },
                         postBodyParams: [
-                             {
+                            {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
                                 parameterName: "shouldMatch",
                                 defaultValue: 1
@@ -1596,13 +1596,13 @@ export default Ember.Route.extend({
                         facetDash: "search",
                         facetDashParameter: "contributors",
                         dataType: 'contributors',
-                        post_body : {
+                        post_body: {
                             "aggregations": {
                                 "listWidgetData": {
                                     "terms": {
                                         "exclude": ucsd_blacklist,
                                         "field": 'lists.contributors.id.exact',
-                                        "size": 9,
+                                        "size": 9
                                     }
                                 }
                             }

@@ -180,7 +180,7 @@ const tag_blacklist = [
   "vertebrates 550201* -- biochemistry-- tracer techniques"
 ]
 
-/* ucsd keywords to be  ommited from the contributor results. Goes into ucsd aggregation query under 'exclude' */
+/* ucsd ID's to be  ommited from the contributor results. Goes into ucsd aggregation query under 'exclude' */
 const ucsd_blacklist = [
   "64201-BDE-4D4", //"University of California, San Diego"
   "641C6-0E9-04C",//"University of California [San Diego] (UC San Diego)",

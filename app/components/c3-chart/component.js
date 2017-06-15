@@ -79,14 +79,14 @@ export default Ember.Component.extend({
         if (this.get('name') === 'Data Providers') {
             this.processData(this.get("aggregations.publishers.buckets"))
         }
-        if (this.get('name') === "Awards") {
+        if (this.get('name') === "Funders") {
             this.processData(this.get('aggregations.funders.buckets'));
         }
     },
 
 
     processData: async function(data) {
-        if (this.get('name') === 'Data Providers' || this.get('name') === 'Awards') {
+        if (this.get('name') === 'Data Providers' || this.get('name') === 'Funders') {
             let agent_details = await Ember.$.ajax({
                 url: 'https://dev-labs.cos.io/bulk_get_agents',
                 crossDomain: true,

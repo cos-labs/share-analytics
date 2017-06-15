@@ -5,6 +5,10 @@
     </div>
   {{/if}}
 
+
+  {{#if widgetSettings.showFilter}}
+      {{dropdown-widget widgetSettings=widgetSettings aggregations=aggregations parameters=parameters item=item data=data transitionToFacet=(action 'parentTransitionToFacet')}}
+  {{/if}}
     <div class="renderChart"></div>
     {{#if data.length}}
         {{#if widgetSettings.viewAllRoute}}

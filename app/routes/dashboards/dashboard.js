@@ -1004,7 +1004,7 @@ export default Ember.Route.extend({
                     {
                             chartType: 'donut',
                             widgetType: 'c3-chart',
-                            name: 'Awards',
+                            name: 'Funders',
                             facetDash: "search",
                             facetDashParameter: "funders",
                             width: 6,

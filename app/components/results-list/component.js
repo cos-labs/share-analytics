@@ -62,30 +62,18 @@ export default Ember.Component.extend({
         },
 
         pageback() {
-            let queryParams = {};
             let page = Number(this.parameters["page"]);
-            if (!page) {
-                page = 0;
+            if (!page || --page < 1) { // decrements and modifies page var before the comparison
+                page = 1;
             }
-            page = page-10;
-            if (page < 0) {
-                page = 0;
-            }
-            queryParams["page"] = page
-            this.attrs.transitionToFacet("search", queryParams);
+            this.attrs.transitionToFacet("search", {page: page})
         },
         pagenext() {
-            let queryParams = {};
             let page = Number(this.parameters["page"]);
-            if (!page) {
-                page = 0;
+            if (!page || ++page < 1) { // increments and modifies page var before the comparison
+                page = 1;
             }
-            page = page+10;
-            if (page < 0) {
-                page = 0;
-            }
-            queryParams["page"] = page
-            this.attrs.transitionToFacet("search", queryParams);
+            this.attrs.transitionToFacet("search", {page: page})
         }
 
     }

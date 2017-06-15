@@ -358,13 +358,15 @@ export default Ember.Route.extend({
                             {
                                 parameterName: "funders",
                                 parameterPath: ["query", "bool", "filter", 5, "term", "lists.funders.id.exact"]
-                            },
-                            {
+                            }, {
+                                parameterName: "page",
+                                parameterPath: ["from"],
+                                defaultValue: 1
+                            }, {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
                                 parameterName: "start",
                                 defaultValue: gte
-                            },
-                            {
+                            }, {
                                 parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
                                 parameterName: "end",
                                 defaultValue: lte
@@ -1719,7 +1721,11 @@ export default Ember.Route.extend({
 
                     let parameter_value;
                     if (param.parameterName in transition.queryParams) {
-                        parameter_value = transition.queryParams[param.parameterName];
+                        if (param.parameterName === "page") {
+                            parameter_value = (Number(transition.queryParams[param.parameterName])*10)-10;
+                        } else {
+                            parameter_value = transition.queryParams[param.parameterName];
+                        }
                     } else if ("defaultValue" in param) {
                         parameter_value = param.defaultValue;
                     } else {

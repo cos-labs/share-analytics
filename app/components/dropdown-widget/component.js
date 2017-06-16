@@ -28,14 +28,32 @@ export default Ember.Component.extend({
         // Show the selected parameter
         let queryParams = this.get('parameters');
         var facet = this.get("item.facetDashParameter");
+
         if(queryParams[facet]){
             if(facet === 'type'){
                 this.set('selectedType', queryParams[facet]);
+            } else if (facet === 'funders' || facet === 'publishers') {
+                let id = { key : queryParams[facet] }
+                this.fetchAgentDetails([id]).then((data) => {
+                    if(data[0]){
+                        this.set('enteredItem', data[0].name);
+                    }
+                });
             } else {
                 this.set('enteredItem', queryParams[facet]);
             }
 
         }
+    },
+    fetchAgentDetails: async function(agentList) {
+      let agent_details = await Ember.$.ajax({
+        url: 'https://dev-labs.cos.io/bulk_get_agents',
+        crossDomain: true,
+        data: JSON.stringify(agentList),
+        type: 'POST',
+        contentType: 'application/json'
+      });
+      return JSON.parse(agent_details);
     },
     outsideClick(event){
         if(!this.get('showList')){ return;}

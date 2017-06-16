@@ -62,7 +62,7 @@ You will need the following things properly installed on your computer.
 * `npm install`
 * `bower install`
 * `yarn install --lockfile`
-* set up your config/local.yml (If this file does not exist, you may need to `ember g`)
+* set up your config/local.yml (If this file does not exist, you may need to `ember g` or copy from below)
 ```prod:
     CLIENT_ID: Add your client id here
     PERSONAL_ACCESS_TOKEN:

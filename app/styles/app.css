@@ -558,7 +558,7 @@ nav.navbar {
     -moz-box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
     box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
     border-radius: 2px;
-
+    height: 120px
 }
 
 
@@ -635,15 +635,15 @@ nav.navbar {
 .share-small {
     height: 12px;
     width: 25px;
-} 
+}
 
 /*JSON pretty print*/
-   
+
 pre {
    background-color: ghostwhite;
    border: 1px solid silver;
    padding: 10px 20px;
-   margin: 20px; 
+   margin: 20px;
    }
 .json-key {
    color: brown;

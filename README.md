@@ -63,11 +63,11 @@ You will need the following things properly installed on your computer.
 * `bower install`
 * `yarn install --lockfile`
 * set up your config/local.yml (If this file does not exist, you may need to `ember g`)
-`prod:
+```prod:
     CLIENT_ID: Add your client id here
     PERSONAL_ACCESS_TOKEN:
     OAUTH_SCOPES: osf.full_read osf.full_write
-    REDIRECT_URI: http://localhost:4200/`
+    REDIRECT_URI: http://localhost:4200/```
 
 ### Running / Development
 

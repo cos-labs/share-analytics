@@ -67,8 +67,8 @@ You will need the following things properly installed on your computer.
     CLIENT_ID: Add your client id here
     PERSONAL_ACCESS_TOKEN:
     OAUTH_SCOPES: osf.full_read osf.full_write
-    REDIRECT_URI: http://localhost:4200/```
-
+    REDIRECT_URI: http://localhost:4200/
+```
 ### Running / Development
 
 * `ember serve`

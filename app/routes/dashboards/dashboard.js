@@ -505,7 +505,10 @@ export default Ember.Route.extend({
                         facetDashParameter: "publishers",
                         hideViewAll: !transition.queryParams.all,
                         widgetSettings : {
-                            viewAllRoute: 'providers'
+                          viewAllRoute: 'providers',
+                          showFilter: true,
+                          mode: 'search',
+                          aggregationTitle: 'publishers'
                         },
                         post_body: {},
                         postBodyParams: [

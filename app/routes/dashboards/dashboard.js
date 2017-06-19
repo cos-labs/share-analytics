@@ -178,7 +178,7 @@ const tag_blacklist = [
   "transition element compounds 360204* -- ceramics",
   "uniform resource locator/link to image",
   "vertebrates 550201* -- biochemistry-- tracer techniques"
-]
+];
 
 /* ucsd ID's to be  ommited from the contributor results. Goes into ucsd aggregation query under 'exclude' */
 const ucsd_blacklist = [
@@ -190,7 +190,7 @@ const ucsd_blacklist = [
   //"University of California at San Diego",
   "640B7-236-74F",//"Univ. of California",
   "64020-818-87A"//"University of California"
-]
+];
 
 export default Ember.Route.extend({
 
@@ -218,7 +218,7 @@ export default Ember.Route.extend({
     }),
 
     /* Resets query parameters to undefined when leaving dashboard route*/
-    resetController: function(controller, isExiting, transition) {
+    resetController: function(controller, isExiting) {
         this._super.apply(this, arguments);
 
         if (isExiting) {
@@ -236,6 +236,7 @@ export default Ember.Route.extend({
             controller.set("page", undefined);
         }
     },
+
     model: function(params, transition, queryParams) {
         let gte = this.get('gte');
         let lte = this.get('lte');
@@ -341,7 +342,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "tags",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags.exact"]
                             },
                             {
                                 parameterName: "publishers",
@@ -361,7 +362,7 @@ export default Ember.Route.extend({
                             }, {
                                 parameterName: "page",
                                 parameterPath: ["from"],
-                                defaultValue: 1
+                                defaultValue: 0
                             }, {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
                                 parameterName: "start",
@@ -405,7 +406,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "tags",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags.exact"]
                             },
                             {
                                 parameterName: "publishers",
@@ -1185,7 +1186,6 @@ export default Ember.Route.extend({
                                 parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             }
-                        
                         ]
                     }
                 ]
@@ -1731,7 +1731,7 @@ export default Ember.Route.extend({
                     } else {
                         return;
                     }
-                    let path_parts = param.parameterPath.slice(0, -1)
+                    let path_parts = param.parameterPath.slice(0, -1);
                     let parameter_key = param.parameterPath[param.parameterPath.length-1];
                     let nested_object = path_parts.reduce((nested, pathPart) => {
                         if (!nested[pathPart]) {
@@ -1742,7 +1742,7 @@ export default Ember.Route.extend({
                             }
                         }
                         return nested[pathPart];
-                    }, widget.post_body) // Uses the actual object; changes made on nested change the original.
+                    }, widget.post_body); // Uses the actual object; changes made on nested change the original.
 
                     nested_object[parameter_key] = parameter_value;
 
@@ -1768,7 +1768,7 @@ export default Ember.Route.extend({
             controller.set('query', model.dashboard.query);
         }
 
-        controller.set('parameters', model.parameters)
+        controller.set('parameters', model.parameters);
 
         controller.set('institutionName', "eScholarship @ University of California");
         controller.set('wrapperClass', model.dashboard.wrapperClass);

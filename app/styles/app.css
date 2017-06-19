@@ -553,14 +553,21 @@ nav.navbar {
     margin: 20px auto;
     margin-bottom: 50px;
     display: block;
-    padding: 10px 10px 10px 10px;
     -webkit-box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
     -moz-box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
     box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
     border-radius: 2px;
-
+    height: 120px
 }
 
+.related-services-button img {
+    max-height: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 .service-box img {
     display: block;
@@ -635,15 +642,15 @@ nav.navbar {
 .share-small {
     height: 12px;
     width: 25px;
-} 
+}
 
 /*JSON pretty print*/
-   
+
 pre {
    background-color: ghostwhite;
    border: 1px solid silver;
    padding: 10px 20px;
-   margin: 20px; 
+   margin: 20px;
    }
 .json-key {
    color: brown;

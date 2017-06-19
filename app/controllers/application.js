@@ -8,19 +8,24 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({//OsfAgnosticAuthControllerMixin,{
     toast: Ember.inject.service(),
-    //authUrl: getAuthUrl(),
     actions: {
-        //loginSuccess() {
-           // this.transitionToRoute('researcher.grant');
-        //},
-        //loginFail(/* err */) {
-        //    this.get('toast').error('Login failed');
-        //}
-        transitionToUCSDDashboard(){
-            console.log(window.location.href = "")
-            this.transitionToRoute("dashboards.dashboard" , "ucsd");
-
-
+        transitionToHome(){  
+            this.transitionToRoute("dashboards.dashboard", "ucsd", {
+                queryParams: {
+                    all: undefined,
+                    sources: undefined,
+                    id: undefined,
+                    contributors: undefined,
+                    publishers: undefined,
+                    tags: undefined,
+                    query: undefined,
+                    type: undefined,
+                    funders: undefined,
+                    start: undefined,
+                    end: undefined,
+                    page: undefined
+                }
+            });
         }
     }
 });

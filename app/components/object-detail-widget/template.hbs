@@ -1,8 +1,8 @@
 <div class="object-detail">
-    <h1 style="padding: 120px 50px 80px 50px; text-align: center; margin: 0; background-color: #eee; overflow: hidden; position: relative; border-radius: 2px; border-bottom: 1px solid rgba(0,0,0,0.2); margin-bottom: 50px;">
+    <h1>
         {{{objectData._source.title}}}<br>
         {{#if dataUrl}}
-        <a class="btn btn-md" href="{{dataUrl}}" style="display: inline-block; background-color: #bbb; color: #fff; padding: 10px 30px; font-size: 17px; border-radius: 2px; font-weight: 600; margin-top: 30px;">Access Resource</a>
+        <a class="btn btn-md object-detail-button" href="{{dataUrl}}">Access Resource</a>
         {{/if}}
     </h1>
 
@@ -28,7 +28,7 @@
         <h3>Contributors</h3>
         <ul>
             {{#each objectData._source.lists.contributors as |contributor|}}
-                <li><a style="cursor: pointer;" {{action "transitionToFacet" "search" "contributors" contributor.id}}>{{contributor.name}}</a></li>
+                <li><a class="pointer" {{action "transitionToFacet" "search" "contributors" contributor.id}}>{{contributor.name}}</a></li>
             {{/each}}
         </ul>
     </div>
@@ -62,7 +62,7 @@
     {{#if objectData._source.tags}}
         <div><h3>Tags</h3>
             {{#each objectData._source.tags as |tag|}}
-                <span {{action "transitionToFacet" "search" "tags" tag true on="click"}} style="cursor: pointer; display: inline-block; font-size: 12px; background-color: #7ec4dd; color: #fff; padding: 2px 5px 2px 5px ; border: 1px solid color: #6ebfd5; border-radius: 3px; margin: 3px;">{{tag}}</span>
+                <span class="pointer object-tag" {{action "transitionToFacet" "search" "tags" tag true on="click"}} >{{tag}}</span>
             {{/each}}
         </div>
     {{/if}}
@@ -108,10 +108,10 @@
     </div>
 
     {{#if showJSON}}
-        <h4 {{action toggleProperty 'showJSON'}} style="font-weight: 600; margin-top: 50px; cursor: pointer;">Hide Raw Data&nbsp;&nbsp;&nbsp;&nbsp;{{fa-icon "chevron-up"}}</h4>
-        <pre style="margin-bottom: 20px;">{{{dataAsString}}}</pre>
+        <h4 {{action toggleProperty 'showJSON'}} class="pointer">Hide Raw Data&nbsp;&nbsp;&nbsp;&nbsp;{{fa-icon "chevron-up"}}</h4>
+        <pre>{{{dataAsString}}}</pre>
     {{else}}
-        <h4 {{action toggleProperty 'showJSON'}} style="font-weight: 600; margin-top: 50px; cursor: pointer;">View Raw Data&nbsp;&nbsp;&nbsp;&nbsp;{{fa-icon "chevron-down"}}</h4>
+        <h4 {{action toggleProperty 'showJSON'}} class="pointer">View Raw Data&nbsp;&nbsp;&nbsp;&nbsp;{{fa-icon "chevron-down"}}</h4>
     {{/if}}
 
 </div>

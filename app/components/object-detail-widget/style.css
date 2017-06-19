@@ -1,0 +1,59 @@
+.object-detail {
+    margin: 0;
+    padding: 0 10px;
+}
+
+.object-detail > div {
+    margin-top: 10px;
+    margin-bottom: 8px
+}
+
+.object-detail > div > span.label {
+    font-weight: 600;
+}
+
+.object-detail h5 {
+    margin-top: 30px;
+}
+
+.object-detail h4 {
+  font-weight: 600;
+  margin-top: 50px;
+}
+
+.object-detail h1 {
+    padding: 120px 50px 80px 50px;
+    text-align: center; margin: 0;
+    background-color: #eee;
+    overflow: hidden; position:
+    relative; border-radius: 2px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    margin-bottom: 50px;
+}
+
+.object-detail pre {
+  margin-bottom: 20px;
+}
+
+.object-detail-button {
+  display: inline-block;
+  background-color: #bbb;
+  color: #fff;
+  padding: 10px 30px;
+  font-size: 17px;
+  border-radius: 2px;
+  font-weight: 600;
+  margin-top: 30px;
+}
+
+.object-tag {
+  display: inline-block;
+  font-size: 12px;
+  background-color: #7ec4dd;
+  color: #fff;
+  padding: 2px 5px 2px 5px;
+  border: 1px solid
+  color: #6ebfd5;
+  border-radius: 3px;
+  margin: 3px;
+}

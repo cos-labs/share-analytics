@@ -4,6 +4,33 @@
     cursor: pointer;
 }
 
+.main-application {
+  display: flex;
+  min-height:100vh;
+  flex-direction: column;
+}
+
+.dashboard {
+    padding-bottom: 80px;
+    padding-top: 70px;
+    background: url("/images/ucsd-geisel-bg-light.png");
+    background-position: left -150% top -10px;
+    background-size: 75%;
+    flex: 1 0 auto;
+    overflow:hidden;
+}
+
+.dashboard:after {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
 .ucsd_header {
     position: fixed;
     overflow: hidden;
@@ -26,6 +53,7 @@
 .navbar-brand:hover {
     opacity: 0.8;
 }
+
 /* light blue 006A96 */
 .ucsd_header img {
     height: 30px;
@@ -33,63 +61,42 @@
     margin-top: 12px;
 }
 
-.object-detail {
-    margin: 0;
-    padding: 0 10px;
-}
-
-.object-detail > div {
-    margin-top: 10px;
-    margin-bottom: 8px
-}
-
-.object-detail > div > span.label {
-    font-weight: 600;
-}
-
-.object-detail h5 {
-    margin-top: 30px;
-}
-
-.is-link {
-    cursor: pointer;
-}
-.is-link:hover {
-    opacity: 0.8;
-}
-.dashboard {
-    padding-bottom: 80px;
-    padding-top: 70px;
-    background: url("/images/ucsd-geisel-bg-light.png");
-    background-position: left -150% top -10px;
-    background-size: 75%;
-}
-
-.dashboard:after {
-    content : "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: -1;
-    overflow: hidden;
-}
-
-.dashboard > .container {
-    padding: 0;
-}
-
-.wrapper h2 {
-    color: #fff;
-}
 /* light grey 747678 */
-.related_services {
+.related-services {
     background-color:#00668d;
     border-top: 3px solid #FFCD00;
     -webkit-box-shadow: 0px 0px 100px 15px rgba(0, 0, 0, 0.5);
     -moz-box-shadow:    0px 0px 100px 15px rgba(0, 0, 0, 0.5);
     box-shadow:         0px 0px 100px 15px rgba(0, 0, 0, 0.5);
+    clear: both
+}
+
+.related-services-button {
+    background-color: #ffcd00;
+    border: 1px solid rgba(0,0,0,0.2);
+    color: #333;
+    margin: 20px auto;
+    margin-bottom: 50px;
+    display: block;
+    -webkit-box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
+    box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
+    border-radius: 2px;
+    height: 120px
+}
+
+.related-services-button img {
+    max-height: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.container.copyright a {
+    color: #fff;
+    font-weight: 800;
 }
 
 .container.copyright {
@@ -104,15 +111,39 @@
     box-shadow: inset 0px 3px 20px 3px -rgba(0,0,0,0.3)
 }
 
+
+
+/*index.hbs in template*/
+.available-dashes {
+    margin: 30px 15px;
+    padding: 15px;
+}
+
+.available-dashes > a {
+    text-decoration: none;
+}
+
+.available-dashes > a:hover {
+    text-decoration: none;
+}
+
+.is-link {
+    cursor: pointer;
+}
+.is-link:hover {
+    opacity: 0.8;
+}
+
+.wrapper h2 {
+    color: #fff;
+}
+
 .widgetpicker {
     overflow: hidden;
 }
+
 footer.footer {
     margin: 0;
-}
-.container.copyright a {
-    color: #fff;
-    font-weight: 800;
 }
 /* Single-width element */
 .grid-item {
@@ -471,49 +502,6 @@ nav.navbar {
     padding-bottom: 20px;
 }
 
-.filter-plaques {
-    color: #fff;
-    background-color: rgba(0,0,0,0);
-    padding-bottom: 20px;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    padding: 0;
-    min-height: 0;
-    margin: 0;
-}
-
-.filter-plaques-container {
-    padding: 0;
-}
-
-.available-dashes {
-    margin: 30px 15px;
-}
-
-.available-dashes > a {
-    text-decoration: none;
-}
-
-.available-dashes > a:hover {
-    text-decoration: none;
-}
-
-.filter-plaques .filter-plaque {
-
-    margin-right: 15px;
-    margin-bottom: 12px;
-    background-color: #552266;
-    padding: 9px 13px;
-    border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 2px;
-    float: left;
-    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
-    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
-    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
-
-}
-
 .query-widget .search-box {
     display: block;
     font-size: 20px;
@@ -544,29 +532,6 @@ nav.navbar {
     background-color: #FFCD00;
     border: 1px solid #ffcd00;
     border-left: 1px solid #ccc;
-}
-
-.related-services-button {
-    background-color: #ffcd00;
-    border: 1px solid rgba(0,0,0,0.2);
-    color: #333;
-    margin: 20px auto;
-    margin-bottom: 50px;
-    display: block;
-    -webkit-box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
-    -moz-box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
-    box-shadow: 0px 5px 25px -5px rgba(0,0,0,0.3);
-    border-radius: 2px;
-    height: 120px
-}
-
-.related-services-button img {
-    max-height: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .service-box img {
@@ -608,40 +573,6 @@ nav.navbar {
 
 .index-page h4 {
     font-size: 22px;
-}
-.widget-stackedBar {
-    height: 50px;
-    margin: 10px 5px;
-}
-.widget-stackedBar .stack {
-    float: left;
-    min-height: 65px;
-    font-size: 13px;
-    padding-top:15px;
-    padding-bottom: 1px;
-    color: #ffffff;
-    text-align: center;
-    cursor: pointer;
-    margin-bottom: 10px;
-}
-.widget-stackedBar .stack:hover {
-    opacity: 0.7;
-}
-.widget-body.text-widget {
-    padding: 20px
-}
-.widget-body.text-widget.summary {
-    padding: 10px;
-}
-.widget-body.text-widget.summary  div{
-    font-size: 15px;
-    line-height: 30px;
-    margin: 0;
-}
-
-.share-small {
-    height: 12px;
-    width: 25px;
 }
 
 /*JSON pretty print*/

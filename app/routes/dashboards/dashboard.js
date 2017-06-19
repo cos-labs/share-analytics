@@ -406,8 +406,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "tags",
-                                parameterPath: ["query", "bool", "filter", 1, "
-                                term", "tags.exact"]
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags.exact"]
                             },
                             {
                                 parameterName: "publishers",

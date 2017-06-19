@@ -218,7 +218,7 @@ export default Ember.Route.extend({
     }),
 
     /* Resets query parameters to undefined when leaving dashboard route*/
-    resetController: function(controller, isExiting) {
+    resetController: function(controller, isExiting, transition) {
         this._super.apply(this, arguments);
 
         if (isExiting) {

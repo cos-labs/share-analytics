@@ -45,10 +45,7 @@
     margin-bottom: 20px;
 }
 
-/*.configureButton {
-    display: none;
-    float: right;
-    line-height: 10px;
-    position: relative;
-    z-index: 1000;
-}*/
+/* override osf-style ball-dark spinner color */
+.ball-dark > div {
+  background-color: #dbe2ef;
+}

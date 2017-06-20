@@ -238,12 +238,6 @@ pre {
     margin-bottom: 7px;
 }
 
-
-/* override osf-style ball-dark spinner color */
-.ball-dark > div {
-  background-color: #dbe2ef;
-}
-
 /* Tooltip Styles from : https://chrisbracco.com/a-simple-css-tooltip/ */
 
 /* Add this attribute to the element that needs a tooltip */

@@ -662,6 +662,10 @@ pre {
    color: olive;
    }
 
+.btn-info {
+    margin-bottom: 7px;
+}
+
 
 /* override osf-style ball-dark spinner color */
 .ball-dark > div {

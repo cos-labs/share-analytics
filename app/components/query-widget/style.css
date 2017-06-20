@@ -1,0 +1,37 @@
+.query-widget {
+    color: #fff;
+    background-color: rgba(0,0,0,0.65);
+    padding-bottom: 20px;
+}
+
+.query-widget .search-box {
+    display: block;
+    font-size: 20px;
+    color: #000;
+    border-radius: 2px;
+    border: none;
+}
+
+.query-widget .form-group {
+    margin: 20px auto;
+    width: 700px;
+    max-width: 100%;
+}
+.query-widget .form-group .input-group input.form-control {
+    height: 40px;
+
+}
+.query-widget .form-group .input-group input.form-control,
+.query-widget .form-group .input-group .input-group-btn button  {
+    font-size: 20px !important;
+    line-height: 20px;
+    padding: 12px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+
+}
+.query-widget .form-group .input-group .input-group-btn button  {
+    background-color: #FFCD00;
+    border: 1px solid #ffcd00;
+    border-left: 1px solid #ccc;
+}

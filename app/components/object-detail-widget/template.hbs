@@ -62,7 +62,7 @@
     {{#if objectData._source.tags}}
         <div><h3>Tags</h3>
             {{#each objectData._source.tags as |tag|}}
-                <span class="pointer object-tag" {{action "transitionToFacet" "search" "tags" tag true on="click"}} >{{tag}}</span>
+                <span class="object-tag" {{action "transitionToFacet" "search" "tags" tag true on="click"}} >{{tag}}</span>
             {{/each}}
         </div>
     {{/if}}

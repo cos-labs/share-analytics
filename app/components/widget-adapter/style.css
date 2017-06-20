@@ -1,0 +1,54 @@
+.picking > .widgetpicker {
+    display: block;
+}
+
+.picking > .configmenu {
+    display: none;
+}
+
+.picking > .chart {
+    display: none;
+}
+
+.widgetpicker {
+    overflow: hidden;
+    display: none;
+}
+
+.configuring > .widget > .configmenu {
+    display: block;
+}
+
+.configuring > .widget > .chart {
+    display: none;
+}
+
+.configuring > .widget > .widgetpicker {
+    display: none;
+}
+
+.configmenu {
+    display: none;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.widgetButtons {
+    z-index: 1000;
+    position: relative;
+    min-height: 5px;
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+.index-page .widgetButtons {
+    margin-bottom: 20px;
+}
+
+/*.configureButton {
+    display: none;
+    float: right;
+    line-height: 10px;
+    position: relative;
+    z-index: 1000;
+}*/

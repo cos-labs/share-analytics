@@ -230,7 +230,7 @@ const tag_blacklist = [
   "transition element compounds 360204* -- ceramics",
   "uniform resource locator/link to image",
   "vertebrates 550201* -- biochemistry-- tracer techniques"
-]
+];
 
 /* ucsd ID's to be  ommited from the contributor results. Goes into ucsd aggregation query under 'exclude' */
 const ucsd_blacklist = [
@@ -242,7 +242,7 @@ const ucsd_blacklist = [
   //"University of California at San Diego",
   "640B7-236-74F",//"Univ. of California",
   "64020-818-87A"//"University of California"
-]
+];
 
 export default Ember.Route.extend({
 
@@ -288,6 +288,7 @@ export default Ember.Route.extend({
             controller.set("page", undefined);
         }
     },
+
     model: function(params, transition, queryParams) {
         let gte = this.get('gte');
         let lte = this.get('lte');
@@ -393,7 +394,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "tags",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags.exact"]
                             },
                             {
                                 parameterName: "publishers",
@@ -413,7 +414,7 @@ export default Ember.Route.extend({
                             }, {
                                 parameterName: "page",
                                 parameterPath: ["from"],
-                                defaultValue: 1
+                                defaultValue: 0
                             }, {
                                 parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
                                 parameterName: "start",
@@ -457,7 +458,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "tags",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "tags"]
+                                parameterPath: ["query", "bool", "filter", 1, "term", "tags.exact"]
                             },
                             {
                                 parameterName: "publishers",
@@ -853,8 +854,8 @@ export default Ember.Route.extend({
                         "<p>SHARE is funded by the <a href='http://www.imls.gov/'> Institute of Museum and Library Services</a> and the <a href='http://www.sloan.org/'>Alfred P. Sloan Foundation</a>. The SHARE initiative was founded in 2013 by <a href='http://www.arl.org/'>ARL</a>, the <a href='http://www.aau.edu/'>Association of American Universities (AAU)</a>, and the <a href='http://www.aplu.org/'>Association of Public and Land-grant Universities (APLU)</a>.</p>" +
                         "<p>TritonSHARE is a joint development effort between the SHARE team and the UC San Diego Library. The Library team includes members of the Research Data Curation, Metadata Services and Information Technology Programs.</p>" +
                         "<h4><b>How do I get my data listed in the catalog?</b></h4>" +
-                        "<p>SHARE harvests metadata about research output from <a href='https://share.osf.io/sources'>146 sources</a> around the world. If your work has been indexed by any of these sources, its metadata has been or can be harvested by SHARE. For your data to be represented in TritonSHARE, however, it must be clearly identified as coming from UC San Diego. How this is done will vary by source. For help, please contact the <a href='mailto:research-data-curation@ucsd.edu'>Research Data Curation Program (RDCP) at the UC San Diego Library</a>.</p>" +
-                        "<p>In addition to these sources, the Library can manually enter information you provide about your research data into the SHARE catalog. The Library also hosts a data repository, the UC San Diego Library Digital Collections, one of the many sources harvested by SHARE. <a href='mailto:research-data-curation@ucsd.edu'>Contact RDCP</a> for more information on entering information about your published data into SHARE or depositing your data into the Digital Collections. </p>" +
+                        "<p>SHARE harvests metadata about research output from <a href='https://share.osf.io/sources'>over 150 sources</a> around the world. If your work has been indexed by any of these sources, its metadata has been or can be harvested by SHARE. For your data to be represented in TritonSHARE, however, it must be clearly identified as coming from UC San Diego. How this is done will vary by source. For help, please contact the <a href='mailto:research-data-curation@ucsd.edu'>Research Data Curation Program (RDCP)</a> at the UC San Diego Library.</p>" +
+                        "<p>In addition to these sources, the Library can manually enter information you provide about your research data into the SHARE catalog. The Library also hosts a data repository, the <a href='http://library.ucsd.edu/dc'>UC San Diego Library Digital Collections</a>, one of the many sources harvested by SHARE. <a href='mailto:research-data-curation@ucsd.edu'>Contact RDCP</a> for more information on entering information about your published data into SHARE or depositing your data into the Digital Collections. </p>" +
                         "<h4><b>I see an error in the representation of my data! How do I correct it? How do I add more or better metadata for my research into the catalog?</b></h4>" +
                         "<p>Because SHARE harvests from many sources, there will be different answers to this question. While we can update the information in SHARE, we would ideally also correct the original source. <a href='mailto:research-data-curation@ucsd.edu'>Contact RDCP</a> for help.</p>"
                     }
@@ -1237,7 +1238,6 @@ export default Ember.Route.extend({
                                 parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             }
-                        
                         ]
                     }
                 ]
@@ -1783,7 +1783,7 @@ export default Ember.Route.extend({
                     } else {
                         return;
                     }
-                    let path_parts = param.parameterPath.slice(0, -1)
+                    let path_parts = param.parameterPath.slice(0, -1);
                     let parameter_key = param.parameterPath[param.parameterPath.length-1];
                     let nested_object = path_parts.reduce((nested, pathPart) => {
                         if (!nested[pathPart]) {
@@ -1794,7 +1794,7 @@ export default Ember.Route.extend({
                             }
                         }
                         return nested[pathPart];
-                    }, widget.post_body) // Uses the actual object; changes made on nested change the original.
+                    }, widget.post_body); // Uses the actual object; changes made on nested change the original.
 
                     nested_object[parameter_key] = parameter_value;
 
@@ -1820,7 +1820,7 @@ export default Ember.Route.extend({
             controller.set('query', model.dashboard.query);
         }
 
-        controller.set('parameters', model.parameters)
+        controller.set('parameters', model.parameters);
 
         controller.set('institutionName', "eScholarship @ University of California");
         controller.set('wrapperClass', model.dashboard.wrapperClass);

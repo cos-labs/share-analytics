@@ -1,0 +1,31 @@
+.object-detail-widget .object-detail > div > span.label {
+    font-weight: 600;
+}
+
+.object-detail-widget .object-detail h5 {
+    margin-top: 30px;
+}
+
+.object-detail-widget .object-detail-button {
+  display: inline-block;
+  background-color: #bbb;
+  color: #fff;
+  padding: 10px 30px;
+  font-size: 17px;
+  border-radius: 2px;
+  font-weight: 600;
+  margin-top: 30px;
+}
+
+.object-detail-widget .object-tag {
+  display: inline-block;
+  font-size: 12px;
+  background-color: #7ec4dd;
+  color: #fff;
+  padding: 2px 5px 2px 5px;
+  border: 1px solid
+  color: #6ebfd5;
+  border-radius: 3px;
+  margin: 3px;
+  cursor: pointer;
+}

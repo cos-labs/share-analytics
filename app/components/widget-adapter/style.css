@@ -1,0 +1,51 @@
+.picking > .widgetpicker {
+    display: block;
+}
+
+.picking > .configmenu {
+    display: none;
+}
+
+.picking > .chart {
+    display: none;
+}
+
+.widgetpicker {
+    overflow: hidden;
+    display: none;
+}
+
+.configuring > .widget > .configmenu {
+    display: block;
+}
+
+.configuring > .widget > .chart {
+    display: none;
+}
+
+.configuring > .widget > .widgetpicker {
+    display: none;
+}
+
+.configmenu {
+    display: none;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.widgetButtons {
+    z-index: 1000;
+    position: relative;
+    min-height: 5px;
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+.index-page .widgetButtons {
+    margin-bottom: 20px;
+}
+
+/* override osf-style ball-dark spinner color */
+.ball-dark > div {
+  background-color: #dbe2ef;
+}

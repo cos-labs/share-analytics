@@ -1,0 +1,10 @@
+.agent-detail-widget .object-detail > h1 > span {
+  display: inline-block;
+  background-color: #bbb;
+  color: #fff;
+  padding: 10px 30px;
+  font-size: 17px;
+  border-radius: 2px;
+  font-weight: 600;
+  margin-top: 30px;
+}

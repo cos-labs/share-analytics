@@ -390,7 +390,7 @@ export default Ember.Component.extend({
 
     // Initialize our query parameters
     query: 'UC',
-    gte: "1996-01-01",
+    gte: undefined, // Set the start date as undefined, by default
     lte: (new Date()).toISOString().split('T')[0], // Set the ending date of our query to today's date, by default
 
     tsInterval: Ember.computed('gte','lte', function(){

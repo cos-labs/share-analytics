@@ -261,7 +261,7 @@ export default Ember.Route.extend({
       end: {refreshModel:true},
       page: {refreshModel: true}
     },
-    gte: "1996-01-01",        // Set default begin date
+    gte: undefined,        // Set default begin date as undefined
     lte: (new Date()).toISOString().split('T')[0], // Set default end date
     tsInterval: Ember.computed('gte','lte', function(){
       let d1 = new Date(this.get('gte'));

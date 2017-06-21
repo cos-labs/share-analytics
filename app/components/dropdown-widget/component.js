@@ -19,7 +19,6 @@ export default Ember.Component.extend({
         this.set('dropList', Ember.A());
         this.set('filteredList', Ember.A());
         this.processData(this.get('aggregations.dropdownList.buckets'));
-        // Show the selected parameter
         let queryParams = this.get('parameters');
         var facet = this.get("item.facetDashParameter");
         if(queryParams[facet]){
@@ -55,6 +54,7 @@ export default Ember.Component.extend({
         Ember.$(document).off('click', clickHandler);
     },
     processData (data) {
+        try{
         data.forEach(item => {
             if(item.doc_count > 0){
                 let obj = {
@@ -62,11 +62,15 @@ export default Ember.Component.extend({
                 };
                 if(item.name){
                   obj.name = item.name.buckets[0].key;
+
                 }
                 this.get('dropList').addObject(obj);
                 this.get('filteredList').addObject(obj);
             }
-        });
+        })
+    }catch(e){
+        console.log("he");
+    }
     },
     actions: {
         transitionToFacet(value) { //Two different items here; one refers to the widget; one refers to the datum.

@@ -54,7 +54,6 @@ export default Ember.Component.extend({
         Ember.$(document).off('click', clickHandler);
     },
     processData (data) {
-        try{
         data.forEach(item => {
             if(item.doc_count > 0){
                 let obj = {
@@ -68,9 +67,6 @@ export default Ember.Component.extend({
                 this.get('filteredList').addObject(obj);
             }
         })
-    }catch(e){
-        console.log("he");
-    }
     },
     actions: {
         transitionToFacet(value) { //Two different items here; one refers to the widget; one refers to the datum.

@@ -110,6 +110,7 @@ export default Ember.Component.extend({
             var facet = this.get("item.facetDashParameter");
             if (facet) {
                 queryParams[facet] = value;
+                queryParams["page"] = undefined;
                 this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
             }
         },

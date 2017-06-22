@@ -383,6 +383,7 @@ export default Ember.Component.extend({
             }, false);
             var facet = this.get("item.facetDashParameter");
             var facetDash = this.get("item.facetDash");
+            queryParams["page"] = undefined;
             if(override){
                 facetDash = override;
             }

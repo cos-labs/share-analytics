@@ -87,6 +87,7 @@ export default Ember.Component.extend({
         },
         filterVisible(){
             let filtered = this.get('dropList').filter((val)=>{
+                val = val['name'] ? val['name'] : val['key'];
                 return val.toLowerCase().includes(this.get('filterText').toLowerCase());
             });
             this.set('filteredList', filtered);

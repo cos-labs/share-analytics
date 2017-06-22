@@ -10,11 +10,11 @@ export default Ember.Component.extend({
     init(){
         this._super(...arguments);
         let data = this.processData(this.get('data.hits.hits'));
-        this.set('data', data); 
-    }, 
+        this.set('data', data);
+    },
     pagebackbtn: Ember.computed('page',  function() {
           let page = Number(this.parameters['page']);
-          if (page == 0 || !page) {
+          if (page == 1 || !page) {
               return 'disable';
           } else {
               return null;
@@ -70,7 +70,10 @@ export default Ember.Component.extend({
         },
         pagenext() {
             let page = Number(this.parameters["page"]);
-            if (!page || ++page < 1) { // increments and modifies page var before the comparison
+            if (!page) {
+                page = 2;
+            }
+            else if ( ++page < 1) { // increments and modifies page var before the comparison
                 page = 1;
             }
             this.attrs.transitionToFacet("search", {page: page})

@@ -165,13 +165,16 @@ export default Ember.Component.extend({
                         }, false);
                     },
                     value: function (value, percent, id) {
-                        var percentage = Math.floor(percent*100);
-                        if (self.get('name') === 'Awards') {
+                        var obj = self.data.filter(function (obj) {
+                          return obj.id === id;
+                          })[0];
+                        var counts = obj.number;
+                        if (self.get('name') === 'Funders') {
                             let roundedValue = currencyRounder(value);
-                            return percentage + "% ($" + roundedValue + ")";
+                            return counts + "&nbsp;records ($" + roundedValue + ")";
 
                         }
-                        return value + " records"; // This isn't perfect, but it's at least more verbose than before
+                        return counts + " records"; // This isn't perfect, but it's at least more verbose than before
                     }
                 }
             };
@@ -311,7 +314,9 @@ export default Ember.Component.extend({
         }
 
         chart_options['data']['columns'] = columns;
+        console.log(columns);
         chart_options[chart_type]['title'] = title;
+        console.log(title);
         this.set('chart', c3.generate(chart_options));
 
         if (chart_type === "donut") {

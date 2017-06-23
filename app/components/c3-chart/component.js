@@ -171,7 +171,7 @@ export default Ember.Component.extend({
                             return percentage + "% ($" + roundedValue + ")";
 
                         }
-                        return percentage + "% (" + value + " records)"; // This isn't perfect, but it's at least more verbose than before
+                        return value + " records"; // This isn't perfect, but it's at least more verbose than before
                     }
                 }
             };

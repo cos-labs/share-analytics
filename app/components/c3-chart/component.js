@@ -314,9 +314,7 @@ export default Ember.Component.extend({
         }
 
         chart_options['data']['columns'] = columns;
-        console.log(columns);
         chart_options[chart_type]['title'] = title;
-        console.log(title);
         this.set('chart', c3.generate(chart_options));
 
         if (chart_type === "donut") {

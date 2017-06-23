@@ -75,7 +75,7 @@ export default Ember.Component.extend({
             let facetDash = this.get("item.facetDash");
             if (facet) {
                 queryParams[facet] = item.name;
-                if (facet === 'contributors' || fact === 'publishers') {
+                if (facet === 'contributors' || facet === 'publishers') {
                   queryParams["page"] = undefined;
                 }
                 if (facetDash === "objectDetail" || facetDash === "agentDetail" || facet === 'contributors' || facet === 'publishers') {

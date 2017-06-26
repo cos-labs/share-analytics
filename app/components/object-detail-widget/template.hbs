@@ -33,11 +33,11 @@
         </ul>
     </div>
 
-    {{#if objectData._source.affiliations}}
+    {{#if affiliations}}
         <div>
             <h3>Affiliations</h3>
             <ul>
-                {{#each objectData._source.affiliations as |affiliation|}}
+                {{#each affiliations as |affiliation|}}
                   <li>{{affiliation}}</li>
                 {{/each}}
             </ul>

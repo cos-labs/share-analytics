@@ -15,6 +15,13 @@ export default Ember.Component.extend({
         return this.get('data');
     }),
 
+    affiliations: Ember.computed(function() {
+      var aff = {};
+      return this.get('data._source.affiliations').filter(function(item) {
+          return aff.hasOwnProperty(item) ? false : (aff[item] = true);
+      });
+    }),
+
     dataAsString: Ember.computed(function() {
         var data = this.get('data');
 

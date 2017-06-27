@@ -16,10 +16,7 @@ export default Ember.Component.extend({
     }),
 
     affiliations: Ember.computed(function() {
-      var aff = {};
-      return this.get('data._source.affiliations').filter(function(item) {
-          return aff.hasOwnProperty(item) ? false : (aff[item] = true);
-      });
+      return Array.from(new Set(this.get('data._source.affiliations')));
     }),
 
     dataAsString: Ember.computed(function() {

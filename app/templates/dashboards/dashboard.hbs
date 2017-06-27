@@ -1,4 +1,4 @@
-<div class='widget-container {{wrapperClass}}'>
+<div class='{{wrapperClass}}'>
     {{#each widgets as |item|}}
         {{widget-adapter options=addableList addChart=(action "addChart") removeChart=(action 'removeChart') item=item widgets=widgets dashboardSaveWidget=(action 'dashboardSaveWidget') parameters=parameters}}
     {{/each}}

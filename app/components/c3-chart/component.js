@@ -368,7 +368,9 @@ export default Ember.Component.extend({
     },
 
     actions: {
-
+        parentTransitionToFacet(facetDash, queryParams){
+            this.attrs.transitionToFacet(facetDash, queryParams);
+        },
         transitionToFacet(id, override) { //Two different items here; one refers to the widget; one refers to the datum.
             override = override || false;
             let queryParams = {};
@@ -381,6 +383,7 @@ export default Ember.Component.extend({
             }, false);
             var facet = this.get("item.facetDashParameter");
             var facetDash = this.get("item.facetDash");
+            queryParams["page"] = undefined;
             if(override){
                 facetDash = override;
             }

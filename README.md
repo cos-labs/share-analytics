@@ -91,7 +91,14 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 #### Deploying
 
-Dockerfiles are in the repo that should provide a simple and easy way to deploy these ember and django apps.
+##### Deploy to gh-pages
+
+Build dist to gh-pages branch
+```ember github-pages:commit --message "Release message"
+```
+
+Push to gh-pages repo
+```git push [remote] gh-pages:gh-pages```
 
 ## Further Reading / Useful Links
 

@@ -36,7 +36,7 @@ export default Ember.Component.extend({
         this.setWidths();
         for (var j = 0; j < items.length; j++) {
             let value = items[j];
-            chartElement.append('<div class="stack" data-index="' + j + '" data-tooltip="'+ value.label + ': ' + value.percentage  + '%" style="width:'+ value.width +'px; background-color:'+ value.background+';"><span>'+ value.label + ': ' + value.percentage  + '%</span></div>');
+            chartElement.append('<div class="stack" data-index="' + j + '" data-tooltip="'+ value.label + ': ' + value.number  + '&nbsp;records" style="width:'+ value.width +'px; background-color:'+ value.background+';"><span>'+ value.label + ': ' + value.number  + '&nbsp;records</span></div>');
         }
     },
     showHideLabel() {

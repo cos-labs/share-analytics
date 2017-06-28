@@ -29,3 +29,8 @@
   margin: 3px;
   cursor: pointer;
 }
+
+.toggleContrib{
+  right: -90%;
+  position: relative;
+}

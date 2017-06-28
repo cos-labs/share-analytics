@@ -25,19 +25,34 @@
     {{/if}}
 
     <div>
+    {{#if showAllContrib}}
         <h3>Contributors</h3>
         <ul>
             {{#each objectData._source.lists.contributors as |contributor|}}
                 <li><a class="pointer" {{action "transitionToFacet" "search" "contributors" contributor.id}}>{{contributor.name}}</a></li>
             {{/each}}
         </ul>
+    {{#if hasMoreContrib}}
+    <a {{action toggleProperty 'showAllContrib'}} class="toggleContrib">Hide&nbsp;&nbsp;&nbsp;&nbsp;{{fa-icon "chevron-up"}}</a>
+    {{/if}}
+    {{else}}
+        <h3>Contributors</h3>
+        <ul>
+            {{#each topContrib as |contributor|}}
+                <li><a class="pointer" {{action "transitionToFacet" "search" "contributors" contributor.id}}>{{contributor.name}}</a></li>
+            {{/each}}
+        </ul>
+    {{#if hasMoreContrib}}
+    <a {{action toggleProperty 'showAllContrib'}} class="toggleContrib">View More&nbsp;&nbsp;&nbsp;&nbsp;{{fa-icon "chevron-down"}}</a>
+    {{/if}}
+    {{/if}}
     </div>
 
-    {{#if objectData._source.affiliations}}
+    {{#if affiliations}}
         <div>
             <h3>Affiliations</h3>
             <ul>
-                {{#each objectData._source.affiliations as |affiliation|}}
+                {{#each affiliations as |affiliation|}}
                   <li>{{affiliation}}</li>
                 {{/each}}
             </ul>

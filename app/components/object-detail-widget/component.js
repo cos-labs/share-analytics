@@ -10,9 +10,15 @@ var isHTTPURL = function(value) {
 export default Ember.Component.extend({
 
     showJSON: false,
+    showAllContrib: false,
+    hasMoreContrib: false,
 
     objectData: Ember.computed(function() {
         return this.get('data');
+    }),
+
+    affiliations: Ember.computed(function() {
+      return Array.from(new Set(this.get('data._source.affiliations')));
     }),
 
     dataAsString: Ember.computed(function() {
@@ -82,6 +88,14 @@ export default Ember.Component.extend({
         }
     }),
 
+    topContrib: Ember.computed('objectData._source.lists.contributors', function() {
+      var topContrib = this.get('objectData')._source.lists.contributors;
+      if (topContrib.length > 10) {
+        this.hasMoreContrib = true;
+      }
+      return topContrib.slice(0, 10);
+    }),
+
     init(){
         this._super(...arguments);
         let data = this.processData(this.get('data'));
@@ -105,7 +119,6 @@ export default Ember.Component.extend({
     },
 
     actions: {
-
         transitionToFacet(facetDash, parameterName, parameter) {
             let queryParams = {
                 id: undefined

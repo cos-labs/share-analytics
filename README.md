@@ -98,7 +98,8 @@ Build dist to gh-pages branch
 ```
 
 Push to gh-pages repo
-```git push [remote] gh-pages:gh-pages```
+```git push [remote] gh-pages:gh-pages
+```
 
 ## Further Reading / Useful Links
 

@@ -63,7 +63,8 @@ You will need the following things properly installed on your computer.
 * `bower install`
 * `yarn install --lockfile`
 * set up your config/local.yml (If this file does not exist, you may need to `ember g` or copy from below)
-```prod:
+```
+prod:
     CLIENT_ID: Add your client id here
     PERSONAL_ACCESS_TOKEN:
     OAUTH_SCOPES: osf.full_read osf.full_write
@@ -94,11 +95,13 @@ Make use of the many generators for code, try `ember help generate` for more det
 ##### Deploy to gh-pages
 
 Build dist to gh-pages branch
-```ember github-pages:commit --message "Release message"
+```
+ember github-pages:commit --message "Release message"
 ```
 
 Push to gh-pages repo
-```git push [remote] gh-pages:gh-pages
+```
+git push [remote] gh-pages:gh-pages
 ```
 
 ## Further Reading / Useful Links

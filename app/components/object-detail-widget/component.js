@@ -17,6 +17,10 @@ export default Ember.Component.extend({
         return this.get('data');
     }),
 
+    affiliations: Ember.computed(function() {
+      return Array.from(new Set(this.get('data._source.affiliations')));
+    }),
+
     dataAsString: Ember.computed(function() {
         var data = this.get('data');
 

@@ -122,12 +122,128 @@ export default Ember.Component.extend({
         applySelection (value) {
             this.send('transitionToFacet', value);
         },
-        filterVisible(){
-            let filtered = this.get('dropList').filter((val)=>{
-              let value = val.name || val.key
-                return value.toLowerCase().includes(this.get('filterText').toLowerCase());
+        filterVisible: async function() {
+            let term_name = "lists." + this.get('item.facetDashParameter') + ".name.exact";
+            let widget_category = this.get('item.facetDashParameter');
+            let search_term_query = this.get('filterText');
+            let search_term = "^"+this.get('filterText');
+
+            let first_char_search_term = search_term_query.charAt(0).toLowerCase();
+            if (search_term_query.length > 1) {
+                search_term_query = search_term_query.slice(1, search_term_query.length);
+                search_term_query = "[" + first_char_search_term + first_char_search_term.toUpperCase() + "]" + search_term_query + "(.*)";
+            } else {
+                search_term_query = search_term_query + "(.*)";
+            }
+            //need to add more filter here
+            let filter_query = {
+                "query": {
+                    "bool": {
+                        "must": {
+                            "regexp": {
+                                [term_name]: {
+                                    "value": search_term_query
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            let filter_data = await Ember.$.ajax({
+                url: 'https://dev-labs.cos.io/api/v2/search/creativeworks/_search?request_cache=true',
+                crossDomain: true,
+                data: JSON.stringify(filter_query),
+                type: 'POST',
+                contentType: 'application/json'
             });
-            this.set('filteredList', filtered);
+            let afilteredList = filter_data.hits.hits.map(function(x) {
+                let map = undefined;
+                if (widget_category == "contributors") {
+
+
+                    let contributorsList = x._source.lists.contributors.map(function(y) {
+                        return {
+                            key: y.id,
+                            name: y.name
+                        };
+                    });
+
+                    var filteredContribList = contributorsList.filter(function(word) {
+                        return word.name.toLowerCase().match(search_term.toLowerCase());
+                    });
+
+                }
+                return filteredContribList;
+            });
+
+            let flattenedFilteredContribList = afilteredList.reduce(function(a, b) {
+              return a.concat(b);
+            }, []);
+
+
+
+            // var removedDuplicates = flattenedFilteredContribList.map(function(d) {
+            //     flattenedFilteredContribList.forEach(function(element) {
+            
+            //    if(d.name != element.name){
+
+            //     console.log("Show" , d.name )
+            //         return d.name; 
+            //    }else{
+            //         console.log("Remove" , d.name )
+
+            //    }
+            //    // console.log(d.name , element.name);
+            //     // return {
+            //     //     key: y.id,
+            //     //     name: y.name
+            //     // };
+            //      });
+            // });
+            console.log(flattenedFilteredContribList);
+
+            for(let i = 0; i < flattenedFilteredContribList.length; i++){
+                for(let k = i+1; k < flattenedFilteredContribList.length; k++){
+                    if(flattenedFilteredContribList[i].name == flattenedFilteredContribList[k].name){
+                        console.log(i , k);
+                        flattenedFilteredContribList.splice( k, 1 );
+                    }
+                }
+            }
+
+
+            // var removedDuplicates = [];
+            // flattenedFilteredContribList.forEach(function(element) {
+
+            //     // let currentEle = flattenedFilteredContribList.find(function(e) {
+            //     //     console.log("debugg>", element.name , e.name);
+            //     //     return (element.name != e.name)
+            //     // });
+
+            //    // var names = ["Mike","Matt","Nancy","Adam","Jenny","Nancy","Carl"];
+            //     //var uniqueNames = [];
+            //     $.each(flattenedFilteredContribList, function(i, el){
+            //         if($.inArray(el, removedDuplicates) === -1) removedDuplicates.push(el);
+            //     });
+
+
+
+
+            //     //console.log(currentEle);
+            //    // // debugger;
+            //    //  if(currentEle === undefined){
+            //    //      removedDuplicates.push(element);
+            //    //  }
+                
+            // });
+
+            //  console.log("List" , removedDuplicates);
+
+            //console.log(flattenedFilteredContribList);
+            if(widget_category == "contributors"){
+                this.set('filteredList', Array.from(new Set(flattenedFilteredContribList)));
+            }
         },
         showList(){
             this.set('showList', true);

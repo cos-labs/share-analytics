@@ -587,13 +587,13 @@ export default Ember.Route.extend({
                             "aggregations": {
                                 "dropdownList" : {
                                     "terms": {
-                                        "field": "lists.contributors.id.exact",
+                                        "field": "",
                                         "size": 100
                                     },
                                     "aggs" : {
                                         "name": {
                                             "terms": {
-                                                "field": "lists.contributors.name.exact"
+                                                "field": ""
                                             }
                                         }
                                     }

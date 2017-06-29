@@ -125,14 +125,13 @@ export default Ember.Component.extend({
         },
         debouncedfilterVisible: function() {
             clearTimeout(this.get('typingTimer'));
-            let typingTimer = setTimeout(function() {this.send('filterVisible')}.bind(this), 5000);
+            let typingTimer = setTimeout(function() {this.send('filterVisible')}.bind(this), 1000);
             this.set('typingTimer' , typingTimer);
         }, 
          resetDebounce: function() {
             clearTimeout(this.get('typingTimer'));
         },   
         filterVisible: async function() {
-            console.log("called");
             let term_name = "lists." + this.get('item.facetDashParameter') + ".name.exact";
             let widget_category = this.get('item.facetDashParameter');
             let search_term_query = this.get('filterText');

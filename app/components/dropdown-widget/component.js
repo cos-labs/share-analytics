@@ -14,6 +14,7 @@ export default Ember.Component.extend({
           this.processData(this.get('data'));
         }
     }),
+    typingTimer: null,
     init(){
         this._super(...arguments);
         // check settings to see what the mode is
@@ -122,7 +123,16 @@ export default Ember.Component.extend({
         applySelection (value) {
             this.send('transitionToFacet', value);
         },
+        debouncedfilterVisible: function() {
+            clearTimeout(this.get('typingTimer'));
+            let typingTimer = setTimeout(function() {this.send('filterVisible')}.bind(this), 5000);
+            this.set('typingTimer' , typingTimer);
+        }, 
+         resetDebounce: function() {
+            clearTimeout(this.get('typingTimer'));
+        },   
         filterVisible: async function() {
+            console.log("called");
             let term_name = "lists." + this.get('item.facetDashParameter') + ".name.exact";
             let widget_category = this.get('item.facetDashParameter');
             let search_term_query = this.get('filterText');
@@ -135,7 +145,7 @@ export default Ember.Component.extend({
             } else {
                 search_term_query = search_term_query + "(.*)";
             }
-            //need to add more filter here
+
             let filter_query = {
                 "query": {
                     "bool": {
@@ -183,64 +193,14 @@ export default Ember.Component.extend({
 
 
 
-            // var removedDuplicates = flattenedFilteredContribList.map(function(d) {
-            //     flattenedFilteredContribList.forEach(function(element) {
-            
-            //    if(d.name != element.name){
-
-            //     console.log("Show" , d.name )
-            //         return d.name; 
-            //    }else{
-            //         console.log("Remove" , d.name )
-
-            //    }
-            //    // console.log(d.name , element.name);
-            //     // return {
-            //     //     key: y.id,
-            //     //     name: y.name
-            //     // };
-            //      });
-            // });
-            console.log(flattenedFilteredContribList);
-
             for(let i = 0; i < flattenedFilteredContribList.length; i++){
                 for(let k = i+1; k < flattenedFilteredContribList.length; k++){
                     if(flattenedFilteredContribList[i].name == flattenedFilteredContribList[k].name){
-                        console.log(i , k);
                         flattenedFilteredContribList.splice( k, 1 );
                     }
                 }
             }
 
-
-            // var removedDuplicates = [];
-            // flattenedFilteredContribList.forEach(function(element) {
-
-            //     // let currentEle = flattenedFilteredContribList.find(function(e) {
-            //     //     console.log("debugg>", element.name , e.name);
-            //     //     return (element.name != e.name)
-            //     // });
-
-            //    // var names = ["Mike","Matt","Nancy","Adam","Jenny","Nancy","Carl"];
-            //     //var uniqueNames = [];
-            //     $.each(flattenedFilteredContribList, function(i, el){
-            //         if($.inArray(el, removedDuplicates) === -1) removedDuplicates.push(el);
-            //     });
-
-
-
-
-            //     //console.log(currentEle);
-            //    // // debugger;
-            //    //  if(currentEle === undefined){
-            //    //      removedDuplicates.push(element);
-            //    //  }
-                
-            // });
-
-            //  console.log("List" , removedDuplicates);
-
-            //console.log(flattenedFilteredContribList);
             if(widget_category == "contributors"){
                 this.set('filteredList', Array.from(new Set(flattenedFilteredContribList)));
             }

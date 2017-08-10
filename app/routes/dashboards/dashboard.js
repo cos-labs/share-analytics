@@ -577,7 +577,7 @@ export default Ember.Route.extend({
                             }
                         ],
                     },
-                    {
+                    /*{
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Contributors',
@@ -643,7 +643,7 @@ export default Ember.Route.extend({
                                 defaultValue: lte
                             }
                         ]
-                    },
+                    },*/
                     {
                         // Type dropdown
                         widgetType: 'dropdown-widget',
@@ -752,7 +752,7 @@ export default Ember.Route.extend({
                         widgetSettings: {
                             mode: 'search'
                         }
-                    },
+                    },/*
                     {
                         // Funder select
                         widgetType: 'dropdown-widget',
@@ -830,7 +830,7 @@ export default Ember.Route.extend({
                         widgetSettings: {
                             mode: 'search'
                         }
-                    },
+                    },*/
                     {
                         // Daterange select
                         widgetType: 'search-facet-daterange',
@@ -1024,107 +1024,107 @@ export default Ember.Route.extend({
                             }
                         ]
                     },
-                    {
-                        chartType: 'topContributors',
-                        widgetType: 'list-widget',
-                        name: 'Top Contributors',
-                        width: 12,
-                        facetDash: "search",
-                        facetDashParameter: "contributors",
-                        dataType: 'contributors',
-                        post_body : {
-                            "aggregations": {
-                                "listWidgetData": {
-                                    "terms": {
-                                        "exclude": ucsd_blacklist,
-                                        "field": 'lists.contributors.id.exact',
-                                        "size": 9
-                                    }
-                                }
-                            }
-                        },
-                        postBodyParams: [
-                            {
-                                parameterPath: ["query", "bool", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "should"],
-                                defaultValue: ucsd_query
-                            },
-                            {
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                parameterName: "query",
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "sources",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
-                            }
-                        ]
-                    },
-                    {
-                            chartType: 'donut',
-                            widgetType: 'c3-chart',
-                            name: 'Funders',
-                            facetDash: "search",
-                            facetDashParameter: "funders",
-                            width: 6,
-                            mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
-                            post_body: {
-                                "aggregations": {
-                                    "funders": {
-                                        "terms": {
-                                            "field": "lists.funders.id.exact"
-                                        },
-                                        "aggs": {
-                                            "awards": {
-                                                "sum": {
-                                                    "script": {
-                                                        "lang": "expression",
-                                                        "inline": "doc['lists.funders.awards.amount'].sum()"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            postBodyParams: [
-                                {
-                                    parameterPath: ["query", "bool", "minimum_should_match"],
-                                    parameterName: "shouldMatch",
-                                    defaultValue: 1
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "should"],
-                                    defaultValue: ucsd_query
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
-                                    parameterName: "sources"
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
-                                    parameterName: "start",
-                                    defaultValue: gte
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
-                                    parameterName: "end",
-                                    defaultValue: lte
-                                },
-                                {
-                                    parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
-                                    parameterName: "date_range_format",
-                                    defaultValue: "yyyy-MM-dd||yyyy"
-                                }
-                            ],
-                            widgetSettings: {
-                              helpText: 'Click on a section to view associated records'
-                            }
-                        },
+                    //{
+                    //    chartType: 'topContributors',
+                    //    widgetType: 'list-widget',
+                    //    name: 'Top Contributors',
+                    //    width: 12,
+                    //    facetDash: "search",
+                    //    facetDashParameter: "contributors",
+                    //    dataType: 'contributors',
+                    //    post_body : {
+                    //        "aggregations": {
+                    //            "listWidgetData": {
+                    //                "terms": {
+                    //                    "exclude": ucsd_blacklist,
+                    //                    "field": 'lists.contributors.id.exact',
+                    //                    "size": 9
+                    //                }
+                    //            }
+                    //        }
+                    //    },
+                    //    postBodyParams: [
+                   //         {
+                    //            parameterPath: ["query", "bool", "minimum_should_match"],
+                    //            parameterName: "shouldMatch",
+                    //            defaultValue: 1
+                    //        },
+                    //        {
+                    //            parameterPath: ["query", "bool", "should"],
+                    //            defaultValue: ucsd_query
+                    //        },
+                    //        {
+                    ////            parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                    //            parameterName: "query",
+                    //            defaultValue: "*"
+                    //        },
+                    //        {
+                    //            parameterName: "sources",
+                    //            parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
+                    //        }
+                    //    ]
+                    //},
+                    //{
+                    //        chartType: 'donut',
+                    //        widgetType: 'c3-chart',
+                    //        name: 'Funders',
+                    //        facetDash: "search",
+                    //        facetDashParameter: "funders",
+                    //        width: 6,
+                    //        mappingType: "OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY",
+                    //        post_body: {
+                    //            "aggregations": {
+                    //                "funders": {
+                     //                   "terms": {
+                     //                       "field": "lists.funders.id.exact"
+                     //                   },
+                     //                   "aggs": {
+                      //                      "awards": {
+                      //                          "sum": {
+                      //                              "script": {
+                      //                                  "lang": "expression",
+                      //                                  "inline": "doc['lists.funders.awards.amount'].sum()"
+                      //                              }
+                      //                          }
+                      //                      }
+                      //                  }
+                      //              }
+                      //          }
+                      //      },
+                      //      postBodyParams: [
+                      //          {
+                      //              parameterPath: ["query", "bool", "minimum_should_match"],
+                      //              parameterName: "shouldMatch",
+                      //              defaultValue: 1
+                      //          },
+                      //          {
+                      //              parameterPath: ["query", "bool", "should"],
+                      //              defaultValue: ucsd_query
+                      ////          },
+                      //          {
+                      //              parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                      //              parameterName: "sources"
+                      //          },
+                      //          {
+                      //              parameterPath: ["query", "bool", "must", 1, "range",  "date", "gte"],
+                      //              parameterName: "start",
+                      //              defaultValue: gte
+                      //          },
+                      //          {
+                      //              parameterPath: ["query", "bool", "must", 1, "range", "date", "lte"],
+                                 //   parameterName: "end",
+                                //    defaultValue: lte
+                               // },
+                              //  {
+                             //       parameterPath: ["query", "bool", "must", 1, "range", "date", "format"],
+                            //        parameterName: "date_range_format",
+                           //         defaultValue: "yyyy-MM-dd||yyyy"
+                          //      }
+                         //   ],
+                        //    widgetSettings: {
+                       //       helpText: 'Click on a section to view associated records'
+                      //      }
+                     //   },
                     {
                         chartType: 'tagsList',
                         widgetType: 'list-widget',

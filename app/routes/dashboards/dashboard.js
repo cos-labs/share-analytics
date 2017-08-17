@@ -578,22 +578,29 @@ export default Ember.Route.extend({
                         ],
                     },
                     {
-                        chartType: 'topContributors',
-                        widgetType: 'list-widget',
+                        widgetType: 'dropdown-widget',
                         name: 'Contributors',
                         width: 3,
-                        hideSHAREButton: true,
-                        indexVersion: 3,
                         facetDash: "search",
-                        dataType: 'contributors',
                         facetDashParameter: "contributors",
-                        post_body : {},
+                        post_body: {
+                            "aggregations": {
+                                "dropdownList" : {
+                                    "terms": {
+                                        "field": "",
+                                        "size": 100
+                                    },
+                                    "aggs" : {
+                                        "name": {
+                                            "terms": {
+                                                "field": ""
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
                         postBodyParams: [
-                            {
-                                parameterPath: ["aggregations", "listWidgetData", "terms", "field"],
-                                parameterName: "contributors_id_field",
-                                defaultValue: "lists.contributors.id.exact",
-                            },
                             {
                                 parameterPath: ["query", "bool", "minimum_should_match"],
                                 parameterName: "shouldMatch",
@@ -604,13 +611,13 @@ export default Ember.Route.extend({
                                 defaultValue: ucsd_query
                             },
                             {
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                parameterName: "query",
-                                defaultValue: "*"
+                                parameterName: "sources",
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             },
                             {
-                                parameterName: "sources",
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                parameterName: "query",
+                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                                defaultValue: "*"
                             },
                             {
                                 parameterName: "tags",
@@ -642,7 +649,10 @@ export default Ember.Route.extend({
                                 parameterName: "end",
                                 defaultValue: lte
                             }
-                        ]
+                        ],
+                        widgetSettings: {
+                            mode: 'search'
+                        }
                     },
                     {
                         // Type dropdown

@@ -440,6 +440,10 @@ export default Ember.Component.extend({
         if (item.indexVersion) {
             endpoint += "&v=" + item.indexVersion;
         }
+        if (!this.get('item').post_body) {
+            this.set('data', {})
+            return;
+        }
         let data = await Ember.$.ajax({
             url: ENV.apiUrl + endpoint,
             crossDomain: true,

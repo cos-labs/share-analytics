@@ -27,10 +27,6 @@ export default Ember.Component.extend({
             return null;
         }
      }),
-    pageNumber: Ember.computed('page',  function() { 
-        let page = 'Page ' + this.get('parameters').page
-        return page
-    }),
     processData (data) {
         return data.map((datum) => {
             var options = {year: 'numeric', month: 'long', day: 'numeric' };

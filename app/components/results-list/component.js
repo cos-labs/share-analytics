@@ -51,7 +51,7 @@ export default Ember.Component.extend({
                 datum["_source"]["date_updated"] = (new Date(datum["_source"]["date_updated"])).toLocaleDateString('en-US', options)
             }
             if( datum["_source"]["type"] === "project"){
-                datum["_source"]["type"] =  datum["_source"]["type"] + " & award"
+                datum["_source"]["type"] =  datum["_source"]["type"] + " & awards"
             }
 
             return datum;

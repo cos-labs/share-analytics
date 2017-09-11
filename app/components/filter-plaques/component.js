@@ -34,7 +34,11 @@ export default Ember.Component.extend({
                 break;
               }
             }
-            return {key: filter.key, value: value};
+            let filterKey = filter.key;
+            if(filter.key === 'publishers'){
+               filterKey = 'provider';
+            }
+            return {key: filterKey, value: value};
           });
           this.set('filters', displayFilters);
         });

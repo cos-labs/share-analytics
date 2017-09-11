@@ -11,10 +11,10 @@ export default Ember.Component.extend({
         let total = 0;
         for (var value of items) {
           total += value.doc_count;
-        }
-        return total;
-    },
-    setData () {
+      }
+      return total;
+  },
+  setData () {
         // Turn numbers into percentages and save to width
         let items = this.get('data.aggregations.stackedData.buckets');
         let total = this.calculateTotal(items);
@@ -36,6 +36,9 @@ export default Ember.Component.extend({
         this.setWidths();
         for (var j = 0; j < items.length; j++) {
             let value = items[j];
+            if(value.label === 'project'){
+                value.label  = value.label  + ' & awards'
+            }
             chartElement.append('<div class="stack" data-index="' + j + '" data-tooltip="'+ value.label + ': ' + value.number  + '&nbsp;records" style="width:'+ value.width +'px; background-color:'+ value.background+';"><span>'+ value.label + ': ' + value.number  + '&nbsp;records</span></div>');
         }
     },
@@ -96,15 +99,15 @@ export default Ember.Component.extend({
     },
     actions: {
         transitionToFacet(item) {
-              let queryParams = {};
-              var facet = this.get("item.facetDashParameter");
-              if (facet) {
-                  queryParams[facet] = item.label;
-                  this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
-              } else if (item.url) {
-                window.location.href = item.url;
-              }
-          }
+          let queryParams = {};
+          var facet = this.get("item.facetDashParameter");
+          if (facet) {
+              queryParams[facet] = item.label;
+              this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
+          } else if (item.url) {
+            window.location.href = item.url;
+        }
     }
+}
 
 });

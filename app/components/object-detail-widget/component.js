@@ -96,10 +96,21 @@ export default Ember.Component.extend({
       return topContrib.slice(0, 10);
     }),
 
+    resourceType : Ember.computed('data', function() {
+      let type = this.get('data._source.type');
+      if(this.get('data._source.type') === 'project'){
+        type = this.get('data._source.type')  + ' & awards'
+      }
+
+      return type;
+    }),
+
     init(){
         this._super(...arguments);
         let data = this.processData(this.get('data'));
         this.set('data', data);
+        this.get('resourceType')
+
     },
 
     processData (data) {

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var ID_FILTERS = ['contributors', 'funders', 'publishers', 'tags' , 'types'];
+var ID_FILTERS = ['contributors', 'funders', 'publishers', 'tags' , 'type'];
 
 export default Ember.Component.extend({
   filters: null,
@@ -38,10 +38,15 @@ export default Ember.Component.extend({
             }
             let filterKey = filter.key;
             if(filter.key === 'publishers'){
-               filterKey = 'provider';
-            }
-            return {key: filterKey, value: value};
-          });
+             filterKey = 'provider';
+           }
+           if(value === 'project'){
+             value += " & awards"
+           }
+
+           console.log(value)
+           return {key: filterKey, value: value};
+         });
           this.set('filters', displayFilters);
         });
       }

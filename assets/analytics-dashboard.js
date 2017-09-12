@@ -1908,10 +1908,13 @@ define('analytics-dashboard/components/dropdown-widget/component', ['exports', '
             // Show the selected parameter
             var queryParams = this.get('parameters');
             var facet = this.get("item.facetDashParameter");
-            console.log(queryParams[facet]);
+
             if (queryParams[facet]) {
                 if (facet === 'type') {
                     this.set('selectedType', queryParams[facet]);
+                    if (queryParams[facet] === "project") {
+                        this.set('selectedType', queryParams[facet] + " & awards");
+                    }
                 } else if (facet === 'funders' || facet === 'publishers' || facet === 'contributors') {
                     var id = { key: queryParams[facet] };
                     console.log('id', id);
@@ -1931,8 +1934,7 @@ define('analytics-dashboard/components/dropdown-widget/component', ['exports', '
             return regeneratorRuntime.async(function fetchAgentDetails$(context$1$0) {
                 while (1) switch (context$1$0.prev = context$1$0.next) {
                     case 0:
-                        console.log('agentList', agentList);
-                        context$1$0.next = 3;
+                        context$1$0.next = 2;
                         return regeneratorRuntime.awrap(_ember['default'].$.ajax({
                             url: 'https://dev-labs.cos.io/bulk_get_agents',
                             crossDomain: true,
@@ -1941,11 +1943,11 @@ define('analytics-dashboard/components/dropdown-widget/component', ['exports', '
                             contentType: 'application/json'
                         }));
 
-                    case 3:
+                    case 2:
                         agent_details = context$1$0.sent;
                         return context$1$0.abrupt('return', JSON.parse(agent_details));
 
-                    case 5:
+                    case 4:
                     case 'end':
                         return context$1$0.stop();
                 }
@@ -1999,6 +2001,9 @@ define('analytics-dashboard/components/dropdown-widget/component', ['exports', '
                     } else {
                         return;
                     }
+                }
+                if (obj.key === 'project') {
+                    obj.key += ' & awards';
                 }
                 _this2.get('dropList').addObject(obj);
                 _this2.get('filteredList').addObject(obj);
@@ -2825,7 +2830,7 @@ define('analytics-dashboard/components/file-widget/component', ['exports', 'embe
 });
 define('analytics-dashboard/components/filter-plaques/component', ['exports', 'ember'], function (exports, _ember) {
 
-  var ID_FILTERS = ['contributors', 'funders', 'publishers'];
+  var ID_FILTERS = ['contributors', 'funders', 'publishers', 'tags', 'type'];
 
   exports['default'] = _ember['default'].Component.extend({
     filters: null,
@@ -2864,7 +2869,9 @@ define('analytics-dashboard/components/filter-plaques/component', ['exports', 'e
                 var agentData = _step.value;
 
                 if (value === agentData.id) {
-                  value = agentData.name;
+                  if (!agentData.name == "") {
+                    value = agentData.name;
+                  }
                   break;
                 }
               }
@@ -2883,7 +2890,16 @@ define('analytics-dashboard/components/filter-plaques/component', ['exports', 'e
               }
             }
 
-            return { key: filter.key, value: value };
+            var filterKey = filter.key;
+            if (filter.key === 'publishers') {
+              filterKey = 'provider';
+            }
+            if (value === 'project') {
+              value += " & awards";
+            }
+
+            console.log(value);
+            return { key: filterKey, value: value };
           });
           _this.set('filters', displayFilters);
         });
@@ -3655,10 +3671,20 @@ define('analytics-dashboard/components/object-detail-widget/component', ['export
             return topContrib.slice(0, 10);
         }),
 
+        resourceType: _ember['default'].computed('data', function () {
+            var type = this.get('data._source.type');
+            if (this.get('data._source.type') === 'project') {
+                type = this.get('data._source.type') + ' & awards';
+            }
+
+            return type;
+        }),
+
         init: function init() {
             this._super.apply(this, arguments);
             var data = this.processData(this.get('data'));
             this.set('data', data);
+            this.get('resourceType');
         },
 
         processData: function processData(data) {
@@ -5169,7 +5195,7 @@ define("analytics-dashboard/components/object-detail-widget/template", ["exports
         morphs[14] = dom.createMorphAt(element10, 25, 25);
         return morphs;
       },
-      statements: [["content", "objectData._source.title", ["loc", [null, [3, 8], [3, 38]]], 0, 0, 0, 0], ["block", "if", [["get", "dataUrl", ["loc", [null, [4, 14], [4, 21]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [4, 8], [6, 15]]]], ["content", "objectData._source.type", ["loc", [null, [10, 12], [10, 39]]], 0, 0, 0, 0], ["block", "if", [["get", "objectData._source.publishers", ["loc", [null, [12, 10], [12, 39]]], 0, 0, 0, 0]], [], 1, null, ["loc", [null, [12, 4], [21, 11]]]], ["block", "if", [["get", "objectData._source.description", ["loc", [null, [23, 10], [23, 40]]], 0, 0, 0, 0]], [], 2, null, ["loc", [null, [23, 4], [25, 11]]]], ["block", "if", [["get", "showAllContrib", ["loc", [null, [28, 10], [28, 24]]], 0, 0, 0, 0]], [], 3, 4, ["loc", [null, [28, 4], [48, 11]]]], ["block", "if", [["get", "affiliations", ["loc", [null, [51, 10], [51, 22]]], 0, 0, 0, 0]], [], 5, null, ["loc", [null, [51, 4], [60, 11]]]], ["block", "if", [["get", "funders", ["loc", [null, [62, 10], [62, 17]]], 0, 0, 0, 0]], [], 6, null, ["loc", [null, [62, 4], [75, 11]]]], ["block", "if", [["get", "objectData._source.tags", ["loc", [null, [77, 10], [77, 33]]], 0, 0, 0, 0]], [], 7, null, ["loc", [null, [77, 4], [83, 11]]]], ["block", "if", [["get", "identifierURLs", ["loc", [null, [85, 10], [85, 24]]], 0, 0, 0, 0]], [], 8, null, ["loc", [null, [85, 4], [96, 11]]]], ["block", "if", [["get", "objectData._source.sources", ["loc", [null, [98, 10], [98, 36]]], 0, 0, 0, 0]], [], 9, null, ["loc", [null, [98, 4], [107, 11]]]], ["block", "if", [["get", "objectData._source.date_published", ["loc", [null, [112, 18], [112, 51]]], 0, 0, 0, 0]], [], 10, null, ["loc", [null, [112, 12], [114, 20]]]], ["block", "if", [["get", "objectData._source.date_updated", ["loc", [null, [115, 19], [115, 50]]], 0, 0, 0, 0]], [], 11, null, ["loc", [null, [115, 13], [117, 20]]]], ["block", "if", [["get", "objectData._source.date_modified", ["loc", [null, [118, 19], [118, 51]]], 0, 0, 0, 0]], [], 12, null, ["loc", [null, [118, 13], [120, 19]]]], ["block", "if", [["get", "showJSON", ["loc", [null, [125, 10], [125, 18]]], 0, 0, 0, 0]], [], 13, 14, ["loc", [null, [125, 4], [130, 11]]]]],
+      statements: [["content", "objectData._source.title", ["loc", [null, [3, 8], [3, 38]]], 0, 0, 0, 0], ["block", "if", [["get", "dataUrl", ["loc", [null, [4, 14], [4, 21]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [4, 8], [6, 15]]]], ["content", "resourceType", ["loc", [null, [10, 12], [10, 28]]], 0, 0, 0, 0], ["block", "if", [["get", "objectData._source.publishers", ["loc", [null, [12, 10], [12, 39]]], 0, 0, 0, 0]], [], 1, null, ["loc", [null, [12, 4], [21, 11]]]], ["block", "if", [["get", "objectData._source.description", ["loc", [null, [23, 10], [23, 40]]], 0, 0, 0, 0]], [], 2, null, ["loc", [null, [23, 4], [25, 11]]]], ["block", "if", [["get", "showAllContrib", ["loc", [null, [28, 10], [28, 24]]], 0, 0, 0, 0]], [], 3, 4, ["loc", [null, [28, 4], [48, 11]]]], ["block", "if", [["get", "affiliations", ["loc", [null, [51, 10], [51, 22]]], 0, 0, 0, 0]], [], 5, null, ["loc", [null, [51, 4], [60, 11]]]], ["block", "if", [["get", "funders", ["loc", [null, [62, 10], [62, 17]]], 0, 0, 0, 0]], [], 6, null, ["loc", [null, [62, 4], [75, 11]]]], ["block", "if", [["get", "objectData._source.tags", ["loc", [null, [77, 10], [77, 33]]], 0, 0, 0, 0]], [], 7, null, ["loc", [null, [77, 4], [83, 11]]]], ["block", "if", [["get", "identifierURLs", ["loc", [null, [85, 10], [85, 24]]], 0, 0, 0, 0]], [], 8, null, ["loc", [null, [85, 4], [96, 11]]]], ["block", "if", [["get", "objectData._source.sources", ["loc", [null, [98, 10], [98, 36]]], 0, 0, 0, 0]], [], 9, null, ["loc", [null, [98, 4], [107, 11]]]], ["block", "if", [["get", "objectData._source.date_published", ["loc", [null, [112, 18], [112, 51]]], 0, 0, 0, 0]], [], 10, null, ["loc", [null, [112, 12], [114, 20]]]], ["block", "if", [["get", "objectData._source.date_updated", ["loc", [null, [115, 19], [115, 50]]], 0, 0, 0, 0]], [], 11, null, ["loc", [null, [115, 13], [117, 20]]]], ["block", "if", [["get", "objectData._source.date_modified", ["loc", [null, [118, 19], [118, 51]]], 0, 0, 0, 0]], [], 12, null, ["loc", [null, [118, 13], [120, 19]]]], ["block", "if", [["get", "showJSON", ["loc", [null, [125, 10], [125, 18]]], 0, 0, 0, 0]], [], 13, 14, ["loc", [null, [125, 4], [130, 11]]]]],
       locals: [],
       templates: [child0, child1, child2, child3, child4, child5, child6, child7, child8, child9, child10, child11, child12, child13, child14]
     };
@@ -5344,6 +5370,7 @@ define('analytics-dashboard/components/results-list/component', ['exports', 'emb
             this._super.apply(this, arguments);
             var data = this.processData(this.get('data.hits.hits'));
             this.set('data', data);
+            this.get('resourceType');
         },
         pagebackbtn: _ember['default'].computed('page', function () {
             var page = Number(this.parameters['page']);
@@ -5386,6 +5413,10 @@ define('analytics-dashboard/components/results-list/component', ['exports', 'emb
                 if (datum._source.date_updated) {
                     datum["_source"]["date_updated"] = new Date(datum["_source"]["date_updated"]).toLocaleDateString('en-US', options);
                 }
+                if (datum["_source"]["type"] === "project") {
+                    datum["_source"]["type"] = datum["_source"]["type"] + " & awards";
+                }
+
                 return datum;
             });
         },
@@ -6068,6 +6099,9 @@ define('analytics-dashboard/components/stacked-bars/component', ['exports', 'emb
             this.setWidths();
             for (var j = 0; j < items.length; j++) {
                 var value = items[j];
+                if (value.label === 'project') {
+                    value.label = value.label + ' & awards';
+                }
                 chartElement.append('<div class="stack" data-index="' + j + '" data-tooltip="' + value.label + ': ' + value.number + '&nbsp;records" style="width:' + value.width + 'px; background-color:' + value.background + ';"><span>' + value.label + ': ' + value.number + '&nbsp;records</span></div>');
             }
         },
@@ -14738,7 +14772,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("analytics-dashboard/app")["default"].create({"LOG_RESOLVER":false,"LOG_ACTIVE_GENERATION":false,"LOG_TRANSITIONS":false,"LOG_TRANSITIONS_INTERNAL":false,"LOG_VIEW_LOOKUPS":false,"GRANTS_BACKEND":"http://127.0.0.1:8000/api","name":"analytics-dashboard","version":"0.0.0+cc50e4f3"});
+  require("analytics-dashboard/app")["default"].create({"LOG_RESOLVER":false,"LOG_ACTIVE_GENERATION":false,"LOG_TRANSITIONS":false,"LOG_TRANSITIONS_INTERNAL":false,"LOG_VIEW_LOOKUPS":false,"GRANTS_BACKEND":"http://127.0.0.1:8000/api","name":"analytics-dashboard","version":"0.0.0+42f4530c"});
 }
 
 /* jshint ignore:end */

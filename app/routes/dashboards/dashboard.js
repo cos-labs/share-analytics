@@ -304,7 +304,6 @@ export default Ember.Route.extend({
                         name: "",
                         width: 9,
                         post_body: {},
-                        indexVersion: 3,
                         facetDash: "search",
                         postBodyParams: [
                             {
@@ -313,16 +312,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "bool", "should", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 0, "bool", "should"],
-                                defaultValue: ucsd_query
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.exact"],
                                 parameterName: "sources"
                             },
                             {
@@ -339,7 +329,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "type",
-                                parameterPath: ["query", "bool", "filter", 5, "term", "type"]
+                                parameterPath: ["query", "bool", "filter", 5, "term", "type.exact"]
                             },
                             {
                                 parameterName: "funders",
@@ -375,7 +365,6 @@ export default Ember.Route.extend({
                         widgetType: 'number-widget',
                         name: 'Total Results',
                         width: 3,
-                        indexVersion: 3,
                         facetDash: null,
                         post_body: {},
                         postBodyParams: [
@@ -385,16 +374,7 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "bool", "should", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 0, "bool", "should"],
-                                defaultValue: ucsd_query
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.exact"],
                                 parameterName: "sources"
                             },
                             {
@@ -411,7 +391,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "type",
-                                parameterPath: ["query", "bool", "filter", 5, "term", "type"]
+                                parameterPath: ["query", "bool", "filter", 5, "term", "type.exact"]
                             },
                             {
                                 parameterName: "funders",
@@ -448,7 +428,6 @@ export default Ember.Route.extend({
                         chartType: 'donut',
                         widgetType: 'c3-chart',
                         name: 'Data Providers',
-                        indexVersion: 3,
                         width: 3,
                         mappingType: "OBJECT_TO_ARRAY",
                         facetDash: "search",
@@ -468,21 +447,12 @@ export default Ember.Route.extend({
                                 defaultValue: "*"
                             },
                             {
-                                parameterPath: ["query", "bool", "filter", 0, "bool", "should", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 0, "bool", "should"],
-                                defaultValue: ucsd_query
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"],
+                                parameterPath: ["query", "bool", "filter", 1, "term", "sources.exact"],
                                 parameterName: "sources"
                             },
                             {
                                 parameterName: "tags",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "tags"]
+                                parameterPath: ["query", "bool", "filter", 2, "term", "tags.exact"]
                             },
                             {
                                 parameterName: "publishers",
@@ -494,7 +464,7 @@ export default Ember.Route.extend({
                             },
                             {
                                 parameterName: "type",
-                                parameterPath: ["query", "bool", "filter", 5, "term", "type"]
+                                parameterPath: ["query", "bool", "filter", 5, "term", "type.exact"]
                             },
                             {
                                 parameterName: "funders",
@@ -623,16 +593,7 @@ export default Ember.Route.extend({
                         post_body : {},
                         postBodyParams: [
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should"],
-                                defaultValue: ucsd_query
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
+                                parameterPath: ["query", "bool", "filter", 0, "term", "sources.exact"],
                                 parameterName: "sources"
                             },
                             {
@@ -643,7 +604,7 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "dropdownList", "terms", "field"],
                                 parameterName: "type_field",
-                                defaultValue: "type"
+                                defaultValue: "type.exact"
                             },
                             {
                                 parameterPath: ["size"],
@@ -874,15 +835,6 @@ export default Ember.Route.extend({
                         post_body: {},
                         postBodyParams: [
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should"],
-                                defaultValue: ucsd_query
-                            },
-                            {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 parameterName: "query",
                                 defaultValue: "*"
@@ -928,16 +880,6 @@ export default Ember.Route.extend({
                         },
                         post_body: {},
                         postBodyParams: [
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should"],
-                                defaultValue: ucsd_query
-                            },
-
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 parameterName: "query",
@@ -987,16 +929,6 @@ export default Ember.Route.extend({
                         post_body: {},
                         postBodyParams: [
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should"],
-                                defaultValue: ucsd_query
-                            },
-
-                            {
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"],
                                 parameterName: "sources"
                             },
@@ -1008,7 +940,7 @@ export default Ember.Route.extend({
                             {
                                 parameterPath: ["aggregations", "stackedData", "terms", "field"],
                                 parameterName: "type_field",
-                                defaultValue: "type"
+                                defaultValue: "type.exact"
                             },
                             {
                                 parameterPath: ["size"],
@@ -1139,15 +1071,6 @@ export default Ember.Route.extend({
                         },
                         postBodyParams: [
                             {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should"],
-                                defaultValue: ucsd_query
-                            },
-                            {
                                 parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
                             },
@@ -1174,15 +1097,6 @@ export default Ember.Route.extend({
                           "sort": { "date": { "order": "desc" }}
                         },
                         postBodyParams: [
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should"],
-                                defaultValue: ucsd_query
-                            },
                             {
                                 parameterName: "sources",
                                 parameterPath: ["query", "bool", "filter", 0, "term", "sources"]
@@ -1226,15 +1140,6 @@ export default Ember.Route.extend({
                             }
                         },
                         postBodyParams: [
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 1, "bool", "should"],
-                                defaultValue: ucsd_query
-                            },
                             {
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 parameterName: "query",

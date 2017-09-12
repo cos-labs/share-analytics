@@ -11,6 +11,7 @@ export default Ember.Component.extend({
         this._super(...arguments);
         let data = this.processData(this.get('data.hits.hits'));
         this.set('data', data);
+        this.get('resourceType')
     },
     pagebackbtn: Ember.computed('page',  function() {
           let page = Number(this.parameters['page']);
@@ -53,6 +54,10 @@ export default Ember.Component.extend({
             if (datum._source.date_updated) {
                 datum["_source"]["date_updated"] = (new Date(datum["_source"]["date_updated"])).toLocaleDateString('en-US', options)
             }
+            if( datum["_source"]["type"] === "project"){
+                datum["_source"]["type"] =  datum["_source"]["type"] + " & awards"
+            }
+
             return datum;
         });
     },

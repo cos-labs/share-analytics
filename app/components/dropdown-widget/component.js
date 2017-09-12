@@ -12,8 +12,9 @@ export default Ember.Component.extend({
     updatedData: Ember.observer('data', function(){
         if(this.get('widgetSettings.aggregationTitle')){
           this.processData(this.get('data'));
-        }
-    }),
+      }
+  }),
+    typingTimer: null,
     init(){
         this._super(...arguments);
         // check settings to see what the mode is
@@ -32,8 +33,15 @@ export default Ember.Component.extend({
         if(queryParams[facet]){
             if(facet === 'type'){
                 this.set('selectedType', queryParams[facet]);
-            } else if (facet === 'funders' || facet === 'publishers') {
+                if(queryParams[facet] === "project"){
+                    this.set('selectedType', queryParams[facet] + " & awards");
+
+                }
+
+            } else if (facet === 'funders' || facet === 'publishers' || facet === 'contributors') {
                 let id = { key : queryParams[facet] }
+                console.log('id' , id);
+
                 this.fetchAgentDetails([id]).then((data) => {
                     if(data[0]){
                         this.set('enteredItem', data[0].name);
@@ -46,14 +54,15 @@ export default Ember.Component.extend({
         }
     },
     fetchAgentDetails: async function(agentList) {
-      let agent_details = await Ember.$.ajax({
-        url: 'https://dev-labs.cos.io/bulk_get_agents',
-        crossDomain: true,
-        data: JSON.stringify(agentList),
-        type: 'POST',
-        contentType: 'application/json'
-      });
-      return JSON.parse(agent_details);
+
+        let agent_details = await Ember.$.ajax({
+            url: 'https://dev-labs.cos.io/bulk_get_agents',
+            crossDomain: true,
+            data: JSON.stringify(agentList),
+            type: 'POST',
+            contentType: 'application/json'
+        });
+        return JSON.parse(agent_details);
     },
     outsideClick(event){
         if(!this.get('showList')){ return;}
@@ -100,6 +109,9 @@ export default Ember.Component.extend({
                     return;
                 }
             }
+            if(obj.key === 'project'){
+                obj.key += ' & awards'
+            }
             this.get('dropList').addObject(obj);
             this.get('filteredList').addObject(obj);
         });
@@ -122,16 +134,89 @@ export default Ember.Component.extend({
         applySelection (value) {
             this.send('transitionToFacet', value);
         },
-        filterVisible(){
-            let filtered = this.get('dropList').filter((val)=>{
-              let value = val.name || val.key
-                return value.toLowerCase().includes(this.get('filterText').toLowerCase());
+        debouncedfilterVisible: function() {
+            clearTimeout(this.get('typingTimer'));
+            let typingTimer = setTimeout(function() {this.send('filterVisible')}.bind(this), 1000);
+            this.set('typingTimer' , typingTimer);
+        }, 
+        resetDebounce: function() {
+            clearTimeout(this.get('typingTimer'));
+        },   
+        filterVisible: async function() {
+           let widget_category = this.get('item.facetDashParameter');
+           if(widget_category === "contributors"){
+            let term_name = "lists." + this.get('item.facetDashParameter') + ".name.exact";
+            let search_term_query = this.get('filterText');
+            let search_term = "^"+this.get('filterText');
+
+            let first_char_search_term = search_term_query.charAt(0).toLowerCase();
+            if (search_term_query.length > 1) {
+                search_term_query = search_term_query.slice(1, search_term_query.length);
+                search_term_query = "[" + first_char_search_term + first_char_search_term.toUpperCase() + "]" + search_term_query + "(.*)";
+            } else {
+                search_term_query = search_term_query + "(.*)";
+            }
+
+            let filter_query = {
+                "query": {
+                    "bool": {
+                        "must": {
+                            "regexp": {
+                                [term_name]: {
+                                    "value": search_term_query
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            let filter_data = await Ember.$.ajax({
+                url: 'https://dev-labs.cos.io/api/v2/search/creativeworks/_search?request_cache=true',
+                crossDomain: true,
+                data: JSON.stringify(filter_query),
+                type: 'POST',
+                contentType: 'application/json'
             });
-            this.set('filteredList', filtered);
-        },
-        showList(){
-            this.set('showList', true);
+            let afilteredList = filter_data.hits.hits.map(function(x) {
+                if (widget_category === "contributors") {
+
+
+                    let contributorsList = x._source.lists.contributors.map(function(y) {
+                        return {
+                            key: y.id,
+                            name: y.name
+                        };
+                    });
+
+                    var filteredContribList = contributorsList.filter(function(word) {
+                        return word.name.toLowerCase().match(search_term.toLowerCase());
+                    });
+
+                }
+                return filteredContribList;
+            });
+
+            let flattenedFilteredContribList = afilteredList.reduce(function(a, b) {
+              return a.concat(b);
+          }, []);
+
+
+
+            for(let i = 0; i < flattenedFilteredContribList.length; i++){
+                for(let k = i+1; k < flattenedFilteredContribList.length; k++){
+                    if(flattenedFilteredContribList[i].name == flattenedFilteredContribList[k].name){
+                        flattenedFilteredContribList.splice( k, 1 );
+                    }
+                }
+            }
+
+            this.set('filteredList', Array.from(new Set(flattenedFilteredContribList)));
         }
+    },
+    showList(){
+        this.set('showList', true);
     }
+}
 
 });

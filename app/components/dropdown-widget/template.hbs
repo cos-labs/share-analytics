@@ -24,7 +24,7 @@
               <div><b>{{enteredItem}}</b> <span class="pointer" {{action "removeFilter" item.facetDashParameter}}>{{fa-icon "close"}} </span> </div>
           </div>
       {{/if}}
-      {{input class="form-control" value=filterText placeholder="Type to filter" key-up="filterVisible" focus-in="showList"}}
+      {{input class="form-control" value=filterText placeholder="Type to filter" key-up="debouncedfilterVisible" key-down="resetDebounce" focus-in="showList"}}
       {{#if showList}}
           <div class="dropdown-search">
               {{#each filteredList as |item|}}

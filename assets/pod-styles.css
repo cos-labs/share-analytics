@@ -1,0 +1,10 @@
+@import "components/agent-detail-widget/style.css";
+@import "components/c3-chart/style.css";
+@import "components/dropdown-widget/style.css";
+@import "components/filter-plaques/style.css";
+@import "components/object-detail-widget/style.css";
+@import "components/query-widget/style.css";
+@import "components/search-facet-daterange/style.css";
+@import "components/stacked-bars/style.css";
+@import "components/text-widget/style.css";
+@import "components/widget-adapter/style.css";

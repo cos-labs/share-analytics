@@ -1,0 +1,35 @@
+.filter-plaques {
+    color: #fff;
+    background-color: rgba(0,0,0,0);
+    padding-bottom: 20px;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    padding: 0;
+    min-height: 0;
+    margin: 0;
+}
+
+.filter-plaques-container {
+    padding: 0;
+}
+
+.filter-plaques .filter-plaque {
+
+    margin-right: 15px;
+    margin-bottom: 12px;
+    background-color: #552266;
+    padding: 9px 13px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 2px;
+    float: left;
+    -webkit-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 25px -2px rgba(0,0,0,0.3);
+
+}
+
+.filter-plaque-type {
+  font-weight: 600;
+  text-transform: capitalize;
+}

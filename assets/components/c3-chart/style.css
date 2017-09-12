@@ -1,0 +1,10 @@
+.chart svg {
+    width: 100%;
+    min-height: 100%;
+}
+.chart {
+    width: 100%;
+}
+.c3-chart {
+  padding-bottom:20px;
+}

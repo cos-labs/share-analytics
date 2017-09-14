@@ -30,6 +30,7 @@ export default Ember.Component.extend({
      }),
     pageNumber: Ember.computed('page',  function() { 
         let page = 'Page ' + this.get('parameters').page
+        if (!this.get('parameters').page) page = 'Page 1';
         return page
     }),
     processData (data) {

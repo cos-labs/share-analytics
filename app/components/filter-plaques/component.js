@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var ID_FILTERS = ['contributors', 'funders', 'publishers', 'tags' , 'type'];
+var ID_FILTERS = ['contributors', 'funders', 'publishers', 'tags' , 'type', 'query', 'start', 'end'];
 
 export default Ember.Component.extend({
   filters: null,
@@ -39,10 +39,10 @@ export default Ember.Component.extend({
             let filterKey = filter.key;
             if(filter.key === 'publishers'){
              filterKey = 'provider';
-           }
-           if(value === 'project'){
-             value += " & awards"
-           }
+            }
+            if(value === 'project'){
+              value += " & awards"
+            }
 
            console.log(value)
            return {key: filterKey, value: value};
@@ -67,12 +67,16 @@ export default Ember.Component.extend({
 
       removeFilter(filter) {
         let queryParams = {};
+        console.log('filter', filter , queryParams)
         queryParams[filter.key] = undefined;
         queryParams['page'] = undefined;
+        console.log(queryParams)
         this.attrs.transitionToFacet("search", queryParams);
       },
 
       transitionToFacet(parameter, parameterValue) {
+                console.log('parameter', parameter , 'parameterValue',parameterValue)
+
         let queryParams = {};
         queryParams[parameter] = parameterValue;
         this.attrs.transitionToFacet("search", queryParams);

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var ID_FILTERS = ['contributors', 'funders', 'publishers', 'tags' , 'type', 'query', 'start', 'end'];
+var ID_FILTERS = ['contributors', 'funders', 'publishers', 'provider','tags' , 'type', 'query', 'start', 'end'];
 
 export default Ember.Component.extend({
   filters: null,

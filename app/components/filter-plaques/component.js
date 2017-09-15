@@ -66,9 +66,16 @@ export default Ember.Component.extend({
     actions: {
 
       removeFilter(filter) {
+        console.log(filter.key)
+        if(filter.key === "provider"){
+          console.log('ffffff')
+          filter.key = "publishers";
+        }
         let queryParams = {};
         queryParams[filter.key] = undefined;
         queryParams['page'] = undefined;
+                  console.log('queryParams')
+
         this.attrs.transitionToFacet("search", queryParams);
       },
 

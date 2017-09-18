@@ -1,10 +1,12 @@
 import Ember from 'ember';
 
-var ID_FILTERS = ['contributors', 'funders', 'publishers', 'tags' , 'type', 'query', 'start', 'end'];
+var ID_FILTERS = ['contributors', 'funders', 'publishers', 'tags' , 'type', 'start', 'end'];
 
 export default Ember.Component.extend({
   filters: null,
   init () {
+
+
     this._super(...arguments);
     let parameters = this.get('parameters');
     var filters = Object.keys(parameters).filter((key) => {
@@ -22,34 +24,43 @@ export default Ember.Component.extend({
       }).map((param) => {
         return {key: param.value}
       });
-
       // Fetch display names
+      let promise
       if (ids.length > 0) {
-        this.fetchAgentDetails(ids).then((data) => {
-          var displayFilters = filters.map((filter) => {
-            var value = filter.value;
-            for (let agentData of data) {
-              if (value === agentData.id) {
-                if(!agentData.name == ""){
-                  value = agentData.name;
-                }
-                break;
-              }
-            }
-            let filterKey = filter.key;
-            if(filter.key === 'publishers'){
-             filterKey = 'provider';
-            }
-            if(value === 'project'){
-              value += " & awards"
-            }
-
-           console.log(value)
-           return {key: filterKey, value: value};
-         });
-          this.set('filters', displayFilters);
+        promise = this.fetchAgentDetails(ids)
+      } else {
+        promise = new Ember.RSVP.Promise((res, rej)=>{
+          res("win");
+          rej("error");
         });
       }
+
+      promise.then((data) => {
+        var displayFilters = filters.map((filter) => {
+          var value = filter.value;
+          for (let agentData of data) {
+            if (value === agentData.id) {
+              if(!agentData.name == ""){
+                value = agentData.name;
+              }
+              break;
+            }
+          }
+          let filterKey = filter.key;
+          if(filter.key === 'publishers'){
+           filterKey = 'provider';
+         }
+         if(value === 'project'){
+          value += " & awards"
+        }
+        return {key: filterKey, value: value};
+      });
+        this.set('filters', displayFilters);
+      });
+
+
+
+
     },
 
     fetchAgentDetails: async function(agentList) {
@@ -67,16 +78,12 @@ export default Ember.Component.extend({
 
       removeFilter(filter) {
         let queryParams = {};
-        console.log('filter', filter , queryParams)
         queryParams[filter.key] = undefined;
         queryParams['page'] = undefined;
-        console.log(queryParams)
         this.attrs.transitionToFacet("search", queryParams);
       },
 
       transitionToFacet(parameter, parameterValue) {
-                console.log('parameter', parameter , 'parameterValue',parameterValue)
-
         let queryParams = {};
         queryParams[parameter] = parameterValue;
         this.attrs.transitionToFacet("search", queryParams);

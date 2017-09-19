@@ -310,3 +310,11 @@ pre {
   background:#c4cee0;
 }
 
+.popover-button{
+  border:none;
+  margin:5px;
+
+}
+.popover-button i{
+  color:#666;
+}

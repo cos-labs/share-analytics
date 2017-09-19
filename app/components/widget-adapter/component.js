@@ -11,7 +11,7 @@ const helpText = {
     'Tags': 'Keywords, subjects, and topics that describe the research output.',
     'Funders': 'Organizations, institutions, foundations, or groups that provided financial support for the research',
     'Dates': 'Date information about the resource was last updated by Source',
-    '':'Click on X within each box to remove the filter from your current search'
+    'Top Contributors': 'Contributors are individuals, organizations, or institutions involved in the production of the resource. Their contribution could be intellectual, material, or financial. Those listed here are the most frequently named contributors in content aggregated by SHARE.'
 }
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
@@ -421,7 +421,7 @@ export default Ember.Component.extend({
         Promise.resolve(this.fetchWidgetData()).then(() =>{
             return this.applyGraphSetting();
         });
-        if(this.get('item.name') == ''){
+        if(this.get('item.name') == '' || this.get('item.name') == 'Highlighted Collections' || this.get('item.name') == 'Recently Added' || this.get('item.name') == 'Top Tags'){
             this.set('showHelpText' , false)
         }
     },

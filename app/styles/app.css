@@ -313,6 +313,7 @@ pre {
 .popover-button{
   border:none;
   margin:5px;
+  background: transparent;
 
 }
 .popover-button i{

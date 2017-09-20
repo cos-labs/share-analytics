@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var ID_FILTERS = ['contributors', 'funders', 'publishers', 'tags' , 'type', 'query', 'start', 'end'];
+var ID_FILTERS = ['contributors', 'funders', 'publishers', 'provider','tags' , 'type', 'query', 'start', 'end'];
 
 export default Ember.Component.extend({
   filters: null,
@@ -39,14 +39,14 @@ export default Ember.Component.extend({
             let filterKey = filter.key;
             if(filter.key === 'publishers'){
              filterKey = 'provider';
-            }
-            if(value === 'project'){
-              value += " & awards"
-            }
+           }
+           if(value === 'project'){
+            value += " & awards"
+          }
 
-           console.log(value)
-           return {key: filterKey, value: value};
-         });
+          console.log(value)
+          return {key: filterKey, value: value};
+        });
           this.set('filters', displayFilters);
         });
       }
@@ -66,17 +66,17 @@ export default Ember.Component.extend({
     actions: {
 
       removeFilter(filter) {
+        let filterKey = filter.key;
+        if(filter.key === "provider"){
+          filterKey = "publishers";
+        }
         let queryParams = {};
-        console.log('filter', filter , queryParams)
-        queryParams[filter.key] = undefined;
+        queryParams[filterKey] = undefined;
         queryParams['page'] = undefined;
-        console.log(queryParams)
         this.attrs.transitionToFacet("search", queryParams);
       },
 
       transitionToFacet(parameter, parameterValue) {
-                console.log('parameter', parameter , 'parameterValue',parameterValue)
-
         let queryParams = {};
         queryParams[parameter] = parameterValue;
         this.attrs.transitionToFacet("search", queryParams);

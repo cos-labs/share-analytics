@@ -1,4 +1,12 @@
 <div class='widget {{widgetType}}' style="height: {{height}}px; min-height: {{item.widgetSettings.minHeight}}px;">
+    {{#if showHelpText}}
+      {{#bs-button class="popover-button pull-right"}}  
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+          {{#bs-popover placement="top" }}
+            {{get helpText item.name}}
+          {{/bs-popover}}
+      {{/bs-button}}
+    {{/if}}
     <div class='widgetButtons'>
         <h4>{{item.name}}</h4>
     </div>

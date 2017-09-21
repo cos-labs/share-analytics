@@ -5,6 +5,13 @@ export default Ember.Component.extend({
 	actions: {		
 		toggleForm(){
 			this.toggleProperty('showForm');
+			if(this.get('showForm')){
+				$("body").css("overflow", "hidden");
+			}else{
+				$("body").css("overflow", "auto");
+			}
+
+
 		}
 	}
 });

@@ -335,6 +335,15 @@ pre {
   cursor: pointer;
 }
 
+.user-feedback:hover{
+    background: #FFCD00;
+
+}
+.user-feedback:active{
+    background: #FFCD00;
+
+}
+
 .user-feedback > div{
   transform:rotate(90deg);
   margin:5px;

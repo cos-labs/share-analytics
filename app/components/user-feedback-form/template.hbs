@@ -1,0 +1,10 @@
+{{yield}}
+<buttin class='btn btn-default user-feedback' {{action 'toggleForm'}} ><div>Provide feedback</div></buttin>
+
+
+{{#if showForm}}
+<div class="feedback-modal">
+	<i class="fa fa-times feedback-close" {{action 'toggleForm'}} aria-hidden="true"></i>
+	<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScIfQMFzGs3P9gsfGM0-Psl0wnD4otSec86j-K8B7fKmUlfag/viewform?embedded=true" width="100%" height="100%" frameborder="0"  scrolling="no" class="googleForm" onsubmit="{{action 'toggleForm'}}">Loading...</iframe>
+</div>
+{{/if}}

@@ -69,15 +69,7 @@ export default Ember.Component.extend({
             type: 'POST',
             contentType: 'application/json'
         });
-        this.set("data", JSON.parse(agent_details));
-
-        let d = []; 
-        this.get('data').forEach(function(element) {
-            if(!(element.name === "")){
-                d.push(element);
-            }
-        });
-        this.set("data", d);
+        this.set('data', JSON.parse(agent_details).filter(element => element.name !== ''))
 
     },
 

@@ -15,38 +15,42 @@ export default Ember.Component.extend({
             this.set('data', data);
         } else if (this.get('chartType') == 'highlightedCollections') {
             data = [
-              {
+            {
                 number: 1,
                 name: 'CAVEcam Virtual Reality Photography Collection',
                 id: '46002-874-0B4'
-              },
-              {
+            },
+            {
                 number: 2,
                 name: 'Data from: Carbonic Anhydrases, EPF2 and a Novel Protease Mediate CO2 Control of Stomatal Development',
                 id: '4619D-B54-28E'
-              },
-              {
+            },
+            {
                 number: 3,
                 name: 'Heavy Metals in the Ocean Insect, Halobates',
                 id: '4612B-AF0-7FB'
-              },
-              {
+            },
+            {
                 number: 4,
                 name: 'Keith Rayner Eye Movements in Reading Data Collection',
                 id: '4601B-68A-696'
-              },
-              {
+            },
+            {
                 number: 5,
                 name: 'Stack Gas and Plume Aerosol Measurements from Renewable Diesel and Ultra Low Sulfur Diesel in At-Sea Operation of Research Vessel Robert Gordon Sproul',
                 id: '4607A-27C-FB9'
-              }
+            }
             ];
             this.set('data', data);
+
+
+
         } else if (this.get('chartType') === 'topContributors') {
             this.fetchAgentDetails(this.get('aggregations.listWidgetData.buckets'));
         } else {
             this.processData(this.get('aggregations.listWidgetData.buckets'));
         }
+
     },
     processData (data) {
         this.set('data', data.map((raw_datum) => {
@@ -65,7 +69,8 @@ export default Ember.Component.extend({
             type: 'POST',
             contentType: 'application/json'
         });
-        this.set("data", JSON.parse(agent_details));
+        this.set('data', JSON.parse(agent_details).filter(element => element.name !== ''))
+
     },
 
     actions: {
@@ -77,15 +82,15 @@ export default Ember.Component.extend({
                 queryParams[facet] = item.name;
                 if (facet === 'contributors' || facet === 'publishers') {
                   queryParams["page"] = undefined;
-                }
-                if (facetDash === "objectDetail" || facetDash === "agentDetail" || facet === 'contributors' || facet === 'publishers') {
-                    queryParams[facet] = item.id;
-                }
-                this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
+              }
+              if (facetDash === "objectDetail" || facetDash === "agentDetail" || facet === 'contributors' || facet === 'publishers') {
+                queryParams[facet] = item.id;
             }
-        },
-        transitionToViewAll(item) {
-            this.attrs.transitionToFacet(item.dataType, {});
+            this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
         }
+    },
+    transitionToViewAll(item) {
+        this.attrs.transitionToFacet(item.dataType, {});
     }
+}
 });

@@ -72,7 +72,7 @@ export default Ember.Component.extend({
         this.updateChart();
     }),
 
-    data: "",
+    data: [],
 
     init() {
         this._super(...arguments);

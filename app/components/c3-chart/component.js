@@ -72,7 +72,7 @@ export default Ember.Component.extend({
         this.updateChart();
     }),
 
-    data: [],
+    data: "",
 
     init() {
         this._super(...arguments);
@@ -86,6 +86,8 @@ export default Ember.Component.extend({
 
 
     processData: async function(data) {
+        this.set("data", "data");
+
         if (this.get('name') === 'Data Providers' || this.get('name') === 'Funders') {
             let agent_details = await Ember.$.ajax({
                 url: 'https://dev-labs.cos.io/bulk_get_agents',
@@ -139,22 +141,22 @@ export default Ember.Component.extend({
 
             if (this.get('data').length === 0 && this.get('name') === 'Data Providers') {
                 var data = [{
-                   'id': '64201-BDE-4D4',
-                   'name': 'UC San Diego',
-                   'number': 58
-                }];
-                this.set('data', data);
-            }
+                 'id': '64201-BDE-4D4',
+                 'name': 'UC San Diego',
+                 'number': 58
+             }];
+             this.set('data', data);
+         }
 
-            if (this.get('item.mappingType') === 'OBJECT_TO_ARRAY') {
-                var columns = this.get('data').map(({ id, number }) => [id, number]);
-            }
+         if (this.get('item.mappingType') === 'OBJECT_TO_ARRAY') {
+            var columns = this.get('data').map(({ id, number }) => [id, number]);
+        }
 
-            if (this.get('item.mappingType') === 'OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY') {
-                var columns = this.get('data').map(({ id, number, awards }) => [id, awards.value]);
-            }
+        if (this.get('item.mappingType') === 'OBJECT_AWARDS_NESTED_VALUE_TO_ARRAY') {
+            var columns = this.get('data').map(({ id, number, awards }) => [id, awards.value]);
+        }
 
-            chart_options['tooltip'] = {
+        chart_options['tooltip'] = {
                 format: { // We want to return a nice-looking tooltip whose content is determined by (or at least consistent with) sour TS intervals
                     name: function (id, percentage) {
                         return self.data.reduce(function(acc, cur, idx, arr) {
@@ -167,7 +169,7 @@ export default Ember.Component.extend({
                     value: function (value, percent, id) {
                         var obj = self.data.filter(function (obj) {
                           return obj.id === id;
-                          })[0];
+                      })[0];
                         var counts = obj.number;
                         if (self.get('name') === 'Funders') {
                             let roundedValue = currencyRounder(value);
@@ -195,10 +197,10 @@ export default Ember.Component.extend({
                     }
                 },
                 y: {
-                     label: 'Number of Publications'
-                },
-            };
-            chart_options['tooltip'] = {
+                   label: 'Number of Publications'
+               },
+           };
+           chart_options['tooltip'] = {
                 grouped: false, // Default true
             };
             chart_options['tooltip'] = tooltip;
@@ -209,16 +211,16 @@ export default Ember.Component.extend({
             let UC_hits = this.get('aggregations.filtered_score.buckets.institution.doc_count')
             let total_hits = this.get('total')
             var columns = [
-                ['overallCountByRelevance'].concat(this.get('data.aggregations.all_score.buckets').map((datum) => {
-                    let val = this.get('aggregations.all_score.buckets')[datum.key];
-                    if (val && val.doc_count > 0) { return val.doc_count * UC_hits / total_hits; }
-                    return 0;
-                })),
-                ['ucCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
-                    let val = this.get('aggregations.filtered_score.buckets.institution.score.buckets')[datum.key];
-                    if (val && val.doc_count > 0) { return val.doc_count; }
-                    return 0;
-                })),
+            ['overallCountByRelevance'].concat(this.get('data.aggregations.all_score.buckets').map((datum) => {
+                let val = this.get('aggregations.all_score.buckets')[datum.key];
+                if (val && val.doc_count > 0) { return val.doc_count * UC_hits / total_hits; }
+                return 0;
+            })),
+            ['ucCountByRelevance'].concat(this.get('aggregations.all_score.buckets').map((datum) => {
+                let val = this.get('aggregations.filtered_score.buckets.institution.score.buckets')[datum.key];
+                if (val && val.doc_count > 0) { return val.doc_count; }
+                return 0;
+            })),
             ];
 
             chart_options['axis'] = {
@@ -324,35 +326,35 @@ export default Ember.Component.extend({
                     return;
                 }
                 d3.select(this.parentNode).append('text')
-                    .text(self.data.reduce(function(acc, cur, idx, arr) {
-                        if (cur.id === d.data.id) {
-                            var string = cur.name ? cur.name : cur.id;
-                            var label = getLabel(string);
-                            if (label.length > 28) {
-                                return label.substring(0,25) + "...";
-                            }
-                            return label;
+                .text(self.data.reduce(function(acc, cur, idx, arr) {
+                    if (cur.id === d.data.id) {
+                        var string = cur.name ? cur.name : cur.id;
+                        var label = getLabel(string);
+                        if (label.length > 28) {
+                            return label.substring(0,25) + "...";
                         }
-                        return acc;
-                    }, false))
-                    .attr("x", 160*Math.sin((d.startAngle + d.endAngle)/2))
-                    .attr("y", -130*Math.cos((d.startAngle + d.endAngle)/2))
-                    .attr("text-anchor", "middle")
-                    .attr("alignment-baseline", "central")
-                    .attr("font-size", "12px")
-                    .attr("fill", "rgb(250,250,250)")
-                    .each(function(d) {
-                        var rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
-                        this.parentNode.insertBefore(rect, this);
-                        let bbox = this.getBBox();
-                        d3.select(rect)
-                            .attr("fill", "rgba(0,0,0,0.5)")
-                            .attr("stroke", "rgba(0,0,0,0.6)")
-                            .attr("width", bbox.width + 14)
-                            .attr("height", bbox.height + 8)
-                            .attr("x", bbox.x - 7)
-                            .attr("y", bbox.y - 4)
-                    })
+                        return label;
+                    }
+                    return acc;
+                }, false))
+                .attr("x", 160*Math.sin((d.startAngle + d.endAngle)/2))
+                .attr("y", -130*Math.cos((d.startAngle + d.endAngle)/2))
+                .attr("text-anchor", "middle")
+                .attr("alignment-baseline", "central")
+                .attr("font-size", "12px")
+                .attr("fill", "rgb(250,250,250)")
+                .each(function(d) {
+                    var rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
+                    this.parentNode.insertBefore(rect, this);
+                    let bbox = this.getBBox();
+                    d3.select(rect)
+                    .attr("fill", "rgba(0,0,0,0.5)")
+                    .attr("stroke", "rgba(0,0,0,0.6)")
+                    .attr("width", bbox.width + 14)
+                    .attr("height", bbox.height + 8)
+                    .attr("x", bbox.x - 7)
+                    .attr("y", bbox.y - 4)
+                })
             });
             /*var labels_bgs = d3.selectAll(this.$(this.element).find('.c3-chart-arc'))
                 .insert('rect', 'text')

@@ -433,7 +433,7 @@ export default Ember.Component.extend({
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
         let item = this.get('item');
-        var endpoint ='v2/_search?request_cache=true';
+        var endpoint ='records/_search?request_cache=true';
         if (item.endpoint) {
             endpoint = '/share/search/' + item.endpoint + '/_search?request_cache=true';
         }

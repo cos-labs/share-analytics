@@ -172,7 +172,7 @@ export default Ember.Component.extend({
             }
 
             let filter_data = await Ember.$.ajax({
-                url: 'https://dev-labs.cos.io/api/v2/search/creativeworks/_search?request_cache=true',
+                url: 'https://dev-labs.cos.io/api/records/search/creativeworks/_search?request_cache=true',
                 crossDomain: true,
                 data: JSON.stringify(filter_query),
                 type: 'POST',

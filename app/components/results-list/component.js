@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
-    data : [],
+    data : [""],
     pagebackbtn : null,
     pagenextbtn : null,
 
@@ -12,6 +12,7 @@ export default Ember.Component.extend({
         let data = this.processData(this.get('data.hits.hits'));
         this.set('data', data);
         this.get('resourceType')
+        
     },
     pagebackbtn: Ember.computed('page',  function() {
           let page = Number(this.parameters['page']);

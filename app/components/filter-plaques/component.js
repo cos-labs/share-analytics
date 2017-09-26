@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
-var ID_FILTERS = ['contributors', 'funders', 'publishers', 'tags' , 'type', 'start', 'end'];
+
+var ID_FILTERS = ['contributors', 'funders', 'publishers', 'provider','tags' , 'type', 'query', 'start', 'end'];
 
 export default Ember.Component.extend({
   filters: null,
@@ -58,9 +59,6 @@ export default Ember.Component.extend({
         this.set('filters', displayFilters);
       });
 
-
-
-
     },
 
     fetchAgentDetails: async function(agentList) {
@@ -77,8 +75,13 @@ export default Ember.Component.extend({
     actions: {
 
       removeFilter(filter) {
+        let filterKey = filter.key;
+        if(filter.key === "provider"){
+          filterKey = "publishers";
+        }
         let queryParams = {};
-        queryParams[filter.key] = undefined;
+
+        queryParams[filterKey] = undefined;
         queryParams['page'] = undefined;
         this.attrs.transitionToFacet("search", queryParams);
       },

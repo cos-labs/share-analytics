@@ -3,6 +3,16 @@ import ENV from 'analytics-dashboard/config/environment';
 import stringify from 'npm:json-stable-stringify';
 import dateInterval from '../../utils/date-interval';
 
+
+const helpText = {
+    'Total Results': 'Number of unique items returned by your search.',
+    'Data Providers': 'Data Providers are organizations or agents, such as publishers, repositories, data centers, archives, and funders, making these resources available. A given resource may list more than one data provider, for example, the Association (e.g. Association for Computing Machinery) and the Association`s Press (ACM Press).',
+    'Types':'The type of resource (article, dataset, dissertation, etc.). Any resource type not listed will appear under Creative Work by default.',
+    'Tags': 'Keywords, subjects, and topics that describe the research output.',
+    'Funders': 'Organizations, institutions, foundations, or groups that provided financial support for the research',
+    'Dates': 'Date information about the resource was last updated by Source',
+    'Top Contributors': 'Contributors are individuals, organizations, or institutions involved in the production of the resource. Their contribution could be intellectual, material, or financial. Those listed here are the most frequently named contributors in content aggregated by SHARE.'
+}
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
 
@@ -402,12 +412,18 @@ export default Ember.Component.extend({
     configuring: false,
     picking: false,
 
+    helpText,
+    showHelpText: true,
+
     init() {
         this._super(...arguments);
         this.set('widthSetting', this.get('item').width);
         Promise.resolve(this.fetchWidgetData()).then(() =>{
             return this.applyGraphSetting();
         });
+        if(this.get('item.name') == '' || this.get('item.name') == 'Highlighted Collections' || this.get('item.name') == 'Recently Added' || this.get('item.name') == 'Top Tags'){
+            this.set('showHelpText' , false)
+        }
     },
 
     didRender() {
@@ -433,7 +449,7 @@ export default Ember.Component.extend({
         let lte = this.get('lte');
         let interval = this.get('tsInterval');
         let item = this.get('item');
-        var endpoint ='v2/_search?request_cache=true';
+        var endpoint ='records/_search?request_cache=true';
         if (item.endpoint) {
             endpoint = '/share/search/' + item.endpoint + '/_search?request_cache=true';
         }

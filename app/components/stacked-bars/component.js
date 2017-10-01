@@ -39,6 +39,7 @@ export default Ember.Component.extend({
             if(value.label === 'project'){
                 value.label  = value.label  + ' & awards'
             }
+            console.log(value)
             chartElement.append('<div class="stack" data-index="' + j + '" data-tooltip="'+ value.label + ': ' + value.number  + '&nbsp;records" style="width:'+ value.width +'px; background-color:'+ value.background+';"><span>'+ value.label + ': ' + value.number  + '&nbsp;records</span></div>');
         }
     },
@@ -81,16 +82,18 @@ export default Ember.Component.extend({
     },
     didInsertElement(){
         this.generateChart();
-        let component  = this;
-        component.$(window).on('resize', function(){
-            component.generateChart.call(component);// This is very expensive, will need to be revised for actual app
-            component.showHideLabel.call(component);
+        this.$(window).on('resize', () => {
+            this.generateChart.call(this);// This is very expensive, will need to be revised for actual app
+            this.showHideLabel.call(this);
         });
-        component.showHideLabel.call(component);
-        component.$('.stack').click(function(event){
-            let index = component.$(event.target).attr('data-index');
-            let item = component.get('data')[index];
-            component.send('transitionToFacet', item);
+        this.showHideLabel.call(this);
+        this.$('.stack').click(ev => {
+            let target = ev.target;
+            if (ev.target.tagName === "SPAN") target = ev.target.parentNode;
+            let index = this.$(target).attr("data-index");
+            console.log(index);
+            let item = this.get('data')[index];
+            this.send('transitionToFacet', item);
         })
     },
     init() {
@@ -102,7 +105,18 @@ export default Ember.Component.extend({
           let queryParams = {};
           var facet = this.get("item.facetDashParameter");
           if (facet) {
-              queryParams[facet] = item.label;
+              queryParams[facet] = {
+                "project & awards": "project",
+                "creative work": "creative work",
+                "article": "article",
+                "data set": "data set",
+                "registration": "registration",
+                "preprint": "preprint",
+                "conference paper": "conference paper",
+                "book": "book",
+                "report": "report",
+                "software": "software"
+              }[item.label];
               this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
           } else if (item.url) {
             window.location.href = item.url;

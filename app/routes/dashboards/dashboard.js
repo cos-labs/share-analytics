@@ -501,7 +501,7 @@ export default Ember.Route.extend({
                             }
                         ],
                     },
-                    /*{
+                    {
                         chartType: 'topContributors',
                         widgetType: 'dropdown-widget',
                         name: 'Contributors',
@@ -582,7 +582,7 @@ export default Ember.Route.extend({
                         widgetSettings: {
                             mode: 'search'
                         }
-                    },*/
+                    },
                     {
                         // Type dropdown
                         widgetType: 'dropdown-widget',

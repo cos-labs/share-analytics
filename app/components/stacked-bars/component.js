@@ -39,7 +39,6 @@ export default Ember.Component.extend({
             if(value.label === 'project'){
                 value.label  = value.label  + ' & awards'
             }
-            console.log(value)
             chartElement.append('<div class="stack" data-index="' + j + '" data-tooltip="'+ value.label + ': ' + value.number  + '&nbsp;records" style="width:'+ value.width +'px; background-color:'+ value.background+';"><span>'+ value.label + ': ' + value.number  + '&nbsp;records</span></div>');
         }
     },
@@ -91,7 +90,6 @@ export default Ember.Component.extend({
             let target = ev.target;
             if (ev.target.tagName === "SPAN") target = ev.target.parentNode;
             let index = this.$(target).attr("data-index");
-            console.log(index);
             let item = this.get('data')[index];
             this.send('transitionToFacet', item);
         })

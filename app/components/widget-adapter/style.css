@@ -49,3 +49,12 @@
 .ball-dark > div {
   background-color: #dbe2ef;
 }
+
+.tooltip{
+    font-size: 14px;
+    z-index: 10001;
+}
+
+.tooltip >div{
+  background-color: hsla(0, 0%, 20%, 0.9);
+}

@@ -438,24 +438,6 @@ export default Ember.Component.extend({
 
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 
-
-
-        $('body').on('click', function (e) {
-           $('*[popover]').each(function () {
-            console.log('dfdfdf')
-                        //Only do this for all popovers other than the current one that cause this event
-                        if (!($(this).is(e.target) || $(this).has(e.target).length > 0) 
-                             && $(this).siblings('.popover').length !== 0 
-                             && $(this).siblings('.popover').has(e.target).length === 0)                  
-                        {
-                             //Remove the popover element from the DOM          
-                             $(this).siblings('.popover').remove();
-                             //Set the state of the popover in the scope to reflect this          
-                             angular.element(this).scope().tt_isOpen = false;
-                        }
-            });
-        }); 
-
     },
 
     fetchWidgetData: async function() {

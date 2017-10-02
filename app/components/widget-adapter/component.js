@@ -5,13 +5,13 @@ import dateInterval from '../../utils/date-interval';
 
 
 const helpText = {
-    'Total Results': 'Number of unique items returned by your search.',
-    'Data Providers': 'Data Providers are organizations or agents, such as publishers, repositories, data centers, archives, and funders, making these resources available. A given resource may list more than one data provider, for example, the Association (e.g. Association for Computing Machinery) and the Association`s Press (ACM Press).',
-    'Types':'The type of resource (article, dataset, dissertation, etc.). Any resource type not listed will appear under Creative Work by default.',
-    'Tags': 'Keywords, subjects, and topics that describe the research output.',
+    'Total Results': 'Number of unique items returned by your search',
+    'Data Providers': 'Data Providers are organizations or agents, such as publishers, repositories, data centers, archives, and funders, making these resources available. A given resource may list more than one data provider, for example, the Association (e.g. Association for Computing Machinery) and the Association`s Press (ACM Press)',
+    'Types':'The type of resource (article, dataset, dissertation, etc.). Any resource type not listed will appear under Creative Work by default',
+    'Tags': 'Keywords, subjects, and topics that describe the research output',
     'Funders': 'Organizations, institutions, foundations, or groups that provided financial support for the research',
     'Dates': 'Date information about the resource was last updated by Source',
-    'Top Contributors': 'Contributors are individuals, organizations, or institutions involved in the production of the resource. Their contribution could be intellectual, material, or financial. Those listed here are the most frequently named contributors in content aggregated by SHARE.',
+    'Top Contributors': 'Contributors are individuals, organizations, or institutions involved in the production of the resource. Their contribution could be intellectual, material, or financial. Those listed here are the most frequently named contributors in content aggregated by SHARE',
     'filter-plaques': 'A list of your current search terms'
 }
 //import Q from 'npm:q';

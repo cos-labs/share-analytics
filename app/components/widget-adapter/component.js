@@ -11,7 +11,8 @@ const helpText = {
     'Tags': 'Keywords, subjects, and topics that describe the research output.',
     'Funders': 'Organizations, institutions, foundations, or groups that provided financial support for the research',
     'Dates': 'Date information about the resource was last updated by Source',
-    'Top Contributors': 'Contributors are individuals, organizations, or institutions involved in the production of the resource. Their contribution could be intellectual, material, or financial. Those listed here are the most frequently named contributors in content aggregated by SHARE.'
+    'Top Contributors': 'Contributors are individuals, organizations, or institutions involved in the production of the resource. Their contribution could be intellectual, material, or financial. Those listed here are the most frequently named contributors in content aggregated by SHARE.',
+    'filter-plaques': 'A list of your current search terms'
 }
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn
@@ -358,6 +359,7 @@ const agg_types = [ // agg_types is this array literal, reduced by the following
 
 export default Ember.Component.extend({
 
+
     aggregations: false,
     docs: false,
     loadingData: Ember.computed('data', function(){
@@ -422,7 +424,11 @@ export default Ember.Component.extend({
             return this.applyGraphSetting();
         });
         if(this.get('item.name') == '' || this.get('item.name') == 'Highlighted Collections' || this.get('item.name') == 'Recently Added' || this.get('item.name') == 'Top Tags'){
-            this.set('showHelpText' , false)
+           this.set('showHelpText' , false)
+        } 
+        if(this.get('item.widgetType') == 'filter-plaques'){
+
+           this.set('showHelpText' , true)
         }
     },
 

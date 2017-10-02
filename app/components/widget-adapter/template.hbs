@@ -2,13 +2,15 @@
     {{#if showHelpText}}
 
       {{#bs-button class="popover-button pull-right"}}
-            <i class="fa fa-info-circle" aria-hidden="true"></i>
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
         {{#bs-tooltip placement="top"}}
-              {{get helpText item.name}}
+          {{#if item.name}}
+            {{get helpText item.name}}
+          {{else}}
+            {{get helpText item.widgetType}}
+          {{/if}}
         {{/bs-tooltip}}
       {{/bs-button}}
-
-
 
     {{/if}}
     <div class='widgetButtons'>

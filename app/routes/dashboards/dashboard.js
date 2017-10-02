@@ -692,7 +692,7 @@ export default Ember.Route.extend({
                             mode: 'search'
                         }
                     },
-                    /*{
+                    {
                         // Funder select
                         widgetType: 'dropdown-widget',
                         name: 'Funders',
@@ -769,7 +769,7 @@ export default Ember.Route.extend({
                         widgetSettings: {
                             mode: 'search'
                         }
-                    },*/
+                    },
                     {
                         // Daterange select
                         widgetType: 'search-facet-daterange',
@@ -976,7 +976,7 @@ export default Ember.Route.extend({
                             }
                         ]
                     },
-                    /*{
+                    {
                         chartType: 'topContributors',
                         widgetType: 'list-widget',
                         name: 'Top Contributors',
@@ -1067,7 +1067,7 @@ export default Ember.Route.extend({
                         widgetSettings: {
                           helpText: 'Click on a section to view associated records'
                         }
-                    },*/
+                    },
                     {
                         chartType: 'tagsList',
                         widgetType: 'list-widget',

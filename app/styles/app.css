@@ -425,7 +425,7 @@ pre {
   position: absolute;
   top: 12px;
   left: -151px;
-  
+
 }
 
 
@@ -454,3 +454,11 @@ pre {
 .fa-gear:before, .fa-cog:before{
   color:#666;
 }
+
+.dots {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #666;
+  box-shadow: 0px 6px 0px #666, 0px 12px 0px #666;
+  }

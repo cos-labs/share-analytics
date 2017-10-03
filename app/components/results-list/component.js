@@ -23,7 +23,8 @@ export default Ember.Component.extend({
 
         $(".menu").click((e)=> {
            e.stopPropagation();
-           this.set('objectID' , e.target.id)
+           this.set('objectID' , e.target.getAttribute('data-id'))
+
 
            switch(e.target.innerHTML) {
             
@@ -31,6 +32,7 @@ export default Ember.Component.extend({
             this.set('newTab', true)
             this.send('transitionToFacet')
             this.set('newTab', false)
+
             break;
             
             case "Open Link":

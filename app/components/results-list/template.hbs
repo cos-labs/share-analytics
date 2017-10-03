@@ -19,13 +19,13 @@
                 {{item._source.date}}
                   
                     <li class="menu dropdown">
-                      <a href="#" class="btn btn-lg  dropdown-toggle">{{fa-icon "gear"}}
+                      <a href="#" class="btn btn-lg  dropdown-toggle"><div class="dots"></div>
 
                       </a>
                         <ul class="menu  dropdown-menu collapsed" role="menu">
-                            <li><a href="#" id="objectDetail?id={{item._source.id}}" >Open in new tab</a></li>
-                            <li><a href="#" id="objectDetail?id={{item._source.id}}" >Open Link</a></li>
-                            <li><a href='#' id="objectDetail?id={{item._source.id}}" >Copy URL</a></li>
+                            <li><a href="#" data-id="objectDetail?id={{item._source.id}}" >Open in new tab</a></li>
+                            <li><a href="#" data-id="objectDetail?id={{item._source.id}}" >Open Link</a></li>
+                            <li><a href='#' data-id="objectDetail?id={{item._source.id}}" >Copy URL</a></li>
                         </ul>
                     </li>
 

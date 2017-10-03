@@ -462,3 +462,7 @@ pre {
   background-color: #666;
   box-shadow: 0px 6px 0px #666, 0px 12px 0px #666;
   }
+
+  .list-widget a {
+    text-decoration: none;
+  }

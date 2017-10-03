@@ -19,26 +19,25 @@ export default Ember.Component.extend({
     didRender(){
         $('.dropdown-toggle').click(function() {
           $(this).siblings('.dropdown-menu').toggleClass('collapsed expanded');
-      });
+        });
 
         $(".menu").click((e)=> {
            e.stopPropagation();
            this.set('objectID' , e.target.getAttribute('data-id'))
 
-
            switch(e.target.innerHTML) {
             
             case "Open in new tab":
-            this.set('newTab', true)
-            this.send('transitionToFacet')
-            this.set('newTab', false)
+                this.set('newTab', true)
+                this.send('transitionToFacet')
+                this.set('newTab', false)
 
             break;
             
             case "Open Link":
-            this.set('newTab', "transitionToFacet")
-            this.send('transitionToFacet')
-            this.set('newTab', false)
+                this.set('newTab', "transitionToFacet")
+                this.send('transitionToFacet')
+                this.set('newTab', false)
 
             break;
             case "Copy URL":
@@ -48,6 +47,8 @@ export default Ember.Component.extend({
                 aux.select();
                 document.execCommand("copy");
                 document.body.removeChild(aux);
+                $(e.target).text('Text copied')
+                setTimeout(()=>{  $(e.target).text('Copy URL') }, 3000);
             break;
 
         default:

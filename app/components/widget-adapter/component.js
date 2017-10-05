@@ -6,13 +6,14 @@ import dateInterval from '../../utils/date-interval';
 
 const helpText = {
     'Total Results': 'Number of unique items returned by your search',
-    'Data Providers': 'Data Providers are organizations or agents, such as publishers, repositories, data centers, archives, and funders, making these resources available. A given resource may list more than one data provider, for example, the Association (e.g. Association for Computing Machinery) and the Association`s Press (ACM Press)',
-    'Types':'The type of resource (article, dataset, dissertation, etc.). Any resource type not listed will appear under Creative Work by default',
-    'Tags': 'Keywords, subjects, and topics that describe the research output',
+    'Data Providers': 'Organizations or agents, such as publishers, repositories, data centers, archives, and funders, making these resources available. A given resource may list more than one data provider, for example, the Association (e.g. Association for Computing Machinery) and the Association`s Press (ACM Press).',
+    'Types':'Resources, or items, are categorized into Types (article, data set, dissertation, etc.). Any resource not categorized by the Source will appear under Creative Work by default.',
+    'Tags': 'Keywords, subjects, and topics that describe the research output. Those listed here are the most frequently listed tags in content aggregated by SHARE.',
     'Funders': 'Organizations, institutions, foundations, or groups that provided financial support for the research',
     'Dates': 'Date information about the resource was last updated by Source',
-    'Top Contributors': 'Contributors are individuals, organizations, or institutions involved in the production of the resource. Their contribution could be intellectual, material, or financial. Those listed here are the most frequently named contributors in content aggregated by SHARE',
-    'filter-plaques': 'A list of your current search terms'
+    'Top Contributors': 'Individuals, organizations, or institutions involved in the production of the resource. Their contribution could be intellectual, material, or financial. Those listed here are the most frequently named contributors in content aggregated by SHARE.',
+    'filter-plaques': 'A list of your current search terms, click on X within each box to remove the filter from your current search.',
+    'Contributors':'Individuals, organizations, or institutions involved in the production of the resource. Their contribution could be intellectual, material, or financial.'
 }
 //import Q from 'npm:q';
 const agg_types = [ // agg_types is this array literal, reduced by the following fn

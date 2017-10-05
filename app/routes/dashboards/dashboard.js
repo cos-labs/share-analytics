@@ -228,16 +228,14 @@ export default Ember.Route.extend({
     beforeModel(){
 
       $.ajax({
-           url:"https://api.cosmicjs.com/v1/ucsd-about-page/object/about-page",
-           async: false,
-           success:(json)=>{
-            
+          url:"https://api.cosmicjs.com/v1/ucsd-about-page/object/about-page",
+          async: false,
+          success:(json)=>{
             this.set('aboutContent' , json.object.content)
-      
-           },
-           error:()=>{
-               alert("Error loading about page content from cosmicJS");
-           }      
+          },
+          error:()=>{
+            console.log("Error loading about page content from cosmicJS");
+          }      
       });
 
     },

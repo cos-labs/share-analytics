@@ -185,6 +185,7 @@ button.edit-title:hover {
   padding: 4px 10px;
   border-bottom: 1px solid #ddd;
   border-radius: 2px;
+      min-height: 130px;
 }
 .list-widget-item{
   cursor: pointer;
@@ -336,11 +337,11 @@ pre {
 }
 
 .user-feedback:hover{
-    background: #FFCD00;
+  background: #FFCD00;
 
 }
 .user-feedback:active{
-    background: #FFCD00;
+  background: #FFCD00;
 
 }
 
@@ -395,3 +396,73 @@ pre {
 }
 
 
+
+
+
+.dropdown {
+  list-style-type: none;
+  /*  margin: 100px auto;*/
+  display: block;
+  /*  width: 200px;*/
+  position: absolute;
+  top: 14px;
+  right: -4px;
+}
+
+.dropdown>a {
+ color:transparent !important;
+ text-shadow:none !important;
+ border:none !important;
+ box-shadow:none !important;
+}
+
+.dropdown .dropdown-menu {
+  display: block !important;
+  padding: 0;
+  border: none;
+  background-color: #e0e0e0;
+  box-shadow: 2px 0 3px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 12px;
+  left: -151px;
+
+}
+
+
+.dropdown .dropdown-menu.collapsed {
+  opacity: 0;
+  visibility: hidden !important;
+}
+
+.dropdown .dropdown-menu.expanded {
+  opacity: 1;
+  visibility: visible !important;
+}
+
+.dropdown .dropdown-menu li {
+  width: 100%;
+  padding: 0;
+}
+
+.dropdown .dropdown-menu li a {
+  width: 100%;
+  color:#666;
+
+}
+
+
+.fa-gear:before, .fa-cog:before{
+  color:#666;
+}
+
+.dots {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #666;
+  box-shadow: 0px 6px 0px #666, 0px 12px 0px #666;
+  }
+
+  .list-widget a {
+    text-decoration: none;
+  }

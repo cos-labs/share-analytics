@@ -1,74 +1,89 @@
 
 <div class="list-widget widget-body" style="padding: 0;">
-    <div>
-        <h3>{{results.title}}</h3>
-    </div>
-    {{#each data as |item|}}
-    <a href="objectDetail?id={{item._source.id}}" style="position: relative; clear: both;">
-        <div style="cursor: pointer; background-color: #eee; overflow: hidden; position: relative; margin: 0 10px;" href="#" class="list-widget-item" {{action "transitionToFacet" "objectDetail" "id" item._source.id}}>
-            <div class="item-number" style="color: #fff; background-color: #aaa; position: absolute; left: 0; top: 0; padding: 3px 7px 3px 7px; font-size: 13px; margin: 0px;">{{item._source.type}}</div>
 
+    <div class='pull-right'>
+        <span>Sort by: </span>
+        <div class="btn-group orderBy" data-toggle="buttons">  
 
+            <label class="btn active orderBySelected" {{action 'orderBy'}}>
+                <input type="radio" name="options" id="orderByRelevance"> Relevance
+            </label>
 
+            <label class="btn" {{action 'orderBy'}}>
+                <input type="radio" name="options" id="orderByDate"> Date
+            </label>
 
-
-            <div class="item-number" style="color: #aaa; float: right; font-size: 13px;">
-
-
-
-                {{item._source.date}}
-                  
-                    <li class="menu dropdown">
-                      <a href="#" class="btn btn-lg  dropdown-toggle"><div class="dots"></div>
-
-                      </a>
-                        <ul class="menu  dropdown-menu collapsed" role="menu">
-                            <li><a href="#" data-id="objectDetail?id={{item._source.id}}" >Open in new tab</a></li>
-                            <li><a href="#" data-id="objectDetail?id={{item._source.id}}" >Open Link</a></li>
-                            <li><a href='#' data-id="objectDetail?id={{item._source.id}}" >Copy URL</a></li>
-                        </ul>
-                    </li>
-
-            </div>
-            <div class="item-number" style="color: #666; clear: both; padding-top: 10px;">{{item._source.title}}</div>
-            {{!--<div class="item-name" style="color: #aaa">
-                {{#each item._source.contributors as |contributor|}}
-                {{contributor}}
-                {{/each}}
-            </div>--}}
-            <div style="max-width: 700px; color: #888; padding-top: 10px; padding-bottom: 10px;">{{item.description_truncated}}</div>
-            <div class="item-number" style="color: #aaa; float: left; clear: both; font-size: 13px;">
-                {{#if item._source.publishers}}
-                Provided by: {{#each item._source.publishers as |publisher|}}
-                <span>{{publisher}}</span>
-                {{/each}}
-                {{/if}}
-            </div>
-
-
-
-
-
-
-            <div class="item-name" style="cursor: pointer; margin-bottom: 10px; float: right; color: #aaa: padding: 3px 5px 3px 5px;" {{action "transitionToFacet" "objectDetail" "id" item._source.id}}>Details&nbsp;&nbsp;<i class="fa fa-angle-right"></i></div>
         </div>
-        <div style="padding: 10px; margin-bottom: 20px;">
-            <div colspan=4 style="padding: 8px; padding-bottom: 28px;">
-                {{!--{{#each item._source.tags as |tag|}}
-                <span {{action "transitionToFacet" "search" "tags" tag on="click"}} style="display: inline-block; font-size: 12px; background-color: #7ec4dd; color: #fff; padding: 2px 5px 2px 5px ; border: 1px solid color: #6ebfd5; border-radius: 3px; margin: 3px; cursor: pointer;">{{tag}}</span>
-                {{/each}}--}}
-            </div>
-        </div>
-    </a>
-    {{else}}
-    <h3 class="text-center p-t-md">
-        No results found.
-    </h3>
-    {{/each}}
-    {{#if data.length}}
-    <div style="text-align: center; padding: 30px;">
-        <button class="btn btn-primary"  disabled={{if pagebackbtn "disabled" null}}  {{action "pageback"}}>{{fa-icon "chevron-left"}}</button> {{pageNumber}}
-        <button class="btn btn-primary"  disabled={{if pagenextbtn "disabled" null}} {{action "pagenext"}}>{{fa-icon "chevron-right"}}</button>
     </div>
-    {{/if}}
+    <br/>
+<hr />
+
+{{#each data as |item|}}
+<a href="objectDetail?id={{item._source.id}}" style="position: relative; clear: both;">
+    <div style="cursor: pointer; background-color: #eee; overflow: hidden; position: relative; margin: 0 10px;" href="#" class="list-widget-item" {{action "transitionToFacet" "objectDetail" "id" item._source.id}}>
+        <div class="item-number" style="color: #fff; background-color: #aaa; position: absolute; left: 0; top: 0; padding: 3px 7px 3px 7px; font-size: 13px; margin: 0px;">{{item._source.type}}</div>
+
+
+
+
+
+        <div class="item-number" style="color: #aaa; float: right; font-size: 13px;">
+
+
+
+            {{item._source.date}}
+
+            <li class="menu dropdown">
+              <a href="#" class="btn btn-lg  dropdown-toggle"><div class="dots"></div>
+
+              </a>
+              <ul class="menu  dropdown-menu collapsed" role="menu">
+                <li><a href="#" data-id="objectDetail?id={{item._source.id}}" >Open in new tab</a></li>
+                <li><a href="#" data-id="objectDetail?id={{item._source.id}}" >Open Link</a></li>
+                <li><a href='#' data-id="objectDetail?id={{item._source.id}}" >Copy URL</a></li>
+            </ul>
+        </li>
+
+    </div>
+    <div class="item-number" style="color: #666; clear: both; padding-top: 10px;">{{item._source.title}}</div>
+    {{!--<div class="item-name" style="color: #aaa">
+        {{#each item._source.contributors as |contributor|}}
+        {{contributor}}
+        {{/each}}
+    </div>--}}
+    <div style="max-width: 700px; color: #888; padding-top: 10px; padding-bottom: 10px;">{{item.description_truncated}}</div>
+    <div class="item-number" style="color: #aaa; float: left; clear: both; font-size: 13px;">
+        {{#if item._source.publishers}}
+        Provided by: {{#each item._source.publishers as |publisher|}}
+        <span>{{publisher}}</span>
+        {{/each}}
+        {{/if}}
+    </div>
+
+
+
+
+
+
+    <div class="item-name" style="cursor: pointer; margin-bottom: 10px; float: right; color: #aaa: padding: 3px 5px 3px 5px;" {{action "transitionToFacet" "objectDetail" "id" item._source.id}}>Details&nbsp;&nbsp;<i class="fa fa-angle-right"></i></div>
+</div>
+<div style="padding: 10px; margin-bottom: 20px;">
+    <div colspan=4 style="padding: 8px; padding-bottom: 28px;">
+        {{!--{{#each item._source.tags as |tag|}}
+        <span {{action "transitionToFacet" "search" "tags" tag on="click"}} style="display: inline-block; font-size: 12px; background-color: #7ec4dd; color: #fff; padding: 2px 5px 2px 5px ; border: 1px solid color: #6ebfd5; border-radius: 3px; margin: 3px; cursor: pointer;">{{tag}}</span>
+        {{/each}}--}}
+    </div>
+</div>
+</a>
+{{else}}
+<h3 class="text-center p-t-md">
+    No results found.
+</h3>
+{{/each}}
+{{#if data.length}}
+<div style="text-align: center; padding: 30px;">
+    <button class="btn btn-primary"  disabled={{if pagebackbtn "disabled" null}}  {{action "pageback"}}>{{fa-icon "chevron-left"}}</button> {{pageNumber}}
+    <button class="btn btn-primary"  disabled={{if pagenextbtn "disabled" null}} {{action "pagenext"}}>{{fa-icon "chevron-right"}}</button>
+</div>
+{{/if}}
 </div>

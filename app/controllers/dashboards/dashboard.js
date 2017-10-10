@@ -17,6 +17,8 @@ export default Ember.Controller.extend({
         {'type': {scope: "controller"}},
         {'funders': {scope: "controller"}},
         {'contributors': {scope: "controller"}},
+        {'recently_added_sort': {scope: "controller"}},
+
     ],
 
     updateParams: Ember.observer('queryParams', function() {

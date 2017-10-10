@@ -196,7 +196,8 @@ export default Ember.Route.extend({
       funders: {refreshModel: true},
       start: {refreshModel:true},
       end: {refreshModel:true},
-      page: {refreshModel: true}
+      page: {refreshModel: true},
+      recently_added_sort: {refreshModel: true}
     },
     gte: "1996-01-01",        // Set default begin date
     lte: (new Date()).toISOString().split('T')[0], // Set default end date
@@ -325,6 +326,10 @@ export default Ember.Route.extend({
                                 parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
                                 parameterName: "query",
                                 defaultValue: "*"
+                            },
+                            {
+                                parameterName: "recently_added_sort",
+                                parameterPath: ["sort", "date", "order"]
                             },
                             {
                                 parameterPath: ["query", "bool", "filter", 1, "term", "sources.exact"],

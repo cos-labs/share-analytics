@@ -22,6 +22,7 @@ export default Ember.Component.extend({
       }
     });
 
+
       // Find and format all query params that use ids for the value
       var ids = filters.filter((item) => {
         return ID_FILTERS.indexOf(item.key) !== -1;

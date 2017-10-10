@@ -3,6 +3,9 @@ import Ember from 'ember';
 
 var ID_FILTERS = ['contributors', 'funders', 'publishers', 'provider'];
 
+//Any plaque name on this list will not show up in the plaques list 
+var PLAQUE_BLACKLIST = ['recently_added_sort'];
+
 export default Ember.Component.extend({
   filters: null,
   init () {
@@ -56,6 +59,17 @@ export default Ember.Component.extend({
         }
         return {key: filterKey, value: value};
       });
+
+        //Remove any blackListedNames 
+        $.each(displayFilters, function( index, value ) {
+          $.each(PLAQUE_BLACKLIST, function( i , blacklistedName ) {
+            console.log(blacklistedName)
+            if(value.key === blacklistedName){
+              displayFilters.pop(index)
+            }
+          });
+        });
+
         this.set('filters', displayFilters);
       });
 

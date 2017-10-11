@@ -63,6 +63,7 @@ export default Ember.Component.extend({
       } else {
           return null;
       }
+
     }),
     pagenextbtn: Ember.computed('data',  function() {
         if(this.get('data').length < 10){
@@ -130,6 +131,7 @@ export default Ember.Component.extend({
         },
         pagenext() {
             let page = Number(this.parameters["page"]);
+            console.log("page", page)
             if (!page) {
                 page = 2;
             }
@@ -153,7 +155,6 @@ export default Ember.Component.extend({
                 queryParams['recently_added_sort'] = undefined;
                 this.attrs.transitionToFacet('search', queryParams);
             }
-
         }
 
     }

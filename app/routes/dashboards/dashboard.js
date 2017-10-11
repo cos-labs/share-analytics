@@ -371,9 +371,9 @@ export default Ember.Route.extend({
                                 defaultValue: lte
                             },
                             {
-                                parametername: "page",
-                                parameterpath: ["from"],
-                                defaultvalue: 0
+                                parameterName: "page",
+                                parameterPath: ["from"],
+                                defaultValue: 0
                             },
                         ],
                         widgetSettings : {

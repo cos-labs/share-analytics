@@ -132,7 +132,6 @@ export default Ember.Component.extend({
             this.attrs.transitionToFacet("search", queryParams);
         },
         applySelection (value) {
-            console.log('value' , value)
             this.send('transitionToFacet', value);
         },
         debouncedfilterVisible: function() {
@@ -145,8 +144,7 @@ export default Ember.Component.extend({
         },   
         filterVisible: async function() {
 
-           let widget_category = this.get('item.facetDashParameter');
-           //if(widget_category === "contributors"){
+            let widget_category = this.get('item.facetDashParameter');
             let term_name = "lists." + this.get('item.facetDashParameter') + ".name.exact";
             if(widget_category ==='tags'){
                 term_name =  this.get('item.facetDashParameter') + ".exact";
@@ -194,7 +192,6 @@ export default Ember.Component.extend({
     },
     filterInput(type, filter_data, search_term){
         let afilteredList = filter_data.hits.hits.map(function(x) {
-               // if (widget_category === "contributors") {
                 let contributorsList;
                 
                 if(type === 'tags'){
@@ -219,7 +216,6 @@ export default Ember.Component.extend({
                 });
 
 
-               // }
                return filteredContribList;
            });
 

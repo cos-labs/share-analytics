@@ -441,7 +441,7 @@ export default Ember.Route.extend({
                             fontSize: 2,
                             fontColor: '#F44336',
                             minHeight: 115,
-                            isLink: false
+                            isLink: true
                         }
                     },
                     {

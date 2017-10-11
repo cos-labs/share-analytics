@@ -137,7 +137,7 @@ export default Ember.Component.extend({
         },
         debouncedfilterVisible: function() {
             clearTimeout(this.get('typingTimer'));
-            let typingTimer = setTimeout(function() {this.send('filterVisible')}.bind(this), 1000);
+            let typingTimer = setTimeout(function() {this.send('filterVisible')}.bind(this), 500);
             this.set('typingTimer' , typingTimer);
         }, 
         resetDebounce: function() {
@@ -163,6 +163,7 @@ export default Ember.Component.extend({
             } else {
                 search_term_query = search_term_query + "(.*)";
             }
+
             let filter_query = {
                 "query": {
                     "bool": {
@@ -185,7 +186,6 @@ export default Ember.Component.extend({
                 contentType: 'application/json'
             });
 
-            console.log('widget_category',widget_category )
             this.send('filterInput' ,widget_category, filter_data , search_term)
 
 
@@ -238,7 +238,6 @@ export default Ember.Component.extend({
                 }
             }
         }
-        console.log('flattenedFilteredContribList' , flattenedFilteredContribList)
         this.set('filteredList', Array.from(new Set(flattenedFilteredContribList)));
     },
     showList(){

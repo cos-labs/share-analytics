@@ -132,6 +132,7 @@ export default Ember.Component.extend({
             this.attrs.transitionToFacet("search", queryParams);
         },
         applySelection (value) {
+            console.log('value' , value)
             this.send('transitionToFacet', value);
         },
         debouncedfilterVisible: function() {
@@ -143,11 +144,17 @@ export default Ember.Component.extend({
             clearTimeout(this.get('typingTimer'));
         },   
         filterVisible: async function() {
+
            let widget_category = this.get('item.facetDashParameter');
-           if(widget_category === "contributors"){
+           //if(widget_category === "contributors"){
             let term_name = "lists." + this.get('item.facetDashParameter') + ".name.exact";
+            if(widget_category ==='tags'){
+                term_name =  this.get('item.facetDashParameter') + ".exact";
+            }
             let search_term_query = this.get('filterText');
             let search_term = "^"+this.get('filterText');
+
+
 
             let first_char_search_term = search_term_query.charAt(0).toLowerCase();
             if (search_term_query.length > 1) {
@@ -156,7 +163,6 @@ export default Ember.Component.extend({
             } else {
                 search_term_query = search_term_query + "(.*)";
             }
-
             let filter_query = {
                 "query": {
                     "bool": {
@@ -172,47 +178,68 @@ export default Ember.Component.extend({
             }
 
             let filter_data = await Ember.$.ajax({
-                url: 'https://dev-labs.cos.io/api/records/search/creativeworks/_search?request_cache=true',
+                url: 'https://dev-labs.cos.io/records/_search?request_cache=true',
                 crossDomain: true,
                 data: JSON.stringify(filter_query),
                 type: 'POST',
                 contentType: 'application/json'
             });
-            let afilteredList = filter_data.hits.hits.map(function(x) {
-                if (widget_category === "contributors") {
+
+            console.log('widget_category',widget_category )
+            this.send('filterInput' ,widget_category, filter_data , search_term)
 
 
-                    let contributorsList = x._source.lists.contributors.map(function(y) {
+
+    
+    },
+    filterInput(type, filter_data, search_term){
+        let afilteredList = filter_data.hits.hits.map(function(x) {
+               // if (widget_category === "contributors") {
+                let contributorsList;
+                
+                if(type === 'tags'){
+                    contributorsList = x._source.tags.map(function(y) {
+                        return {
+                            key: y,
+                            name: y
+                        };
+                    });
+                }else{
+                    contributorsList = x._source.lists[type].map(function(y) {
                         return {
                             key: y.id,
                             name: y.name
                         };
                     });
-
-                    var filteredContribList = contributorsList.filter(function(word) {
-                        return word.name.toLowerCase().match(search_term.toLowerCase());
-                    });
-
                 }
-                return filteredContribList;
-            });
-
-            let flattenedFilteredContribList = afilteredList.reduce(function(a, b) {
-              return a.concat(b);
-          }, []);
 
 
+                var filteredContribList = contributorsList.filter(function(word) {
+                    return word.name.toLowerCase().match(search_term.toLowerCase());
+                });
 
-            for(let i = 0; i < flattenedFilteredContribList.length; i++){
-                for(let k = i+1; k < flattenedFilteredContribList.length; k++){
-                    if(flattenedFilteredContribList[i].name == flattenedFilteredContribList[k].name){
-                        flattenedFilteredContribList.splice( k, 1 );
-                    }
+
+               // }
+               return filteredContribList;
+           });
+
+
+
+        let flattenedFilteredContribList = afilteredList.reduce(function(a, b) {
+          return a.concat(b);
+      }, []);
+
+
+
+        for(let i = 0; i < flattenedFilteredContribList.length; i++){
+            for(let k = i+1; k < flattenedFilteredContribList.length; k++){
+                if(flattenedFilteredContribList[i].name == flattenedFilteredContribList[k].name){
+                    flattenedFilteredContribList.splice( k, 1 );
                 }
             }
-
-            this.set('filteredList', Array.from(new Set(flattenedFilteredContribList)));
         }
+        console.log('flattenedFilteredContribList' , flattenedFilteredContribList)
+        this.set('filteredList', Array.from(new Set(flattenedFilteredContribList)));
     },
     showList(){
         this.set('showList', true);

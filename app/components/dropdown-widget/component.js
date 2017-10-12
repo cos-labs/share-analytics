@@ -130,10 +130,8 @@ export default Ember.Component.extend({
                 });
             }
 
-
             var filteredContribList = contributorsList.filter(word) =>
                 word.name.toLowerCase().match(search_term.toLowerCase()));
-
 
             return filteredContribList;
         });

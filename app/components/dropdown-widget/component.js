@@ -155,14 +155,11 @@ export default Ember.Component.extend({
       }, []);
 
 
+        flattenedFilteredContribList.filter(contribToTest =>
+            contribToTest === flattenedFilteredContribList.find(testContrib => 
+                testContrib.name === contribToTest.name));
 
-        for(let i = 0; i < flattenedFilteredContribList.length; i++){
-            for(let k = i+1; k < flattenedFilteredContribList.length; k++){
-                if(flattenedFilteredContribList[i].name == flattenedFilteredContribList[k].name){
-                    flattenedFilteredContribList.splice( k, 1 );
-                }
-            }
-        }
+
         this.set('filteredList', Array.from(new Set(flattenedFilteredContribList)));
     },
     actions: {

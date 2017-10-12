@@ -19,6 +19,7 @@ export default Ember.Component.extend({
     typingTimer: null,
     init(){
         this._super(...arguments);
+        console.log(ENV.apiUrl)
         // check settings to see what the mode is
         let settings = this.get('widgetSettings');
         if (settings && settings.mode){
@@ -32,18 +33,14 @@ export default Ember.Component.extend({
         let queryParams = this.get('parameters');
         var facet = this.get("item.facetDashParameter");
 
-        if(queryParams[facet]){
-            if(facet === 'type'){
+        if (queryParams[facet]) {
+            if (facet === 'type') {
                 this.set('selectedType', queryParams[facet]);
-                if(queryParams[facet] === "project"){
+                if (queryParams[facet] === "project") {
                     this.set('selectedType', queryParams[facet] + " & awards");
-
                 }
-
             } else if (facet === 'funders' || facet === 'publishers' || facet === 'contributors') {
                 let id = { key : queryParams[facet] }
-                console.log('id' , id);
-
                 this.fetchAgentDetails([id]).then((data) => {
                     if(data[0]){
                         this.set('enteredItem', data[0].name);
@@ -67,7 +64,7 @@ export default Ember.Component.extend({
         return JSON.parse(agent_details);
     },
     outsideClick(event){
-        if(!this.get('showList')){ return;}
+        if (!this.get('showList')) return;
         let $element = this.$();
         let $target = $(event.target);
 
@@ -76,16 +73,12 @@ export default Ember.Component.extend({
         }
     },
     didInsertElement() {
-        if(this.get('mode') === 'dropdown' ){
-            return;
-        }
+        if (this.get('mode') === 'dropdown' ) return;
         let clickHandler = this.get('outsideClick').bind(this);
         Ember.$(document).on('click', clickHandler);
     },
     willDestroyElement(){
-        if(this.get('mode') === 'dropdown' ){
-            return;
-        }
+        if (this.get('mode') === 'dropdown' ) return;
         let clickHandler = this.get('outsideClick').bind(this);
         Ember.$(document).off('click', clickHandler);
     },
@@ -94,24 +87,24 @@ export default Ember.Component.extend({
         this.get('filteredList').clear();
         data.forEach(item => {
             let obj = {};
-            if(item.doc_count){
-                if(item.doc_count > 0){
+            if (item.doc_count) {
+                if (item.doc_count > 0) {
                     obj.key = item.key
-                    if(item.name){
+                    if (item.name) {
                         obj.name = item.name.buckets[0].key;
                     }
                 } else {
                     return;
                 }
-            } else if (item.number){
-                if(item.number > 0){
+            } else if (item.number) {
+                if (item.number > 0) {
                     obj.key = item.id;
                     obj.name = item.name;
                 } else {
                     return;
                 }
             }
-            if(obj.key === 'project'){
+            if (obj.key === 'project') {
                 obj.key += ' & awards'
             }
             this.get('dropList').addObject(obj);
@@ -122,14 +115,14 @@ export default Ember.Component.extend({
         let afilteredList = filter_data.hits.hits.map(function(x) {
             let contributorsList;
 
-            if(type === 'tags'){
+            if (type === 'tags') {
                 contributorsList = x._source.tags.map(function(y) {
                     return {
                         key: y,
                         name: y
                     };
                 });
-            }else{
+            } else {
                 contributorsList = x._source.lists[type].map(function(y) {
                     return {
                         key: y.id,
@@ -139,9 +132,8 @@ export default Ember.Component.extend({
             }
 
 
-            var filteredContribList = contributorsList.filter(function(word) {
-                return word.name.toLowerCase().match(search_term.toLowerCase());
-            });
+            var filteredContribList = contributorsList.filter(word) =>
+                word.name.toLowerCase().match(search_term.toLowerCase()));
 
 
             return filteredContribList;
@@ -149,9 +141,7 @@ export default Ember.Component.extend({
 
 
 
-        let flattenedFilteredContribList = afilteredList.reduce(function(a, b) {
-          return a.concat(b);
-      }, []);
+        let flattenedFilteredContribList = afilteredList.reduce((a, b) => a.concat(b), []);
 
 
         flattenedFilteredContribList.filter(contribToTest =>
@@ -176,22 +166,22 @@ export default Ember.Component.extend({
             queryParams[key] = undefined;
             this.attrs.transitionToFacet("search", queryParams);
         },
-        applySelection (value) {
+        applySelection(value) {
             this.send('transitionToFacet', value);
         },
-        debouncedfilterVisible: function() {
+        debouncedfilterVisible() {
             clearTimeout(this.get('typingTimer'));
             let typingTimer = setTimeout(function() {this.send('filterVisible')}.bind(this), 500);
             this.set('typingTimer' , typingTimer);
         }, 
-        resetDebounce: function() {
+        resetDebounce() {
             clearTimeout(this.get('typingTimer'));
         },   
         filterVisible: async function() {
 
             let widget_category = this.get('item.facetDashParameter');
             let term_name = "lists." + this.get('item.facetDashParameter') + ".name.exact";
-            if(widget_category ==='tags'){
+            if (widget_category ==='tags') {
                 term_name =  this.get('item.facetDashParameter') + ".exact";
             }
             let search_term_query = this.get('filterText');
@@ -235,7 +225,7 @@ export default Ember.Component.extend({
 
 
         },
-        showList(){
+        showList() {
             this.set('showList', true);
         }
     }

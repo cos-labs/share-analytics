@@ -19,7 +19,6 @@ export default Ember.Component.extend({
     typingTimer: null,
     init(){
         this._super(...arguments);
-        console.log(ENV.apiUrl)
         // check settings to see what the mode is
         let settings = this.get('widgetSettings');
         if (settings && settings.mode){

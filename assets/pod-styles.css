@@ -4,6 +4,7 @@
 @import "components/filter-plaques/style.css";
 @import "components/object-detail-widget/style.css";
 @import "components/query-widget/style.css";
+@import "components/results-list/style.css";
 @import "components/search-facet-daterange/style.css";
 @import "components/stacked-bars/style.css";
 @import "components/text-widget/style.css";

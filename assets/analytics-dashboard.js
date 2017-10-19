@@ -8,7 +8,7 @@
 
 define('analytics-dashboard/adapters/application', ['exports', 'ember', 'ember-data', 'analytics-dashboard/config/environment'], function (exports, _ember, _emberData, _analyticsDashboardConfigEnvironment) {
     exports['default'] = _emberData['default'].RESTAdapter.extend(_emberData['default'].BuildURLMixin, {
-        namespace: 'api/v2',
+        namespace: 'api/records',
         host: _analyticsDashboardConfigEnvironment['default'].apiBaseUrl,
         headers: {
             Accept: 'application/json'
@@ -620,7 +620,9 @@ define("analytics-dashboard/components/agent-detail-widget/template", ["exports"
           dom.setAttribute(el1, "class", "pointer");
           var el2 = dom.createTextNode("Hide Raw Data    ");
           dom.appendChild(el1, el2);
-          var el2 = dom.createComment("");
+          var el2 = dom.createElement("i");
+          dom.setAttribute(el2, "class", "fa fa-chevron-up");
+          dom.setAttribute(el2, "aria-hidden", "true");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("\n        ");
@@ -635,13 +637,12 @@ define("analytics-dashboard/components/agent-detail-widget/template", ["exports"
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
           var element1 = dom.childAt(fragment, [1]);
-          var morphs = new Array(3);
+          var morphs = new Array(2);
           morphs[0] = dom.createElementMorph(element1);
-          morphs[1] = dom.createMorphAt(element1, 1, 1);
-          morphs[2] = dom.createMorphAt(dom.childAt(fragment, [3]), 0, 0);
+          morphs[1] = dom.createMorphAt(dom.childAt(fragment, [3]), 0, 0);
           return morphs;
         },
-        statements: [["element", "action", [["get", "toggleProperty", ["loc", [null, [32, 21], [32, 35]]], 0, 0, 0, 0], "showJSON"], [], ["loc", [null, [32, 12], [32, 48]]], 0, 0], ["inline", "fa-icon", ["chevron-up"], [], ["loc", [null, [32, 102], [32, 126]]], 0, 0], ["content", "dataAsString", ["loc", [null, [33, 13], [33, 29]]], 0, 0, 0, 0]],
+        statements: [["element", "action", [["get", "toggleProperty", ["loc", [null, [32, 21], [32, 35]]], 0, 0, 0, 0], "showJSON"], [], ["loc", [null, [32, 12], [32, 48]]], 0, 0], ["content", "dataAsString", ["loc", [null, [33, 13], [33, 29]]], 0, 0, 0, 0]],
         locals: [],
         templates: []
       };
@@ -675,7 +676,9 @@ define("analytics-dashboard/components/agent-detail-widget/template", ["exports"
           dom.setAttribute(el1, "class", "pointer");
           var el2 = dom.createTextNode("View Raw Data    ");
           dom.appendChild(el1, el2);
-          var el2 = dom.createComment("");
+          var el2 = dom.createElement("i");
+          dom.setAttribute(el2, "class", "fa fa-chevron-down");
+          dom.setAttribute(el2, "aria-hidden", "true");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("\n");
@@ -684,12 +687,11 @@ define("analytics-dashboard/components/agent-detail-widget/template", ["exports"
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
           var element0 = dom.childAt(fragment, [1]);
-          var morphs = new Array(2);
+          var morphs = new Array(1);
           morphs[0] = dom.createElementMorph(element0);
-          morphs[1] = dom.createMorphAt(element0, 1, 1);
           return morphs;
         },
-        statements: [["element", "action", [["get", "toggleProperty", ["loc", [null, [35, 21], [35, 35]]], 0, 0, 0, 0], "showJSON"], [], ["loc", [null, [35, 12], [35, 48]]], 0, 0], ["inline", "fa-icon", ["chevron-down"], [], ["loc", [null, [35, 102], [35, 128]]], 0, 0]],
+        statements: [["element", "action", [["get", "toggleProperty", ["loc", [null, [35, 21], [35, 35]]], 0, 0, 0, 0], "showJSON"], [], ["loc", [null, [35, 12], [35, 48]]], 0, 0]],
         locals: [],
         templates: []
       };
@@ -1156,12 +1158,14 @@ define('analytics-dashboard/components/c3-chart/component', ['exports', 'ember',
             return regeneratorRuntime.async(function processData$(context$1$0) {
                 while (1) switch (context$1$0.prev = context$1$0.next) {
                     case 0:
+                        this.set("data", "data");
+
                         if (!(this.get('name') === 'Data Providers' || this.get('name') === 'Funders')) {
-                            context$1$0.next = 5;
+                            context$1$0.next = 6;
                             break;
                         }
 
-                        context$1$0.next = 3;
+                        context$1$0.next = 4;
                         return regeneratorRuntime.awrap(_ember['default'].$.ajax({
                             url: 'https://dev-labs.cos.io/bulk_get_agents',
                             crossDomain: true,
@@ -1170,12 +1174,12 @@ define('analytics-dashboard/components/c3-chart/component', ['exports', 'ember',
                             contentType: 'application/json'
                         }));
 
-                    case 3:
+                    case 4:
                         agent_details = context$1$0.sent;
 
                         this.set("data", JSON.parse(agent_details));
 
-                    case 5:
+                    case 6:
                     case 'end':
                         return context$1$0.stop();
                 }
@@ -1874,7 +1878,7 @@ define('analytics-dashboard/components/draggable-object-target', ['exports', 'em
 define('analytics-dashboard/components/draggable-object', ['exports', 'ember-drag-drop/components/draggable-object'], function (exports, _emberDragDropComponentsDraggableObject) {
   exports['default'] = _emberDragDropComponentsDraggableObject['default'];
 });
-define('analytics-dashboard/components/dropdown-widget/component', ['exports', 'ember'], function (exports, _ember) {
+define('analytics-dashboard/components/dropdown-widget/component', ['exports', 'ember', 'analytics-dashboard/config/environment'], function (exports, _ember, _analyticsDashboardConfigEnvironment) {
     function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
     exports['default'] = _ember['default'].Component.extend({
@@ -1917,8 +1921,6 @@ define('analytics-dashboard/components/dropdown-widget/component', ['exports', '
                     }
                 } else if (facet === 'funders' || facet === 'publishers' || facet === 'contributors') {
                     var id = { key: queryParams[facet] };
-                    console.log('id', id);
-
                     this.fetchAgentDetails([id]).then(function (data) {
                         if (data[0]) {
                             _this.set('enteredItem', data[0].name);
@@ -1954,9 +1956,7 @@ define('analytics-dashboard/components/dropdown-widget/component', ['exports', '
             }, null, this);
         },
         outsideClick: function outsideClick(event) {
-            if (!this.get('showList')) {
-                return;
-            }
+            if (!this.get('showList')) return;
             var $element = this.$();
             var $target = $(event.target);
 
@@ -1965,16 +1965,12 @@ define('analytics-dashboard/components/dropdown-widget/component', ['exports', '
             }
         },
         didInsertElement: function didInsertElement() {
-            if (this.get('mode') === 'dropdown') {
-                return;
-            }
+            if (this.get('mode') === 'dropdown') return;
             var clickHandler = this.get('outsideClick').bind(this);
             _ember['default'].$(document).on('click', clickHandler);
         },
         willDestroyElement: function willDestroyElement() {
-            if (this.get('mode') === 'dropdown') {
-                return;
-            }
+            if (this.get('mode') === 'dropdown') return;
             var clickHandler = this.get('outsideClick').bind(this);
             _ember['default'].$(document).off('click', clickHandler);
         },
@@ -2009,6 +2005,45 @@ define('analytics-dashboard/components/dropdown-widget/component', ['exports', '
                 _this2.get('filteredList').addObject(obj);
             });
         },
+        filterInput: function filterInput(type, filter_data, search_term) {
+            var afilteredList = filter_data.hits.hits.map(function (x) {
+                var contributorsList = undefined;
+
+                if (type === 'tags') {
+                    contributorsList = x._source.tags.map(function (y) {
+                        return {
+                            key: y,
+                            name: y
+                        };
+                    });
+                } else {
+                    contributorsList = x._source.lists[type].map(function (y) {
+                        return {
+                            key: y.id,
+                            name: y.name
+                        };
+                    });
+                }
+
+                var filteredContribList = contributorsList.filter(function (word) {
+                    return word.name.toLowerCase().match(search_term.toLowerCase());
+                });
+
+                return filteredContribList;
+            });
+
+            var flattenedFilteredContribList = afilteredList.reduce(function (a, b) {
+                return a.concat(b);
+            }, []);
+
+            flattenedFilteredContribList.filter(function (contribToTest) {
+                return contribToTest === flattenedFilteredContribList.find(function (testContrib) {
+                    return testContrib.name === contribToTest.name;
+                });
+            });
+
+            this.set('filteredList', Array.from(new Set(flattenedFilteredContribList)));
+        },
         actions: {
             transitionToFacet: function transitionToFacet(value) {
                 //Two different items here; one refers to the widget; one refers to the datum.
@@ -2032,104 +2067,60 @@ define('analytics-dashboard/components/dropdown-widget/component', ['exports', '
                 clearTimeout(this.get('typingTimer'));
                 var typingTimer = setTimeout((function () {
                     this.send('filterVisible');
-                }).bind(this), 1000);
+                }).bind(this), 500);
                 this.set('typingTimer', typingTimer);
             },
             resetDebounce: function resetDebounce() {
                 clearTimeout(this.get('typingTimer'));
             },
             filterVisible: function filterVisible() {
-                var widget_category;
+                var widget_category, term_name, search_term_query, search_term, first_char_search_term, filter_query, filter_data;
                 return regeneratorRuntime.async(function filterVisible$(context$1$0) {
-                    var _this3 = this;
-
                     while (1) switch (context$1$0.prev = context$1$0.next) {
                         case 0:
                             widget_category = this.get('item.facetDashParameter');
+                            term_name = "lists." + this.get('item.facetDashParameter') + ".name.exact";
 
-                            if (!(widget_category === "contributors")) {
-                                context$1$0.next = 4;
-                                break;
+                            if (widget_category === 'tags') {
+                                term_name = this.get('item.facetDashParameter') + ".exact";
+                            }
+                            search_term_query = this.get('filterText');
+                            search_term = "^" + this.get('filterText');
+                            first_char_search_term = search_term_query.charAt(0).toLowerCase();
+
+                            if (search_term_query.length > 1) {
+                                search_term_query = search_term_query.slice(1, search_term_query.length);
+                                search_term_query = "[" + first_char_search_term + first_char_search_term.toUpperCase() + "]" + search_term_query + "(.*)";
+                            } else {
+                                search_term_query = search_term_query + "(.*)";
                             }
 
-                            context$1$0.next = 4;
-                            return regeneratorRuntime.awrap((function callee$1$0() {
-                                var term_name, search_term_query, search_term, first_char_search_term, filter_query, filter_data, afilteredList, flattenedFilteredContribList, i, k;
-                                return regeneratorRuntime.async(function callee$1$0$(context$2$0) {
-                                    while (1) switch (context$2$0.prev = context$2$0.next) {
-                                        case 0:
-                                            term_name = "lists." + this.get('item.facetDashParameter') + ".name.exact";
-                                            search_term_query = this.get('filterText');
-                                            search_term = "^" + this.get('filterText');
-                                            first_char_search_term = search_term_query.charAt(0).toLowerCase();
-
-                                            if (search_term_query.length > 1) {
-                                                search_term_query = search_term_query.slice(1, search_term_query.length);
-                                                search_term_query = "[" + first_char_search_term + first_char_search_term.toUpperCase() + "]" + search_term_query + "(.*)";
-                                            } else {
-                                                search_term_query = search_term_query + "(.*)";
-                                            }
-
-                                            filter_query = {
-                                                "query": {
-                                                    "bool": {
-                                                        "must": {
-                                                            "regexp": _defineProperty({}, term_name, {
-                                                                "value": search_term_query
-                                                            })
-                                                        }
-                                                    }
-                                                }
-                                            };
-                                            context$2$0.next = 8;
-                                            return regeneratorRuntime.awrap(_ember['default'].$.ajax({
-                                                url: 'https://dev-labs.cos.io/api/v2/search/creativeworks/_search?request_cache=true',
-                                                crossDomain: true,
-                                                data: JSON.stringify(filter_query),
-                                                type: 'POST',
-                                                contentType: 'application/json'
-                                            }));
-
-                                        case 8:
-                                            filter_data = context$2$0.sent;
-                                            afilteredList = filter_data.hits.hits.map(function (x) {
-                                                if (widget_category === "contributors") {
-
-                                                    var contributorsList = x._source.lists.contributors.map(function (y) {
-                                                        return {
-                                                            key: y.id,
-                                                            name: y.name
-                                                        };
-                                                    });
-
-                                                    var filteredContribList = contributorsList.filter(function (word) {
-                                                        return word.name.toLowerCase().match(search_term.toLowerCase());
-                                                    });
-                                                }
-                                                return filteredContribList;
-                                            });
-                                            flattenedFilteredContribList = afilteredList.reduce(function (a, b) {
-                                                return a.concat(b);
-                                            }, []);
-
-                                            for (i = 0; i < flattenedFilteredContribList.length; i++) {
-                                                for (k = i + 1; k < flattenedFilteredContribList.length; k++) {
-                                                    if (flattenedFilteredContribList[i].name == flattenedFilteredContribList[k].name) {
-                                                        flattenedFilteredContribList.splice(k, 1);
-                                                    }
-                                                }
-                                            }
-
-                                            this.set('filteredList', Array.from(new Set(flattenedFilteredContribList)));
-
-                                        case 13:
-                                        case 'end':
-                                            return context$2$0.stop();
+                            filter_query = {
+                                "query": {
+                                    "bool": {
+                                        "must": {
+                                            "regexp": _defineProperty({}, term_name, {
+                                                "value": search_term_query
+                                            })
+                                        }
                                     }
-                                }, null, _this3);
-                            })());
+                                }
+                            };
+                            context$1$0.next = 10;
+                            return regeneratorRuntime.awrap(_ember['default'].$.ajax({
+                                url: _analyticsDashboardConfigEnvironment['default'].apiUrl + 'records/_search?request_cache=true',
+                                crossDomain: true,
+                                data: JSON.stringify(filter_query),
+                                type: 'POST',
+                                contentType: 'application/json'
+                            }));
 
-                        case 4:
+                        case 10:
+                            filter_data = context$1$0.sent;
+
+                            this.filterInput(widget_category, filter_data, search_term);
+
+                        case 12:
                         case 'end':
                             return context$1$0.stop();
                     }
@@ -2183,7 +2174,9 @@ define("analytics-dashboard/components/dropdown-widget/template", ["exports"], f
             dom.appendChild(el2, el3);
             var el3 = dom.createElement("span");
             dom.setAttribute(el3, "class", "pointer");
-            var el4 = dom.createComment("");
+            var el4 = dom.createElement("i");
+            dom.setAttribute(el4, "class", "fa fa-close");
+            dom.setAttribute(el4, "aria-hidden", "true");
             dom.appendChild(el3, el4);
             var el4 = dom.createTextNode(" ");
             dom.appendChild(el3, el4);
@@ -2201,13 +2194,12 @@ define("analytics-dashboard/components/dropdown-widget/template", ["exports"], f
           buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
             var element5 = dom.childAt(fragment, [1, 1]);
             var element6 = dom.childAt(element5, [2]);
-            var morphs = new Array(3);
+            var morphs = new Array(2);
             morphs[0] = dom.createMorphAt(dom.childAt(element5, [0]), 0, 0);
             morphs[1] = dom.createElementMorph(element6);
-            morphs[2] = dom.createMorphAt(element6, 0, 0);
             return morphs;
           },
-          statements: [["content", "selectedType", ["loc", [null, [5, 18], [5, 34]]], 0, 0, 0, 0], ["element", "action", ["removeFilter", ["get", "item.facetDashParameter", ["loc", [null, [5, 85], [5, 108]]], 0, 0, 0, 0]], [], ["loc", [null, [5, 61], [5, 110]]], 0, 0], ["inline", "fa-icon", ["close"], [], ["loc", [null, [5, 111], [5, 130]]], 0, 0]],
+          statements: [["content", "selectedType", ["loc", [null, [5, 18], [5, 34]]], 0, 0, 0, 0], ["element", "action", ["removeFilter", ["get", "item.facetDashParameter", ["loc", [null, [5, 85], [5, 108]]], 0, 0, 0, 0]], [], ["loc", [null, [5, 61], [5, 110]]], 0, 0]],
           locals: [],
           templates: []
         };
@@ -2405,7 +2397,9 @@ define("analytics-dashboard/components/dropdown-widget/template", ["exports"], f
             dom.appendChild(el2, el3);
             var el3 = dom.createElement("span");
             dom.setAttribute(el3, "class", "pointer");
-            var el4 = dom.createComment("");
+            var el4 = dom.createElement("i");
+            dom.setAttribute(el4, "class", "fa fa-close");
+            dom.setAttribute(el4, "aria-hidden", "true");
             dom.appendChild(el3, el4);
             var el4 = dom.createTextNode(" ");
             dom.appendChild(el3, el4);
@@ -2423,13 +2417,12 @@ define("analytics-dashboard/components/dropdown-widget/template", ["exports"], f
           buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
             var element1 = dom.childAt(fragment, [1, 1]);
             var element2 = dom.childAt(element1, [2]);
-            var morphs = new Array(3);
+            var morphs = new Array(2);
             morphs[0] = dom.createMorphAt(dom.childAt(element1, [0]), 0, 0);
             morphs[1] = dom.createElementMorph(element2);
-            morphs[2] = dom.createMorphAt(element2, 0, 0);
             return morphs;
           },
-          statements: [["content", "enteredItem", ["loc", [null, [24, 22], [24, 37]]], 0, 0, 0, 0], ["element", "action", ["removeFilter", ["get", "item.facetDashParameter", ["loc", [null, [24, 88], [24, 111]]], 0, 0, 0, 0]], [], ["loc", [null, [24, 64], [24, 113]]], 0, 0], ["inline", "fa-icon", ["close"], [], ["loc", [null, [24, 114], [24, 133]]], 0, 0]],
+          statements: [["content", "enteredItem", ["loc", [null, [24, 22], [24, 37]]], 0, 0, 0, 0], ["element", "action", ["removeFilter", ["get", "item.facetDashParameter", ["loc", [null, [24, 88], [24, 111]]], 0, 0, 0, 0]], [], ["loc", [null, [24, 64], [24, 113]]], 0, 0]],
           locals: [],
           templates: []
         };
@@ -2740,30 +2733,6 @@ define('analytics-dashboard/components/eosf-project-nav/component', ['exports', 
     }
   });
 });
-define('analytics-dashboard/components/fa-icon', ['exports', 'ember-font-awesome/components/fa-icon'], function (exports, _emberFontAwesomeComponentsFaIcon) {
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function get() {
-      return _emberFontAwesomeComponentsFaIcon['default'];
-    }
-  });
-});
-define('analytics-dashboard/components/fa-list', ['exports', 'ember-font-awesome/components/fa-list'], function (exports, _emberFontAwesomeComponentsFaList) {
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function get() {
-      return _emberFontAwesomeComponentsFaList['default'];
-    }
-  });
-});
-define('analytics-dashboard/components/fa-stack', ['exports', 'ember-font-awesome/components/fa-stack'], function (exports, _emberFontAwesomeComponentsFaStack) {
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function get() {
-      return _emberFontAwesomeComponentsFaStack['default'];
-    }
-  });
-});
 define('analytics-dashboard/components/file-browser-icon/component', ['exports', 'ember-osf/components/file-browser-icon/component'], function (exports, _emberOsfComponentsFileBrowserIconComponent) {
   Object.defineProperty(exports, 'default', {
     enumerable: true,
@@ -2830,7 +2799,10 @@ define('analytics-dashboard/components/file-widget/component', ['exports', 'embe
 });
 define('analytics-dashboard/components/filter-plaques/component', ['exports', 'ember'], function (exports, _ember) {
 
-  var ID_FILTERS = ['contributors', 'funders', 'publishers', 'tags', 'type'];
+  var ID_FILTERS = ['contributors', 'funders', 'publishers', 'provider'];
+
+  //Any plaque name on this list will not show up in the plaques list
+  var PLAQUE_BLACKLIST = ['recently_added_sort'];
 
   exports['default'] = _ember['default'].Component.extend({
     filters: null,
@@ -2854,56 +2826,72 @@ define('analytics-dashboard/components/filter-plaques/component', ['exports', 'e
       }).map(function (param) {
         return { key: param.value };
       });
-
       // Fetch display names
+      var promise = undefined;
       if (ids.length > 0) {
-        this.fetchAgentDetails(ids).then(function (data) {
-          var displayFilters = filters.map(function (filter) {
-            var value = filter.value;
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-              for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var agentData = _step.value;
-
-                if (value === agentData.id) {
-                  if (!agentData.name == "") {
-                    value = agentData.name;
-                  }
-                  break;
-                }
-              }
-            } catch (err) {
-              _didIteratorError = true;
-              _iteratorError = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion && _iterator['return']) {
-                  _iterator['return']();
-                }
-              } finally {
-                if (_didIteratorError) {
-                  throw _iteratorError;
-                }
-              }
-            }
-
-            var filterKey = filter.key;
-            if (filter.key === 'publishers') {
-              filterKey = 'provider';
-            }
-            if (value === 'project') {
-              value += " & awards";
-            }
-
-            console.log(value);
-            return { key: filterKey, value: value };
-          });
-          _this.set('filters', displayFilters);
+        promise = this.fetchAgentDetails(ids);
+      } else {
+        promise = new _ember['default'].RSVP.Promise(function (res, rej) {
+          res("win");
+          rej("error");
         });
       }
+
+      promise.then(function (data) {
+        var displayFilters = filters.map(function (filter) {
+          var value = filter.value;
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var agentData = _step.value;
+
+              if (value === agentData.id) {
+                if (!agentData.name == "") {
+                  value = agentData.name;
+                }
+                break;
+              }
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator['return']) {
+                _iterator['return']();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+
+          var filterKey = filter.key;
+          if (filter.key === 'publishers') {
+            filterKey = 'provider';
+          }
+          if (value === 'project') {
+            value += " & awards";
+          }
+          return { key: filterKey, value: value };
+        });
+
+        //Remove any blackListedNames
+        $.each(displayFilters, function (index, value) {
+          $.each(PLAQUE_BLACKLIST, function (i, blacklistedName) {
+            console.log(blacklistedName);
+            if (value.key === blacklistedName) {
+              displayFilters.pop(index);
+            }
+          });
+        });
+
+        _this.set('filters', displayFilters);
+      });
     },
 
     fetchAgentDetails: function fetchAgentDetails(agentList) {
@@ -2934,8 +2922,13 @@ define('analytics-dashboard/components/filter-plaques/component', ['exports', 'e
     actions: {
 
       removeFilter: function removeFilter(filter) {
+        var filterKey = filter.key;
+        if (filter.key === "provider") {
+          filterKey = "publishers";
+        }
         var queryParams = {};
-        queryParams[filter.key] = undefined;
+
+        queryParams[filterKey] = undefined;
         queryParams['page'] = undefined;
         this.attrs.transitionToFacet("search", queryParams);
       },
@@ -2994,7 +2987,9 @@ define("analytics-dashboard/components/filter-plaques/template", ["exports"], fu
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("span");
           dom.setAttribute(el2, "class", "pointer");
-          var el3 = dom.createComment("");
+          var el3 = dom.createElement("i");
+          dom.setAttribute(el3, "class", "fa fa-close");
+          dom.setAttribute(el3, "aria-hidden", "true");
           dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
@@ -3005,14 +3000,13 @@ define("analytics-dashboard/components/filter-plaques/template", ["exports"], fu
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
           var element0 = dom.childAt(fragment, [1]);
           var element1 = dom.childAt(element0, [4]);
-          var morphs = new Array(4);
+          var morphs = new Array(3);
           morphs[0] = dom.createMorphAt(dom.childAt(element0, [0]), 0, 0);
           morphs[1] = dom.createMorphAt(dom.childAt(element0, [2]), 0, 0);
           morphs[2] = dom.createElementMorph(element1);
-          morphs[3] = dom.createMorphAt(element1, 0, 0);
           return morphs;
         },
-        statements: [["content", "filter.key", ["loc", [null, [3, 68], [3, 82]]], 0, 0, 0, 0], ["content", "filter.value", ["loc", [null, [3, 119], [3, 135]]], 0, 0, 0, 0], ["element", "action", ["removeFilter", ["get", "filter", ["loc", [null, [3, 212], [3, 218]]], 0, 0, 0, 0]], [], ["loc", [null, [3, 188], [3, 220]]], 0, 0], ["inline", "fa-icon", ["close"], [], ["loc", [null, [3, 221], [3, 240]]], 0, 0]],
+        statements: [["content", "filter.key", ["loc", [null, [3, 68], [3, 82]]], 0, 0, 0, 0], ["content", "filter.value", ["loc", [null, [3, 119], [3, 135]]], 0, 0, 0, 0], ["element", "action", ["removeFilter", ["get", "filter", ["loc", [null, [3, 212], [3, 218]]], 0, 0, 0, 0]], [], ["loc", [null, [3, 188], [3, 220]]], 0, 0]],
         locals: ["filter"],
         templates: []
       };
@@ -3079,7 +3073,7 @@ define('analytics-dashboard/components/license-picker/component', ['exports', 'e
 });
 define('analytics-dashboard/components/list-widget/component', ['exports', 'ember'], function (exports, _ember) {
     exports['default'] = _ember['default'].Component.extend({
-        data: [],
+        data: [''],
         init: function init() {
             this._super.apply(this, arguments);
             if (this.get('chartType') === 'recentlyAdded') {
@@ -3146,7 +3140,9 @@ define('analytics-dashboard/components/list-widget/component', ['exports', 'embe
                     case 2:
                         agent_details = context$1$0.sent;
 
-                        this.set("data", JSON.parse(agent_details));
+                        this.set('data', JSON.parse(agent_details).filter(function (element) {
+                            return element.name !== '';
+                        }));
 
                     case 4:
                     case 'end':
@@ -4001,7 +3997,9 @@ define("analytics-dashboard/components/object-detail-widget/template", ["exports
             dom.setAttribute(el1, "class", "toggleContrib");
             var el2 = dom.createTextNode("Hide    ");
             dom.appendChild(el1, el2);
-            var el2 = dom.createComment("");
+            var el2 = dom.createElement("i");
+            dom.setAttribute(el2, "class", "fa fa-chevron-up");
+            dom.setAttribute(el2, "aria-hidden", "true");
             dom.appendChild(el1, el2);
             dom.appendChild(el0, el1);
             var el1 = dom.createTextNode("\n");
@@ -4010,12 +4008,11 @@ define("analytics-dashboard/components/object-detail-widget/template", ["exports
           },
           buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
             var element7 = dom.childAt(fragment, [1]);
-            var morphs = new Array(2);
+            var morphs = new Array(1);
             morphs[0] = dom.createElementMorph(element7);
-            morphs[1] = dom.createMorphAt(element7, 1, 1);
             return morphs;
           },
-          statements: [["element", "action", [["get", "toggleProperty", ["loc", [null, [36, 16], [36, 30]]], 0, 0, 0, 0], "showAllContrib"], [], ["loc", [null, [36, 7], [36, 49]]], 0, 0], ["inline", "fa-icon", ["chevron-up"], [], ["loc", [null, [36, 100], [36, 124]]], 0, 0]],
+          statements: [["element", "action", [["get", "toggleProperty", ["loc", [null, [36, 16], [36, 30]]], 0, 0, 0, 0], "showAllContrib"], [], ["loc", [null, [36, 7], [36, 49]]], 0, 0]],
           locals: [],
           templates: []
         };
@@ -4154,7 +4151,9 @@ define("analytics-dashboard/components/object-detail-widget/template", ["exports
             dom.setAttribute(el1, "class", "toggleContrib");
             var el2 = dom.createTextNode("View More    ");
             dom.appendChild(el1, el2);
-            var el2 = dom.createComment("");
+            var el2 = dom.createElement("i");
+            dom.setAttribute(el2, "class", "fa fa-chevron-down");
+            dom.setAttribute(el2, "aria-hidden", "true");
             dom.appendChild(el1, el2);
             dom.appendChild(el0, el1);
             var el1 = dom.createTextNode("\n");
@@ -4163,12 +4162,11 @@ define("analytics-dashboard/components/object-detail-widget/template", ["exports
           },
           buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
             var element5 = dom.childAt(fragment, [1]);
-            var morphs = new Array(2);
+            var morphs = new Array(1);
             morphs[0] = dom.createElementMorph(element5);
-            morphs[1] = dom.createMorphAt(element5, 1, 1);
             return morphs;
           },
-          statements: [["element", "action", [["get", "toggleProperty", ["loc", [null, [46, 16], [46, 30]]], 0, 0, 0, 0], "showAllContrib"], [], ["loc", [null, [46, 7], [46, 49]]], 0, 0], ["inline", "fa-icon", ["chevron-down"], [], ["loc", [null, [46, 105], [46, 131]]], 0, 0]],
+          statements: [["element", "action", [["get", "toggleProperty", ["loc", [null, [46, 16], [46, 30]]], 0, 0, 0, 0], "showAllContrib"], [], ["loc", [null, [46, 7], [46, 49]]], 0, 0]],
           locals: [],
           templates: []
         };
@@ -4970,7 +4968,9 @@ define("analytics-dashboard/components/object-detail-widget/template", ["exports
           dom.setAttribute(el1, "class", "pointer");
           var el2 = dom.createTextNode("Hide Raw Data    ");
           dom.appendChild(el1, el2);
-          var el2 = dom.createComment("");
+          var el2 = dom.createElement("i");
+          dom.setAttribute(el2, "class", "fa fa-chevron-up");
+          dom.setAttribute(el2, "aria-hidden", "true");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("\n        ");
@@ -4985,13 +4985,12 @@ define("analytics-dashboard/components/object-detail-widget/template", ["exports
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
           var element1 = dom.childAt(fragment, [1]);
-          var morphs = new Array(3);
+          var morphs = new Array(2);
           morphs[0] = dom.createElementMorph(element1);
-          morphs[1] = dom.createMorphAt(element1, 1, 1);
-          morphs[2] = dom.createUnsafeMorphAt(dom.childAt(fragment, [3]), 0, 0);
+          morphs[1] = dom.createUnsafeMorphAt(dom.childAt(fragment, [3]), 0, 0);
           return morphs;
         },
-        statements: [["element", "action", [["get", "toggleProperty", ["loc", [null, [126, 21], [126, 35]]], 0, 0, 0, 0], "showJSON"], [], ["loc", [null, [126, 12], [126, 48]]], 0, 0], ["inline", "fa-icon", ["chevron-up"], [], ["loc", [null, [126, 102], [126, 126]]], 0, 0], ["content", "dataAsString", ["loc", [null, [127, 13], [127, 31]]], 0, 0, 0, 0]],
+        statements: [["element", "action", [["get", "toggleProperty", ["loc", [null, [126, 21], [126, 35]]], 0, 0, 0, 0], "showJSON"], [], ["loc", [null, [126, 12], [126, 48]]], 0, 0], ["content", "dataAsString", ["loc", [null, [127, 13], [127, 31]]], 0, 0, 0, 0]],
         locals: [],
         templates: []
       };
@@ -5025,7 +5024,9 @@ define("analytics-dashboard/components/object-detail-widget/template", ["exports
           dom.setAttribute(el1, "class", "pointer");
           var el2 = dom.createTextNode("View Raw Data    ");
           dom.appendChild(el1, el2);
-          var el2 = dom.createComment("");
+          var el2 = dom.createElement("i");
+          dom.setAttribute(el2, "class", "fa fa-chevron-down");
+          dom.setAttribute(el2, "aria-hidden", "true");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("\n");
@@ -5034,12 +5035,11 @@ define("analytics-dashboard/components/object-detail-widget/template", ["exports
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
           var element0 = dom.childAt(fragment, [1]);
-          var morphs = new Array(2);
+          var morphs = new Array(1);
           morphs[0] = dom.createElementMorph(element0);
-          morphs[1] = dom.createMorphAt(element0, 1, 1);
           return morphs;
         },
-        statements: [["element", "action", [["get", "toggleProperty", ["loc", [null, [129, 21], [129, 35]]], 0, 0, 0, 0], "showJSON"], [], ["loc", [null, [129, 12], [129, 48]]], 0, 0], ["inline", "fa-icon", ["chevron-down"], [], ["loc", [null, [129, 102], [129, 128]]], 0, 0]],
+        statements: [["element", "action", [["get", "toggleProperty", ["loc", [null, [129, 21], [129, 35]]], 0, 0, 0, 0], "showJSON"], [], ["loc", [null, [129, 12], [129, 48]]], 0, 0]],
         locals: [],
         templates: []
       };
@@ -5317,7 +5317,9 @@ define("analytics-dashboard/components/query-widget/template", ["exports"], func
         var el5 = dom.createElement("button");
         dom.setAttribute(el5, "class", "btn btn-default");
         dom.setAttribute(el5, "type", "submit");
-        var el6 = dom.createComment("");
+        var el6 = dom.createElement("i");
+        dom.setAttribute(el6, "class", "fa fa-search");
+        dom.setAttribute(el6, "aria-hidden", "true");
         dom.appendChild(el5, el6);
         dom.appendChild(el4, el5);
         var el5 = dom.createTextNode("\n            ");
@@ -5338,14 +5340,12 @@ define("analytics-dashboard/components/query-widget/template", ["exports"], func
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
         var element0 = dom.childAt(fragment, [0, 1]);
-        var element1 = dom.childAt(element0, [1]);
-        var morphs = new Array(3);
+        var morphs = new Array(2);
         morphs[0] = dom.createElementMorph(element0);
-        morphs[1] = dom.createMorphAt(element1, 1, 1);
-        morphs[2] = dom.createMorphAt(dom.childAt(element1, [3, 1]), 0, 0);
+        morphs[1] = dom.createMorphAt(dom.childAt(element0, [1]), 1, 1);
         return morphs;
       },
-      statements: [["element", "action", ["transitionToFacet", ["get", "query", ["loc", [null, [2, 58], [2, 63]]], 0, 0, 0, 0]], ["on", "submit"], ["loc", [null, [2, 29], [2, 77]]], 0, 0], ["inline", "input", [], ["class", "form-control", "type", "text", "value", ["subexpr", "@mut", [["get", "query", ["loc", [null, [4, 59], [4, 64]]], 0, 0, 0, 0]], [], [], 0, 0], "placeholder", "e.g., Ocean"], ["loc", [null, [4, 12], [4, 92]]], 0, 0], ["inline", "fa-icon", ["search"], [], ["loc", [null, [6, 62], [6, 82]]], 0, 0]],
+      statements: [["element", "action", ["transitionToFacet", ["get", "query", ["loc", [null, [2, 58], [2, 63]]], 0, 0, 0, 0]], ["on", "submit"], ["loc", [null, [2, 29], [2, 77]]], 0, 0], ["inline", "input", [], ["class", "form-control", "type", "text", "value", ["subexpr", "@mut", [["get", "query", ["loc", [null, [4, 59], [4, 64]]], 0, 0, 0, 0]], [], [], 0, 0], "placeholder", "e.g., Ocean"], ["loc", [null, [4, 12], [4, 92]]], 0, 0]],
       locals: [],
       templates: []
     };
@@ -5359,12 +5359,14 @@ define('analytics-dashboard/components/radio-button', ['exports', 'ember-radio-b
     }
   });
 });
-define('analytics-dashboard/components/results-list/component', ['exports', 'ember'], function (exports, _ember) {
-    exports['default'] = _ember['default'].Component.extend({
+define("analytics-dashboard/components/results-list/component", ["exports", "ember"], function (exports, _ember) {
+    exports["default"] = _ember["default"].Component.extend({
 
-        data: [],
+        data: [""],
         pagebackbtn: null,
         pagenextbtn: null,
+        newTab: false,
+        objectID: "",
 
         init: function init() {
             this._super.apply(this, arguments);
@@ -5372,7 +5374,52 @@ define('analytics-dashboard/components/results-list/component', ['exports', 'emb
             this.set('data', data);
             this.get('resourceType');
         },
-        pagebackbtn: _ember['default'].computed('page', function () {
+        didRender: function didRender() {
+            var _this = this;
+
+            $('.dropdown-toggle').click(function () {
+                $(this).siblings('.dropdown-menu').toggleClass('collapsed expanded');
+            });
+
+            $(".menu").click(function (e) {
+                e.stopPropagation();
+                _this.set('objectID', e.target.getAttribute('data-id'));
+
+                switch (e.target.innerHTML) {
+                    case "Open in new tab":
+                        _this.set('newTab', true);
+                        _this.send('transitionToFacet');
+                        _this.set('newTab', false);
+                        break;
+                    case "Open Link":
+                        _this.set('newTab', "transitionToFacet");
+                        _this.send('transitionToFacet');
+                        _this.set('newTab', false);
+                        break;
+                    case "Copy URL":
+                        var aux = document.createElement("input");
+                        aux.setAttribute("value", window.location.origin + '/' + _this.get('objectID'));
+                        document.body.appendChild(aux);
+                        aux.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(aux);
+                        $(e.target).text('Text copied');
+                        setTimeout(function () {
+                            $(e.target).text('Copy URL');
+                        }, 3000);
+                        break;
+                    default:
+                }
+                return false;
+            });
+
+            //check the sort
+            if (this.get('parameters').recently_added_sort === 'desc') {
+                $('.orderBy label').removeClass("active orderBySelected");
+                $(".orderBy").children().eq(1).addClass("active orderBySelected");
+            }
+        },
+        pagebackbtn: _ember["default"].computed('page', function () {
             var page = Number(this.parameters['page']);
             if (page == 1 || !page) {
                 return 'disable';
@@ -5380,15 +5427,16 @@ define('analytics-dashboard/components/results-list/component', ['exports', 'emb
                 return null;
             }
         }),
-        pagenextbtn: _ember['default'].computed('data', function () {
+        pagenextbtn: _ember["default"].computed('data', function () {
             if (this.get('data').length < 10) {
                 return 'disable';
             } else {
                 return null;
             }
         }),
-        pageNumber: _ember['default'].computed('page', function () {
+        pageNumber: _ember["default"].computed('page', function () {
             var page = 'Page ' + this.get('parameters').page;
+            if (!this.get('parameters').page) page = 'Page 1';
             return page;
         }),
         processData: function processData(data) {
@@ -5420,15 +5468,21 @@ define('analytics-dashboard/components/results-list/component', ['exports', 'emb
                 return datum;
             });
         },
-
         actions: {
 
             transitionToFacet: function transitionToFacet(facet_name, parameter_name, parameter_value) {
                 var queryParams = {};
                 queryParams[parameter_name] = parameter_value;
-                this.attrs.transitionToFacet(facet_name, queryParams);
+                if (this.get('newTab') === true) {
+                    window.open(window.location.origin + '/' + this.get('objectID'));
+                } else if (this.get('newTab') === "transitionToFacet") {
+                    var url = window.location + '/' + this.get('objectID');
+                    console.log("URL", url);
+                    window.location.replace(window.location.origin + '/' + this.get('objectID'));
+                } else {
+                    this.attrs.transitionToFacet(facet_name, queryParams);
+                }
             },
-
             pageback: function pageback() {
                 var page = Number(this.parameters["page"]);
                 if (!page || --page < 1) {
@@ -5439,6 +5493,7 @@ define('analytics-dashboard/components/results-list/component', ['exports', 'emb
             },
             pagenext: function pagenext() {
                 var page = Number(this.parameters["page"]);
+                console.log("page", page);
                 if (!page) {
                     page = 2;
                 } else if (++page < 1) {
@@ -5446,6 +5501,22 @@ define('analytics-dashboard/components/results-list/component', ['exports', 'emb
                     page = 1;
                 }
                 this.attrs.transitionToFacet("search", { page: page });
+            },
+            orderBy: function orderBy() {
+                var orderBtnID = $(event.target).children().attr('id');
+
+                $('.orderBy label').removeClass("active orderBySelected");
+                $(event.target).addClass("active orderBySelected");
+
+                if (orderBtnID === 'orderByDate') {
+                    console.log('date');
+                    this.attrs.transitionToFacet('search', { recently_added_sort: 'desc' });
+                } else if (orderBtnID === 'orderByRelevance') {
+                    console.log('relevance');
+                    var queryParams = {};
+                    queryParams['recently_added_sort'] = undefined;
+                    this.attrs.transitionToFacet('search', queryParams);
+                }
             }
 
         }
@@ -5463,12 +5534,12 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
               "loc": {
                 "source": null,
                 "start": {
-                  "line": 19,
-                  "column": 37
+                  "line": 56,
+                  "column": 21
                 },
                 "end": {
-                  "line": 21,
-                  "column": 24
+                  "line": 58,
+                  "column": 8
                 }
               },
               "moduleName": "analytics-dashboard/components/results-list/template.hbs"
@@ -5479,7 +5550,7 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
             hasRendered: false,
             buildFragment: function buildFragment(dom) {
               var el0 = dom.createDocumentFragment();
-              var el1 = dom.createTextNode("\n                            ");
+              var el1 = dom.createTextNode("\n        ");
               dom.appendChild(el0, el1);
               var el1 = dom.createElement("span");
               var el2 = dom.createComment("");
@@ -5494,7 +5565,7 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
               morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 0, 0);
               return morphs;
             },
-            statements: [["content", "publisher", ["loc", [null, [20, 34], [20, 47]]], 0, 0, 0, 0]],
+            statements: [["content", "publisher", ["loc", [null, [57, 14], [57, 27]]], 0, 0, 0, 0]],
             locals: ["publisher"],
             templates: []
           };
@@ -5505,12 +5576,12 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
             "loc": {
               "source": null,
               "start": {
-                "line": 18,
-                "column": 20
+                "line": 55,
+                "column": 8
               },
               "end": {
-                "line": 22,
-                "column": 20
+                "line": 59,
+                "column": 8
               }
             },
             "moduleName": "analytics-dashboard/components/results-list/template.hbs"
@@ -5521,7 +5592,7 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
           hasRendered: false,
           buildFragment: function buildFragment(dom) {
             var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode("                        Provided by: ");
+            var el1 = dom.createTextNode("        Provided by: ");
             dom.appendChild(el0, el1);
             var el1 = dom.createComment("");
             dom.appendChild(el0, el1);
@@ -5533,7 +5604,7 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
             dom.insertBoundary(fragment, null);
             return morphs;
           },
-          statements: [["block", "each", [["get", "item._source.publishers", ["loc", [null, [19, 45], [19, 68]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [19, 37], [21, 33]]]]],
+          statements: [["block", "each", [["get", "item._source.publishers", ["loc", [null, [56, 29], [56, 52]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [56, 21], [58, 17]]]]],
           locals: [],
           templates: [child0]
         };
@@ -5544,12 +5615,12 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
           "loc": {
             "source": null,
             "start": {
-              "line": 5,
-              "column": 4
+              "line": 20,
+              "column": 0
             },
             "end": {
-              "line": 34,
-              "column": 4
+              "line": 77,
+              "column": 0
             }
           },
           "moduleName": "analytics-dashboard/components/results-list/template.hbs"
@@ -5560,17 +5631,15 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
         hasRendered: false,
         buildFragment: function buildFragment(dom) {
           var el0 = dom.createDocumentFragment();
-          var el1 = dom.createTextNode("        ");
-          dom.appendChild(el0, el1);
-          var el1 = dom.createElement("div");
+          var el1 = dom.createElement("a");
           dom.setAttribute(el1, "style", "position: relative; clear: both;");
-          var el2 = dom.createTextNode("\n            ");
+          var el2 = dom.createTextNode("\n    ");
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("div");
           dom.setAttribute(el2, "style", "cursor: pointer; background-color: #eee; overflow: hidden; position: relative; margin: 0 10px;");
           dom.setAttribute(el2, "href", "#");
           dom.setAttribute(el2, "class", "list-widget-item");
-          var el3 = dom.createTextNode("\n                ");
+          var el3 = dom.createTextNode("\n        ");
           dom.appendChild(el2, el3);
           var el3 = dom.createElement("div");
           dom.setAttribute(el3, "class", "item-number");
@@ -5578,15 +5647,72 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
           var el4 = dom.createComment("");
           dom.appendChild(el3, el4);
           dom.appendChild(el2, el3);
-          var el3 = dom.createTextNode("\n                ");
+          var el3 = dom.createTextNode("\n\n\n\n\n\n        ");
           dom.appendChild(el2, el3);
           var el3 = dom.createElement("div");
           dom.setAttribute(el3, "class", "item-number");
           dom.setAttribute(el3, "style", "color: #aaa; float: right; font-size: 13px;");
+          var el4 = dom.createTextNode("\n\n\n\n            ");
+          dom.appendChild(el3, el4);
           var el4 = dom.createComment("");
           dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("\n\n            ");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createElement("li");
+          dom.setAttribute(el4, "class", "menu dropdown");
+          var el5 = dom.createTextNode("\n              ");
+          dom.appendChild(el4, el5);
+          var el5 = dom.createElement("a");
+          dom.setAttribute(el5, "href", "#");
+          dom.setAttribute(el5, "class", "btn btn-lg  dropdown-toggle");
+          var el6 = dom.createElement("div");
+          dom.setAttribute(el6, "class", "dots");
+          dom.appendChild(el5, el6);
+          var el6 = dom.createTextNode("\n\n              ");
+          dom.appendChild(el5, el6);
+          dom.appendChild(el4, el5);
+          var el5 = dom.createTextNode("\n              ");
+          dom.appendChild(el4, el5);
+          var el5 = dom.createElement("ul");
+          dom.setAttribute(el5, "class", "menu  dropdown-menu collapsed");
+          dom.setAttribute(el5, "role", "menu");
+          var el6 = dom.createTextNode("\n                ");
+          dom.appendChild(el5, el6);
+          var el6 = dom.createElement("li");
+          var el7 = dom.createElement("a");
+          dom.setAttribute(el7, "href", "#");
+          var el8 = dom.createTextNode("Open in new tab");
+          dom.appendChild(el7, el8);
+          dom.appendChild(el6, el7);
+          dom.appendChild(el5, el6);
+          var el6 = dom.createTextNode("\n                ");
+          dom.appendChild(el5, el6);
+          var el6 = dom.createElement("li");
+          var el7 = dom.createElement("a");
+          dom.setAttribute(el7, "href", "#");
+          var el8 = dom.createTextNode("Open Link");
+          dom.appendChild(el7, el8);
+          dom.appendChild(el6, el7);
+          dom.appendChild(el5, el6);
+          var el6 = dom.createTextNode("\n                ");
+          dom.appendChild(el5, el6);
+          var el6 = dom.createElement("li");
+          var el7 = dom.createElement("a");
+          dom.setAttribute(el7, "href", "#");
+          var el8 = dom.createTextNode("Copy URL");
+          dom.appendChild(el7, el8);
+          dom.appendChild(el6, el7);
+          dom.appendChild(el5, el6);
+          var el6 = dom.createTextNode("\n            ");
+          dom.appendChild(el5, el6);
+          dom.appendChild(el4, el5);
+          var el5 = dom.createTextNode("\n        ");
+          dom.appendChild(el4, el5);
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("\n\n    ");
+          dom.appendChild(el3, el4);
           dom.appendChild(el2, el3);
-          var el3 = dom.createTextNode("\n                ");
+          var el3 = dom.createTextNode("\n    ");
           dom.appendChild(el2, el3);
           var el3 = dom.createElement("div");
           dom.setAttribute(el3, "class", "item-number");
@@ -5596,14 +5722,14 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
           dom.appendChild(el2, el3);
           var el3 = dom.createTextNode("\n");
           dom.appendChild(el2, el3);
-          var el3 = dom.createTextNode("                ");
+          var el3 = dom.createTextNode("    ");
           dom.appendChild(el2, el3);
           var el3 = dom.createElement("div");
           dom.setAttribute(el3, "style", "max-width: 700px; color: #888; padding-top: 10px; padding-bottom: 10px;");
           var el4 = dom.createComment("");
           dom.appendChild(el3, el4);
           dom.appendChild(el2, el3);
-          var el3 = dom.createTextNode("\n                ");
+          var el3 = dom.createTextNode("\n    ");
           dom.appendChild(el2, el3);
           var el3 = dom.createElement("div");
           dom.setAttribute(el3, "class", "item-number");
@@ -5612,10 +5738,10 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
           dom.appendChild(el3, el4);
           var el4 = dom.createComment("");
           dom.appendChild(el3, el4);
-          var el4 = dom.createTextNode("                ");
+          var el4 = dom.createTextNode("    ");
           dom.appendChild(el3, el4);
           dom.appendChild(el2, el3);
-          var el3 = dom.createTextNode("\n                ");
+          var el3 = dom.createTextNode("\n\n\n\n\n\n\n    ");
           dom.appendChild(el2, el3);
           var el3 = dom.createElement("div");
           dom.setAttribute(el3, "class", "item-name");
@@ -5626,27 +5752,27 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
           dom.setAttribute(el4, "class", "fa fa-angle-right");
           dom.appendChild(el3, el4);
           dom.appendChild(el2, el3);
-          var el3 = dom.createTextNode("\n            ");
+          var el3 = dom.createTextNode("\n");
           dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode("\n            ");
+          var el2 = dom.createTextNode("\n");
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("div");
           dom.setAttribute(el2, "style", "padding: 10px; margin-bottom: 20px;");
-          var el3 = dom.createTextNode("\n                ");
+          var el3 = dom.createTextNode("\n    ");
           dom.appendChild(el2, el3);
           var el3 = dom.createElement("div");
           dom.setAttribute(el3, "colspan", "4");
           dom.setAttribute(el3, "style", "padding: 8px; padding-bottom: 28px;");
           var el4 = dom.createTextNode("\n");
           dom.appendChild(el3, el4);
-          var el4 = dom.createTextNode("                ");
+          var el4 = dom.createTextNode("    ");
           dom.appendChild(el3, el4);
           dom.appendChild(el2, el3);
-          var el3 = dom.createTextNode("\n            ");
+          var el3 = dom.createTextNode("\n");
           dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode("\n        ");
+          var el2 = dom.createTextNode("\n");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("\n");
@@ -5654,19 +5780,29 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
           return el0;
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var element3 = dom.childAt(fragment, [1, 1]);
-          var element4 = dom.childAt(element3, [12]);
-          var morphs = new Array(7);
-          morphs[0] = dom.createElementMorph(element3);
-          morphs[1] = dom.createMorphAt(dom.childAt(element3, [1]), 0, 0);
-          morphs[2] = dom.createMorphAt(dom.childAt(element3, [3]), 0, 0);
-          morphs[3] = dom.createMorphAt(dom.childAt(element3, [5]), 0, 0);
-          morphs[4] = dom.createMorphAt(dom.childAt(element3, [8]), 0, 0);
-          morphs[5] = dom.createMorphAt(dom.childAt(element3, [10]), 1, 1);
-          morphs[6] = dom.createElementMorph(element4);
+          var element3 = dom.childAt(fragment, [0]);
+          var element4 = dom.childAt(element3, [1]);
+          var element5 = dom.childAt(element4, [3]);
+          var element6 = dom.childAt(element5, [3, 3]);
+          var element7 = dom.childAt(element6, [1, 0]);
+          var element8 = dom.childAt(element6, [3, 0]);
+          var element9 = dom.childAt(element6, [5, 0]);
+          var element10 = dom.childAt(element4, [12]);
+          var morphs = new Array(11);
+          morphs[0] = dom.createAttrMorph(element3, 'href');
+          morphs[1] = dom.createElementMorph(element4);
+          morphs[2] = dom.createMorphAt(dom.childAt(element4, [1]), 0, 0);
+          morphs[3] = dom.createMorphAt(element5, 1, 1);
+          morphs[4] = dom.createAttrMorph(element7, 'data-id');
+          morphs[5] = dom.createAttrMorph(element8, 'data-id');
+          morphs[6] = dom.createAttrMorph(element9, 'data-id');
+          morphs[7] = dom.createMorphAt(dom.childAt(element4, [5]), 0, 0);
+          morphs[8] = dom.createMorphAt(dom.childAt(element4, [8]), 0, 0);
+          morphs[9] = dom.createMorphAt(dom.childAt(element4, [10]), 1, 1);
+          morphs[10] = dom.createElementMorph(element10);
           return morphs;
         },
-        statements: [["element", "action", ["transitionToFacet", "objectDetail", "id", ["get", "item._source.id", ["loc", [null, [7, 203], [7, 218]]], 0, 0, 0, 0]], [], ["loc", [null, [7, 154], [7, 220]]], 0, 0], ["content", "item._source.type", ["loc", [null, [8, 179], [8, 200]]], 0, 0, 0, 0], ["content", "item._source.date", ["loc", [null, [9, 93], [9, 114]]], 0, 0, 0, 0], ["content", "item._source.title", ["loc", [null, [10, 94], [10, 116]]], 0, 0, 0, 0], ["content", "item.description_truncated", ["loc", [null, [16, 101], [16, 131]]], 0, 0, 0, 0], ["block", "if", [["get", "item._source.publishers", ["loc", [null, [18, 26], [18, 49]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [18, 20], [22, 27]]]], ["element", "action", ["transitionToFacet", "objectDetail", "id", ["get", "item._source.id", ["loc", [null, [24, 187], [24, 202]]], 0, 0, 0, 0]], [], ["loc", [null, [24, 138], [24, 204]]], 0, 0]],
+        statements: [["attribute", "href", ["concat", ["objectDetail?id=", ["get", "item._source.id", ["loc", [null, [21, 27], [21, 42]]], 0, 0, 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["element", "action", ["transitionToFacet", "objectDetail", "id", ["get", "item._source.id", ["loc", [null, [22, 195], [22, 210]]], 0, 0, 0, 0]], [], ["loc", [null, [22, 146], [22, 212]]], 0, 0], ["content", "item._source.type", ["loc", [null, [23, 171], [23, 192]]], 0, 0, 0, 0], ["content", "item._source.date", ["loc", [null, [33, 12], [33, 33]]], 0, 0, 0, 0], ["attribute", "data-id", ["concat", ["objectDetail?id=", ["get", "item._source.id", ["loc", [null, [40, 59], [40, 74]]], 0, 0, 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["attribute", "data-id", ["concat", ["objectDetail?id=", ["get", "item._source.id", ["loc", [null, [41, 59], [41, 74]]], 0, 0, 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["attribute", "data-id", ["concat", ["objectDetail?id=", ["get", "item._source.id", ["loc", [null, [42, 59], [42, 74]]], 0, 0, 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["content", "item._source.title", ["loc", [null, [47, 82], [47, 104]]], 0, 0, 0, 0], ["content", "item.description_truncated", ["loc", [null, [53, 89], [53, 119]]], 0, 0, 0, 0], ["block", "if", [["get", "item._source.publishers", ["loc", [null, [55, 14], [55, 37]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [55, 8], [59, 15]]]], ["element", "action", ["transitionToFacet", "objectDetail", "id", ["get", "item._source.id", ["loc", [null, [67, 175], [67, 190]]], 0, 0, 0, 0]], [], ["loc", [null, [67, 126], [67, 192]]], 0, 0]],
         locals: ["item"],
         templates: [child0]
       };
@@ -5678,12 +5814,12 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
           "loc": {
             "source": null,
             "start": {
-              "line": 34,
-              "column": 4
+              "line": 77,
+              "column": 0
             },
             "end": {
-              "line": 38,
-              "column": 4
+              "line": 81,
+              "column": 0
             }
           },
           "moduleName": "analytics-dashboard/components/results-list/template.hbs"
@@ -5694,11 +5830,9 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
         hasRendered: false,
         buildFragment: function buildFragment(dom) {
           var el0 = dom.createDocumentFragment();
-          var el1 = dom.createTextNode("        ");
-          dom.appendChild(el0, el1);
           var el1 = dom.createElement("h3");
           dom.setAttribute(el1, "class", "text-center p-t-md");
-          var el2 = dom.createTextNode("\n            No results found.\n        ");
+          var el2 = dom.createTextNode("\n    No results found.\n");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("\n");
@@ -5720,12 +5854,12 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
           "loc": {
             "source": null,
             "start": {
-              "line": 39,
-              "column": 4
+              "line": 82,
+              "column": 0
             },
             "end": {
-              "line": 44,
-              "column": 4
+              "line": 87,
+              "column": 0
             }
           },
           "moduleName": "analytics-dashboard/components/results-list/template.hbs"
@@ -5736,29 +5870,31 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
         hasRendered: false,
         buildFragment: function buildFragment(dom) {
           var el0 = dom.createDocumentFragment();
-          var el1 = dom.createTextNode("        ");
-          dom.appendChild(el0, el1);
           var el1 = dom.createElement("div");
           dom.setAttribute(el1, "style", "text-align: center; padding: 30px;");
-          var el2 = dom.createTextNode("\n            ");
+          var el2 = dom.createTextNode("\n    ");
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("button");
           dom.setAttribute(el2, "class", "btn btn-primary");
-          var el3 = dom.createComment("");
+          var el3 = dom.createElement("i");
+          dom.setAttribute(el3, "class", "fa fa-chevron-left");
+          dom.setAttribute(el3, "aria-hidden", "true");
           dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
           var el2 = dom.createTextNode(" ");
           dom.appendChild(el1, el2);
           var el2 = dom.createComment("");
           dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode("\n            ");
+          var el2 = dom.createTextNode("\n    ");
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("button");
           dom.setAttribute(el2, "class", "btn btn-primary");
-          var el3 = dom.createComment("");
+          var el3 = dom.createElement("i");
+          dom.setAttribute(el3, "class", "fa fa-chevron-right");
+          dom.setAttribute(el3, "aria-hidden", "true");
           dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode("\n        ");
+          var el2 = dom.createTextNode("\n");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("\n");
@@ -5766,20 +5902,18 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
           return el0;
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var element0 = dom.childAt(fragment, [1]);
+          var element0 = dom.childAt(fragment, [0]);
           var element1 = dom.childAt(element0, [1]);
           var element2 = dom.childAt(element0, [5]);
-          var morphs = new Array(7);
+          var morphs = new Array(5);
           morphs[0] = dom.createAttrMorph(element1, 'disabled');
           morphs[1] = dom.createElementMorph(element1);
-          morphs[2] = dom.createMorphAt(element1, 0, 0);
-          morphs[3] = dom.createMorphAt(element0, 3, 3);
-          morphs[4] = dom.createAttrMorph(element2, 'disabled');
-          morphs[5] = dom.createElementMorph(element2);
-          morphs[6] = dom.createMorphAt(element2, 0, 0);
+          morphs[2] = dom.createMorphAt(element0, 3, 3);
+          morphs[3] = dom.createAttrMorph(element2, 'disabled');
+          morphs[4] = dom.createElementMorph(element2);
           return morphs;
         },
-        statements: [["attribute", "disabled", ["subexpr", "if", [["get", "pagebackbtn", ["loc", [null, [41, 59], [41, 70]]], 0, 0, 0, 0], "disabled", null], [], ["loc", [null, [null, null], [41, 88]]], 0, 0], 0, 0, 0, 0], ["element", "action", ["pageback"], [], ["loc", [null, [41, 90], [41, 111]]], 0, 0], ["inline", "fa-icon", ["chevron-left"], [], ["loc", [null, [41, 112], [41, 138]]], 0, 0], ["content", "pageNumber", ["loc", [null, [41, 148], [41, 162]]], 0, 0, 0, 0], ["attribute", "disabled", ["subexpr", "if", [["get", "pagenextbtn", ["loc", [null, [42, 59], [42, 70]]], 0, 0, 0, 0], "disabled", null], [], ["loc", [null, [null, null], [42, 88]]], 0, 0], 0, 0, 0, 0], ["element", "action", ["pagenext"], [], ["loc", [null, [42, 89], [42, 110]]], 0, 0], ["inline", "fa-icon", ["chevron-right"], [], ["loc", [null, [42, 111], [42, 138]]], 0, 0]],
+        statements: [["attribute", "disabled", ["subexpr", "if", [["get", "pagebackbtn", ["loc", [null, [84, 51], [84, 62]]], 0, 0, 0, 0], "disabled", null], [], ["loc", [null, [null, null], [84, 80]]], 0, 0], 0, 0, 0, 0], ["element", "action", ["pageback"], [], ["loc", [null, [84, 82], [84, 103]]], 0, 0], ["content", "pageNumber", ["loc", [null, [84, 140], [84, 154]]], 0, 0, 0, 0], ["attribute", "disabled", ["subexpr", "if", [["get", "pagenextbtn", ["loc", [null, [85, 51], [85, 62]]], 0, 0, 0, 0], "disabled", null], [], ["loc", [null, [null, null], [85, 80]]], 0, 0], 0, 0, 0, 0], ["element", "action", ["pagenext"], [], ["loc", [null, [85, 81], [85, 102]]], 0, 0]],
         locals: [],
         templates: []
       };
@@ -5794,7 +5928,7 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
             "column": 0
           },
           "end": {
-            "line": 46,
+            "line": 89,
             "column": 0
           }
         },
@@ -5806,22 +5940,69 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
       hasRendered: false,
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
         var el1 = dom.createElement("div");
         dom.setAttribute(el1, "class", "list-widget widget-body");
         dom.setAttribute(el1, "style", "padding: 0;");
         var el2 = dom.createTextNode("\n    ");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
+        dom.setAttribute(el2, "class", "pull-right");
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
-        var el3 = dom.createElement("h3");
-        var el4 = dom.createComment("");
+        var el3 = dom.createElement("span");
+        var el4 = dom.createTextNode("Sort by: ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "class", "btn-group orderBy");
+        dom.setAttribute(el3, "data-toggle", "buttons");
+        var el4 = dom.createTextNode("  \n\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("label");
+        dom.setAttribute(el4, "class", "btn active orderBySelected");
+        var el5 = dom.createTextNode("\n                ");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createElement("input");
+        dom.setAttribute(el5, "type", "radio");
+        dom.setAttribute(el5, "name", "options");
+        dom.setAttribute(el5, "id", "orderByRelevance");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createTextNode(" Relevance\n            ");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("label");
+        dom.setAttribute(el4, "class", "btn");
+        var el5 = dom.createTextNode("\n                ");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createElement("input");
+        dom.setAttribute(el5, "type", "radio");
+        dom.setAttribute(el5, "name", "options");
+        dom.setAttribute(el5, "id", "orderByDate");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createTextNode(" Date\n            ");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n\n        ");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
         dom.appendChild(el2, el3);
         dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("br");
+        dom.appendChild(el1, el2);
         var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("hr");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n\n");
         dom.appendChild(el1, el2);
         var el2 = dom.createComment("");
         dom.appendChild(el1, el2);
@@ -5833,14 +6014,18 @@ define("analytics-dashboard/components/results-list/template", ["exports"], func
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var element5 = dom.childAt(fragment, [0]);
-        var morphs = new Array(3);
-        morphs[0] = dom.createMorphAt(dom.childAt(element5, [1, 1]), 0, 0);
-        morphs[1] = dom.createMorphAt(element5, 3, 3);
-        morphs[2] = dom.createMorphAt(element5, 4, 4);
+        var element11 = dom.childAt(fragment, [1]);
+        var element12 = dom.childAt(element11, [1, 3]);
+        var element13 = dom.childAt(element12, [1]);
+        var element14 = dom.childAt(element12, [3]);
+        var morphs = new Array(4);
+        morphs[0] = dom.createElementMorph(element13);
+        morphs[1] = dom.createElementMorph(element14);
+        morphs[2] = dom.createMorphAt(element11, 7, 7);
+        morphs[3] = dom.createMorphAt(element11, 8, 8);
         return morphs;
       },
-      statements: [["content", "results.title", ["loc", [null, [3, 12], [3, 29]]], 0, 0, 0, 0], ["block", "each", [["get", "data", ["loc", [null, [5, 12], [5, 16]]], 0, 0, 0, 0]], [], 0, 1, ["loc", [null, [5, 4], [38, 13]]]], ["block", "if", [["get", "data.length", ["loc", [null, [39, 10], [39, 21]]], 0, 0, 0, 0]], [], 2, null, ["loc", [null, [39, 4], [44, 11]]]]],
+      statements: [["element", "action", ["orderBy"], [], ["loc", [null, [7, 54], [7, 74]]], 0, 0], ["element", "action", ["orderBy"], [], ["loc", [null, [11, 31], [11, 51]]], 0, 0], ["block", "each", [["get", "data", ["loc", [null, [20, 8], [20, 12]]], 0, 0, 0, 0]], [], 0, 1, ["loc", [null, [20, 0], [81, 9]]]], ["block", "if", [["get", "data.length", ["loc", [null, [82, 6], [82, 17]]], 0, 0, 0, 0]], [], 2, null, ["loc", [null, [82, 0], [87, 7]]]]],
       locals: [],
       templates: [child0, child1, child2]
     };
@@ -5986,7 +6171,9 @@ define("analytics-dashboard/components/search-facet-daterange/template", ["expor
         dom.setAttribute(el2, "class", "date-range");
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
-        var el3 = dom.createComment("");
+        var el3 = dom.createElement("i");
+        dom.setAttribute(el3, "class", "fa fa-calendar");
+        dom.setAttribute(el3, "aria-hidden", "true");
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
@@ -5994,7 +6181,9 @@ define("analytics-dashboard/components/search-facet-daterange/template", ["expor
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
-        var el3 = dom.createComment("");
+        var el3 = dom.createElement("i");
+        dom.setAttribute(el3, "class", "fa fa-caret-down pull-right");
+        dom.setAttribute(el3, "aria-hidden", "true");
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
         dom.appendChild(el2, el3);
@@ -6007,14 +6196,11 @@ define("analytics-dashboard/components/search-facet-daterange/template", ["expor
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var element0 = dom.childAt(fragment, [0, 1]);
-        var morphs = new Array(3);
-        morphs[0] = dom.createMorphAt(element0, 1, 1);
-        morphs[1] = dom.createMorphAt(element0, 3, 3);
-        morphs[2] = dom.createMorphAt(element0, 5, 5);
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0, 1]), 3, 3);
         return morphs;
       },
-      statements: [["inline", "fa-icon", ["calendar"], [], ["loc", [null, [3, 8], [3, 30]]], 0, 0], ["content", "pickerValue", ["loc", [null, [4, 8], [4, 23]]], 0, 0, 0, 0], ["inline", "fa-icon", ["caret-down"], ["class", "pull-right"], ["loc", [null, [5, 8], [5, 51]]], 0, 0]],
+      statements: [["content", "pickerValue", ["loc", [null, [4, 8], [4, 23]]], 0, 0, 0, 0]],
       locals: [],
       templates: []
     };
@@ -6164,17 +6350,20 @@ define('analytics-dashboard/components/stacked-bars/component', ['exports', 'emb
             topItem.itemWidth += residualPixel; // Add all residual pixel to biggest item;
         },
         didInsertElement: function didInsertElement() {
+            var _this2 = this;
+
             this.generateChart();
-            var component = this;
-            component.$(window).on('resize', function () {
-                component.generateChart.call(component); // This is very expensive, will need to be revised for actual app
-                component.showHideLabel.call(component);
+            this.$(window).on('resize', function () {
+                _this2.generateChart.call(_this2); // This is very expensive, will need to be revised for actual app
+                _this2.showHideLabel.call(_this2);
             });
-            component.showHideLabel.call(component);
-            component.$('.stack').click(function (event) {
-                var index = component.$(event.target).attr('data-index');
-                var item = component.get('data')[index];
-                component.send('transitionToFacet', item);
+            this.showHideLabel.call(this);
+            this.$('.stack').click(function (ev) {
+                var target = ev.target;
+                if (ev.target.tagName === "SPAN") target = ev.target.parentNode;
+                var index = _this2.$(target).attr("data-index");
+                var item = _this2.get('data')[index];
+                _this2.send('transitionToFacet', item);
             });
         },
         init: function init() {
@@ -6186,7 +6375,18 @@ define('analytics-dashboard/components/stacked-bars/component', ['exports', 'emb
                 var queryParams = {};
                 var facet = this.get("item.facetDashParameter");
                 if (facet) {
-                    queryParams[facet] = item.label;
+                    queryParams[facet] = ({
+                        "project & awards": "project",
+                        "creative work": "creative work",
+                        "article": "article",
+                        "data set": "data set",
+                        "registration": "registration",
+                        "preprint": "preprint",
+                        "conference paper": "conference paper",
+                        "book": "book",
+                        "report": "report",
+                        "software": "software"
+                    })[item.label];
                     this.attrs.transitionToFacet(this.get('item.facetDash'), queryParams);
                 } else if (item.url) {
                     window.location.href = item.url;
@@ -6368,11 +6568,158 @@ define("analytics-dashboard/components/text-widget/template", ["exports"], funct
     };
   })());
 });
+define('analytics-dashboard/components/user-feedback-form/component', ['exports', 'ember'], function (exports, _ember) {
+	exports['default'] = _ember['default'].Component.extend({
+		showForm: false,
+		actions: {
+			toggleForm: function toggleForm() {
+				this.toggleProperty('showForm');
+				if (this.get('showForm')) {
+					$("body").css("overflow", "hidden");
+				} else {
+					$("body").css("overflow", "auto");
+				}
+			}
+		}
+	});
+});
+define("analytics-dashboard/components/user-feedback-form/template", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@2.7.3",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 5,
+              "column": 0
+            },
+            "end": {
+              "line": 10,
+              "column": 0
+            }
+          },
+          "moduleName": "analytics-dashboard/components/user-feedback-form/template.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("div");
+          dom.setAttribute(el1, "class", "feedback-modal");
+          var el2 = dom.createTextNode("\n	");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("i");
+          dom.setAttribute(el2, "class", "fa fa-times feedback-close");
+          dom.setAttribute(el2, "aria-hidden", "true");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n	");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("iframe");
+          dom.setAttribute(el2, "src", "https://docs.google.com/forms/d/e/1FAIpQLScIfQMFzGs3P9gsfGM0-Psl0wnD4otSec86j-K8B7fKmUlfag/viewform?embedded=true");
+          dom.setAttribute(el2, "width", "100%");
+          dom.setAttribute(el2, "height", "100%");
+          dom.setAttribute(el2, "frameborder", "0");
+          dom.setAttribute(el2, "scrolling", "no");
+          dom.setAttribute(el2, "class", "googleForm");
+          var el3 = dom.createTextNode("Loading...");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var element0 = dom.childAt(fragment, [0]);
+          var element1 = dom.childAt(element0, [1]);
+          var element2 = dom.childAt(element0, [3]);
+          var morphs = new Array(2);
+          morphs[0] = dom.createElementMorph(element1);
+          morphs[1] = dom.createAttrMorph(element2, 'onsubmit');
+          return morphs;
+        },
+        statements: [["element", "action", ["toggleForm"], [], ["loc", [null, [7, 39], [7, 62]]], 0, 0], ["attribute", "onsubmit", ["concat", [["subexpr", "action", ["toggleForm"], [], ["loc", [null, [8, 217], [8, 240]]], 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0]],
+        locals: [],
+        templates: []
+      };
+    })();
+    return {
+      meta: {
+        "revision": "Ember@2.7.3",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 11,
+            "column": 0
+          }
+        },
+        "moduleName": "analytics-dashboard/components/user-feedback-form/template.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("span");
+        dom.setAttribute(el1, "class", "btn btn-default user-feedback");
+        var el2 = dom.createElement("div");
+        var el3 = dom.createTextNode("Provide feedback");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n\n\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var element3 = dom.childAt(fragment, [2]);
+        var morphs = new Array(3);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createElementMorph(element3);
+        morphs[2] = dom.createMorphAt(fragment, 4, 4, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        dom.insertBoundary(fragment, null);
+        return morphs;
+      },
+      statements: [["content", "yield", ["loc", [null, [1, 0], [1, 9]]], 0, 0, 0, 0], ["element", "action", ["toggleForm"], [], ["loc", [null, [2, 44], [2, 67]]], 0, 0], ["block", "if", [["get", "showForm", ["loc", [null, [5, 6], [5, 14]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [5, 0], [10, 7]]]]],
+      locals: [],
+      templates: [child0]
+    };
+  })());
+});
 define('analytics-dashboard/components/widget-adapter/component', ['exports', 'ember', 'analytics-dashboard/config/environment', 'npm:json-stable-stringify', 'analytics-dashboard/utils/date-interval'], function (exports, _ember, _analyticsDashboardConfigEnvironment, _npmJsonStableStringify, _analyticsDashboardUtilsDateInterval) {
     var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
     function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
+    var helpText = {
+        'Total Results': 'Number of unique items returned by your search',
+        'Data Providers': 'Organizations or agents, such as publishers, repositories, data centers, archives, and funders, making these resources available. A given resource may list more than one data provider, for example, the Association (e.g. Association for Computing Machinery) and the Association`s Press (ACM Press).',
+        'Types': 'Resources, or items, are categorized into Types (article, data set, dissertation, etc.). Any resource not categorized by the Source will appear under Creative Work by default.',
+        'Tags': 'Keywords, subjects, and topics that describe the research output. Those listed here are the most frequently listed tags in content aggregated by SHARE.',
+        'Funders': 'Organizations, institutions, foundations, or groups that provided financial support for the research',
+        'Dates': 'Date information about the resource was last updated by Source',
+        'Top Contributors': 'Individuals, organizations, or institutions involved in the production of the resource. Their contribution could be intellectual, material, or financial. Those listed here are the most frequently named contributors in content aggregated by SHARE.',
+        'filter-plaques': 'A list of your current search terms, click on X within each box to remove the filter from your current search.',
+        'Contributors': 'Individuals, organizations, or institutions involved in the production of the resource. Their contribution could be intellectual, material, or financial.'
+    };
     //import Q from 'npm:q';
     var agg_types = [// agg_types is this array literal, reduced by the following fn
 
@@ -6760,6 +7107,9 @@ define('analytics-dashboard/components/widget-adapter/component', ['exports', 'e
         configuring: false,
         picking: false,
 
+        helpText: helpText,
+        showHelpText: true,
+
         init: function init() {
             var _this = this;
 
@@ -6768,6 +7118,13 @@ define('analytics-dashboard/components/widget-adapter/component', ['exports', 'e
             Promise.resolve(this.fetchWidgetData()).then(function () {
                 return _this.applyGraphSetting();
             });
+            if (this.get('item.name') == '' || this.get('item.name') == 'Highlighted Collections' || this.get('item.name') == 'Recently Added' || this.get('item.name') == 'Top Tags') {
+                this.set('showHelpText', false);
+            }
+            if (this.get('item.widgetType') == 'filter-plaques') {
+
+                this.set('showHelpText', true);
+            }
         },
 
         didRender: function didRender() {
@@ -6800,7 +7157,7 @@ define('analytics-dashboard/components/widget-adapter/component', ['exports', 'e
                         lte = this.get('lte');
                         interval = this.get('tsInterval');
                         item = this.get('item');
-                        endpoint = 'v2/_search?request_cache=true';
+                        endpoint = 'records/_search?request_cache=true';
 
                         if (item.endpoint) {
                             endpoint = '/share/search/' + item.endpoint + '/_search?request_cache=true';
@@ -7015,17 +7372,225 @@ define('analytics-dashboard/components/widget-adapter/component', ['exports', 'e
 define("analytics-dashboard/components/widget-adapter/template", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template((function () {
     var child0 = (function () {
+      var child0 = (function () {
+        var child0 = (function () {
+          var child0 = (function () {
+            return {
+              meta: {
+                "revision": "Ember@2.7.3",
+                "loc": {
+                  "source": null,
+                  "start": {
+                    "line": 7,
+                    "column": 10
+                  },
+                  "end": {
+                    "line": 9,
+                    "column": 10
+                  }
+                },
+                "moduleName": "analytics-dashboard/components/widget-adapter/template.hbs"
+              },
+              isEmpty: false,
+              arity: 0,
+              cachedFragment: null,
+              hasRendered: false,
+              buildFragment: function buildFragment(dom) {
+                var el0 = dom.createDocumentFragment();
+                var el1 = dom.createTextNode("            ");
+                dom.appendChild(el0, el1);
+                var el1 = dom.createComment("");
+                dom.appendChild(el0, el1);
+                var el1 = dom.createTextNode("\n");
+                dom.appendChild(el0, el1);
+                return el0;
+              },
+              buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+                var morphs = new Array(1);
+                morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+                return morphs;
+              },
+              statements: [["inline", "get", [["get", "helpText", ["loc", [null, [8, 18], [8, 26]]], 0, 0, 0, 0], ["get", "item.name", ["loc", [null, [8, 27], [8, 36]]], 0, 0, 0, 0]], [], ["loc", [null, [8, 12], [8, 38]]], 0, 0]],
+              locals: [],
+              templates: []
+            };
+          })();
+          var child1 = (function () {
+            return {
+              meta: {
+                "revision": "Ember@2.7.3",
+                "loc": {
+                  "source": null,
+                  "start": {
+                    "line": 9,
+                    "column": 10
+                  },
+                  "end": {
+                    "line": 11,
+                    "column": 10
+                  }
+                },
+                "moduleName": "analytics-dashboard/components/widget-adapter/template.hbs"
+              },
+              isEmpty: false,
+              arity: 0,
+              cachedFragment: null,
+              hasRendered: false,
+              buildFragment: function buildFragment(dom) {
+                var el0 = dom.createDocumentFragment();
+                var el1 = dom.createTextNode("            ");
+                dom.appendChild(el0, el1);
+                var el1 = dom.createComment("");
+                dom.appendChild(el0, el1);
+                var el1 = dom.createTextNode("\n");
+                dom.appendChild(el0, el1);
+                return el0;
+              },
+              buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+                var morphs = new Array(1);
+                morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+                return morphs;
+              },
+              statements: [["inline", "get", [["get", "helpText", ["loc", [null, [10, 18], [10, 26]]], 0, 0, 0, 0], ["get", "item.widgetType", ["loc", [null, [10, 27], [10, 42]]], 0, 0, 0, 0]], [], ["loc", [null, [10, 12], [10, 44]]], 0, 0]],
+              locals: [],
+              templates: []
+            };
+          })();
+          return {
+            meta: {
+              "revision": "Ember@2.7.3",
+              "loc": {
+                "source": null,
+                "start": {
+                  "line": 6,
+                  "column": 8
+                },
+                "end": {
+                  "line": 12,
+                  "column": 8
+                }
+              },
+              "moduleName": "analytics-dashboard/components/widget-adapter/template.hbs"
+            },
+            isEmpty: false,
+            arity: 0,
+            cachedFragment: null,
+            hasRendered: false,
+            buildFragment: function buildFragment(dom) {
+              var el0 = dom.createDocumentFragment();
+              var el1 = dom.createComment("");
+              dom.appendChild(el0, el1);
+              return el0;
+            },
+            buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+              var morphs = new Array(1);
+              morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+              dom.insertBoundary(fragment, 0);
+              dom.insertBoundary(fragment, null);
+              return morphs;
+            },
+            statements: [["block", "if", [["get", "item.name", ["loc", [null, [7, 16], [7, 25]]], 0, 0, 0, 0]], [], 0, 1, ["loc", [null, [7, 10], [11, 17]]]]],
+            locals: [],
+            templates: [child0, child1]
+          };
+        })();
+        return {
+          meta: {
+            "revision": "Ember@2.7.3",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 4,
+                "column": 6
+              },
+              "end": {
+                "line": 13,
+                "column": 6
+              }
+            },
+            "moduleName": "analytics-dashboard/components/widget-adapter/template.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("          ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("i");
+            dom.setAttribute(el1, "class", "fa fa-info-circle");
+            dom.setAttribute(el1, "aria-hidden", "true");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createComment("");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(fragment, 3, 3, contextualElement);
+            dom.insertBoundary(fragment, null);
+            return morphs;
+          },
+          statements: [["block", "bs-tooltip", [], ["placement", "top"], 0, null, ["loc", [null, [6, 8], [12, 23]]]]],
+          locals: [],
+          templates: [child0]
+        };
+      })();
       return {
         meta: {
           "revision": "Ember@2.7.3",
           "loc": {
             "source": null,
             "start": {
-              "line": 46,
+              "line": 2,
+              "column": 4
+            },
+            "end": {
+              "line": 15,
+              "column": 4
+            }
+          },
+          "moduleName": "analytics-dashboard/components/widget-adapter/template.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+          return morphs;
+        },
+        statements: [["block", "bs-button", [], ["class", "popover-button pull-right"], 0, null, ["loc", [null, [4, 6], [13, 20]]]]],
+        locals: [],
+        templates: [child0]
+      };
+    })();
+    var child1 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@2.7.3",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 60,
               "column": 12
             },
             "end": {
-              "line": 48,
+              "line": 62,
               "column": 12
             }
           },
@@ -7054,23 +7619,23 @@ define("analytics-dashboard/components/widget-adapter/template", ["exports"], fu
           morphs[1] = dom.createMorphAt(element0, 0, 0);
           return morphs;
         },
-        statements: [["attribute", "value", ["get", "index", ["loc", [null, [47, 32], [47, 37]]], 0, 0, 0, 0], 0, 0, 0, 0], ["content", "item.name", ["loc", [null, [47, 40], [47, 53]]], 0, 0, 0, 0]],
+        statements: [["attribute", "value", ["get", "index", ["loc", [null, [61, 32], [61, 37]]], 0, 0, 0, 0], 0, 0, 0, 0], ["content", "item.name", ["loc", [null, [61, 40], [61, 53]]], 0, 0, 0, 0]],
         locals: ["item", "index"],
         templates: []
       };
     })();
-    var child1 = (function () {
+    var child2 = (function () {
       return {
         meta: {
           "revision": "Ember@2.7.3",
           "loc": {
             "source": null,
             "start": {
-              "line": 55,
+              "line": 69,
               "column": 4
             },
             "end": {
-              "line": 57,
+              "line": 71,
               "column": 4
             }
           },
@@ -7115,7 +7680,7 @@ define("analytics-dashboard/components/widget-adapter/template", ["exports"], fu
             "column": 0
           },
           "end": {
-            "line": 60,
+            "line": 74,
             "column": 0
           }
         },
@@ -7128,7 +7693,11 @@ define("analytics-dashboard/components/widget-adapter/template", ["exports"], fu
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
         var el1 = dom.createElement("div");
-        var el2 = dom.createTextNode("\n    ");
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("    ");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
         dom.setAttribute(el2, "class", "widgetButtons");
@@ -7363,32 +7932,33 @@ define("analytics-dashboard/components/widget-adapter/template", ["exports"], fu
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
         var element1 = dom.childAt(fragment, [0]);
-        var element2 = dom.childAt(element1, [3]);
+        var element2 = dom.childAt(element1, [5]);
         var element3 = dom.childAt(element2, [3, 1]);
         var element4 = dom.childAt(element2, [7, 1]);
         var element5 = dom.childAt(element2, [25, 1]);
-        var element6 = dom.childAt(element1, [5, 3, 1]);
-        var morphs = new Array(15);
+        var element6 = dom.childAt(element1, [7, 3, 1]);
+        var morphs = new Array(16);
         morphs[0] = dom.createAttrMorph(element1, 'class');
         morphs[1] = dom.createAttrMorph(element1, 'style');
-        morphs[2] = dom.createMorphAt(dom.childAt(element1, [1, 1]), 0, 0);
-        morphs[3] = dom.createAttrMorph(element3, 'onchange');
-        morphs[4] = dom.createAttrMorph(element4, 'onchange');
-        morphs[5] = dom.createMorphAt(dom.childAt(element2, [11]), 1, 1);
-        morphs[6] = dom.createMorphAt(dom.childAt(element2, [15]), 1, 1);
-        morphs[7] = dom.createMorphAt(dom.childAt(element2, [19]), 1, 1);
-        morphs[8] = dom.createMorphAt(dom.childAt(element2, [23]), 1, 1);
-        morphs[9] = dom.createElementMorph(element5);
-        morphs[10] = dom.createAttrMorph(element6, 'onchange');
-        morphs[11] = dom.createMorphAt(element6, 1, 1);
-        morphs[12] = dom.createMorphAt(element1, 7, 7);
+        morphs[2] = dom.createMorphAt(element1, 1, 1);
+        morphs[3] = dom.createMorphAt(dom.childAt(element1, [3, 1]), 0, 0);
+        morphs[4] = dom.createAttrMorph(element3, 'onchange');
+        morphs[5] = dom.createAttrMorph(element4, 'onchange');
+        morphs[6] = dom.createMorphAt(dom.childAt(element2, [11]), 1, 1);
+        morphs[7] = dom.createMorphAt(dom.childAt(element2, [15]), 1, 1);
+        morphs[8] = dom.createMorphAt(dom.childAt(element2, [19]), 1, 1);
+        morphs[9] = dom.createMorphAt(dom.childAt(element2, [23]), 1, 1);
+        morphs[10] = dom.createElementMorph(element5);
+        morphs[11] = dom.createAttrMorph(element6, 'onchange');
+        morphs[12] = dom.createMorphAt(element6, 1, 1);
         morphs[13] = dom.createMorphAt(element1, 9, 9);
         morphs[14] = dom.createMorphAt(element1, 11, 11);
+        morphs[15] = dom.createMorphAt(element1, 13, 13);
         return morphs;
       },
-      statements: [["attribute", "class", ["concat", ["widget ", ["get", "widgetType", ["loc", [null, [1, 21], [1, 31]]], 0, 0, 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["attribute", "style", ["concat", ["height: ", ["get", "height", ["loc", [null, [1, 52], [1, 58]]], 0, 0, 0, 0], "px; min-height: ", ["get", "item.widgetSettings.minHeight", ["loc", [null, [1, 78], [1, 107]]], 0, 0, 0, 0], "px;"], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["content", "item.name", ["loc", [null, [3, 12], [3, 25]]], 0, 0, 0, 0], ["attribute", "onchange", ["subexpr", "action", ["changeEngine"], ["value", "target.value"], ["loc", [null, [null, null], [8, 77]]], 0, 0], 0, 0, 0, 0], ["attribute", "onchange", ["subexpr", "action", ["changeChart"], ["value", "target.value"], ["loc", [null, [null, null], [15, 76]]], 0, 0], 0, 0, 0, 0], ["inline", "input", [], ["type", "text", "size", "35", "value", ["subexpr", "@mut", [["get", "name", ["loc", [null, [23, 50], [23, 54]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [23, 14], [23, 56]]], 0, 0], ["inline", "input", [], ["type", "text", "size", "10", "value", ["subexpr", "@mut", [["get", "widthSetting", ["loc", [null, [27, 50], [27, 62]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [27, 14], [27, 64]]], 0, 0], ["inline", "input", [], ["type", "text", "size", "10", "value", ["subexpr", "@mut", [["get", "heightSetting", ["loc", [null, [31, 50], [31, 63]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [31, 14], [31, 65]]], 0, 0], ["inline", "textarea", [], ["value", ["subexpr", "@mut", [["get", "query", ["loc", [null, [35, 31], [35, 36]]], 0, 0, 0, 0]], [], [], 0, 0], "cols", "35", "rows", "3"], ["loc", [null, [35, 14], [35, 57]]], 0, 0], ["element", "action", ["configChanged"], [], ["loc", [null, [38, 86], [38, 112]]], 0, 0], ["attribute", "onchange", ["subexpr", "action", ["widgetPicked"], ["value", "target.value"], ["loc", [null, [null, null], [45, 73]]], 0, 0], 0, 0, 0, 0], ["block", "each", [["get", "widgets", ["loc", [null, [46, 20], [46, 27]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [46, 12], [48, 21]]]], ["inline", "component", [["get", "widgetType", ["loc", [null, [53, 16], [53, 26]]], 0, 0, 0, 0]], ["parameters", ["subexpr", "@mut", [["get", "parameters", ["loc", [null, [53, 38], [53, 48]]], 0, 0, 0, 0]], [], [], 0, 0], "data", ["subexpr", "@mut", [["get", "data", ["loc", [null, [53, 54], [53, 58]]], 0, 0, 0, 0]], [], [], 0, 0], "widgetSettings", ["subexpr", "@mut", [["get", "item.widgetSettings", ["loc", [null, [53, 74], [53, 93]]], 0, 0, 0, 0]], [], [], 0, 0], "chartType", ["subexpr", "@mut", [["get", "chartType", ["loc", [null, [53, 104], [53, 113]]], 0, 0, 0, 0]], [], [], 0, 0], "aggregations", ["subexpr", "@mut", [["get", "aggregations", ["loc", [null, [53, 127], [53, 139]]], 0, 0, 0, 0]], [], [], 0, 0], "name", ["subexpr", "@mut", [["get", "item.name", ["loc", [null, [53, 145], [53, 154]]], 0, 0, 0, 0]], [], [], 0, 0], "item", ["subexpr", "@mut", [["get", "item", ["loc", [null, [53, 160], [53, 164]]], 0, 0, 0, 0]], [], [], 0, 0], "width", ["subexpr", "@mut", [["get", "widthSetting", ["loc", [null, [53, 171], [53, 183]]], 0, 0, 0, 0]], [], [], 0, 0], "height", ["subexpr", "@mut", [["get", "heightSetting", ["loc", [null, [53, 191], [53, 204]]], 0, 0, 0, 0]], [], [], 0, 0], "interval", ["subexpr", "@mut", [["get", "tsInterval", ["loc", [null, [53, 214], [53, 224]]], 0, 0, 0, 0]], [], [], 0, 0], "resizedSignal", ["subexpr", "@mut", [["get", "resizedSignal", ["loc", [null, [53, 239], [53, 252]]], 0, 0, 0, 0]], [], [], 0, 0], "total", ["subexpr", "@mut", [["get", "total", ["loc", [null, [53, 259], [53, 264]]], 0, 0, 0, 0]], [], [], 0, 0], "transitionToFacet", ["subexpr", "action", ["transitionToFacet"], [], ["loc", [null, [53, 283], [53, 311]]], 0, 0]], ["loc", [null, [53, 4], [53, 313]]], 0, 0], ["block", "if", [["get", "loadingData", ["loc", [null, [55, 10], [55, 21]]], 0, 0, 0, 0]], [], 1, null, ["loc", [null, [55, 4], [57, 11]]]], ["content", "yield", ["loc", [null, [58, 4], [58, 13]]], 0, 0, 0, 0]],
+      statements: [["attribute", "class", ["concat", ["widget ", ["get", "widgetType", ["loc", [null, [1, 21], [1, 31]]], 0, 0, 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["attribute", "style", ["concat", ["height: ", ["get", "height", ["loc", [null, [1, 52], [1, 58]]], 0, 0, 0, 0], "px; min-height: ", ["get", "item.widgetSettings.minHeight", ["loc", [null, [1, 78], [1, 107]]], 0, 0, 0, 0], "px;"], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["block", "if", [["get", "showHelpText", ["loc", [null, [2, 10], [2, 22]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [2, 4], [15, 11]]]], ["content", "item.name", ["loc", [null, [17, 12], [17, 25]]], 0, 0, 0, 0], ["attribute", "onchange", ["subexpr", "action", ["changeEngine"], ["value", "target.value"], ["loc", [null, [null, null], [22, 77]]], 0, 0], 0, 0, 0, 0], ["attribute", "onchange", ["subexpr", "action", ["changeChart"], ["value", "target.value"], ["loc", [null, [null, null], [29, 76]]], 0, 0], 0, 0, 0, 0], ["inline", "input", [], ["type", "text", "size", "35", "value", ["subexpr", "@mut", [["get", "name", ["loc", [null, [37, 50], [37, 54]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [37, 14], [37, 56]]], 0, 0], ["inline", "input", [], ["type", "text", "size", "10", "value", ["subexpr", "@mut", [["get", "widthSetting", ["loc", [null, [41, 50], [41, 62]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [41, 14], [41, 64]]], 0, 0], ["inline", "input", [], ["type", "text", "size", "10", "value", ["subexpr", "@mut", [["get", "heightSetting", ["loc", [null, [45, 50], [45, 63]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [45, 14], [45, 65]]], 0, 0], ["inline", "textarea", [], ["value", ["subexpr", "@mut", [["get", "query", ["loc", [null, [49, 31], [49, 36]]], 0, 0, 0, 0]], [], [], 0, 0], "cols", "35", "rows", "3"], ["loc", [null, [49, 14], [49, 57]]], 0, 0], ["element", "action", ["configChanged"], [], ["loc", [null, [52, 86], [52, 112]]], 0, 0], ["attribute", "onchange", ["subexpr", "action", ["widgetPicked"], ["value", "target.value"], ["loc", [null, [null, null], [59, 73]]], 0, 0], 0, 0, 0, 0], ["block", "each", [["get", "widgets", ["loc", [null, [60, 20], [60, 27]]], 0, 0, 0, 0]], [], 1, null, ["loc", [null, [60, 12], [62, 21]]]], ["inline", "component", [["get", "widgetType", ["loc", [null, [67, 16], [67, 26]]], 0, 0, 0, 0]], ["parameters", ["subexpr", "@mut", [["get", "parameters", ["loc", [null, [67, 38], [67, 48]]], 0, 0, 0, 0]], [], [], 0, 0], "data", ["subexpr", "@mut", [["get", "data", ["loc", [null, [67, 54], [67, 58]]], 0, 0, 0, 0]], [], [], 0, 0], "widgetSettings", ["subexpr", "@mut", [["get", "item.widgetSettings", ["loc", [null, [67, 74], [67, 93]]], 0, 0, 0, 0]], [], [], 0, 0], "chartType", ["subexpr", "@mut", [["get", "chartType", ["loc", [null, [67, 104], [67, 113]]], 0, 0, 0, 0]], [], [], 0, 0], "aggregations", ["subexpr", "@mut", [["get", "aggregations", ["loc", [null, [67, 127], [67, 139]]], 0, 0, 0, 0]], [], [], 0, 0], "name", ["subexpr", "@mut", [["get", "item.name", ["loc", [null, [67, 145], [67, 154]]], 0, 0, 0, 0]], [], [], 0, 0], "item", ["subexpr", "@mut", [["get", "item", ["loc", [null, [67, 160], [67, 164]]], 0, 0, 0, 0]], [], [], 0, 0], "width", ["subexpr", "@mut", [["get", "widthSetting", ["loc", [null, [67, 171], [67, 183]]], 0, 0, 0, 0]], [], [], 0, 0], "height", ["subexpr", "@mut", [["get", "heightSetting", ["loc", [null, [67, 191], [67, 204]]], 0, 0, 0, 0]], [], [], 0, 0], "interval", ["subexpr", "@mut", [["get", "tsInterval", ["loc", [null, [67, 214], [67, 224]]], 0, 0, 0, 0]], [], [], 0, 0], "resizedSignal", ["subexpr", "@mut", [["get", "resizedSignal", ["loc", [null, [67, 239], [67, 252]]], 0, 0, 0, 0]], [], [], 0, 0], "total", ["subexpr", "@mut", [["get", "total", ["loc", [null, [67, 259], [67, 264]]], 0, 0, 0, 0]], [], [], 0, 0], "transitionToFacet", ["subexpr", "action", ["transitionToFacet"], [], ["loc", [null, [67, 283], [67, 311]]], 0, 0]], ["loc", [null, [67, 4], [67, 313]]], 0, 0], ["block", "if", [["get", "loadingData", ["loc", [null, [69, 10], [69, 21]]], 0, 0, 0, 0]], [], 2, null, ["loc", [null, [69, 4], [71, 11]]]], ["content", "yield", ["loc", [null, [72, 4], [72, 13]]], 0, 0, 0, 0]],
       locals: [],
-      templates: [child0, child1]
+      templates: [child0, child1, child2]
     };
   })());
 });
@@ -7427,7 +7997,7 @@ define("analytics-dashboard/controllers/application", ["exports", "ember"], func
 define('analytics-dashboard/controllers/dashboards/dashboard', ['exports', 'ember'], function (exports, _ember) {
     exports['default'] = _ember['default'].Controller.extend({
 
-        queryParams: [{ 'id': { scope: "controller" } }, { 'scholar': { scope: "controller" } }, { 'query': { scope: "controller" } }, { 'q': { scope: "controller" } }, { 'institution': { scope: "controller" } }, { 'tag': { scope: "controller" } }, { 'tags': { scope: "controller" } }, { 'topic': { scope: "controller" } }, { 'all': { scope: "controller" } }, { 'sources': { scope: "controller" } }, { 'publishers': { scope: "controller" } }, { 'type': { scope: "controller" } }, { 'funders': { scope: "controller" } }, { 'contributors': { scope: "controller" } }],
+        queryParams: [{ 'id': { scope: "controller" } }, { 'scholar': { scope: "controller" } }, { 'query': { scope: "controller" } }, { 'q': { scope: "controller" } }, { 'institution': { scope: "controller" } }, { 'tag': { scope: "controller" } }, { 'tags': { scope: "controller" } }, { 'topic': { scope: "controller" } }, { 'all': { scope: "controller" } }, { 'sources': { scope: "controller" } }, { 'publishers': { scope: "controller" } }, { 'type': { scope: "controller" } }, { 'funders': { scope: "controller" } }, { 'contributors': { scope: "controller" } }, { 'recently_added_sort': { scope: "controller" } }],
 
         updateParams: _ember['default'].observer('queryParams', function () {
             //this.set("parameters", Ember.computed.apply(this, this.get('queryParams').concat(() => {
@@ -8649,7 +9219,7 @@ define('analytics-dashboard/routes/dashboards/dashboard', ['exports', 'ember', '
     ];
 
     exports['default'] = _ember['default'].Route.extend({
-
+        aboutContent: '',
         queryParams: { //Ember queryParams, if any of the listed parameters change the page will refresh.
             query: { refreshModel: true },
             tags: { refreshModel: true },
@@ -8663,7 +9233,8 @@ define('analytics-dashboard/routes/dashboards/dashboard', ['exports', 'ember', '
             funders: { refreshModel: true },
             start: { refreshModel: true },
             end: { refreshModel: true },
-            page: { refreshModel: true }
+            page: { refreshModel: true },
+            recently_added_sort: { refreshModel: true }
         },
         gte: "1996-01-01", // Set default begin date
         lte: new Date().toISOString().split('T')[0], // Set default end date
@@ -8692,8 +9263,22 @@ define('analytics-dashboard/routes/dashboards/dashboard', ['exports', 'ember', '
                 controller.set("page", undefined);
             }
         },
+        beforeModel: function beforeModel() {
+            var _this = this;
 
+            $.ajax({
+                url: "https://api.cosmicjs.com/v1/ucsd-about-page/object/about-page",
+                async: false,
+                success: function success(json) {
+                    _this.set('aboutContent', json.object.content);
+                },
+                error: function error() {
+                    console.log("Error loading about page content from cosmicJS");
+                }
+            });
+        },
         model: function model(params, transition, queryParams) {
+
             var gte = this.get('gte');
             var lte = this.get('lte');
             var dashboards = {
@@ -8767,6 +9352,9 @@ define('analytics-dashboard/routes/dashboards/dashboard', ['exports', 'ember', '
                             parameterName: "query",
                             defaultValue: "*"
                         }, {
+                            parameterName: "recently_added_sort",
+                            parameterPath: ["sort", "date", "order"]
+                        }, {
                             parameterPath: ["query", "bool", "filter", 1, "term", "sources.exact"],
                             parameterName: "sources"
                         }, {
@@ -8797,9 +9385,9 @@ define('analytics-dashboard/routes/dashboards/dashboard', ['exports', 'ember', '
                             parameterName: "end",
                             defaultValue: lte
                         }, {
-                            parametername: "page",
-                            parameterpath: ["from"],
-                            defaultvalue: 0
+                            parameterName: "page",
+                            parameterPath: ["from"],
+                            defaultValue: 0
                         }],
                         widgetSettings: {
                             minHeight: 115
@@ -8853,7 +9441,7 @@ define('analytics-dashboard/routes/dashboards/dashboard', ['exports', 'ember', '
                             fontSize: 2,
                             fontColor: '#F44336',
                             minHeight: 115,
-                            isLink: false
+                            isLink: true
                         }
                     }, {
                         chartType: 'donut',
@@ -8917,8 +9505,7 @@ define('analytics-dashboard/routes/dashboards/dashboard', ['exports', 'ember', '
                             parameterName: "publisher_size",
                             defaultValue: 200
                         }]
-                    },
-                    /*{
+                    }, {
                         chartType: 'topContributors',
                         widgetType: 'dropdown-widget',
                         name: 'Contributors',
@@ -8927,12 +9514,12 @@ define('analytics-dashboard/routes/dashboards/dashboard', ['exports', 'ember', '
                         facetDashParameter: "contributors",
                         post_body: {
                             "aggregations": {
-                                "dropdownList" : {
+                                "dropdownList": {
                                     "terms": {
                                         "field": "",
                                         "size": 100
                                     },
-                                    "aggs" : {
+                                    "aggs": {
                                         "name": {
                                             "terms": {
                                                 "field": ""
@@ -8942,65 +9529,51 @@ define('analytics-dashboard/routes/dashboards/dashboard', ['exports', 'ember', '
                                 }
                             }
                         },
-                        postBodyParams: [
-                            {
-                                parameterPath: ["query", "bool", "filter", 0, "bool", "should", "minimum_should_match"],
-                                parameterName: "shouldMatch",
-                                defaultValue: 1
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 0, "bool", "should"],
-                                defaultValue: ucsd_query
-                            },
-                            {
-                                parameterName: "sources",
-                                parameterPath: ["query", "bool", "filter", 1, "term", "sources"]
-                            },
-                            {
-                                parameterName: "query",
-                                parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
-                                defaultValue: "*"
-                            },
-                            {
-                                parameterName: "tags",
-                                parameterPath: ["query", "bool", "filter", 2, "term", "tags"]
-                            },
-                            {
-                                parameterName: "publishers",
-                                parameterPath: ["query", "bool", "filter", 3, "term", "lists.publishers.id.exact"]
-                            },
-                            {
-                                parameterName: "contributors",
-                                parameterPath: ["query", "bool", "filter", 4, "term", "lists.contributors.id.exact"]
-                            },
-                            {
-                                parameterName: "type",
-                                parameterPath: ["query", "bool", "filter", 5, "term", "type"]
-                            },
-                            {
-                                parameterName: "funders",
-                                parameterPath: ["query", "bool", "filter", 6, "term", "lists.funders.id.exact"]
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 7, "range",  "date", "gte"],
-                                parameterName: "start",
-                                defaultValue: gte
-                            },
-                            {
-                                parameterPath: ["query", "bool", "filter", 7, "range", "date", "lte"],
-                                parameterName: "end",
-                                defaultValue: lte
-                            },
-                            {
-                                parameterPath: ["size"],
-                                defaultValue: 0
-                            }
-                        ],
+                        postBodyParams: [{
+                            parameterPath: ["query", "bool", "filter", 0, "bool", "should", "minimum_should_match"],
+                            parameterName: "shouldMatch",
+                            defaultValue: 1
+                        }, {
+                            parameterPath: ["query", "bool", "filter", 0, "bool", "should"],
+                            defaultValue: ucsd_query
+                        }, {
+                            parameterName: "sources",
+                            parameterPath: ["query", "bool", "filter", 1, "term", "sources"]
+                        }, {
+                            parameterName: "query",
+                            parameterPath: ["query", "bool", "must", 0, "query_string", "query"],
+                            defaultValue: "*"
+                        }, {
+                            parameterName: "tags",
+                            parameterPath: ["query", "bool", "filter", 2, "term", "tags"]
+                        }, {
+                            parameterName: "publishers",
+                            parameterPath: ["query", "bool", "filter", 3, "term", "lists.publishers.id.exact"]
+                        }, {
+                            parameterName: "contributors",
+                            parameterPath: ["query", "bool", "filter", 4, "term", "lists.contributors.id.exact"]
+                        }, {
+                            parameterName: "type",
+                            parameterPath: ["query", "bool", "filter", 5, "term", "type"]
+                        }, {
+                            parameterName: "funders",
+                            parameterPath: ["query", "bool", "filter", 6, "term", "lists.funders.id.exact"]
+                        }, {
+                            parameterPath: ["query", "bool", "filter", 7, "range", "date", "gte"],
+                            parameterName: "start",
+                            defaultValue: gte
+                        }, {
+                            parameterPath: ["query", "bool", "filter", 7, "range", "date", "lte"],
+                            parameterName: "end",
+                            defaultValue: lte
+                        }, {
+                            parameterPath: ["size"],
+                            defaultValue: 0
+                        }],
                         widgetSettings: {
                             mode: 'search'
                         }
-                    },*/
-                    {
+                    }, {
                         // Type dropdown
                         widgetType: 'dropdown-widget',
                         name: 'Types',
@@ -9170,7 +9743,7 @@ define('analytics-dashboard/routes/dashboards/dashboard', ['exports', 'ember', '
                         name: "",
                         width: 12,
                         facetDash: "aboutDash",
-                        content: "<h4><b>What is TritonSHARE?</b></h4>" + "<p>TritonSHARE is a tool that harvests and presents information about UC San Diego research outputs, harvested from sources around the world. Research outputs refers to a wide variety of scholarly work, including journal articles and preprints, datasets, ongoing projects, awards and research tools that are publicly findable.</p>" + "<p>TritonSHARE is a tool designed and built by the UC San Diego Library, in conjunction with several partners. It harvests metadata about research - that is, the tool collects information about contemporary research outputs from diverse sources and presents it in a single, unified interface. This allows for the discovery of many pieces of research in one place, rather than needing to search in multiple locations. TritonSHARE displays this information in a simple interface, exposing common elements.</p>" + "<h4><b>How does TritonSHARE work?</b></h4>" + "<p>TritonSHARE is built on top of an international research tool: the SHARE database. SHARE is an <a href=\"http://arl.org\">Association of Research Libraries (ARL)</a> and <a href=\"http://cos.io\">Center for Open Science</a> initiative whose mission is to maximize research impact by making research output widely accessible, discoverable, and reusable. SHARE is a free, open data set about research and scholarly activities across the scholarly life cycle. The SHARE database stores information on over 30 million research items, harvested from <a href=\"https://share.osf.io/sources\">more than 150 international sources</a>. These are presented in a searchable interface on the SHARE site: <a href=\"https://share.osf.io\">https://share.osf.io</a>.</p>" + "<p>TritonSHARE is a <i>custom view</i> into the SHARE database, searching only for UC San Diego-related resources. This is done behind the scenes via an actively-maintained search string that looks for all name variants for our campus, schools and research units. Based on this query, users can search whatever keywords, names, identifiers, resource types, etc. they want to find.</p>" + "<p>Once relevant items are found, TritonSHARE displays them in a consistent format, to allow for ease of comparison. If searchers want to find out more about certain items, or download data, clicking on the relevant link in the record will hand them off directly to the data resource.</p>" + "<h4><b>How do I get my research listed in TritonSHARE?</b></h4>" + "<p>In addition to harvesting information from sources, the Library can manually enter information you provide about your research data into the SHARE database. The Library also hosts a data repository, the <a href=\"https://library.ucsd.edu/dc\">UC San Diego Library Digital Collections</a>, one of the many sources harvested by SHARE. Contact the team at <a href=\"mailto:tritonshare@ucsd.edu\">tritonshare@ucsd.edu</a> if you would like to enter information about your published data into SHARE or deposit your data into the Digital Collections.</p>" + "<h4><b>I’m not finding items that I expect to be in TritonSHARE</b></h4>" + "<p>TritonSHARE undergoes <i>constant updating, revision and improvement</i>. Because it presents data that are hosted in thousands of locations around the world, consistency is a challenge. Sometimes metadata is present in the tool, but phrased in such a way to make discovery difficult. Sometimes data hasn’t been correctly attributed as associated with UC San Diego, or contains errors in the attribution. And sometimes the tool simply doesn’t know about research output that has been posted online but not indexed in one of the international sources from which SHARE currently harvests information.</p>" + "<h4><b>I see a problem or error in TritonSHARE</b></h4>" + "<p>The TritonSHARE team works daily to improve content in the tool, and greatly appreciates your feedback, comments, and requests for updates. You can contact the team directly at <a href=\"mailto:tritonshare@ucsd.edu\">tritonshare@ucsd.edu</a>, and we’ll look into your query and respond as soon as possible.</p>" + "<h4><b>Attributions</b></h4>" + "<p>SHARE is funded by the <a href=\"http://imls.gov\">Institute of Museum and Library Services</a> and the <a href=\"http://sloan.org\">Alfred P. Sloan Foundation</a>. The SHARE initiative was founded in 2013 by <a href=\"http://www.arl.org\">ARL</a>, the <a href=\"http://www.aau.edu\">Association of American Universities (AAU)</a>, and the <a href=\"http://aplu.org\">Association of Public and Land-grant Universities (APLU).</a></p>"
+                        content: this.get('aboutContent')
                     }]
                 },
                 "ucsd": {
@@ -14427,7 +15000,7 @@ define("analytics-dashboard/templates/dashboards/dashboard", ["exports"], functi
             "column": 0
           },
           "end": {
-            "line": 15,
+            "line": 16,
             "column": 0
           }
         },
@@ -14455,17 +15028,22 @@ define("analytics-dashboard/templates/dashboards/dashboard", ["exports"], functi
         dom.appendChild(el0, el1);
         var el1 = dom.createTextNode("\n");
         dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
         var element0 = dom.childAt(fragment, [0]);
-        var morphs = new Array(3);
+        var morphs = new Array(4);
         morphs[0] = dom.createAttrMorph(element0, 'class');
         morphs[1] = dom.createMorphAt(element0, 1, 1);
         morphs[2] = dom.createMorphAt(fragment, 4, 4, contextualElement);
+        morphs[3] = dom.createMorphAt(fragment, 6, 6, contextualElement);
         return morphs;
       },
-      statements: [["attribute", "class", ["concat", [["get", "wrapperClass", ["loc", [null, [1, 14], [1, 26]]], 0, 0, 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["block", "each", [["get", "widgets", ["loc", [null, [2, 12], [2, 19]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [2, 4], [4, 13]]]], ["content", "outlet", ["loc", [null, [14, 0], [14, 10]]], 0, 0, 0, 0]],
+      statements: [["attribute", "class", ["concat", [["get", "wrapperClass", ["loc", [null, [1, 14], [1, 26]]], 0, 0, 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["block", "each", [["get", "widgets", ["loc", [null, [2, 12], [2, 19]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [2, 4], [4, 13]]]], ["content", "user-feedback-form", ["loc", [null, [14, 0], [14, 22]]], 0, 0, 0, 0], ["content", "outlet", ["loc", [null, [15, 0], [15, 10]]], 0, 0, 0, 0]],
       locals: [],
       templates: [child0]
     };
@@ -14772,7 +15350,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("analytics-dashboard/app")["default"].create({"LOG_RESOLVER":false,"LOG_ACTIVE_GENERATION":false,"LOG_TRANSITIONS":false,"LOG_TRANSITIONS_INTERNAL":false,"LOG_VIEW_LOOKUPS":false,"GRANTS_BACKEND":"http://127.0.0.1:8000/api","name":"analytics-dashboard","version":"0.0.0+42f4530c"});
+  require("analytics-dashboard/app")["default"].create({"LOG_RESOLVER":false,"LOG_ACTIVE_GENERATION":false,"LOG_TRANSITIONS":false,"LOG_TRANSITIONS_INTERNAL":false,"LOG_VIEW_LOOKUPS":false,"GRANTS_BACKEND":"http://127.0.0.1:8000/api","name":"analytics-dashboard","version":"0.0.0+72e5d936"});
 }
 
 /* jshint ignore:end */

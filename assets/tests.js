@@ -42,7 +42,7 @@ define('analytics-dashboard/tests/components/c3-chart/component.jshint', ['expor
   QUnit.module('JSHint | components/c3-chart/component.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/c3-chart/component.js should pass jshint.\ncomponents/c3-chart/component.js: line 80, col 74, Missing semicolon.\ncomponents/c3-chart/component.js: line 88, col 24, Expected \'}\' to match \'{\' from line 62 and instead saw \'function\'.\ncomponents/c3-chart/component.js: line 88, col 32, Bad invocation.\ncomponents/c3-chart/component.js: line 88, col 39, Expected \')\' and instead saw \'{\'.\ncomponents/c3-chart/component.js: line 88, col 40, Missing semicolon.\ncomponents/c3-chart/component.js: line 90, col 38, Missing semicolon.\ncomponents/c3-chart/component.js: line 98, col 9, Unrecoverable syntax error. (23% scanned).\n\n7 errors');
+    assert.ok(false, 'components/c3-chart/component.js should pass jshint.\ncomponents/c3-chart/component.js: line 80, col 74, Missing semicolon.\ncomponents/c3-chart/component.js: line 88, col 24, Expected \'}\' to match \'{\' from line 62 and instead saw \'function\'.\ncomponents/c3-chart/component.js: line 88, col 32, Bad invocation.\ncomponents/c3-chart/component.js: line 88, col 39, Expected \')\' and instead saw \'{\'.\ncomponents/c3-chart/component.js: line 88, col 40, Missing semicolon.\ncomponents/c3-chart/component.js: line 92, col 38, Missing semicolon.\ncomponents/c3-chart/component.js: line 100, col 9, Unrecoverable syntax error. (24% scanned).\n\n7 errors');
   });
 });
 define('analytics-dashboard/tests/components/dropdown-widget/component.jshint', ['exports'], function (exports) {
@@ -51,7 +51,7 @@ define('analytics-dashboard/tests/components/dropdown-widget/component.jshint', 
   QUnit.module('JSHint | components/dropdown-widget/component.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/dropdown-widget/component.js should pass jshint.\ncomponents/dropdown-widget/component.js: line 42, col 54, Missing semicolon.\ncomponents/dropdown-widget/component.js: line 56, col 30, Expected \'}\' to match \'{\' from line 3 and instead saw \'function\'.\ncomponents/dropdown-widget/component.js: line 56, col 38, Bad invocation.\ncomponents/dropdown-widget/component.js: line 56, col 50, Expected \')\' and instead saw \'{\'.\ncomponents/dropdown-widget/component.js: line 56, col 51, Missing semicolon.\ncomponents/dropdown-widget/component.js: line 58, col 34, Missing semicolon.\ncomponents/dropdown-widget/component.js: line 65, col 41, Unrecoverable syntax error. (29% scanned).\n\n7 errors');
+    assert.ok(false, 'components/dropdown-widget/component.js should pass jshint.\ncomponents/dropdown-widget/component.js: line 42, col 54, Missing semicolon.\ncomponents/dropdown-widget/component.js: line 54, col 30, Expected \'}\' to match \'{\' from line 5 and instead saw \'function\'.\ncomponents/dropdown-widget/component.js: line 54, col 38, Bad invocation.\ncomponents/dropdown-widget/component.js: line 54, col 50, Expected \')\' and instead saw \'{\'.\ncomponents/dropdown-widget/component.js: line 54, col 51, Missing semicolon.\ncomponents/dropdown-widget/component.js: line 56, col 34, Missing semicolon.\ncomponents/dropdown-widget/component.js: line 63, col 41, Unrecoverable syntax error. (27% scanned).\n\n7 errors');
   });
 });
 define('analytics-dashboard/tests/components/filter-plaques/component.jshint', ['exports'], function (exports) {
@@ -60,7 +60,7 @@ define('analytics-dashboard/tests/components/filter-plaques/component.jshint', [
   QUnit.module('JSHint | components/filter-plaques/component.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/filter-plaques/component.js should pass jshint.\ncomponents/filter-plaques/component.js: line 16, col 8, Missing semicolon.\ncomponents/filter-plaques/component.js: line 23, col 34, Missing semicolon.\ncomponents/filter-plaques/component.js: line 33, col 38, Expected \'===\' and instead saw \'==\'.\ncomponents/filter-plaques/component.js: line 33, col 20, Confusing use of \'!\'.\ncomponents/filter-plaques/component.js: line 44, col 34, Missing semicolon.\ncomponents/filter-plaques/component.js: line 47, col 30, Missing semicolon.\ncomponents/filter-plaques/component.js: line 55, col 30, Expected \'}\' to match \'{\' from line 5 and instead saw \'function\'.\ncomponents/filter-plaques/component.js: line 55, col 38, Bad invocation.\ncomponents/filter-plaques/component.js: line 55, col 50, Expected \')\' and instead saw \'{\'.\ncomponents/filter-plaques/component.js: line 55, col 51, Missing semicolon.\ncomponents/filter-plaques/component.js: line 56, col 32, Missing semicolon.\ncomponents/filter-plaques/component.js: line 63, col 39, Unrecoverable syntax error. (75% scanned).\n\n12 errors');
+    assert.ok(false, 'components/filter-plaques/component.js should pass jshint.\ncomponents/filter-plaques/component.js: line 22, col 8, Missing semicolon.\ncomponents/filter-plaques/component.js: line 30, col 34, Missing semicolon.\ncomponents/filter-plaques/component.js: line 33, col 18, Missing semicolon.\ncomponents/filter-plaques/component.js: line 35, col 46, Missing semicolon.\ncomponents/filter-plaques/component.js: line 48, col 36, Expected \'===\' and instead saw \'==\'.\ncomponents/filter-plaques/component.js: line 48, col 18, Confusing use of \'!\'.\ncomponents/filter-plaques/component.js: line 59, col 31, Missing semicolon.\ncomponents/filter-plaques/component.js: line 67, col 41, Missing semicolon.\ncomponents/filter-plaques/component.js: line 69, col 40, Missing semicolon.\ncomponents/filter-plaques/component.js: line 79, col 30, Expected \'}\' to match \'{\' from line 9 and instead saw \'function\'.\ncomponents/filter-plaques/component.js: line 79, col 38, Bad invocation.\ncomponents/filter-plaques/component.js: line 79, col 50, Expected \')\' and instead saw \'{\'.\ncomponents/filter-plaques/component.js: line 79, col 51, Missing semicolon.\ncomponents/filter-plaques/component.js: line 80, col 32, Missing semicolon.\ncomponents/filter-plaques/component.js: line 87, col 39, Unrecoverable syntax error. (76% scanned).\n\n15 errors');
   });
 });
 define('analytics-dashboard/tests/components/list-widget/component.jshint', ['exports'], function (exports) {
@@ -69,7 +69,7 @@ define('analytics-dashboard/tests/components/list-widget/component.jshint', ['ex
   QUnit.module('JSHint | components/list-widget/component.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/list-widget/component.js should pass jshint.\ncomponents/list-widget/component.js: line 13, col 18, Missing semicolon.\ncomponents/list-widget/component.js: line 16, col 44, Expected \'===\' and instead saw \'==\'.\ncomponents/list-widget/component.js: line 17, col 13, \'data\' used out of scope.\ncomponents/list-widget/component.js: line 44, col 30, \'data\' used out of scope.\ncomponents/list-widget/component.js: line 60, col 30, Expected \'}\' to match \'{\' from line 3 and instead saw \'function\'.\ncomponents/list-widget/component.js: line 60, col 38, Bad invocation.\ncomponents/list-widget/component.js: line 60, col 45, Expected \')\' and instead saw \'{\'.\ncomponents/list-widget/component.js: line 60, col 46, Missing semicolon.\ncomponents/list-widget/component.js: line 61, col 34, Missing semicolon.\ncomponents/list-widget/component.js: line 68, col 52, Unrecoverable syntax error. (73% scanned).\n\n10 errors');
+    assert.ok(false, 'components/list-widget/component.js should pass jshint.\ncomponents/list-widget/component.js: line 13, col 18, Missing semicolon.\ncomponents/list-widget/component.js: line 16, col 44, Expected \'===\' and instead saw \'==\'.\ncomponents/list-widget/component.js: line 17, col 13, \'data\' used out of scope.\ncomponents/list-widget/component.js: line 44, col 30, \'data\' used out of scope.\ncomponents/list-widget/component.js: line 64, col 30, Expected \'}\' to match \'{\' from line 3 and instead saw \'function\'.\ncomponents/list-widget/component.js: line 64, col 38, Bad invocation.\ncomponents/list-widget/component.js: line 64, col 45, Expected \')\' and instead saw \'{\'.\ncomponents/list-widget/component.js: line 64, col 46, Missing semicolon.\ncomponents/list-widget/component.js: line 65, col 34, Missing semicolon.\ncomponents/list-widget/component.js: line 72, col 91, Missing semicolon.\ncomponents/list-widget/component.js: line 72, col 90, Unrecoverable syntax error. (74% scanned).\n\n11 errors');
   });
 });
 define('analytics-dashboard/tests/components/number-widget/component.jshint', ['exports'], function (exports) {
@@ -105,7 +105,7 @@ define('analytics-dashboard/tests/components/results-list/component.jshint', ['e
   QUnit.module('JSHint | components/results-list/component.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/results-list/component.js should pass jshint.\ncomponents/results-list/component.js: line 14, col 33, Missing semicolon.\ncomponents/results-list/component.js: line 16, col 16, Duplicate key \'pagebackbtn\'.\ncomponents/results-list/component.js: line 18, col 22, Expected \'===\' and instead saw \'==\'.\ncomponents/results-list/component.js: line 24, col 17, Duplicate key \'pagenextbtn\'.\ncomponents/results-list/component.js: line 32, col 57, Missing semicolon.\ncomponents/results-list/component.js: line 33, col 20, Missing semicolon.\ncomponents/results-list/component.js: line 40, col 98, Missing semicolon.\ncomponents/results-list/component.js: line 46, col 133, Missing semicolon.\ncomponents/results-list/component.js: line 49, col 135, Missing semicolon.\ncomponents/results-list/component.js: line 52, col 137, Missing semicolon.\ncomponents/results-list/component.js: line 55, col 133, Missing semicolon.\ncomponents/results-list/component.js: line 58, col 83, Missing semicolon.\ncomponents/results-list/component.js: line 78, col 65, Missing semicolon.\ncomponents/results-list/component.js: line 88, col 65, Missing semicolon.\n\n14 errors');
+    assert.ok(false, 'components/results-list/component.js should pass jshint.\ncomponents/results-list/component.js: line 25, col 68, Missing semicolon.\ncomponents/results-list/component.js: line 29, col 45, Missing semicolon.\ncomponents/results-list/component.js: line 30, col 51, Missing semicolon.\ncomponents/results-list/component.js: line 31, col 46, Missing semicolon.\ncomponents/results-list/component.js: line 34, col 60, Missing semicolon.\ncomponents/results-list/component.js: line 35, col 51, Missing semicolon.\ncomponents/results-list/component.js: line 36, col 46, Missing semicolon.\ncomponents/results-list/component.js: line 45, col 52, Missing semicolon.\ncomponents/results-list/component.js: line 46, col 67, Missing semicolon.\ncomponents/results-list/component.js: line 56, col 82, Missing semicolon.\ncomponents/results-list/component.js: line 59, col 16, Duplicate key \'pagebackbtn\'.\ncomponents/results-list/component.js: line 61, col 18, Expected \'===\' and instead saw \'==\'.\ncomponents/results-list/component.js: line 68, col 16, Duplicate key \'pagenextbtn\'.\ncomponents/results-list/component.js: line 76, col 57, Missing semicolon.\ncomponents/results-list/component.js: line 77, col 43, Expected \'{\' and instead saw \'page\'.\ncomponents/results-list/component.js: line 78, col 20, Missing semicolon.\ncomponents/results-list/component.js: line 85, col 98, Missing semicolon.\ncomponents/results-list/component.js: line 91, col 133, Missing semicolon.\ncomponents/results-list/component.js: line 94, col 135, Missing semicolon.\ncomponents/results-list/component.js: line 97, col 137, Missing semicolon.\ncomponents/results-list/component.js: line 100, col 133, Missing semicolon.\ncomponents/results-list/component.js: line 103, col 83, Missing semicolon.\ncomponents/results-list/component.js: line 117, col 68, Missing semicolon.\ncomponents/results-list/component.js: line 118, col 41, Missing semicolon.\ncomponents/results-list/component.js: line 130, col 65, Missing semicolon.\ncomponents/results-list/component.js: line 134, col 38, Missing semicolon.\ncomponents/results-list/component.js: line 141, col 65, Missing semicolon.\ncomponents/results-list/component.js: line 147, col 65, Missing semicolon.\ncomponents/results-list/component.js: line 150, col 36, Missing semicolon.\ncomponents/results-list/component.js: line 153, col 41, Missing semicolon.\ncomponents/results-list/component.js: line 19, col 9, \'$\' is not defined.\ncomponents/results-list/component.js: line 20, col 13, \'$\' is not defined.\ncomponents/results-list/component.js: line 23, col 9, \'$\' is not defined.\ncomponents/results-list/component.js: line 45, col 21, \'$\' is not defined.\ncomponents/results-list/component.js: line 46, col 39, \'$\' is not defined.\ncomponents/results-list/component.js: line 55, col 13, \'$\' is not defined.\ncomponents/results-list/component.js: line 56, col 13, \'$\' is not defined.\ncomponents/results-list/component.js: line 144, col 30, \'$\' is not defined.\ncomponents/results-list/component.js: line 146, col 13, \'$\' is not defined.\ncomponents/results-list/component.js: line 147, col 13, \'$\' is not defined.\n\n40 errors');
   });
 });
 define('analytics-dashboard/tests/components/search-facet-daterange/component.jshint', ['exports'], function (exports) {
@@ -123,7 +123,7 @@ define('analytics-dashboard/tests/components/stacked-bars/component.jshint', ['e
   QUnit.module('JSHint | components/stacked-bars/component.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/stacked-bars/component.js should pass jshint.\ncomponents/stacked-bars/component.js: line 40, col 58, Missing semicolon.\ncomponents/stacked-bars/component.js: line 94, col 11, Missing semicolon.\n\n2 errors');
+    assert.ok(false, 'components/stacked-bars/component.js should pass jshint.\ncomponents/stacked-bars/component.js: line 40, col 58, Missing semicolon.\ncomponents/stacked-bars/component.js: line 91, col 47, Expected \'{\' and instead saw \'target\'.\ncomponents/stacked-bars/component.js: line 95, col 11, Missing semicolon.\n\n3 errors');
   });
 });
 define('analytics-dashboard/tests/components/text-widget/component.jshint', ['exports'], function (exports) {
@@ -135,13 +135,22 @@ define('analytics-dashboard/tests/components/text-widget/component.jshint', ['ex
     assert.ok(true, 'components/text-widget/component.js should pass jshint.');
   });
 });
+define('analytics-dashboard/tests/components/user-feedback-form/component.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | components/user-feedback-form/component.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/user-feedback-form/component.js should pass jshint.\ncomponents/user-feedback-form/component.js: line 9, col 17, \'$\' is not defined.\ncomponents/user-feedback-form/component.js: line 11, col 17, \'$\' is not defined.\n\n2 errors');
+  });
+});
 define('analytics-dashboard/tests/components/widget-adapter/component.jshint', ['exports'], function (exports) {
   'use strict';
 
   QUnit.module('JSHint | components/widget-adapter/component.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/widget-adapter/component.js should pass jshint.\ncomponents/widget-adapter/component.js: line 61, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 89, col 17, A generator function shall contain a yield statement.\ncomponents/widget-adapter/component.js: line 94, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 120, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 146, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 179, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 212, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 238, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 264, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 328, col 33, Missing semicolon.\ncomponents/widget-adapter/component.js: line 343, col 6, Missing semicolon.\ncomponents/widget-adapter/component.js: line 379, col 46, Missing semicolon.\ncomponents/widget-adapter/component.js: line 427, col 28, Expected \'}\' to match \'{\' from line 349 and instead saw \'function\'.\ncomponents/widget-adapter/component.js: line 427, col 36, Bad invocation.\ncomponents/widget-adapter/component.js: line 427, col 39, Expected \')\' and instead saw \'{\'.\ncomponents/widget-adapter/component.js: line 427, col 40, Missing semicolon.\ncomponents/widget-adapter/component.js: line 444, col 33, Missing semicolon.\ncomponents/widget-adapter/component.js: line 447, col 25, Missing semicolon.\ncomponents/widget-adapter/component.js: line 467, col 9, Unrecoverable syntax error. (74% scanned).\n\n19 errors');
+    assert.ok(false, 'components/widget-adapter/component.js should pass jshint.\ncomponents/widget-adapter/component.js: line 17, col 2, Missing semicolon.\ncomponents/widget-adapter/component.js: line 73, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 101, col 17, A generator function shall contain a yield statement.\ncomponents/widget-adapter/component.js: line 106, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 132, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 158, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 191, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 224, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 250, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 276, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 340, col 33, Missing semicolon.\ncomponents/widget-adapter/component.js: line 355, col 6, Missing semicolon.\ncomponents/widget-adapter/component.js: line 392, col 46, Missing semicolon.\ncomponents/widget-adapter/component.js: line 427, col 36, Expected \'===\' and instead saw \'==\'.\ncomponents/widget-adapter/component.js: line 427, col 67, Expected \'===\' and instead saw \'==\'.\ncomponents/widget-adapter/component.js: line 427, col 121, Expected \'===\' and instead saw \'==\'.\ncomponents/widget-adapter/component.js: line 427, col 166, Expected \'===\' and instead saw \'==\'.\ncomponents/widget-adapter/component.js: line 428, col 44, Missing semicolon.\ncomponents/widget-adapter/component.js: line 430, col 42, Expected \'===\' and instead saw \'==\'.\ncomponents/widget-adapter/component.js: line 432, col 43, Missing semicolon.\ncomponents/widget-adapter/component.js: line 450, col 28, Expected \'}\' to match \'{\' from line 361 and instead saw \'function\'.\ncomponents/widget-adapter/component.js: line 450, col 36, Bad invocation.\ncomponents/widget-adapter/component.js: line 450, col 39, Expected \')\' and instead saw \'{\'.\ncomponents/widget-adapter/component.js: line 450, col 40, Missing semicolon.\ncomponents/widget-adapter/component.js: line 467, col 33, Missing semicolon.\ncomponents/widget-adapter/component.js: line 470, col 25, Missing semicolon.\ncomponents/widget-adapter/component.js: line 490, col 9, Unrecoverable syntax error. (75% scanned).\n\n27 errors');
   });
 });
 define('analytics-dashboard/tests/controllers/application.jshint', ['exports'], function (exports) {
@@ -159,7 +168,7 @@ define('analytics-dashboard/tests/controllers/dashboards/dashboard.jshint', ['ex
   QUnit.module('JSHint | controllers/dashboards/dashboard.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'controllers/dashboards/dashboard.js should pass jshint.\ncontrollers/dashboards/dashboard.js: line 73, col 28, \'widget\' is defined but never used.\ncontrollers/dashboards/dashboard.js: line 85, col 25, \'r\' is defined but never used.\n\n2 errors');
+    assert.ok(false, 'controllers/dashboards/dashboard.js should pass jshint.\ncontrollers/dashboards/dashboard.js: line 75, col 28, \'widget\' is defined but never used.\ncontrollers/dashboards/dashboard.js: line 87, col 25, \'r\' is defined but never used.\n\n2 errors');
   });
 });
 define('analytics-dashboard/tests/ember-sinon-qunit/test', ['exports', 'ember', 'sinon', 'qunit', 'ember-qunit'], function (exports, _ember, _sinon, _qunit, _emberQunit) {
@@ -1104,6 +1113,147 @@ define('analytics-dashboard/tests/integration/components/stacked-bars/component-
     assert.ok(true, 'integration/components/stacked-bars/component-test.js should pass jshint.');
   });
 });
+define('analytics-dashboard/tests/integration/components/user-feedback-form/component-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleForComponent)('user-feedback-form', 'Integration | Component | user feedback form', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template((function () {
+      return {
+        meta: {
+          'revision': 'Ember@2.7.3',
+          'loc': {
+            'source': null,
+            'start': {
+              'line': 1,
+              'column': 0
+            },
+            'end': {
+              'line': 1,
+              'column': 22
+            }
+          }
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createComment('');
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+          dom.insertBoundary(fragment, 0);
+          dom.insertBoundary(fragment, null);
+          return morphs;
+        },
+        statements: [['content', 'user-feedback-form', ['loc', [null, [1, 0], [1, 22]]], 0, 0, 0, 0]],
+        locals: [],
+        templates: []
+      };
+    })()));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template((function () {
+      var child0 = (function () {
+        return {
+          meta: {
+            'revision': 'Ember@2.7.3',
+            'loc': {
+              'source': null,
+              'start': {
+                'line': 2,
+                'column': 4
+              },
+              'end': {
+                'line': 4,
+                'column': 4
+              }
+            }
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode('      template block text\n');
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes() {
+            return [];
+          },
+          statements: [],
+          locals: [],
+          templates: []
+        };
+      })();
+
+      return {
+        meta: {
+          'revision': 'Ember@2.7.3',
+          'loc': {
+            'source': null,
+            'start': {
+              'line': 1,
+              'column': 0
+            },
+            'end': {
+              'line': 5,
+              'column': 2
+            }
+          }
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode('\n');
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment('');
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode('  ');
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+          return morphs;
+        },
+        statements: [['block', 'user-feedback-form', [], [], 0, null, ['loc', [null, [2, 4], [4, 27]]]]],
+        locals: [],
+        templates: [child0]
+      };
+    })()));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
+define('analytics-dashboard/tests/integration/components/user-feedback-form/component-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | integration/components/user-feedback-form/component-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/user-feedback-form/component-test.js should pass jshint.');
+  });
+});
 define('analytics-dashboard/tests/models/dashboard.jshint', ['exports'], function (exports) {
   'use strict';
 
@@ -1173,7 +1323,7 @@ define('analytics-dashboard/tests/routes/dashboards/dashboard.jshint', ['exports
   QUnit.module('JSHint | routes/dashboards/dashboard.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/dashboards/dashboard.js should pass jshint.\nroutes/dashboards/dashboard.js: line 210, col 54, \'transition\' is defined but never used.\nroutes/dashboards/dashboard.js: line 229, col 41, \'queryParams\' is defined but never used.\n\n2 errors');
+    assert.ok(false, 'routes/dashboards/dashboard.js should pass jshint.\nroutes/dashboards/dashboard.js: line 211, col 54, \'transition\' is defined but never used.\nroutes/dashboards/dashboard.js: line 235, col 59, Missing semicolon.\nroutes/dashboards/dashboard.js: line 243, col 41, \'queryParams\' is defined but never used.\nroutes/dashboards/dashboard.js: line 231, col 7, \'$\' is not defined.\n\n4 errors');
   });
 });
 define('analytics-dashboard/tests/test-helper', ['exports', 'analytics-dashboard/tests/helpers/resolver', 'ember-qunit'], function (exports, _analyticsDashboardTestsHelpersResolver, _emberQunit) {

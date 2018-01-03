@@ -2,7 +2,7 @@
     {{#if showHelpText}}
 
       {{#bs-button class="popover-button pull-right"}}
-          <i class="fa fa-info-circle" aria-hidden="true"></i>
+        <span style="border: 1px solid #888; border-radius: 3px; padding: 1px 5px; margin: 0; text-style: none;">?</span>
         {{#bs-tooltip placement="top"}}
           {{#if item.name}}
             {{get helpText item.name}}

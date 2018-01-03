@@ -104,7 +104,7 @@ export default Ember.Component.extend({
           var facet = this.get("item.facetDashParameter");
           if (facet) {
               queryParams[facet] = {
-                "project & awards": "project",
+                "project or awards": "project",
                 "creative work": "creative work",
                 "article": "article",
                 "data set": "data set",

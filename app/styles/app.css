@@ -386,17 +386,23 @@ pre {
   z-index: 1002;
   position:absolute;
   font-size: 35px;
-  left: 0; 
-  right: 0; 
+  left: 0;
+  right: 0;
   bottom:100px;
-  margin-left: auto; 
-  margin-right: auto; 
+  margin-left: auto;
+  margin-right: auto;
   width:500px;
   cursor: pointer;
 }
 
 
-
+.help-icon {
+    border: 1px solid #888;
+    border-radius: 3px;
+    padding: 1px 5px;
+    margin: 0;
+    text-style: none;
+}
 
 
 .dropdown {

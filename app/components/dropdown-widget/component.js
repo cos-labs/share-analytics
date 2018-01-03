@@ -130,7 +130,7 @@ export default Ember.Component.extend({
                 });
             }
 
-            var filteredContribList = contributorsList.filter(word) =>
+            var filteredContribList = contributorsList.filter(word =>
                 word.name.toLowerCase().match(search_term.toLowerCase()));
 
             return filteredContribList;
@@ -142,7 +142,7 @@ export default Ember.Component.extend({
 
 
         flattenedFilteredContribList.filter(contribToTest =>
-            contribToTest === flattenedFilteredContribList.find(testContrib => 
+            contribToTest === flattenedFilteredContribList.find(testContrib =>
                 testContrib.name === contribToTest.name));
 
 

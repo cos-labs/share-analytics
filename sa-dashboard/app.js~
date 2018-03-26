@@ -1,0 +1,114 @@
+var http = require("http");
+var https = require("https")
+
+const PORT=9000;
+
+
+http.createServer(function(request, response){
+
+
+    if (request.method == "POST") {
+
+        var body = "";
+
+        request.on("data", function(data) {
+
+            body += data;
+
+            // Too much POST data, kill the connection!
+            if (body.length > 1e6) {
+                request.connection.destroy();
+            }
+
+        });
+
+        var ids = [];
+
+        request.on("end", function() {
+
+            ids = JSON.parse(body).map(function(item, index, array) {
+		console.log("REQUESTING " + item.key);
+
+                var share_req = https.request({
+                    hostname: "share.osf.io",
+                    method: "GET",
+                    port: 443,
+                    path: "/api/v2/agents/" + item.key + "/"
+                }, function(resp) {
+                    
+                    var item_details = "";
+
+                    resp.on("data", function(chunk) {
+                        console.log("got data")
+			if (chunk) {
+                            item_details += chunk;
+                        }
+			console.log("FOR" + item.key + "GOT CHUNK" + chunk);
+                        console.log(item_details);
+                    });
+
+                    resp.on("end", function() {
+			if (!item_details) {
+				console.log("something bad here");
+				console.log(item_details);
+				return;
+			}
+                        var details = JSON.parse(item_details);
+                        if (!details.data.attributes) {
+                            details.data.attributes = {
+                                name: "",
+                                id: item.key,
+                                sources: [],
+                                location: "",
+                                identifiers: [],
+                                type: "",
+                                types: []
+                            };
+                        }
+
+                        ids[index] = details.data.attributes;
+                        ids[index].number = item.doc_count;
+
+                        if (item.awards) {
+                            ids[index].awards = item.awards;
+                        }
+
+                        if (ids.some(function(el, index, array) { return el == null; })) {
+                            return;
+                        }
+
+			console.log ("\n\n\n RESPONSE \n\n\n");
+
+                        response.end(JSON.stringify(ids));
+
+                    });
+
+                })
+		debugger;
+		share_req.on("error", function(e) {
+
+                    console.log("got error: " + e.message);
+
+                });
+
+		share_req.end();
+
+                return null;
+
+            });
+
+        });
+
+    } else {
+
+        console.log(request);
+        response.end("It Works!! Path Hit: " + request.url);
+
+    }
+
+
+}).listen(PORT, function(){
+
+    console.log("Server listening on: http://localhost:%s", PORT);
+
+});

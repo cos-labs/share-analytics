@@ -227,18 +227,88 @@ export default Ember.Route.extend({
         }
     },
     beforeModel(){
-
-      $.ajax({
-          url:"https://api.cosmicjs.com/v1/ucsd-about-page/object/about-page",
-          async: false,
-          success:(json)=>{
-            this.set('aboutContent' , json.object.content)
-          },
-          error:()=>{
-            console.log("Error loading about page content from cosmicJS");
-          }      
-      });
-
+        this.set('aboutContent' , `
+            <h4><b>What is TritonSHARE?</b></h4>
+            <p>
+                TritonSHARE is a tool that harvests and presents information about UC San Diego
+                research outputs, harvested from sources around the world. Research outputs
+                refers to a wide variety of scholarly work, including journal articles and
+                preprints, datasets, ongoing projects, awards and research tools that are
+                publicly findable.
+            </p>
+            <p>
+                TritonSHARE is a tool designed and built by the UC San Diego Library, in
+                conjunction with several partners. It harvests metadata about research - that is,
+                the tool collects information about contemporary research outputs from diverse
+                sources and presents it in a single, unified interface. This allows for the
+                discovery of many pieces of research in one place, rather than needing to search
+                in multiple locations. TritonSHARE displays this information in a simple
+                interface, exposing common elements.
+            </p>
+            <h4><b>How does TritonSHARE work?</b></h4>
+            <p>
+                TritonSHARE is built on top of an international research tool: the SHARE database.
+                SHARE is an <a href=\"http://arl.org\">Association of Research Libraries (ARL)</a>
+                and <a href=\"http://cos.io\">Center for Open Science</a> initiative whose mission
+                is to maximize research impact by making research output widely accessible,
+                discoverable, and reusable. SHARE is a free, open data set about research and
+                scholarly activities across the scholarly life cycle. The SHARE database stores
+                information on over 30 million research items, harvested from
+                <a href=\"https://share.osf.io/sources\">more than 150 international sources</a>.
+                These are presented in a searchable interface on the SHARE site:
+                <a href=\"https://share.osf.io\">https://share.osf.io</a>.
+            </p>
+            <p>
+                TritonSHARE is a <i>custom view</i> into the SHARE database, searching only for
+                UC San Diego-related resources. This is done behind the scenes via an
+                actively-maintained search string that looks for all name variants for our campus,
+                schools and research units. Based on this query, users can search whatever
+                keywords, names, identifiers, resource types, etc. they want to find.
+            </p>
+            <p>
+                Once relevant items are found, TritonSHARE displays them in a consistent format,
+                to allow for ease of comparison. If searchers want to find out more about certain
+                items, or download data, clicking on the relevant link in the record will hand them
+                off directly to the data resource.
+            </p>
+            <h4><b>How do I get my research listed in TritonSHARE?</b></h4>
+            <p>
+                In addition to harvesting information from sources, the Library can manually enter
+                information you provide about your research data into the SHARE database. The Library
+                also hosts a data repository, the
+                <a href=\"https://library.ucsd.edu/dc\">UC San Diego Library Digital Collections</a>,
+                one of the many sources harvested by SHARE. Contact the team at 
+                <a href=\"mailto:tritonshare@ucsd.edu\">tritonshare@ucsd.edu</a> if you would like to
+                enter information about your published data into SHARE or deposit your data into the
+                Digital Collections.
+            </p>
+            <h4><b>I’m not finding items that I expect to be in TritonSHARE</b></h4>
+            <p>
+                TritonSHARE undergoes <i>constant updating, revision and improvement</i>. Because it
+                presents data that are hosted in thousands of locations around the world, consistency
+                is a challenge. Sometimes metadata is present in the tool, but phrased in such a
+                way to make discovery difficult. Sometimes data hasn’t been correctly attributed
+                as associated with UC San Diego, or contains errors in the attribution. And sometimes
+                the tool simply doesn’t know about research output that has been posted online but
+                not indexed in one of the international sources from which SHARE currently harvests
+                information.
+            </p>
+            <h4><b>I see a problem or error in TritonSHARE</b></h4>
+            <p>
+                The TritonSHARE team works daily to improve content in the tool, and greatly
+                appreciates your feedback, comments, and requests for updates. You can contact 
+                the team directly at <a href=\"mailto:tritonshare@ucsd.edu\">tritonshare@ucsd.edu</a>,
+                and we’ll look into your query and respond as soon as possible.
+            </p>
+            <h4><b>Attributions</b></h4>
+            <p>
+                SHARE is funded by the <a href=\"http://imls.gov\">Institute of Museum and Library
+                Services</a> and the <a href=\"http://sloan.org\">Alfred P. Sloan Foundation</a>.
+                The SHARE initiative was founded in 2013 by <a href=\"http://www.arl.org\">ARL</a>,
+                the <a href=\"http://www.aau.edu\">Association of American Universities (AAU)</a>,
+                and the <a href=\"http://aplu.org\">Association of Public and Land-grant Universities (APLU).</a>
+            </p>
+        `)
     },
     model: function(params, transition, queryParams) {
 

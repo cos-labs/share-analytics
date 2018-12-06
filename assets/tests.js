@@ -1,257 +1,786 @@
 'use strict';
 
-define('analytics-dashboard/tests/adapters/application.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/app.lint-test', [], function () {
   'use strict';
 
-  QUnit.module('JSHint | adapters/application.js');
-  QUnit.test('should pass jshint', function (assert) {
+  QUnit.module('ESLint | app');
+
+  QUnit.test('adapters/application.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'adapters/application.js should pass jshint.');
+    assert.ok(false, 'adapters/application.js should pass ESLint\n\n8:5 - Only string, number, symbol, boolean, null, undefined, and function are allowed as default properties (ember/avoid-leaking-state-in-ember-objects)\n19:16 - Use import { underscore } from \'@ember/string\'; instead of using Ember.String.underscore (ember/new-module-imports)');
+  });
+
+  QUnit.test('adapters/widget.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'adapters/widget.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('app.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'app.js should pass ESLint\n\n9:11 - Use import Application from \'@ember/application\'; instead of using Ember.Application (ember/new-module-imports)');
+  });
+
+  QUnit.test('components/agent-detail-widget/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/agent-detail-widget/component.js should pass ESLint\n\n2:8 - \'ENV\' is defined but never used. (no-unused-vars)\n5:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n7:16 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n10:19 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n25:22 - Do not use this.attrs (ember/no-attrs-in-components)\n32:18 - Do not use this.attrs (ember/no-attrs-in-components)');
+  });
+
+  QUnit.test('components/c3-chart/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/c3-chart/component.js should pass ESLint\n\n3:8 - \'ENV\' is defined but never used. (no-unused-vars)\n63:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n68:18 - Use import { observer } from \'@ember/object\'; instead of using Ember.observer (ember/new-module-imports)\n72:19 - Use import { observer } from \'@ember/object\'; instead of using Ember.observer (ember/new-module-imports)\n76:5 - Only string, number, symbol, boolean, null, undefined, and function are allowed as default properties (ember/avoid-leaking-state-in-ember-objects)\n93:39 - Use import $ from \'jquery\'; instead of using Ember.$ (ember/new-module-imports)\n104:18 - Use import { observer } from \'@ember/object\'; instead of using Ember.observer (ember/new-module-imports)\n110:21 - Use import { observer } from \'@ember/object\'; instead of using Ember.observer (ember/new-module-imports)\n141:17 - \'_data\' is assigned a value but never used. (no-unused-vars)\n157:17 - \'columns\' is already defined. (no-redeclare)\n157:55 - \'number\' is defined but never used. (no-unused-vars)\n162:41 - \'percentage\' is defined but never used. (no-unused-vars)\n163:73 - \'arr\' is defined but never used. (no-unused-vars)\n190:17 - \'columns\' is already defined. (no-redeclare)\n207:40 - \'tooltip\' is not defined. (no-undef)\n214:17 - \'columns\' is already defined. (no-redeclare)\n266:17 - \'columns\' is already defined. (no-redeclare)\n296:55 - \'a\' is defined but never used. (no-unused-vars)\n324:17 - \'labels\' is assigned a value but never used. (no-unused-vars)\n330:64 - \'arr\' is defined but never used. (no-unused-vars)\n347:32 - \'d\' is defined but never used. (no-unused-vars)\n378:18 - Do not use this.attrs (ember/no-attrs-in-components)\n384:52 - \'arr\' is defined but never used. (no-unused-vars)\n397:22 - Do not use this.attrs (ember/no-attrs-in-components)\n409:22 - Do not use this.attrs (ember/no-attrs-in-components)');
+  });
+
+  QUnit.test('components/dropdown-widget/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/dropdown-widget/component.js should pass ESLint\n\n5:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n14:18 - Use import { observer } from \'@ember/object\'; instead of using Ember.observer (ember/new-module-imports)\n27:30 - Use import { A } from \'@ember/array\'; instead of using Ember.A (ember/new-module-imports)\n28:34 - Use import { A } from \'@ember/array\'; instead of using Ember.A (ember/new-module-imports)\n56:35 - Use import $ from \'jquery\'; instead of using Ember.$ (ember/new-module-imports)\n68:23 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n68:23 - \'$\' is not defined. (no-undef)\n77:9 - Use import $ from \'jquery\'; instead of using Ember.$ (ember/new-module-imports)\n82:9 - Use import $ from \'jquery\'; instead of using Ember.$ (ember/new-module-imports)\n158:22 - Do not use this.attrs (ember/no-attrs-in-components)\n164:18 - Do not use this.attrs (ember/no-attrs-in-components)\n211:37 - Use import $ from \'jquery\'; instead of using Ember.$ (ember/new-module-imports)');
+  });
+
+  QUnit.test('components/filter-plaques/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/filter-plaques/component.js should pass ESLint\n\n9:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n37:23 - Use import { Promise } from \'rsvp\'; instead of using Ember.RSVP.Promise (ember/new-module-imports)\n65:9 - \'$\' is not defined. (no-undef)\n66:11 - \'$\' is not defined. (no-undef)\n67:13 - Unexpected console statement. (no-console)\n80:33 - Use import $ from \'jquery\'; instead of using Ember.$ (ember/new-module-imports)\n101:14 - Do not use this.attrs (ember/no-attrs-in-components)\n107:14 - Do not use this.attrs (ember/no-attrs-in-components)');
+  });
+
+  QUnit.test('components/list-widget/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/list-widget/component.js should pass ESLint\n\n3:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n4:5 - Only string, number, symbol, boolean, null, undefined, and function are allowed as default properties (ember/avoid-leaking-state-in-ember-objects)\n65:35 - Use import $ from \'jquery\'; instead of using Ember.$ (ember/new-module-imports)\n89:18 - Do not use this.attrs (ember/no-attrs-in-components)\n93:14 - Do not use this.attrs (ember/no-attrs-in-components)');
+  });
+
+  QUnit.test('components/number-widget/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/number-widget/component.js should pass ESLint\n\n3:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n5:5 - Only string, number, symbol, boolean, null, undefined, and function are allowed as default properties (ember/avoid-leaking-state-in-ember-objects)\n16:34 - Use import { assign } from \'@ember/polyfills\'; instead of using Ember.assign (ember/new-module-imports)\n33:17 - \'facet\' is assigned a value but never used. (no-unused-vars)\n35:40 - \'item\' is not defined. (no-undef)\n36:40 - \'item\' is not defined. (no-undef)\n40:22 - Do not use this.attrs (ember/no-attrs-in-components)');
+  });
+
+  QUnit.test('components/object-detail-widget/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/object-detail-widget/component.js should pass ESLint\n\n2:8 - \'ENV\' is defined but never used. (no-unused-vars)\n10:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n16:17 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n20:19 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n24:19 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n55:21 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n61:14 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n77:14 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n91:17 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n99:20 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n138:18 - Do not use this.attrs (ember/no-attrs-in-components)\n146:18 - Do not use this.attrs (ember/no-attrs-in-components)');
+  });
+
+  QUnit.test('components/query-widget/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/query-widget/component.js should pass ESLint\n\n3:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n16:18 - Do not use this.attrs (ember/no-attrs-in-components)');
+  });
+
+  QUnit.test('components/results-list/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/results-list/component.js should pass ESLint\n\n4:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n6:5 - Only string, number, symbol, boolean, null, undefined, and function are allowed as default properties (ember/avoid-leaking-state-in-ember-objects)\n19:9 - \'$\' is not defined. (no-undef)\n19:9 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n20:13 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n20:13 - \'$\' is not defined. (no-undef)\n23:9 - \'$\' is not defined. (no-undef)\n23:9 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n24:13 - Don\'t use jQuery without Ember Run Loop (ember/jquery-ember-run)\n25:13 - Don\'t use jQuery without Ember Run Loop (ember/jquery-ember-run)\n45:21 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n45:21 - \'$\' is not defined. (no-undef)\n46:39 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n46:39 - \'$\' is not defined. (no-undef)\n55:13 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n55:13 - \'$\' is not defined. (no-undef)\n56:13 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n56:13 - \'$\' is not defined. (no-undef)\n59:5 - Duplicate key \'pagebackbtn\'. (no-dupe-keys)\n59:18 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n68:5 - Duplicate key \'pagenextbtn\'. (no-dupe-keys)\n68:18 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n75:17 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n118:17 - Unexpected console statement. (no-console)\n122:22 - Do not use this.attrs (ember/no-attrs-in-components)\n130:18 - Do not use this.attrs (ember/no-attrs-in-components)\n134:13 - Unexpected console statement. (no-console)\n141:18 - Do not use this.attrs (ember/no-attrs-in-components)\n144:30 - \'$\' is not defined. (no-undef)\n144:30 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n146:13 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n146:13 - \'$\' is not defined. (no-undef)\n147:13 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n147:13 - \'$\' is not defined. (no-undef)\n150:17 - Unexpected console statement. (no-console)\n151:22 - Do not use this.attrs (ember/no-attrs-in-components)\n153:17 - Unexpected console statement. (no-console)\n156:22 - Do not use this.attrs (ember/no-attrs-in-components)');
+  });
+
+  QUnit.test('components/search-facet-daterange/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/search-facet-daterange/component.js should pass ESLint\n\n6:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n7:5 - Only string, number, symbol, boolean, null, undefined, and function are allowed as default properties (ember/avoid-leaking-state-in-ember-objects)\n35:13 - Use import { run } from \'@ember/runloop\'; instead of using Ember.run (ember/new-module-imports)\n43:13 - Use import { run } from \'@ember/runloop\'; instead of using Ember.run (ember/new-module-imports)\n48:9 - Use import { scheduleOnce } from \'@ember/runloop\'; instead of using Ember.run.scheduleOnce (ember/new-module-imports)\n53:5 - Only string, number, symbol, boolean, null, undefined, and function are allowed as default properties (ember/avoid-leaking-state-in-ember-objects)\n54:14 - Use import { observer } from \'@ember/object\'; instead of using Ember.observer (ember/new-module-imports)\n63:20 - Use import { observer } from \'@ember/object\'; instead of using Ember.observer (ember/new-module-imports)\n95:18 - Do not use this.attrs (ember/no-attrs-in-components)');
+  });
+
+  QUnit.test('components/stacked-bars/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/stacked-bars/component.js should pass ESLint\n\n6:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n8:5 - Only string, number, symbol, boolean, null, undefined, and function are allowed as default properties (ember/avoid-leaking-state-in-ember-objects)\n9:5 - Only string, number, symbol, boolean, null, undefined, and function are allowed as default properties (ember/avoid-leaking-state-in-ember-objects)\n118:20 - Do not use this.attrs (ember/no-attrs-in-components)');
+  });
+
+  QUnit.test('components/text-widget/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/text-widget/component.js should pass ESLint\n\n3:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n8:18 - Do not use this.attrs (ember/no-attrs-in-components)');
+  });
+
+  QUnit.test('components/user-feedback-form/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/user-feedback-form/component.js should pass ESLint\n\n3:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n9:5 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n9:5 - \'$\' is not defined. (no-undef)\n11:5 - Do not use global `$` or `jQuery` (ember/no-global-jquery)\n11:5 - \'$\' is not defined. (no-undef)');
+  });
+
+  QUnit.test('components/widget-adapter/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/widget-adapter/component.js should pass ESLint\n\n19:7 - \'agg_types\' is assigned a value but never used. (no-unused-vars)\n73:37 - \'value\' is defined but never used. (no-unused-vars)\n99:28 - This generator function does not have \'yield\'. (require-yield)\n106:37 - \'value\' is defined but never used. (no-unused-vars)\n132:37 - \'value\' is defined but never used. (no-unused-vars)\n158:37 - \'value\' is defined but never used. (no-unused-vars)\n191:37 - \'value\' is defined but never used. (no-unused-vars)\n224:37 - \'value\' is defined but never used. (no-unused-vars)\n250:37 - \'value\' is defined but never used. (no-unused-vars)\n276:37 - \'value\' is defined but never used. (no-unused-vars)\n361:16 - Use import Component from \'@ember/component\'; instead of using Ember.Component (ember/new-module-imports)\n366:18 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n377:13 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n380:12 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n401:13 - Use import { inject } from \'@ember/service\'; instead of using Ember.inject.service (ember/new-module-imports)\n409:17 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n446:9 - \'MathJax\' is not defined. (no-undef)\n446:38 - \'MathJax\' is not defined. (no-undef)\n454:13 - \'query\' is assigned a value but never used. (no-unused-vars)\n455:13 - \'gte\' is assigned a value but never used. (no-unused-vars)\n456:13 - \'lte\' is assigned a value but never used. (no-unused-vars)\n457:13 - \'interval\' is assigned a value but never used. (no-unused-vars)\n470:26 - Use import $ from \'jquery\'; instead of using Ember.$ (ember/new-module-imports)\n517:13 - Use closure actions, unless you need bubbling (ember/closure-actions)\n531:13 - Unexpected console statement. (no-console)\n541:13 - Unexpected console statement. (no-console)\n548:13 - Use closure actions, unless you need bubbling (ember/closure-actions)\n552:17 - \'name\' is assigned a value but never used. (no-unused-vars)\n559:17 - \'self\' is assigned a value but never used. (no-unused-vars)\n560:82 - \'arr\' is defined but never used. (no-unused-vars)\n566:30 - \'route\' is defined but never used. (no-unused-vars)\n579:13 - Unexpected console statement. (no-console)\n580:17 - \'widgetType\' is assigned a value but never used. (no-unused-vars)\n584:17 - \'author\' is assigned a value but never used. (no-unused-vars)\n645:13 - Use closure actions, unless you need bubbling (ember/closure-actions)');
+  });
+
+  QUnit.test('controllers/application.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'controllers/application.js should pass ESLint\n\n9:16 - Use import Controller from \'@ember/controller\'; instead of using Ember.Controller (ember/new-module-imports)\n10:12 - Use import { inject } from \'@ember/service\'; instead of using Ember.inject.service (ember/new-module-imports)');
+  });
+
+  QUnit.test('controllers/dashboards/dashboard.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'controllers/dashboards/dashboard.js should pass ESLint\n\n3:16 - Use import Controller from \'@ember/controller\'; instead of using Ember.Controller (ember/new-module-imports)\n24:19 - Use import { observer } from \'@ember/object\'; instead of using Ember.observer (ember/new-module-imports)\n32:18 - Use import { inject } from \'@ember/service\'; instead of using Ember.inject.service (ember/new-module-imports)\n35:5 - Only string, number, symbol, boolean, null, undefined, and function are allowed as default properties (ember/avoid-leaking-state-in-ember-objects)\n38:5 - Only string, number, symbol, boolean, null, undefined, and function are allowed as default properties (ember/avoid-leaking-state-in-ember-objects)\n39:5 - Only string, number, symbol, boolean, null, undefined, and function are allowed as default properties (ember/avoid-leaking-state-in-ember-objects)\n41:21 - Don\'t use Ember\'s function prototype extensions (ember/no-function-prototype-extensions)\n44:5 - Call this._super(...arguments) in init hook (ember/require-super-in-init)\n75:28 - \'widget\' is defined but never used. (no-unused-vars)\n87:25 - \'r\' is defined but never used. (no-unused-vars)');
+  });
+
+  QUnit.test('helpers/add.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'helpers/add.js should pass ESLint\n\n7:16 - Use import { helper } from \'@ember/component/helper\'; instead of using Ember.Helper.helper (ember/new-module-imports)');
+  });
+
+  QUnit.test('initializers/component-routes.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'initializers/component-routes.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('initializers/promise.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'initializers/promise.js should pass ESLint\n\n4:20 - Use import { Promise } from \'rsvp\'; instead of using Ember.RSVP.Promise (ember/new-module-imports)');
+  });
+
+  QUnit.test('instance-initializers/global.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'instance-initializers/global.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('models/dashboard.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'models/dashboard.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('models/institution.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'models/institution.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('models/widget.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'models/widget.js should pass ESLint\n\n3:10 - \'belongsTo\' is defined but never used. (no-unused-vars)');
+  });
+
+  QUnit.test('resolver.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'resolver.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('router.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'router.js should pass ESLint\n\n4:16 - Use import EmberRouter from \'@ember/routing/router\'; instead of using Ember.Router (ember/new-module-imports)');
+  });
+
+  QUnit.test('routes/application.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'routes/application.js should pass ESLint\n\n5:16 - Use import Route from \'@ember/routing/route\'; instead of using Ember.Route (ember/new-module-imports)\n7:12 - Use import { inject } from \'@ember/service\'; instead of using Ember.inject.service (ember/new-module-imports)\n8:14 - Use import { inject } from \'@ember/service\'; instead of using Ember.inject.service (ember/new-module-imports)');
+  });
+
+  QUnit.test('routes/dashboards.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'routes/dashboards.js should pass ESLint\n\n2:8 - \'AuthenticatedRouteMixin\' is defined but never used. (no-unused-vars)\n4:16 - Use import Route from \'@ember/routing/route\'; instead of using Ember.Route (ember/new-module-imports)\n5:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n6:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n7:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n8:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)');
+  });
+
+  QUnit.test('routes/dashboards/dashboard.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'routes/dashboards/dashboard.js should pass ESLint\n\n184:16 - Use import Route from \'@ember/routing/route\'; instead of using Ember.Route (ember/new-module-imports)\n204:17 - Use import { computed } from \'@ember/object\'; instead of using Ember.computed (ember/new-module-imports)\n211:54 - \'transition\' is defined but never used. (no-unused-vars)\n251:37 - Unnecessary escape character: \\". (no-useless-escape)\n251:53 - Unnecessary escape character: \\". (no-useless-escape)\n252:29 - Unnecessary escape character: \\". (no-useless-escape)\n252:44 - Unnecessary escape character: \\". (no-useless-escape)\n257:25 - Unnecessary escape character: \\". (no-useless-escape)\n257:55 - Unnecessary escape character: \\". (no-useless-escape)\n259:25 - Unnecessary escape character: \\". (no-useless-escape)\n259:47 - Unnecessary escape character: \\". (no-useless-escape)\n279:25 - Unnecessary escape character: \\". (no-useless-escape)\n279:54 - Unnecessary escape character: \\". (no-useless-escape)\n281:25 - Unnecessary escape character: \\". (no-useless-escape)\n281:54 - Unnecessary escape character: \\". (no-useless-escape)\n300:46 - Unnecessary escape character: \\". (no-useless-escape)\n300:75 - Unnecessary escape character: \\". (no-useless-escape)\n305:48 - Unnecessary escape character: \\". (no-useless-escape)\n305:65 - Unnecessary escape character: \\". (no-useless-escape)\n306:46 - Unnecessary escape character: \\". (no-useless-escape)\n306:64 - Unnecessary escape character: \\". (no-useless-escape)\n307:69 - Unnecessary escape character: \\". (no-useless-escape)\n307:89 - Unnecessary escape character: \\". (no-useless-escape)\n308:29 - Unnecessary escape character: \\". (no-useless-escape)\n308:49 - Unnecessary escape character: \\". (no-useless-escape)\n309:33 - Unnecessary escape character: \\". (no-useless-escape)\n309:50 - Unnecessary escape character: \\". (no-useless-escape)\n313:41 - \'queryParams\' is defined but never used. (no-unused-vars)');
+  });
+
+  QUnit.test('utils/currency-rounder.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'utils/currency-rounder.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('utils/date-interval.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'utils/date-interval.js should pass ESLint\n\n');
   });
 });
-define('analytics-dashboard/tests/adapters/widget.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/components/ember-ace', ['exports', 'ember-ace/test-support/components/ember-ace'], function (exports, _emberAce) {
   'use strict';
 
-  QUnit.module('JSHint | adapters/widget.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'adapters/widget.js should pass jshint.');
+  Object.defineProperty(exports, "__esModule", {
+    value: true
   });
-});
-define('analytics-dashboard/tests/app.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | app.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'app.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/components/agent-detail-widget/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/agent-detail-widget/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'components/agent-detail-widget/component.js should pass jshint.\ncomponents/agent-detail-widget/component.js: line 2, col 8, \'ENV\' is defined but never used.\n\n1 error');
-  });
-});
-define('analytics-dashboard/tests/components/c3-chart/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/c3-chart/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'components/c3-chart/component.js should pass jshint.\ncomponents/c3-chart/component.js: line 80, col 74, Missing semicolon.\ncomponents/c3-chart/component.js: line 88, col 24, Expected \'}\' to match \'{\' from line 62 and instead saw \'function\'.\ncomponents/c3-chart/component.js: line 88, col 32, Bad invocation.\ncomponents/c3-chart/component.js: line 88, col 39, Expected \')\' and instead saw \'{\'.\ncomponents/c3-chart/component.js: line 88, col 40, Missing semicolon.\ncomponents/c3-chart/component.js: line 92, col 38, Missing semicolon.\ncomponents/c3-chart/component.js: line 100, col 9, Unrecoverable syntax error. (24% scanned).\n\n7 errors');
-  });
-});
-define('analytics-dashboard/tests/components/dropdown-widget/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/dropdown-widget/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'components/dropdown-widget/component.js should pass jshint.\ncomponents/dropdown-widget/component.js: line 42, col 54, Missing semicolon.\ncomponents/dropdown-widget/component.js: line 54, col 30, Expected \'}\' to match \'{\' from line 5 and instead saw \'function\'.\ncomponents/dropdown-widget/component.js: line 54, col 38, Bad invocation.\ncomponents/dropdown-widget/component.js: line 54, col 50, Expected \')\' and instead saw \'{\'.\ncomponents/dropdown-widget/component.js: line 54, col 51, Missing semicolon.\ncomponents/dropdown-widget/component.js: line 56, col 34, Missing semicolon.\ncomponents/dropdown-widget/component.js: line 63, col 41, Unrecoverable syntax error. (27% scanned).\n\n7 errors');
-  });
-});
-define('analytics-dashboard/tests/components/filter-plaques/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/filter-plaques/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'components/filter-plaques/component.js should pass jshint.\ncomponents/filter-plaques/component.js: line 22, col 8, Missing semicolon.\ncomponents/filter-plaques/component.js: line 30, col 34, Missing semicolon.\ncomponents/filter-plaques/component.js: line 33, col 18, Missing semicolon.\ncomponents/filter-plaques/component.js: line 35, col 46, Missing semicolon.\ncomponents/filter-plaques/component.js: line 48, col 36, Expected \'===\' and instead saw \'==\'.\ncomponents/filter-plaques/component.js: line 48, col 18, Confusing use of \'!\'.\ncomponents/filter-plaques/component.js: line 59, col 31, Missing semicolon.\ncomponents/filter-plaques/component.js: line 67, col 41, Missing semicolon.\ncomponents/filter-plaques/component.js: line 69, col 40, Missing semicolon.\ncomponents/filter-plaques/component.js: line 79, col 30, Expected \'}\' to match \'{\' from line 9 and instead saw \'function\'.\ncomponents/filter-plaques/component.js: line 79, col 38, Bad invocation.\ncomponents/filter-plaques/component.js: line 79, col 50, Expected \')\' and instead saw \'{\'.\ncomponents/filter-plaques/component.js: line 79, col 51, Missing semicolon.\ncomponents/filter-plaques/component.js: line 80, col 32, Missing semicolon.\ncomponents/filter-plaques/component.js: line 87, col 39, Unrecoverable syntax error. (76% scanned).\n\n15 errors');
-  });
-});
-define('analytics-dashboard/tests/components/list-widget/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/list-widget/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'components/list-widget/component.js should pass jshint.\ncomponents/list-widget/component.js: line 13, col 18, Missing semicolon.\ncomponents/list-widget/component.js: line 16, col 44, Expected \'===\' and instead saw \'==\'.\ncomponents/list-widget/component.js: line 17, col 13, \'data\' used out of scope.\ncomponents/list-widget/component.js: line 44, col 30, \'data\' used out of scope.\ncomponents/list-widget/component.js: line 64, col 30, Expected \'}\' to match \'{\' from line 3 and instead saw \'function\'.\ncomponents/list-widget/component.js: line 64, col 38, Bad invocation.\ncomponents/list-widget/component.js: line 64, col 45, Expected \')\' and instead saw \'{\'.\ncomponents/list-widget/component.js: line 64, col 46, Missing semicolon.\ncomponents/list-widget/component.js: line 65, col 34, Missing semicolon.\ncomponents/list-widget/component.js: line 72, col 91, Missing semicolon.\ncomponents/list-widget/component.js: line 72, col 90, Unrecoverable syntax error. (74% scanned).\n\n11 errors');
-  });
-});
-define('analytics-dashboard/tests/components/number-widget/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/number-widget/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'components/number-widget/component.js should pass jshint.\ncomponents/number-widget/component.js: line 33, col 17, \'facet\' is defined but never used.\ncomponents/number-widget/component.js: line 35, col 40, \'item\' is not defined.\ncomponents/number-widget/component.js: line 36, col 40, \'item\' is not defined.\n\n3 errors');
-  });
-});
-define('analytics-dashboard/tests/components/object-detail-widget/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/object-detail-widget/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'components/object-detail-widget/component.js should pass jshint.\ncomponents/object-detail-widget/component.js: line 28, col 12, Expected \'{\' and instead saw \'var\'.\ncomponents/object-detail-widget/component.js: line 37, col 18, Expected \'{\' and instead saw \'r\'.\ncomponents/object-detail-widget/component.js: line 39, col 18, Expected \'{\' and instead saw \'r\'.\ncomponents/object-detail-widget/component.js: line 39, col 37, Expected \'===\' and instead saw \'==\'.\ncomponents/object-detail-widget/component.js: line 27, col 14, \'library\' used out of scope.\ncomponents/object-detail-widget/component.js: line 30, col 9, \'library\' used out of scope.\ncomponents/object-detail-widget/component.js: line 51, col 16, \'library\' used out of scope.\ncomponents/object-detail-widget/component.js: line 102, col 60, Missing semicolon.\ncomponents/object-detail-widget/component.js: line 112, col 33, Missing semicolon.\ncomponents/object-detail-widget/component.js: line 121, col 135, Missing semicolon.\ncomponents/object-detail-widget/component.js: line 124, col 137, Missing semicolon.\ncomponents/object-detail-widget/component.js: line 127, col 133, Missing semicolon.\ncomponents/object-detail-widget/component.js: line 2, col 8, \'ENV\' is defined but never used.\n\n13 errors');
-  });
-});
-define('analytics-dashboard/tests/components/query-widget/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/query-widget/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'components/query-widget/component.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/components/results-list/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/results-list/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'components/results-list/component.js should pass jshint.\ncomponents/results-list/component.js: line 25, col 68, Missing semicolon.\ncomponents/results-list/component.js: line 29, col 45, Missing semicolon.\ncomponents/results-list/component.js: line 30, col 51, Missing semicolon.\ncomponents/results-list/component.js: line 31, col 46, Missing semicolon.\ncomponents/results-list/component.js: line 34, col 60, Missing semicolon.\ncomponents/results-list/component.js: line 35, col 51, Missing semicolon.\ncomponents/results-list/component.js: line 36, col 46, Missing semicolon.\ncomponents/results-list/component.js: line 45, col 52, Missing semicolon.\ncomponents/results-list/component.js: line 46, col 67, Missing semicolon.\ncomponents/results-list/component.js: line 56, col 82, Missing semicolon.\ncomponents/results-list/component.js: line 59, col 16, Duplicate key \'pagebackbtn\'.\ncomponents/results-list/component.js: line 61, col 18, Expected \'===\' and instead saw \'==\'.\ncomponents/results-list/component.js: line 68, col 16, Duplicate key \'pagenextbtn\'.\ncomponents/results-list/component.js: line 76, col 57, Missing semicolon.\ncomponents/results-list/component.js: line 77, col 43, Expected \'{\' and instead saw \'page\'.\ncomponents/results-list/component.js: line 78, col 20, Missing semicolon.\ncomponents/results-list/component.js: line 85, col 98, Missing semicolon.\ncomponents/results-list/component.js: line 91, col 133, Missing semicolon.\ncomponents/results-list/component.js: line 94, col 135, Missing semicolon.\ncomponents/results-list/component.js: line 97, col 137, Missing semicolon.\ncomponents/results-list/component.js: line 100, col 133, Missing semicolon.\ncomponents/results-list/component.js: line 103, col 83, Missing semicolon.\ncomponents/results-list/component.js: line 117, col 68, Missing semicolon.\ncomponents/results-list/component.js: line 118, col 41, Missing semicolon.\ncomponents/results-list/component.js: line 130, col 65, Missing semicolon.\ncomponents/results-list/component.js: line 134, col 38, Missing semicolon.\ncomponents/results-list/component.js: line 141, col 65, Missing semicolon.\ncomponents/results-list/component.js: line 147, col 65, Missing semicolon.\ncomponents/results-list/component.js: line 150, col 36, Missing semicolon.\ncomponents/results-list/component.js: line 153, col 41, Missing semicolon.\ncomponents/results-list/component.js: line 19, col 9, \'$\' is not defined.\ncomponents/results-list/component.js: line 20, col 13, \'$\' is not defined.\ncomponents/results-list/component.js: line 23, col 9, \'$\' is not defined.\ncomponents/results-list/component.js: line 45, col 21, \'$\' is not defined.\ncomponents/results-list/component.js: line 46, col 39, \'$\' is not defined.\ncomponents/results-list/component.js: line 55, col 13, \'$\' is not defined.\ncomponents/results-list/component.js: line 56, col 13, \'$\' is not defined.\ncomponents/results-list/component.js: line 144, col 30, \'$\' is not defined.\ncomponents/results-list/component.js: line 146, col 13, \'$\' is not defined.\ncomponents/results-list/component.js: line 147, col 13, \'$\' is not defined.\n\n40 errors');
-  });
-});
-define('analytics-dashboard/tests/components/search-facet-daterange/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/search-facet-daterange/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'components/search-facet-daterange/component.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/components/stacked-bars/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/stacked-bars/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'components/stacked-bars/component.js should pass jshint.\ncomponents/stacked-bars/component.js: line 40, col 58, Missing semicolon.\ncomponents/stacked-bars/component.js: line 91, col 47, Expected \'{\' and instead saw \'target\'.\ncomponents/stacked-bars/component.js: line 95, col 11, Missing semicolon.\n\n3 errors');
-  });
-});
-define('analytics-dashboard/tests/components/text-widget/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/text-widget/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'components/text-widget/component.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/components/user-feedback-form/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/user-feedback-form/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'components/user-feedback-form/component.js should pass jshint.\ncomponents/user-feedback-form/component.js: line 9, col 17, \'$\' is not defined.\ncomponents/user-feedback-form/component.js: line 11, col 17, \'$\' is not defined.\n\n2 errors');
-  });
-});
-define('analytics-dashboard/tests/components/widget-adapter/component.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/widget-adapter/component.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'components/widget-adapter/component.js should pass jshint.\ncomponents/widget-adapter/component.js: line 17, col 2, Missing semicolon.\ncomponents/widget-adapter/component.js: line 73, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 101, col 17, A generator function shall contain a yield statement.\ncomponents/widget-adapter/component.js: line 106, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 132, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 158, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 191, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 224, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 250, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 276, col 37, \'value\' is defined but never used.\ncomponents/widget-adapter/component.js: line 340, col 33, Missing semicolon.\ncomponents/widget-adapter/component.js: line 355, col 6, Missing semicolon.\ncomponents/widget-adapter/component.js: line 392, col 46, Missing semicolon.\ncomponents/widget-adapter/component.js: line 427, col 36, Expected \'===\' and instead saw \'==\'.\ncomponents/widget-adapter/component.js: line 427, col 67, Expected \'===\' and instead saw \'==\'.\ncomponents/widget-adapter/component.js: line 427, col 121, Expected \'===\' and instead saw \'==\'.\ncomponents/widget-adapter/component.js: line 427, col 166, Expected \'===\' and instead saw \'==\'.\ncomponents/widget-adapter/component.js: line 428, col 44, Missing semicolon.\ncomponents/widget-adapter/component.js: line 430, col 42, Expected \'===\' and instead saw \'==\'.\ncomponents/widget-adapter/component.js: line 432, col 43, Missing semicolon.\ncomponents/widget-adapter/component.js: line 450, col 28, Expected \'}\' to match \'{\' from line 361 and instead saw \'function\'.\ncomponents/widget-adapter/component.js: line 450, col 36, Bad invocation.\ncomponents/widget-adapter/component.js: line 450, col 39, Expected \')\' and instead saw \'{\'.\ncomponents/widget-adapter/component.js: line 450, col 40, Missing semicolon.\ncomponents/widget-adapter/component.js: line 467, col 33, Missing semicolon.\ncomponents/widget-adapter/component.js: line 470, col 25, Missing semicolon.\ncomponents/widget-adapter/component.js: line 490, col 9, Unrecoverable syntax error. (75% scanned).\n\n27 errors');
-  });
-});
-define('analytics-dashboard/tests/controllers/application.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | controllers/application.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'controllers/application.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/controllers/dashboards/dashboard.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | controllers/dashboards/dashboard.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'controllers/dashboards/dashboard.js should pass jshint.\ncontrollers/dashboards/dashboard.js: line 75, col 28, \'widget\' is defined but never used.\ncontrollers/dashboards/dashboard.js: line 87, col 25, \'r\' is defined but never used.\n\n2 errors');
-  });
-});
-define('analytics-dashboard/tests/ember-sinon-qunit/test', ['exports', 'ember', 'sinon', 'qunit', 'ember-qunit'], function (exports, _ember, _sinon, _qunit, _emberQunit) {
-  exports['default'] = test;
-
-  _sinon['default'].expectation.fail = _sinon['default'].assert.fail = function (msg) {
-    _qunit['default'].ok(false, msg);
-  };
-
-  _sinon['default'].assert.pass = function (assertion) {
-    _qunit['default'].ok(true, assertion);
-  };
-
-  _sinon['default'].config = {
-    injectIntoThis: false,
-    injectInto: null,
-    properties: ['spy', 'stub', 'mock', 'sandbox'],
-    useFakeTimers: false,
-    useFakeServer: false
-  };
-
-  function test(testName, callback) {
-    function sinonWrapper() {
-      var context = this;
-      if (_ember['default'].isBlank(context)) {
-        context = {};
-      }
-      _sinon['default'].config.injectInto = context;
-
-      return _sinon['default'].test(callback).apply(context, arguments);
+  Object.defineProperty(exports, 'default', {
+    enumerable: true,
+    get: function () {
+      return _emberAce.default;
     }
-
-    return (0, _emberQunit.test)(testName, sinonWrapper);
-  }
-});
-define('analytics-dashboard/tests/helpers/add.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | helpers/add.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'helpers/add.js should pass jshint.');
   });
 });
-define('analytics-dashboard/tests/helpers/destroy-app', ['exports', 'ember'], function (exports, _ember) {
-  exports['default'] = destroyApp;
+define("sa-dashboard/tests/ember-sinon-qunit/test", ["exports", "ember-sinon-qunit/test-support/test"], function (exports, _test) {
+  "use strict";
 
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  exports.default = function () {
+    console.warn("Using deprecated import path for ember-sinon-qunit; use `import test from 'ember-sinon-qunit/test-support/test';` instead.");
+    return _test.default.apply(this, arguments);
+  };
+});
+define('sa-dashboard/tests/factories/citation', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('citation', {
+        default: {
+            citation: () => _faker.default.lorem.words(10)
+        }
+    });
+});
+define('sa-dashboard/tests/factories/collection', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('collection', {
+        default: {
+            title: () => _faker.default.lorem.words(3),
+            dateCreated: () => _faker.default.date.past(1),
+            dateModified: () => _faker.default.date.recent(1),
+            bookmarks: false
+        },
+        traits: {
+            hasNodes: {
+                linkedNodes: _emberDataFactoryGuy.default.hasMany('node', 3)
+            },
+            hasRegistrations: {
+                linkedRegistrations: _emberDataFactoryGuy.default.hasMany('registration', 3)
+            },
+            isBookmark: {
+                bookmarks: true
+            }
+        }
+    });
+});
+define('sa-dashboard/tests/factories/comment-report', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('comment-report', {
+        default: {
+            category: () => _faker.default.random.arrayElement(['hate', 'spam', 'violence']),
+            text: _emberDataFactoryGuy.default.belongsTo('comment')
+        }
+    });
+});
+define('sa-dashboard/tests/factories/comment', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('comment', {
+        default: {
+            content: () => _faker.default.lorem.sentence(),
+
+            dateCreated: () => _faker.default.date.past(1),
+            dateModified: () => _faker.default.date.recent(1),
+
+            modified: true,
+            deleted: false,
+
+            isAbuse: false,
+            hasChildren: false,
+
+            canEdit: true
+        },
+        traits: {
+            // List of possible "page" values h/t Saman- must be one of these values. Mutually exclusive.
+            isWiki: {
+                page: 'wiki'
+            },
+            isNode: {
+                page: 'node'
+            },
+            isFile: {
+                page: 'files'
+            },
+            // TODO: Add a hasReplies trait in the future to support replies- can we make reply page type match the specified parent type?
+            // Not sure if reply needs to have same page type for hasReplies to be useful. Can always make manual replies with relevant type
+            hasReplies: {
+                replies: _emberDataFactoryGuy.default.hasMany('comment', 3)
+            }
+        }
+    });
+});
+define('sa-dashboard/tests/factories/contributor', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('contributor', {
+        default: {
+            bibliographic: () => _faker.default.random.boolean(),
+            permission: () => _faker.default.random.arrayElement(['read', 'write', 'admin']),
+            // nodeID: // TODO: Field not defined in serializer. Find out meaning and add to factory.
+            users: _emberDataFactoryGuy.default.belongsTo('user'),
+            index: () => _faker.default.random.number(),
+            fullName: () => _faker.default.lorem.words(2),
+            email: () => _faker.default.internet.email(),
+            node: _emberDataFactoryGuy.default.belongsTo('node')
+        }
+    });
+});
+define('sa-dashboard/tests/factories/draft-registration', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('draft-registration', {
+        default: {
+            registrationSupplement: () => _faker.default.lorem.words(1),
+            datetimeInitiated: () => _faker.default.date.past(1),
+            datetimeUpdated: () => _faker.default.date.recent(),
+            branchedFrom: _emberDataFactoryGuy.default.belongsTo('node'),
+            initiator: _emberDataFactoryGuy.default.belongsTo('user'),
+            registrationSchema: _emberDataFactoryGuy.default.belongsTo('metaschema')
+        }
+    });
+});
+define('sa-dashboard/tests/factories/file-provider', ['ember-data-factory-guy'], function (_emberDataFactoryGuy) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('file-provider', {
+        default: {
+            name: 'osfstorage',
+            kind: 'folder',
+            path: '/',
+            provider: 'osfstorage',
+            node: _emberDataFactoryGuy.default.belongsTo('node')
+        },
+        traits: {
+            hasFiles: {
+                files: () => _emberDataFactoryGuy.default.hasMany('file', 3)
+            }
+        }
+    });
+});
+define('sa-dashboard/tests/factories/file-version', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('file-version', {
+        default: {
+            size: () => _faker.default.random.number(),
+            contentType: 'text/plain' // faker.system may not come with older versions of lib
+        }
+    });
+});
+define('sa-dashboard/tests/factories/file', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('file', {
+        default: {
+            name: () => _faker.default.lorem.words(1) + '.txt',
+            kind: 'file',
+            path: '/1234567890', // Faker.system.filePath may not yet be implemented
+            size: () => _faker.default.random.number(),
+            provider: 'osfstorage',
+            materializedPath: () => '/' + _faker.default.lorem.words(1) + '.png',
+            lastTouched: null,
+
+            dateModified: () => _faker.default.date.recent(1),
+            dateCreated: () => _faker.default.date.past(1),
+
+            isProvider: false,
+            checkout: null,
+
+            links: {
+                upload: '/this/is/an/upload/url',
+                download: '/this/is/a/download/url',
+                move: '/this/is/a/move/url',
+                delete: '/this/is/a/delete/url',
+                new_folder: '/this/is/a/new_folder/url'
+            }
+        },
+        traits: {
+            // Folder specific
+            isFolder: {
+                kind: 'folder',
+                materializedPath: () => '/' + _faker.default.lorem.words(1),
+                files: () => _emberDataFactoryGuy.default.hasMany('file', 3)
+            },
+            // File specific
+            hasVersions: {
+                kind: 'file',
+                versions: () => _emberDataFactoryGuy.default.hasMany('file-version', 3)
+            },
+            hasComments: {
+                kind: 'file',
+                comments: () => _emberDataFactoryGuy.default.hasMany('comment', 3)
+            },
+            hasTags: {
+                kind: 'file',
+                tags: () => [_faker.default.lorem.words(1), _faker.default.lorem.words(1), _faker.default.lorem.words(1)]
+            }
+        }
+    });
+});
+define('sa-dashboard/tests/factories/institution', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('institution', {
+        default: {
+            name: () => _faker.default.lorem.words(3),
+            description: () => _faker.default.lorem.sentences(3),
+            logoPath: '/img.jpg',
+            authUrl: () => _faker.default.internet.url()
+        },
+        traits: {
+            // TODO: Add children relations, if that field turns out to be needed after all (henrique)
+            hasNodes: {
+                nodes: () => _emberDataFactoryGuy.default.hasMany('node', 3)
+            },
+            hasRegistrations: {
+                registrations: () => _emberDataFactoryGuy.default.hasMany('registration', 3)
+            }
+        }
+    });
+});
+define('sa-dashboard/tests/factories/license', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('license', {
+        default: {
+            name: () => _faker.default.lorem.words(1),
+            text: () => _faker.default.lorem.words(15)
+        }
+    });
+});
+define('sa-dashboard/tests/factories/log', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('log', {
+        default: {
+            date: () => _faker.default.date.past(1),
+            // Extracted from Nodelog.actions as of May 24, 2016
+            action: () => _faker.default.random.arrayElement(['checked_in', 'checked_out', 'file_tag_removed', 'file_tag_added', 'created_from', 'project_created', 'project_registered', 'project_deleted', 'node_created', 'node_forked', 'node_removed', 'pointer_created', 'pointer_forked', 'pointer_removed', 'wiki_updated', 'wiki_deleted', 'wiki_renamed', 'made_wiki_public', 'made_wiki_private', 'contributor_added', 'contributor_removed', 'contributors_reordered', 'permissions_updated', 'made_private', 'made_public', 'tag_added', 'tag_removed', 'edit_title', 'edit_description', 'updated_fields', 'addon_file_moved', 'addon_file_copied', 'folder_created', 'file_added', 'file_updated', 'file_removed', 'file_restored', 'addon_added', 'addon_removed', 'comment_added', 'comment_removed', 'comment_updated', 'made_contributor_visible', 'made_contributor_invisible', 'external_ids_added', 'embargo_approved', 'embargo_cancelled', 'embargo_completed', 'embargo_initiated', 'retraction_approved', 'retraction_cancelled', 'retraction_initiated', 'registration_cancelled', 'registration_initiated', 'registration_approved', 'prereg_registration_initiated', 'citation_added', 'citation_edited', 'citation_removed', 'primary_institution_changed', 'primary_institution_removed']),
+            params: {} // Correct info from this field will depend on the log type
+            // TODO: Figure out node vs originalnode vs linkedNode vs templateNode, and add sample traits with correct values
+        }
+    });
+});
+define('sa-dashboard/tests/factories/metaschema', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('metaschema', {
+        default: {
+            name: () => _faker.default.lorem.words(1),
+            schemaVersion: () => _faker.default.random.number(),
+            schema: {}
+        }
+    });
+});
+define('sa-dashboard/tests/factories/node-link', ['ember-data-factory-guy'], function (_emberDataFactoryGuy) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('node-link', {
+        default: {
+            targetNode: _emberDataFactoryGuy.default.belongsTo('node')
+        }
+    });
+});
+define('sa-dashboard/tests/factories/node', ['ember-data-factory-guy', 'faker', 'ember-osf/const/permissions'], function (_emberDataFactoryGuy, _faker, _permissions) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('node', {
+        default: {
+            title: () => _faker.default.lorem.words(4),
+            description: () => _faker.default.lorem.paragraphs(2, '\n'),
+            // Extracted from Node model CATEGORY_MAP as of May 24, 2016
+            category: () => _faker.default.random.arrayElement(['analysis', 'communication', 'data', 'hypothesis', 'instrumentation', 'methods and measures', 'procedure', 'project', 'software', 'other', '']),
+
+            currentUserPermissions: () => _faker.default.random.arrayElement([_permissions.default.READ, _permissions.default.WRITE, _permissions.default.ADMIN]),
+
+            fork: false,
+            collection: false,
+            registration: false,
+            public: () => _faker.default.random.boolean(),
+
+            dateCreated: () => _faker.default.date.past(1),
+            dateModified: () => _faker.default.date.recent(1)
+        },
+        traits: {
+            hasParent: { // Is a child of a public node
+                parent: () => _emberDataFactoryGuy.default.belongsTo('node')
+            },
+            hasChildren: { // Has one layer of child projects
+                children: _emberDataFactoryGuy.default.hasMany('node', 3)
+            },
+            hasInstitution: {
+                affiliatedInstitutions: _emberDataFactoryGuy.default.hasMany('institution', 1)
+            },
+            hasComments: {
+                comments: _emberDataFactoryGuy.default.hasMany('comment', 3)
+            },
+            hasContributors: {
+                contributors: _emberDataFactoryGuy.default.hasMany('contributor', 3)
+            },
+            hasFiles: {
+                files: _emberDataFactoryGuy.default.hasMany('file-provider', 3, 'hasFiles')
+            },
+            hasRegistrations: {
+                registrations: _emberDataFactoryGuy.default.hasMany('registration', 1)
+            },
+            hasLogs: {
+                logs: _emberDataFactoryGuy.default.hasMany('log', 5)
+            },
+            hasTags: {
+                tags: () => [_faker.default.lorem.words(1), _faker.default.lorem.words(1), _faker.default.lorem.words(1)]
+            }
+        }
+    });
+});
+define('sa-dashboard/tests/factories/preprint-provider', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('preprint-provider', {
+        default: {
+            name: () => _faker.default.lorem.words(1),
+            logoPath: () => '/static/img/preprint_providers/' + _faker.default.lorem.words(1) + '.png',
+            bannerPath: () => '/static/img/preprint_providers/' + _faker.default.lorem.words(1) + '.png',
+            description: () => _faker.default.lorem.words(3),
+            advisoryBoard: () => _faker.default.lorem.paragraphs(2),
+            emailContact: 'contact+fake@osf.io',
+            emailSupport: 'support+fake@osf.io',
+            headerText: () => _faker.default.lorem.words(3),
+            taxonomy: _emberDataFactoryGuy.default.hasMany('taxonomy', 20)
+        },
+        traits: {
+            isOSF: {
+                id: 'osf'
+            },
+            hasPreprints: {
+                preprints: _emberDataFactoryGuy.default.hasMany('preprint', 5)
+            },
+            hasLicenses: {
+                licensesAcceptable: _emberDataFactoryGuy.default.hasMany('license', 3)
+            }
+        }
+    });
+});
+define('sa-dashboard/tests/factories/preprint', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('preprint', {
+        default: {
+            dateCreated: () => _faker.default.date.past(2),
+            datePublished: () => _faker.default.date.past(1),
+            dateModified: () => _faker.default.date.recent(),
+            doi: () => '10.1000/' + String(_faker.default.random.number()),
+            node: _emberDataFactoryGuy.default.belongsTo('node'),
+            license: _emberDataFactoryGuy.default.belongsTo('license'),
+            primaryFile: _emberDataFactoryGuy.default.belongsTo('file'),
+            provider: _emberDataFactoryGuy.default.belongsTo('preprint-provider'),
+            isPublished: false,
+            isPreprintOrphan: false
+        },
+        traits: {
+            hasBeenPublished: {
+                isPublished: true
+            }
+        }
+    });
+});
+define('sa-dashboard/tests/factories/registration', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('registration', {
+        default: {
+            dateRegistered: () => _faker.default.date.past(1),
+            pendingRegistrationApproval: false,
+
+            embargoEndDate: () => _faker.default.date.future(1),
+            pendingEmbargoApproval: false,
+
+            withdrawn: false,
+            pendingWithdrawal: false,
+
+            // TODO: Implement with sample data for faker, possibly traits for different reg types
+            registrationSupplement: null,
+            registeredMeta: null,
+
+            registeredFrom: () => _emberDataFactoryGuy.default.belongsTo('node'),
+            registeredBy: () => _emberDataFactoryGuy.default.belongsTo('user'),
+
+            contributors: () => _emberDataFactoryGuy.default.hasMany('contributor', 3)
+        },
+        traits: {
+            hasComments: {
+                comments: () => _emberDataFactoryGuy.default.hasMany('comment', 3)
+            }
+        }
+    });
+});
+define('sa-dashboard/tests/factories/taxonomy', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('taxonomy', {
+        default: {
+            text: () => _faker.default.lorem.words(2),
+            child_count: () => _faker.default.random.number(),
+            parents: null
+        },
+        traits: {
+            hasParents: {
+                parents: () => [String(_faker.default.random.number())]
+            }
+        }
+    });
+});
+define('sa-dashboard/tests/factories/user', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('user', {
+        default: {
+            fullName: () => _faker.default.name.findName(),
+            givenName: () => _faker.default.name.firstName(),
+            familyName: () => _faker.default.name.lastName(),
+            dateRegistered: () => _faker.default.date.past(1)
+        },
+        traits: {
+            // TODO: Consider writing tests that would force pagination of relationships (!)
+            hasProjects: {
+                nodes: () => _emberDataFactoryGuy.default.hasMany('node', 3)
+            },
+            hasRegistrations: {
+                registrations: () => _emberDataFactoryGuy.default.hasMany('registration', 3)
+            },
+            hasInstitutions: {
+                affiliatedInstitutions: () => _emberDataFactoryGuy.default.hasMany('institution', 2)
+            }
+        }
+    });
+});
+define('sa-dashboard/tests/factories/wiki', ['ember-data-factory-guy', 'faker'], function (_emberDataFactoryGuy, _faker) {
+    'use strict';
+
+    _emberDataFactoryGuy.default.define('wiki', {
+        defaults: {
+            kind: 'file',
+            name: () => _faker.default.lorem.words(2),
+            dateModified: () => _faker.default.date.recent(),
+            contentType: 'text/markdown',
+            path: () => '/' + _faker.default.lorem.words(1),
+            currentUserCanComment: () => _faker.default.random.boolean(),
+            materializedPath: () => '/' + _faker.default.lorem.words(1),
+            size: () => _faker.default.random.number(),
+            node: _emberDataFactoryGuy.default.belongsTo('node')
+        }
+    });
+});
+define('sa-dashboard/tests/helpers/destroy-app', ['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = destroyApp;
   function destroyApp(application) {
-    _ember['default'].run(application, 'destroy');
+    Ember.run(application, 'destroy');
   }
 });
-define('analytics-dashboard/tests/helpers/destroy-app.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/helpers/ember-cli-clipboard', ['exports'], function (exports) {
   'use strict';
 
-  QUnit.module('JSHint | helpers/destroy-app.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'helpers/destroy-app.js should pass jshint.');
+  Object.defineProperty(exports, "__esModule", {
+    value: true
   });
+  exports.triggerSuccess = triggerSuccess;
+  exports.triggerError = triggerError;
+
+  exports.default = function () {
+    Ember.Test.registerAsyncHelper('triggerCopySuccess', function (app, selector = '.copy-btn') {
+      fireComponentActionFromApp(app, selector, 'success');
+    });
+
+    Ember.Test.registerAsyncHelper('triggerCopyError', function (app, selector = '.copy-btn') {
+      fireComponentActionFromApp(app, selector, 'error');
+    });
+  };
+
+  /* === Integration Test Helpers === */
+
+  /**
+   * Fires `success` action for an instance of a copy-button component
+   * @function triggerSuccess
+   * @param {Object} context - integration test’s this context
+   * @param {String|Element} selector - selector of the copy-button instance
+   * @returns {Void}
+   */
+  function triggerSuccess(context, selector) {
+    fireComponentAction(context, selector, 'success');
+  }
+
+  /**
+   * Fires `error` action for an instance of a copy-button component
+   * @function triggerError
+   * @param {Object} context - integration test’s this context
+   * @param {String|Element} selector - selector of the copy-button instance
+   * @returns {Void}
+   */
+  function triggerError(context, selector) {
+    fireComponentAction(context, selector, 'error');
+  }
+
+  /* === Acceptance Test Helpers === */
+
+  /**
+   * Default export is a function that registers acceptance test helpers
+   */
+
+
+  /* === Private Functions === */
+
+  /**
+   * Fires named action for an instance of a copy-button component in an app
+   * @function fireComponentActionFromApp
+   * @param {Object} app - Ember application
+   * @param {String|Element} selector - selector of the copy-button instance
+   * @param {String} actionName - name of action
+   * @returns {Void}
+   */
+  function fireComponentActionFromApp(app, selector, actionName) {
+    fireComponentAction({
+      container: app.__container__,
+      $: app.$
+    }, selector, actionName);
+  }
+
+  /**
+   * Fires named action for an instance of a copy-button component
+   * @function fireComponentAction
+   * @param {Object} context - test context
+   * @param {String|Element} selector - selector of the copy-button instance
+   * @param {String} actionName - name of action
+   * @returns {Void}
+   */
+  function fireComponentAction(context, selector, actionName) {
+    let component = getComponentBySelector(context, selector);
+    fireActionByName(component, actionName);
+  }
+
+  /**
+   * Fetches component reference for a given context and selector
+   * @function getComponentBySelector
+   * @param {Object} context - test context
+   * @param {String|Element} selector - selector of the copy-button instance
+   * @returns {Object} component object
+   */
+  function getComponentBySelector(context, selector = '.copy-btn') {
+    let emberId = context.$(selector).attr('id');
+    return context.container.lookup('-view-registry:main')[emberId];
+  }
+
+  /**
+   * Fires a component's action given an action name
+   * @function fireActionByName
+   * @param {Ember.Component} component - component to fire action from
+   * @param {String} actionName - name of action
+   * @returns {Void}
+   */
+  function fireActionByName(component, actionName) {
+    let action = component[actionName];
+
+    Ember.run(() => {
+      if (typeof action === 'string') {
+        component.sendAction(action);
+      } else {
+        action();
+      }
+    });
+  }
 });
-define('analytics-dashboard/tests/helpers/ember-i18n/test-helpers', ['exports', 'ember'], function (exports, _ember) {
+define('sa-dashboard/tests/helpers/ember-i18n/test-helpers', [], function () {
+  'use strict';
 
   // example usage: find(`.header:contains(${t('welcome_message')})`)
-  _ember['default'].Test.registerHelper('t', function (app, key, interpolations) {
-    var i18n = app.__container__.lookup('service:i18n');
+  Ember.Test.registerHelper('t', function (app, key, interpolations) {
+    const i18n = app.__container__.lookup('service:i18n');
     return i18n.t(key, interpolations);
   });
 
   // example usage: expectTranslation('.header', 'welcome_message');
-  _ember['default'].Test.registerHelper('expectTranslation', function (app, element, key, interpolations) {
-    var text = app.testHelpers.t(key, interpolations);
+  Ember.Test.registerHelper('expectTranslation', function (app, element, key, interpolations) {
+    const text = app.testHelpers.t(key, interpolations);
 
     assertTranslation(element, key, text);
   });
 
-  var assertTranslation = (function () {
-    if (typeof QUnit !== 'undefined' && typeof ok === 'function') {
+  const assertTranslation = function () {
+    if (typeof QUnit !== 'undefined' && typeof QUnit.assert.ok === 'function') {
       return function (element, key, text) {
-        ok(find(element + ':contains(' + text + ')').length, 'Found translation key ' + key + ' in ' + element);
+        QUnit.assert.ok(find(`${element}:contains(${text})`).length, `Found translation key ${key} in ${element}`);
       };
     } else if (typeof expect === 'function') {
       return function (element, key, text) {
-        var found = !!find(element + ':contains(' + text + ')').length;
+        const found = !!find(`${element}:contains(${text})`).length;
         expect(found).to.equal(true);
       };
     } else {
@@ -259,115 +788,150 @@ define('analytics-dashboard/tests/helpers/ember-i18n/test-helpers', ['exports', 
         throw new Error("ember-i18n could not find a compatible test framework");
       };
     }
-  })();
+  }();
 });
-define('analytics-dashboard/tests/helpers/ember-simple-auth', ['exports', 'ember-simple-auth/authenticators/test'], function (exports, _emberSimpleAuthAuthenticatorsTest) {
+define('sa-dashboard/tests/helpers/ember-power-select', ['exports', 'ember-power-select/test-support/helpers'], function (exports, _helpers) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.selectChoose = exports.touchTrigger = exports.nativeTouch = exports.clickTrigger = exports.typeInSearch = exports.triggerKeydown = exports.nativeMouseUp = exports.nativeMouseDown = exports.findContains = undefined;
+  exports.default = deprecatedRegisterHelpers;
+
+
+  function deprecateHelper(fn, name) {
+    return function (...args) {
+      (true && !(false) && Ember.deprecate(`DEPRECATED \`import { ${name} } from '../../tests/helpers/ember-power-select';\` is deprecated. Please, replace it with \`import { ${name} } from 'ember-power-select/test-support/helpers';\``, false, { until: '1.11.0', id: `ember-power-select-test-support-${name}` }));
+
+      return fn(...args);
+    };
+  }
+
+  let findContains = deprecateHelper(_helpers.findContains, 'findContains');
+  let nativeMouseDown = deprecateHelper(_helpers.nativeMouseDown, 'nativeMouseDown');
+  let nativeMouseUp = deprecateHelper(_helpers.nativeMouseUp, 'nativeMouseUp');
+  let triggerKeydown = deprecateHelper(_helpers.triggerKeydown, 'triggerKeydown');
+  let typeInSearch = deprecateHelper(_helpers.typeInSearch, 'typeInSearch');
+  let clickTrigger = deprecateHelper(_helpers.clickTrigger, 'clickTrigger');
+  let nativeTouch = deprecateHelper(_helpers.nativeTouch, 'nativeTouch');
+  let touchTrigger = deprecateHelper(_helpers.touchTrigger, 'touchTrigger');
+  let selectChoose = deprecateHelper(_helpers.selectChoose, 'selectChoose');
+
+  function deprecatedRegisterHelpers() {
+    (true && !(false) && Ember.deprecate("DEPRECATED `import registerPowerSelectHelpers from '../../tests/helpers/ember-power-select';` is deprecated. Please, replace it with `import registerPowerSelectHelpers from 'ember-power-select/test-support/helpers';`", false, { until: '1.11.0', id: 'ember-power-select-test-support-register-helpers' }));
+
+    return (0, _helpers.default)();
+  }
+
+  exports.findContains = findContains;
+  exports.nativeMouseDown = nativeMouseDown;
+  exports.nativeMouseUp = nativeMouseUp;
+  exports.triggerKeydown = triggerKeydown;
+  exports.typeInSearch = typeInSearch;
+  exports.clickTrigger = clickTrigger;
+  exports.nativeTouch = nativeTouch;
+  exports.touchTrigger = touchTrigger;
+  exports.selectChoose = selectChoose;
+});
+define('sa-dashboard/tests/helpers/ember-simple-auth', ['exports', 'ember-simple-auth/authenticators/test'], function (exports, _test) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
   exports.authenticateSession = authenticateSession;
   exports.currentSession = currentSession;
   exports.invalidateSession = invalidateSession;
 
-  var TEST_CONTAINER_KEY = 'authenticator:test';
+
+  const TEST_CONTAINER_KEY = 'authenticator:test';
 
   function ensureAuthenticator(app, container) {
-    var authenticator = container.lookup(TEST_CONTAINER_KEY);
+    const authenticator = container.lookup(TEST_CONTAINER_KEY);
     if (!authenticator) {
-      app.register(TEST_CONTAINER_KEY, _emberSimpleAuthAuthenticatorsTest['default']);
+      app.register(TEST_CONTAINER_KEY, _test.default);
     }
   }
 
   function authenticateSession(app, sessionData) {
-    var container = app.__container__;
-
-    var session = container.lookup('service:session');
+    const { __container__: container } = app;
+    const session = container.lookup('service:session');
     ensureAuthenticator(app, container);
     session.authenticate(TEST_CONTAINER_KEY, sessionData);
-    return wait();
+    return app.testHelpers.wait();
   }
-
-  ;
 
   function currentSession(app) {
     return app.__container__.lookup('service:session');
   }
 
-  ;
-
   function invalidateSession(app) {
-    var session = app.__container__.lookup('service:session');
+    const session = app.__container__.lookup('service:session');
     if (session.get('isAuthenticated')) {
       session.invalidate();
     }
-    return wait();
+    return app.testHelpers.wait();
   }
-
-  ;
 });
-define('analytics-dashboard/tests/helpers/module-for-acceptance', ['exports', 'qunit', 'ember', 'analytics-dashboard/tests/helpers/start-app', 'analytics-dashboard/tests/helpers/destroy-app'], function (exports, _qunit, _ember, _analyticsDashboardTestsHelpersStartApp, _analyticsDashboardTestsHelpersDestroyApp) {
-  var Promise = _ember['default'].RSVP.Promise;
+define('sa-dashboard/tests/helpers/module-for-acceptance', ['exports', 'qunit', 'sa-dashboard/tests/helpers/start-app', 'sa-dashboard/tests/helpers/destroy-app'], function (exports, _qunit, _startApp, _destroyApp) {
+  'use strict';
 
-  exports['default'] = function (name) {
-    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
 
+  exports.default = function (name, options = {}) {
     (0, _qunit.module)(name, {
-      beforeEach: function beforeEach() {
-        this.application = (0, _analyticsDashboardTestsHelpersStartApp['default'])();
+      beforeEach() {
+        this.application = (0, _startApp.default)();
 
         if (options.beforeEach) {
           return options.beforeEach.apply(this, arguments);
         }
       },
 
-      afterEach: function afterEach() {
-        var _this = this;
-
-        var afterEach = options.afterEach && options.afterEach.apply(this, arguments);
-        return Promise.resolve(afterEach).then(function () {
-          return (0, _analyticsDashboardTestsHelpersDestroyApp['default'])(_this.application);
-        });
+      afterEach() {
+        let afterEach = options.afterEach && options.afterEach.apply(this, arguments);
+        return Promise.resolve(afterEach).then(() => (0, _destroyApp.default)(this.application));
       }
     });
   };
+
+  const { RSVP: { Promise } } = Ember;
 });
-define('analytics-dashboard/tests/helpers/module-for-acceptance.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/helpers/resolver', ['exports', 'sa-dashboard/resolver', 'sa-dashboard/config/environment'], function (exports, _resolver, _environment) {
   'use strict';
 
-  QUnit.module('JSHint | helpers/module-for-acceptance.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'helpers/module-for-acceptance.js should pass jshint.');
+  Object.defineProperty(exports, "__esModule", {
+    value: true
   });
-});
-define('analytics-dashboard/tests/helpers/resolver', ['exports', 'analytics-dashboard/resolver', 'analytics-dashboard/config/environment'], function (exports, _analyticsDashboardResolver, _analyticsDashboardConfigEnvironment) {
 
-  var resolver = _analyticsDashboardResolver['default'].create();
+
+  const resolver = _resolver.default.create();
 
   resolver.namespace = {
-    modulePrefix: _analyticsDashboardConfigEnvironment['default'].modulePrefix,
-    podModulePrefix: _analyticsDashboardConfigEnvironment['default'].podModulePrefix
+    modulePrefix: _environment.default.modulePrefix,
+    podModulePrefix: _environment.default.podModulePrefix
   };
 
-  exports['default'] = resolver;
+  exports.default = resolver;
 });
-define('analytics-dashboard/tests/helpers/resolver.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/helpers/start-app', ['exports', 'sa-dashboard/app', 'sa-dashboard/config/environment'], function (exports, _app, _environment) {
   'use strict';
 
-  QUnit.module('JSHint | helpers/resolver.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'helpers/resolver.js should pass jshint.');
+  Object.defineProperty(exports, "__esModule", {
+    value: true
   });
-});
-define('analytics-dashboard/tests/helpers/start-app', ['exports', 'ember', 'analytics-dashboard/app', 'analytics-dashboard/config/environment'], function (exports, _ember, _analyticsDashboardApp, _analyticsDashboardConfigEnvironment) {
-  exports['default'] = startApp;
-
+  exports.default = startApp;
   function startApp(attrs) {
-    var application = undefined;
+    let application;
 
-    var attributes = _ember['default'].merge({}, _analyticsDashboardConfigEnvironment['default'].APP);
-    attributes = _ember['default'].merge(attributes, attrs); // use defaults, but you can override;
+    let attributes = Ember.merge({}, _environment.default.APP);
+    attributes = Ember.merge(attributes, attrs); // use defaults, but you can override;
 
-    _ember['default'].run(function () {
-      application = _analyticsDashboardApp['default'].create(attributes);
+    Ember.run(() => {
+      application = _app.default.create(attributes);
       application.setupForTesting();
       application.injectTestHelpers();
     });
@@ -375,43 +939,8 @@ define('analytics-dashboard/tests/helpers/start-app', ['exports', 'ember', 'anal
     return application;
   }
 });
-define('analytics-dashboard/tests/helpers/start-app.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/integration/components/dropdown-widget/component-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | helpers/start-app.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'helpers/start-app.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/initializers/component-routes.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | initializers/component-routes.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'initializers/component-routes.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/initializers/promise.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | initializers/promise.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'initializers/promise.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/instance-initializers/global.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | instance-initializers/global.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'instance-initializers/global.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/integration/components/dropdown-widget/component-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForComponent)('dropdown-widget', 'Integration | Component | dropdown widget', {
     integration: true
@@ -422,137 +951,26 @@ define('analytics-dashboard/tests/integration/components/dropdown-widget/compone
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    this.render(Ember.HTMLBars.template((function () {
-      return {
-        meta: {
-          'revision': 'Ember@2.7.3',
-          'loc': {
-            'source': null,
-            'start': {
-              'line': 1,
-              'column': 0
-            },
-            'end': {
-              'line': 1,
-              'column': 19
-            }
-          }
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createComment('');
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
-          dom.insertBoundary(fragment, 0);
-          dom.insertBoundary(fragment, null);
-          return morphs;
-        },
-        statements: [['content', 'dropdown-widget', ['loc', [null, [1, 0], [1, 19]]], 0, 0, 0, 0]],
-        locals: [],
-        templates: []
-      };
-    })()));
+    this.render(Ember.HTMLBars.template({
+      "id": "Zx2iw6ky",
+      "block": "{\"symbols\":[],\"statements\":[[1,[18,\"dropdown-widget\"],false]],\"hasEval\":false}",
+      "meta": {}
+    }));
 
     assert.equal(this.$().text().trim(), '');
 
     // Template block usage:
-    this.render(Ember.HTMLBars.template((function () {
-      var child0 = (function () {
-        return {
-          meta: {
-            'revision': 'Ember@2.7.3',
-            'loc': {
-              'source': null,
-              'start': {
-                'line': 2,
-                'column': 4
-              },
-              'end': {
-                'line': 4,
-                'column': 4
-              }
-            }
-          },
-          isEmpty: false,
-          arity: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          buildFragment: function buildFragment(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode('      template block text\n');
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          buildRenderNodes: function buildRenderNodes() {
-            return [];
-          },
-          statements: [],
-          locals: [],
-          templates: []
-        };
-      })();
-
-      return {
-        meta: {
-          'revision': 'Ember@2.7.3',
-          'loc': {
-            'source': null,
-            'start': {
-              'line': 1,
-              'column': 0
-            },
-            'end': {
-              'line': 5,
-              'column': 2
-            }
-          }
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createTextNode('\n');
-          dom.appendChild(el0, el1);
-          var el1 = dom.createComment('');
-          dom.appendChild(el0, el1);
-          var el1 = dom.createTextNode('  ');
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
-          return morphs;
-        },
-        statements: [['block', 'dropdown-widget', [], [], 0, null, ['loc', [null, [2, 4], [4, 24]]]]],
-        locals: [],
-        templates: [child0]
-      };
-    })()));
+    this.render(Ember.HTMLBars.template({
+      "id": "CQA3uNvF",
+      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n\"],[4,\"dropdown-widget\",null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"parameters\":[]},null],[0,\"  \"]],\"hasEval\":false}",
+      "meta": {}
+    }));
 
     assert.equal(this.$().text().trim(), 'template block text');
   });
 });
-define('analytics-dashboard/tests/integration/components/dropdown-widget/component-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/integration/components/list-widget/component-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | integration/components/dropdown-widget/component-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'integration/components/dropdown-widget/component-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/integration/components/list-widget/component-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForComponent)('list-widget', 'Integration | Component | list widget', {
     integration: true
@@ -562,137 +980,26 @@ define('analytics-dashboard/tests/integration/components/list-widget/component-t
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    this.render(Ember.HTMLBars.template((function () {
-      return {
-        meta: {
-          'revision': 'Ember@2.7.3',
-          'loc': {
-            'source': null,
-            'start': {
-              'line': 1,
-              'column': 0
-            },
-            'end': {
-              'line': 1,
-              'column': 15
-            }
-          }
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createComment('');
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
-          dom.insertBoundary(fragment, 0);
-          dom.insertBoundary(fragment, null);
-          return morphs;
-        },
-        statements: [['content', 'list-widget', ['loc', [null, [1, 0], [1, 15]]], 0, 0, 0, 0]],
-        locals: [],
-        templates: []
-      };
-    })()));
+    this.render(Ember.HTMLBars.template({
+      "id": "Ie2vnriM",
+      "block": "{\"symbols\":[],\"statements\":[[1,[18,\"list-widget\"],false]],\"hasEval\":false}",
+      "meta": {}
+    }));
 
     assert.equal(this.$().text().trim(), '');
 
     // Template block usage:
-    this.render(Ember.HTMLBars.template((function () {
-      var child0 = (function () {
-        return {
-          meta: {
-            'revision': 'Ember@2.7.3',
-            'loc': {
-              'source': null,
-              'start': {
-                'line': 2,
-                'column': 4
-              },
-              'end': {
-                'line': 4,
-                'column': 4
-              }
-            }
-          },
-          isEmpty: false,
-          arity: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          buildFragment: function buildFragment(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode('      template block text\n');
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          buildRenderNodes: function buildRenderNodes() {
-            return [];
-          },
-          statements: [],
-          locals: [],
-          templates: []
-        };
-      })();
-
-      return {
-        meta: {
-          'revision': 'Ember@2.7.3',
-          'loc': {
-            'source': null,
-            'start': {
-              'line': 1,
-              'column': 0
-            },
-            'end': {
-              'line': 5,
-              'column': 2
-            }
-          }
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createTextNode('\n');
-          dom.appendChild(el0, el1);
-          var el1 = dom.createComment('');
-          dom.appendChild(el0, el1);
-          var el1 = dom.createTextNode('  ');
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
-          return morphs;
-        },
-        statements: [['block', 'list-widget', [], [], 0, null, ['loc', [null, [2, 4], [4, 20]]]]],
-        locals: [],
-        templates: [child0]
-      };
-    })()));
+    this.render(Ember.HTMLBars.template({
+      "id": "PCaUaotl",
+      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n\"],[4,\"list-widget\",null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"parameters\":[]},null],[0,\"  \"]],\"hasEval\":false}",
+      "meta": {}
+    }));
 
     assert.equal(this.$().text().trim(), 'template block text');
   });
 });
-define('analytics-dashboard/tests/integration/components/list-widget/component-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/integration/components/number-widget/component-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | integration/components/list-widget/component-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'integration/components/list-widget/component-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/integration/components/number-widget/component-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForComponent)('number-widget', 'Integration | Component | number widget', {
     integration: true
@@ -702,137 +1009,26 @@ define('analytics-dashboard/tests/integration/components/number-widget/component
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    this.render(Ember.HTMLBars.template((function () {
-      return {
-        meta: {
-          'revision': 'Ember@2.7.3',
-          'loc': {
-            'source': null,
-            'start': {
-              'line': 1,
-              'column': 0
-            },
-            'end': {
-              'line': 1,
-              'column': 17
-            }
-          }
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createComment('');
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
-          dom.insertBoundary(fragment, 0);
-          dom.insertBoundary(fragment, null);
-          return morphs;
-        },
-        statements: [['content', 'number-widget', ['loc', [null, [1, 0], [1, 17]]], 0, 0, 0, 0]],
-        locals: [],
-        templates: []
-      };
-    })()));
+    this.render(Ember.HTMLBars.template({
+      "id": "+EF4F04R",
+      "block": "{\"symbols\":[],\"statements\":[[1,[18,\"number-widget\"],false]],\"hasEval\":false}",
+      "meta": {}
+    }));
 
     assert.equal(this.$().text().trim(), '');
 
     // Template block usage:
-    this.render(Ember.HTMLBars.template((function () {
-      var child0 = (function () {
-        return {
-          meta: {
-            'revision': 'Ember@2.7.3',
-            'loc': {
-              'source': null,
-              'start': {
-                'line': 2,
-                'column': 4
-              },
-              'end': {
-                'line': 4,
-                'column': 4
-              }
-            }
-          },
-          isEmpty: false,
-          arity: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          buildFragment: function buildFragment(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode('      template block text\n');
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          buildRenderNodes: function buildRenderNodes() {
-            return [];
-          },
-          statements: [],
-          locals: [],
-          templates: []
-        };
-      })();
-
-      return {
-        meta: {
-          'revision': 'Ember@2.7.3',
-          'loc': {
-            'source': null,
-            'start': {
-              'line': 1,
-              'column': 0
-            },
-            'end': {
-              'line': 5,
-              'column': 2
-            }
-          }
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createTextNode('\n');
-          dom.appendChild(el0, el1);
-          var el1 = dom.createComment('');
-          dom.appendChild(el0, el1);
-          var el1 = dom.createTextNode('  ');
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
-          return morphs;
-        },
-        statements: [['block', 'number-widget', [], [], 0, null, ['loc', [null, [2, 4], [4, 22]]]]],
-        locals: [],
-        templates: [child0]
-      };
-    })()));
+    this.render(Ember.HTMLBars.template({
+      "id": "avyA3ORz",
+      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n\"],[4,\"number-widget\",null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"parameters\":[]},null],[0,\"  \"]],\"hasEval\":false}",
+      "meta": {}
+    }));
 
     assert.equal(this.$().text().trim(), 'template block text');
   });
 });
-define('analytics-dashboard/tests/integration/components/number-widget/component-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/integration/components/search-facet-daterange/component-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | integration/components/number-widget/component-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'integration/components/number-widget/component-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/integration/components/search-facet-daterange/component-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForComponent)('search-facet-daterange', 'Integration | Component | search facet daterange', {
     integration: true
@@ -843,137 +1039,26 @@ define('analytics-dashboard/tests/integration/components/search-facet-daterange/
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    this.render(Ember.HTMLBars.template((function () {
-      return {
-        meta: {
-          'revision': 'Ember@2.7.3',
-          'loc': {
-            'source': null,
-            'start': {
-              'line': 1,
-              'column': 0
-            },
-            'end': {
-              'line': 1,
-              'column': 26
-            }
-          }
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createComment('');
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
-          dom.insertBoundary(fragment, 0);
-          dom.insertBoundary(fragment, null);
-          return morphs;
-        },
-        statements: [['content', 'search-facet-daterange', ['loc', [null, [1, 0], [1, 26]]], 0, 0, 0, 0]],
-        locals: [],
-        templates: []
-      };
-    })()));
+    this.render(Ember.HTMLBars.template({
+      "id": "G8WhguPw",
+      "block": "{\"symbols\":[],\"statements\":[[1,[18,\"search-facet-daterange\"],false]],\"hasEval\":false}",
+      "meta": {}
+    }));
 
     assert.equal(this.$().text().trim(), '');
 
     // Template block usage:
-    this.render(Ember.HTMLBars.template((function () {
-      var child0 = (function () {
-        return {
-          meta: {
-            'revision': 'Ember@2.7.3',
-            'loc': {
-              'source': null,
-              'start': {
-                'line': 2,
-                'column': 4
-              },
-              'end': {
-                'line': 4,
-                'column': 4
-              }
-            }
-          },
-          isEmpty: false,
-          arity: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          buildFragment: function buildFragment(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode('      template block text\n');
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          buildRenderNodes: function buildRenderNodes() {
-            return [];
-          },
-          statements: [],
-          locals: [],
-          templates: []
-        };
-      })();
-
-      return {
-        meta: {
-          'revision': 'Ember@2.7.3',
-          'loc': {
-            'source': null,
-            'start': {
-              'line': 1,
-              'column': 0
-            },
-            'end': {
-              'line': 5,
-              'column': 2
-            }
-          }
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createTextNode('\n');
-          dom.appendChild(el0, el1);
-          var el1 = dom.createComment('');
-          dom.appendChild(el0, el1);
-          var el1 = dom.createTextNode('  ');
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
-          return morphs;
-        },
-        statements: [['block', 'search-facet-daterange', [], [], 0, null, ['loc', [null, [2, 4], [4, 31]]]]],
-        locals: [],
-        templates: [child0]
-      };
-    })()));
+    this.render(Ember.HTMLBars.template({
+      "id": "8MFfJiCP",
+      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n\"],[4,\"search-facet-daterange\",null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"parameters\":[]},null],[0,\"  \"]],\"hasEval\":false}",
+      "meta": {}
+    }));
 
     assert.equal(this.$().text().trim(), 'template block text');
   });
 });
-define('analytics-dashboard/tests/integration/components/search-facet-daterange/component-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/integration/components/stacked-bars/component-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | integration/components/search-facet-daterange/component-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'integration/components/search-facet-daterange/component-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/integration/components/stacked-bars/component-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForComponent)('stacked-bars', 'Integration | Component | stacked bars', {
     integration: true
@@ -983,137 +1068,26 @@ define('analytics-dashboard/tests/integration/components/stacked-bars/component-
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    this.render(Ember.HTMLBars.template((function () {
-      return {
-        meta: {
-          'revision': 'Ember@2.7.3',
-          'loc': {
-            'source': null,
-            'start': {
-              'line': 1,
-              'column': 0
-            },
-            'end': {
-              'line': 1,
-              'column': 16
-            }
-          }
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createComment('');
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
-          dom.insertBoundary(fragment, 0);
-          dom.insertBoundary(fragment, null);
-          return morphs;
-        },
-        statements: [['content', 'stacked-bars', ['loc', [null, [1, 0], [1, 16]]], 0, 0, 0, 0]],
-        locals: [],
-        templates: []
-      };
-    })()));
+    this.render(Ember.HTMLBars.template({
+      "id": "H88VzVs5",
+      "block": "{\"symbols\":[],\"statements\":[[1,[18,\"stacked-bars\"],false]],\"hasEval\":false}",
+      "meta": {}
+    }));
 
     assert.equal(this.$().text().trim(), '');
 
     // Template block usage:
-    this.render(Ember.HTMLBars.template((function () {
-      var child0 = (function () {
-        return {
-          meta: {
-            'revision': 'Ember@2.7.3',
-            'loc': {
-              'source': null,
-              'start': {
-                'line': 2,
-                'column': 4
-              },
-              'end': {
-                'line': 4,
-                'column': 4
-              }
-            }
-          },
-          isEmpty: false,
-          arity: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          buildFragment: function buildFragment(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode('      template block text\n');
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          buildRenderNodes: function buildRenderNodes() {
-            return [];
-          },
-          statements: [],
-          locals: [],
-          templates: []
-        };
-      })();
-
-      return {
-        meta: {
-          'revision': 'Ember@2.7.3',
-          'loc': {
-            'source': null,
-            'start': {
-              'line': 1,
-              'column': 0
-            },
-            'end': {
-              'line': 5,
-              'column': 2
-            }
-          }
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createTextNode('\n');
-          dom.appendChild(el0, el1);
-          var el1 = dom.createComment('');
-          dom.appendChild(el0, el1);
-          var el1 = dom.createTextNode('  ');
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
-          return morphs;
-        },
-        statements: [['block', 'stacked-bars', [], [], 0, null, ['loc', [null, [2, 4], [4, 21]]]]],
-        locals: [],
-        templates: [child0]
-      };
-    })()));
+    this.render(Ember.HTMLBars.template({
+      "id": "VzKgoZJe",
+      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n\"],[4,\"stacked-bars\",null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"parameters\":[]},null],[0,\"  \"]],\"hasEval\":false}",
+      "meta": {}
+    }));
 
     assert.equal(this.$().text().trim(), 'template block text');
   });
 });
-define('analytics-dashboard/tests/integration/components/stacked-bars/component-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/integration/components/user-feedback-form/component-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | integration/components/stacked-bars/component-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'integration/components/stacked-bars/component-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/integration/components/user-feedback-form/component-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForComponent)('user-feedback-form', 'Integration | Component | user feedback form', {
     integration: true
@@ -1124,222 +1098,156 @@ define('analytics-dashboard/tests/integration/components/user-feedback-form/comp
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    this.render(Ember.HTMLBars.template((function () {
-      return {
-        meta: {
-          'revision': 'Ember@2.7.3',
-          'loc': {
-            'source': null,
-            'start': {
-              'line': 1,
-              'column': 0
-            },
-            'end': {
-              'line': 1,
-              'column': 22
-            }
-          }
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createComment('');
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
-          dom.insertBoundary(fragment, 0);
-          dom.insertBoundary(fragment, null);
-          return morphs;
-        },
-        statements: [['content', 'user-feedback-form', ['loc', [null, [1, 0], [1, 22]]], 0, 0, 0, 0]],
-        locals: [],
-        templates: []
-      };
-    })()));
+    this.render(Ember.HTMLBars.template({
+      "id": "ymj+tGTC",
+      "block": "{\"symbols\":[],\"statements\":[[1,[18,\"user-feedback-form\"],false]],\"hasEval\":false}",
+      "meta": {}
+    }));
 
     assert.equal(this.$().text().trim(), '');
 
     // Template block usage:
-    this.render(Ember.HTMLBars.template((function () {
-      var child0 = (function () {
-        return {
-          meta: {
-            'revision': 'Ember@2.7.3',
-            'loc': {
-              'source': null,
-              'start': {
-                'line': 2,
-                'column': 4
-              },
-              'end': {
-                'line': 4,
-                'column': 4
-              }
-            }
-          },
-          isEmpty: false,
-          arity: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          buildFragment: function buildFragment(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode('      template block text\n');
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          buildRenderNodes: function buildRenderNodes() {
-            return [];
-          },
-          statements: [],
-          locals: [],
-          templates: []
-        };
-      })();
-
-      return {
-        meta: {
-          'revision': 'Ember@2.7.3',
-          'loc': {
-            'source': null,
-            'start': {
-              'line': 1,
-              'column': 0
-            },
-            'end': {
-              'line': 5,
-              'column': 2
-            }
-          }
-        },
-        isEmpty: false,
-        arity: 0,
-        cachedFragment: null,
-        hasRendered: false,
-        buildFragment: function buildFragment(dom) {
-          var el0 = dom.createDocumentFragment();
-          var el1 = dom.createTextNode('\n');
-          dom.appendChild(el0, el1);
-          var el1 = dom.createComment('');
-          dom.appendChild(el0, el1);
-          var el1 = dom.createTextNode('  ');
-          dom.appendChild(el0, el1);
-          return el0;
-        },
-        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
-          return morphs;
-        },
-        statements: [['block', 'user-feedback-form', [], [], 0, null, ['loc', [null, [2, 4], [4, 27]]]]],
-        locals: [],
-        templates: [child0]
-      };
-    })()));
+    this.render(Ember.HTMLBars.template({
+      "id": "MtpaSfAV",
+      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n\"],[4,\"user-feedback-form\",null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"parameters\":[]},null],[0,\"  \"]],\"hasEval\":false}",
+      "meta": {}
+    }));
 
     assert.equal(this.$().text().trim(), 'template block text');
   });
 });
-define('analytics-dashboard/tests/integration/components/user-feedback-form/component-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/test-helper', ['sa-dashboard/tests/helpers/resolver', 'ember-qunit'], function (_resolver, _emberQunit) {
   'use strict';
 
-  QUnit.module('JSHint | integration/components/user-feedback-form/component-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'integration/components/user-feedback-form/component-test.js should pass jshint.');
-  });
+  (0, _emberQunit.setResolver)(_resolver.default);
 });
-define('analytics-dashboard/tests/models/dashboard.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/tests.lint-test', [], function () {
   'use strict';
 
-  QUnit.module('JSHint | models/dashboard.js');
-  QUnit.test('should pass jshint', function (assert) {
+  QUnit.module('ESLint | tests');
+
+  QUnit.test('helpers/destroy-app.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'models/dashboard.js should pass jshint.');
+    assert.ok(false, 'helpers/destroy-app.js should pass ESLint\n\n4:3 - Use import { run } from \'@ember/runloop\'; instead of using Ember.run (ember/new-module-imports)');
+  });
+
+  QUnit.test('helpers/module-for-acceptance.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'helpers/module-for-acceptance.js should pass ESLint\n\n6:17 - Use import { Promise } from \'rsvp\'; instead of using Ember destructuring (ember/new-module-imports)');
+  });
+
+  QUnit.test('helpers/resolver.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'helpers/resolver.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('helpers/start-app.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'helpers/start-app.js should pass ESLint\n\n8:20 - Use import { merge } from \'@ember/polyfills\'; instead of using Ember.merge (ember/new-module-imports)\n9:16 - Use import { merge } from \'@ember/polyfills\'; instead of using Ember.merge (ember/new-module-imports)\n11:3 - Use import { run } from \'@ember/runloop\'; instead of using Ember.run (ember/new-module-imports)');
+  });
+
+  QUnit.test('integration/components/dropdown-widget/component-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/dropdown-widget/component-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('integration/components/list-widget/component-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/list-widget/component-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('integration/components/number-widget/component-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/number-widget/component-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('integration/components/search-facet-daterange/component-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/search-facet-daterange/component-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('integration/components/stacked-bars/component-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/stacked-bars/component-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('integration/components/user-feedback-form/component-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/user-feedback-form/component-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('test-helper.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'test-helper.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/adapters/application-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/adapters/application-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/adapters/widget-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/adapters/widget-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/controllers/dashboard-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/controllers/dashboard-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/controllers/widget-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/controllers/widget-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/helpers/add-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/helpers/add-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/instance-initializers/global-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'unit/instance-initializers/global-test.js should pass ESLint\n\n8:5 - Use import { run } from \'@ember/runloop\'; instead of using Ember.run (ember/new-module-imports)\n9:26 - Use import Application from \'@ember/application\'; instead of using Ember.Application (ember/new-module-imports)\n14:5 - Use import { run } from \'@ember/runloop\'; instead of using Ember.run (ember/new-module-imports)');
+  });
+
+  QUnit.test('unit/instance-initializers/global.js-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'unit/instance-initializers/global.js-test.js should pass ESLint\n\n8:5 - Use import { run } from \'@ember/runloop\'; instead of using Ember.run (ember/new-module-imports)\n9:26 - Use import Application from \'@ember/application\'; instead of using Ember.Application (ember/new-module-imports)\n14:5 - Use import { run } from \'@ember/runloop\'; instead of using Ember.run (ember/new-module-imports)');
+  });
+
+  QUnit.test('unit/models/dashboard-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/models/dashboard-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/models/institution-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/models/institution-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/models/widget-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/models/widget-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/routes/dashboard-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/dashboard-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/utils/currency-rounder-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'unit/utils/currency-rounder-test.js should pass ESLint\n\n2:10 - \'module\' is defined but never used. (no-unused-vars)');
+  });
+
+  QUnit.test('unit/utils/date-interval-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/utils/date-interval-test.js should pass ESLint\n\n');
   });
 });
-define('analytics-dashboard/tests/models/institution.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/adapters/application-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | models/institution.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'models/institution.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/models/widget.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | models/widget.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'models/widget.js should pass jshint.\nmodels/widget.js: line 3, col 10, \'belongsTo\' is defined but never used.\n\n1 error');
-  });
-});
-define('analytics-dashboard/tests/resolver.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | resolver.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'resolver.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/router.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | router.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'router.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/routes/application.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | routes/application.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'routes/application.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/routes/dashboards.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | routes/dashboards.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'routes/dashboards.js should pass jshint.\nroutes/dashboards.js: line 6, col 41, Expected \'===\' and instead saw \'==\'.\nroutes/dashboards.js: line 2, col 8, \'AuthenticatedRouteMixin\' is defined but never used.\n\n2 errors');
-  });
-});
-define('analytics-dashboard/tests/routes/dashboards/dashboard.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | routes/dashboards/dashboard.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'routes/dashboards/dashboard.js should pass jshint.\nroutes/dashboards/dashboard.js: line 211, col 54, \'transition\' is defined but never used.\nroutes/dashboards/dashboard.js: line 235, col 59, Missing semicolon.\nroutes/dashboards/dashboard.js: line 243, col 41, \'queryParams\' is defined but never used.\nroutes/dashboards/dashboard.js: line 231, col 7, \'$\' is not defined.\n\n4 errors');
-  });
-});
-define('analytics-dashboard/tests/test-helper', ['exports', 'analytics-dashboard/tests/helpers/resolver', 'ember-qunit'], function (exports, _analyticsDashboardTestsHelpersResolver, _emberQunit) {
-
-  (0, _emberQunit.setResolver)(_analyticsDashboardTestsHelpersResolver['default']);
-});
-define('analytics-dashboard/tests/test-helper.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | test-helper.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'test-helper.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/unit/adapters/application-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleFor)('adapter:application', 'Unit | Adapter | application', {
     // Specify the other units that are required for this test.
@@ -1348,20 +1256,12 @@ define('analytics-dashboard/tests/unit/adapters/application-test', ['exports', '
 
   // Replace this with your real tests.
   (0, _emberQunit.test)('it exists', function (assert) {
-    var adapter = this.subject();
+    let adapter = this.subject();
     assert.ok(adapter);
   });
 });
-define('analytics-dashboard/tests/unit/adapters/application-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/adapters/widget-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | unit/adapters/application-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/adapters/application-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/unit/adapters/widget-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleFor)('adapter:widget', 'Unit | Adapter | widget', {
     // Specify the other units that are required for this test.
@@ -1370,20 +1270,12 @@ define('analytics-dashboard/tests/unit/adapters/widget-test', ['exports', 'ember
 
   // Replace this with your real tests.
   (0, _emberQunit.test)('it exists', function (assert) {
-    var adapter = this.subject();
+    let adapter = this.subject();
     assert.ok(adapter);
   });
 });
-define('analytics-dashboard/tests/unit/adapters/widget-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/controllers/dashboard-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | unit/adapters/widget-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/adapters/widget-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/unit/controllers/dashboard-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleFor)('controller:dashboard', 'Unit | Controller | dashboard', {
     // Specify the other units that are required for this test.
@@ -1392,20 +1284,12 @@ define('analytics-dashboard/tests/unit/controllers/dashboard-test', ['exports', 
 
   // Replace this with your real tests.
   (0, _emberQunit.test)('it exists', function (assert) {
-    var controller = this.subject();
+    let controller = this.subject();
     assert.ok(controller);
   });
 });
-define('analytics-dashboard/tests/unit/controllers/dashboard-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/controllers/widget-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | unit/controllers/dashboard-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/controllers/dashboard-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/unit/controllers/widget-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleFor)('controller:widget', 'Unit | Controller | widget', {
     // Specify the other units that are required for this test.
@@ -1414,107 +1298,71 @@ define('analytics-dashboard/tests/unit/controllers/widget-test', ['exports', 'em
 
   // Replace this with your real tests.
   (0, _emberQunit.test)('it exists', function (assert) {
-    var controller = this.subject();
+    let controller = this.subject();
     assert.ok(controller);
   });
 });
-define('analytics-dashboard/tests/unit/controllers/widget-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/helpers/add-test', ['tc3/helpers/add', 'qunit'], function (_add, _qunit) {
   'use strict';
-
-  QUnit.module('JSHint | unit/controllers/widget-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/controllers/widget-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/unit/helpers/add-test', ['exports', 'tc3/helpers/add', 'qunit'], function (exports, _tc3HelpersAdd, _qunit) {
 
   (0, _qunit.module)('Unit | Helper | add');
 
   // Replace this with your real tests.
   (0, _qunit.test)('it works', function (assert) {
-    var result = (0, _tc3HelpersAdd.add)([42]);
+    let result = (0, _add.add)([42]);
     assert.ok(result);
   });
 });
-define('analytics-dashboard/tests/unit/helpers/add-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/instance-initializers/global-test', ['tc3/instance-initializers/global', 'qunit', 'sa-dashboard/tests/helpers/destroy-app'], function (_global, _qunit, _destroyApp) {
   'use strict';
-
-  QUnit.module('JSHint | unit/helpers/add-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/helpers/add-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/unit/instance-initializers/global-test', ['exports', 'ember', 'tc3/instance-initializers/global', 'qunit', 'analytics-dashboard/tests/helpers/destroy-app'], function (exports, _ember, _tc3InstanceInitializersGlobal, _qunit, _analyticsDashboardTestsHelpersDestroyApp) {
 
   (0, _qunit.module)('Unit | Instance Initializer | global', {
-    beforeEach: function beforeEach() {
-      var _this = this;
-
-      _ember['default'].run(function () {
-        _this.application = _ember['default'].Application.create();
-        _this.appInstance = _this.application.buildInstance();
+    beforeEach: function () {
+      Ember.run(() => {
+        this.application = Ember.Application.create();
+        this.appInstance = this.application.buildInstance();
       });
     },
-    afterEach: function afterEach() {
-      _ember['default'].run(this.appInstance, 'destroy');
-      (0, _analyticsDashboardTestsHelpersDestroyApp['default'])(this.application);
+    afterEach: function () {
+      Ember.run(this.appInstance, 'destroy');
+      (0, _destroyApp.default)(this.application);
     }
   });
 
   // Replace this with your real tests.
   (0, _qunit.test)('it works', function (assert) {
-    (0, _tc3InstanceInitializersGlobal.initialize)(this.appInstance);
+    (0, _global.initialize)(this.appInstance);
 
     // you would normally confirm the results of the initializer here
     assert.ok(true);
   });
 });
-define('analytics-dashboard/tests/unit/instance-initializers/global-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/instance-initializers/global.js-test', ['tc3/instance-initializers/global.js', 'qunit', 'sa-dashboard/tests/helpers/destroy-app'], function (_global, _qunit, _destroyApp) {
   'use strict';
-
-  QUnit.module('JSHint | unit/instance-initializers/global-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/instance-initializers/global-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/unit/instance-initializers/global.js-test', ['exports', 'ember', 'tc3/instance-initializers/global.js', 'qunit', 'analytics-dashboard/tests/helpers/destroy-app'], function (exports, _ember, _tc3InstanceInitializersGlobalJs, _qunit, _analyticsDashboardTestsHelpersDestroyApp) {
 
   (0, _qunit.module)('Unit | Instance Initializer | global.js', {
-    beforeEach: function beforeEach() {
-      var _this = this;
-
-      _ember['default'].run(function () {
-        _this.application = _ember['default'].Application.create();
-        _this.appInstance = _this.application.buildInstance();
+    beforeEach: function () {
+      Ember.run(() => {
+        this.application = Ember.Application.create();
+        this.appInstance = this.application.buildInstance();
       });
     },
-    afterEach: function afterEach() {
-      _ember['default'].run(this.appInstance, 'destroy');
-      (0, _analyticsDashboardTestsHelpersDestroyApp['default'])(this.application);
+    afterEach: function () {
+      Ember.run(this.appInstance, 'destroy');
+      (0, _destroyApp.default)(this.application);
     }
   });
 
   // Replace this with your real tests.
   (0, _qunit.test)('it works', function (assert) {
-    (0, _tc3InstanceInitializersGlobalJs.initialize)(this.appInstance);
+    (0, _global.initialize)(this.appInstance);
 
     // you would normally confirm the results of the initializer here
     assert.ok(true);
   });
 });
-define('analytics-dashboard/tests/unit/instance-initializers/global.js-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/models/dashboard-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | unit/instance-initializers/global.js-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/instance-initializers/global.js-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/unit/models/dashboard-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForModel)('dashboard', 'Unit | Model | dashboard', {
     // Specify the other units that are required for this test.
@@ -1522,21 +1370,13 @@ define('analytics-dashboard/tests/unit/models/dashboard-test', ['exports', 'embe
   });
 
   (0, _emberQunit.test)('it exists', function (assert) {
-    var model = this.subject();
+    let model = this.subject();
     // let store = this.store();
     assert.ok(!!model);
   });
 });
-define('analytics-dashboard/tests/unit/models/dashboard-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/models/institution-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | unit/models/dashboard-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/models/dashboard-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/unit/models/institution-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForModel)('institution', 'Unit | Model | institution', {
     // Specify the other units that are required for this test.
@@ -1544,21 +1384,13 @@ define('analytics-dashboard/tests/unit/models/institution-test', ['exports', 'em
   });
 
   (0, _emberQunit.test)('it exists', function (assert) {
-    var model = this.subject();
+    let model = this.subject();
     // let store = this.store();
     assert.ok(!!model);
   });
 });
-define('analytics-dashboard/tests/unit/models/institution-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/models/widget-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | unit/models/institution-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/models/institution-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/unit/models/widget-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForModel)('widget', 'Unit | Model | widget', {
     // Specify the other units that are required for this test.
@@ -1566,21 +1398,13 @@ define('analytics-dashboard/tests/unit/models/widget-test', ['exports', 'ember-q
   });
 
   (0, _emberQunit.test)('it exists', function (assert) {
-    var model = this.subject();
+    let model = this.subject();
     // let store = this.store();
     assert.ok(!!model);
   });
 });
-define('analytics-dashboard/tests/unit/models/widget-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/routes/dashboard-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
-
-  QUnit.module('JSHint | unit/models/widget-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/models/widget-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/unit/routes/dashboard-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleFor)('route:dashboard', 'Unit | Route | dashboard', {
     // Specify the other units that are required for this test.
@@ -1588,78 +1412,50 @@ define('analytics-dashboard/tests/unit/routes/dashboard-test', ['exports', 'embe
   });
 
   (0, _emberQunit.test)('it exists', function (assert) {
-    var route = this.subject();
+    let route = this.subject();
     assert.ok(route);
   });
 });
-define('analytics-dashboard/tests/unit/routes/dashboard-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/utils/currency-rounder-test', ['analytics-dashboard/utils/currency-rounder', 'qunit'], function (_currencyRounder, _qunit) {
   'use strict';
-
-  QUnit.module('JSHint | unit/routes/dashboard-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/routes/dashboard-test.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/unit/utils/currency-rounder-test', ['exports', 'analytics-dashboard/utils/currency-rounder', 'qunit'], function (exports, _analyticsDashboardUtilsCurrencyRounder, _qunit) {
 
   // Replace this with your real tests.
   (0, _qunit.test)('works with billions', function (assert) {
-    var rawValue = 180000000123;
-    var result = (0, _analyticsDashboardUtilsCurrencyRounder['default'])(rawValue);
+    let rawValue = 180000000123;
+    let result = (0, _currencyRounder.default)(rawValue);
     assert.equal(result, '180B');
   });
 });
-define('analytics-dashboard/tests/unit/utils/currency-rounder-test.jshint', ['exports'], function (exports) {
+define('sa-dashboard/tests/unit/utils/date-interval-test', ['analytics-dashboard/utils/date-interval', 'qunit'], function (_dateInterval, _qunit) {
   'use strict';
-
-  QUnit.module('JSHint | unit/utils/currency-rounder-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'unit/utils/currency-rounder-test.js should pass jshint.\nunit/utils/currency-rounder-test.js: line 2, col 10, \'module\' is defined but never used.\n\n1 error');
-  });
-});
-define('analytics-dashboard/tests/unit/utils/date-interval-test', ['exports', 'analytics-dashboard/utils/date-interval', 'qunit'], function (exports, _analyticsDashboardUtilsDateInterval, _qunit) {
 
   (0, _qunit.module)('Unit | Utility | date interval');
 
   // Replace this with your real tests.
   (0, _qunit.test)('it works', function (assert) {
-    var result = (0, _analyticsDashboardUtilsDateInterval['default'])();
+    let result = (0, _dateInterval.default)();
     assert.ok(result);
   });
 });
-define('analytics-dashboard/tests/unit/utils/date-interval-test.jshint', ['exports'], function (exports) {
-  'use strict';
+define('sa-dashboard/config/environment', [], function() {
+  var prefix = 'sa-dashboard';
+try {
+  var metaName = prefix + '/config/environment';
+  var rawConfig = document.querySelector('meta[name="' + metaName + '"]').getAttribute('content');
+  var config = JSON.parse(unescape(rawConfig));
 
-  QUnit.module('JSHint | unit/utils/date-interval-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/utils/date-interval-test.js should pass jshint.');
-  });
+  var exports = { 'default': config };
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+  return exports;
+}
+catch(err) {
+  throw new Error('Could not read config from meta tag with name "' + metaName + '".');
+}
+
 });
-define('analytics-dashboard/tests/utils/currency-rounder.jshint', ['exports'], function (exports) {
-  'use strict';
 
-  QUnit.module('JSHint | utils/currency-rounder.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'utils/currency-rounder.js should pass jshint.');
-  });
-});
-define('analytics-dashboard/tests/utils/date-interval.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | utils/date-interval.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'utils/date-interval.js should pass jshint.');
-  });
-});
-/* jshint ignore:start */
-
-require('analytics-dashboard/tests/test-helper');
+require('sa-dashboard/tests/test-helper');
 EmberENV.TESTS_FILE_LOADED = true;
-
-/* jshint ignore:end */
 //# sourceMappingURL=tests.map

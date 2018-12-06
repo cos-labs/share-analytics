@@ -4,6 +4,8 @@
 dist/
 tmp/
 
+sa-dashboard/dist/
+
 # dependencies
 node_modules/
 bower_components/

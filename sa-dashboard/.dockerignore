@@ -4,8 +4,6 @@
 dist/
 tmp/
 
-sa-dashboard/dist/
-
 # dependencies
 node_modules/
 bower_components/
@@ -21,7 +19,7 @@ package-lock.json
 testem.log
 
 
-.python-version
+
 
 !.gitkeep
 # DB / Migrations

@@ -1,0 +1,12 @@
+[Service]
+ExecStart=/usr/bin/nodejs /home/josh/bulk-get-agents/app.js
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=bulkagentget
+User=josh
+Group=josh
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

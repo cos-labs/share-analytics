@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: share-analytics-ingress
+spec:
+  rules:
+  - host: tritonshare.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: share-analytics-static
+          servicePort: 80
+      - path: /bulkagentget
+        backend:
+          serviceName: bulkagentget
+          servicePort: 80

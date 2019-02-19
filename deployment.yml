@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: share-analytics-deployment
+  labels:
+    app: share-analytics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: share-analytics
+  template:
+    metadata:
+      labels:
+        app: share-analytics
+    spec:
+      containers:
+      - name: share-analytics-dashboard
+        image: share-analytics-dashboard
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+      - name: share-analytics-bulkagentget
+        image: share-analytics-bulkagentget
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 4200
+      #- name: elastic
+      #  image: elasticsearch:latest
+      #  ports:
+      #  - containerPort: 9200

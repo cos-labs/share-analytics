@@ -1,0 +1,110 @@
+proxy_cache_path /var/cache/nginx/cache levels=1:2 keys_zone=share:25m inactive=40000s;
+
+server {
+
+    listen 80;
+    listen [::]:80;
+
+    server_name _;
+
+    return 301 https://$host$request_uri;
+
+}
+
+server {
+
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
+
+	server_name _;
+
+    ssl_certificate /etc/letsencrypt/live/dev-labs.cos.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/dev-labs.cos.io/privkey.pem;
+
+    proxy_buffering on;
+
+    location /bulk_get_agents {
+
+        if ($request_method = 'OPTIONS') {
+
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' 'HEAD, GET, POST, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+
+            return 204;
+
+        }
+
+        proxy_cache share;
+        proxy_cache_methods HEAD GET POST;
+        proxy_cache_key "$host$uri$is_args$args$request_body";
+        add_header X-Debug-Cache-Key "$uri$request_body";
+        proxy_ignore_headers Expires Cache-Control Set-Cookie;
+        proxy_hide_header Set-Cookie;
+        proxy_hide_header Cache-Control;
+        proxy_buffers 8 32k;
+        proxy_buffer_size 64k;
+        proxy_cache_valid 40000s;
+        proxy_cache_use_stale updating;
+        expires max;
+        proxy_pass http://localhost:9000/;
+        more_set_headers 'Access-Control-Allow-Origin: $http_origin';
+        add_header X-Cache $upstream_cache_status;
+
+    }
+
+    location / {
+
+        if ($request_method = 'OPTIONS') {
+
+            add_header 'Access-Control-Allow-Credentials' 'true';
+            add_header 'Access-Control-Allow-Methods' 'HEAD, GET, POST, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+
+            return 204;
+
+        }
+
+        proxy_cache share;
+        proxy_cache_methods HEAD GET POST;
+        proxy_cache_key "$host$uri$is_args$args$request_body";
+        add_header X-Debug-Cache-Key "$uri$request_body";
+        proxy_ignore_headers Expires Cache-Control Set-Cookie;
+        proxy_hide_header Set-Cookie;
+        proxy_hide_header Cache-Control;
+        proxy_buffers 8 32k;
+        proxy_buffer_size 64k;
+        proxy_cache_valid 40000s;
+        proxy_cache_use_stale updating;
+        expires max;
+        proxy_pass https://share.osf.io;
+        more_set_headers 'Access-Control-Allow-Origin: $http_origin';
+        add_header X-Cache $upstream_cache_status;
+
+        #proxy_set_header X-Real-IP  $remote_addr;
+        #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        #proxy_set_header X-Forwarded-Proto https;
+        #proxy_set_header X-Forwarded-Port 443;
+        #proxy_set_header Host $host;
+    }
+
+}
+
+
+server {
+
+    listen 8080;
+    listen [::]:8080;
+
+    server_name _;
+    location / {
+        proxy_pass https://share.osf.io;
+    }
+
+}

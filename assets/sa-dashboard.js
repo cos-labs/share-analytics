@@ -8589,6 +8589,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("sa-dashboard/app")["default"].create({"LOG_RESOLVER":false,"LOG_ACTIVE_GENERATION":false,"LOG_TRANSITIONS":false,"LOG_TRANSITIONS_INTERNAL":false,"LOG_VIEW_LOOKUPS":false,"GRANTS_BACKEND":"http://127.0.0.1:8000/api","name":"sa-dashboard","version":"0.0.0+b75f7121"});
+  require("sa-dashboard/app")["default"].create({"LOG_RESOLVER":false,"LOG_ACTIVE_GENERATION":false,"LOG_TRANSITIONS":false,"LOG_TRANSITIONS_INTERNAL":false,"LOG_VIEW_LOOKUPS":false,"GRANTS_BACKEND":"http://127.0.0.1:8000/api","name":"sa-dashboard","version":"0.0.0+f3a6372c"});
 }
 //# sourceMappingURL=sa-dashboard.map
